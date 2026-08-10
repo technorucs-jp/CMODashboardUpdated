@@ -54,8 +54,9 @@ Last updated:         2026-08-10
   *Verify:* `npm run dev` serves a page; `npx tsc --noEmit` exits 0.
       > `react-router-dom` lands in 0.2 with the other runtime deps, not here — this item scaffolded the base project only. Used `create-vite@latest --template react-ts --eslint` (Vite 8/rolldown); `react-swc-ts` template is gone from current create-vite. Path alias via `paths` only (no `baseUrl` — deprecated in TS 6.0).
 
-- [ ] **0.2** Install runtime deps: `react-router-dom`, `@azure/msal-browser`, `@azure/msal-react`, `zod`, `@tanstack/react-query`, `recharts`, `react-day-picker`, `date-fns`.
+- [x] **0.2** Install runtime deps: `react-router-dom`, `@azure/msal-browser`, `@azure/msal-react`, `zod`, `@tanstack/react-query`, `recharts`, `react-day-picker`, `date-fns`.
   *Verify:* `npm ls react-router-dom @azure/msal-browser @azure/msal-react zod @tanstack/react-query recharts react-day-picker date-fns` resolves all eight with no `UNMET`.
+      > Resolved versions: zod@4.4.3 (v4 API — `.strict()` semantics differ slightly from v3, will confirm when schemas land in Phase 1), react-day-picker@10.0.1, react-router-dom@7.18.2. All current-major, no substitutions.
 
 - [ ] **0.3** Install dev deps: `vitest`, `@testing-library/react`, `jsdom`, `ajv`, `zod-to-json-schema`, `xlsx`, ESLint + TS plugin.
   *Verify:* `npm ls vitest ajv zod-to-json-schema xlsx` resolves all four.
