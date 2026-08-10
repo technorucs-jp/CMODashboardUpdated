@@ -366,3 +366,35 @@ export const linkedInFileSchema = envelopeSchema.extend({
 })
 
 export type LinkedInFile = z.infer<typeof linkedInFileSchema>
+
+// ---------------------------------------------------------------------------
+// narratives.json (TAD §10.2, ADR-004) — keyed by flag ID ('channel.category.name'),
+// never a range signature. No `meta` envelope — this file has no sync metadata of
+// its own, per the TAD/TRD examples.
+// ---------------------------------------------------------------------------
+
+/** Dot-separated, lowercase, hyphenated segments — e.g. 'meta.adset.cost-per-conv-outlier'.
+ *  A range signature ('2026-06-01_2026-06-30_vs_...') starts with a digit and uses
+ *  underscores, so it can never match this pattern (ADR-004's whole point). */
+export const flagIdSchema = z
+  .string()
+  .regex(/^[a-z]+(\.[a-z][a-z0-9-]*)+$/, 'must be a dot-separated flag ID, not a range signature')
+
+export const narrativePhrasingSchema = z
+  .object({
+    headline: z.string(),
+    body: z.string(),
+    tier: z.enum(['immediate', 'process', 'strategic', 'observation']),
+    authoredBy: z.string().optional(),
+    authoredAt: z.string().optional(),
+  })
+  .strict()
+
+export const narrativesFileSchema = z
+  .object({
+    schemaVersion: z.number().int().positive(),
+    phrasings: z.record(flagIdSchema, narrativePhrasingSchema),
+  })
+  .strict()
+
+export type NarrativesFile = z.infer<typeof narrativesFileSchema>
