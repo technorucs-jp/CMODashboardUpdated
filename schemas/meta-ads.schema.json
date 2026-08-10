@@ -1,0 +1,187 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "channel": {
+          "type": "string"
+        },
+        "lastSyncedAt": {
+          "type": "string"
+        },
+        "earliestRecordDate": {
+          "type": "string"
+        },
+        "latestRecordDate": {
+          "type": "string"
+        },
+        "syncSource": {
+          "type": "string"
+        },
+        "coworkRunId": {
+          "type": "string"
+        },
+        "rowCounts": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        }
+      },
+      "required": [
+        "channel",
+        "lastSyncedAt",
+        "earliestRecordDate",
+        "latestRecordDate",
+        "syncSource",
+        "coworkRunId",
+        "rowCounts"
+      ],
+      "additionalProperties": false
+    },
+    "dimensions": {
+      "type": "object",
+      "properties": {
+        "adSets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "adSetId": {
+                "type": "string"
+              },
+              "adSetName": {
+                "type": "string"
+              },
+              "campaignId": {
+                "type": "string"
+              },
+              "campaignName": {
+                "type": "string"
+              },
+              "launchDate": {
+                "type": "string"
+              },
+              "region": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "adSetId",
+              "adSetName",
+              "campaignId",
+              "campaignName",
+              "launchDate",
+              "region"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "adSets"
+      ],
+      "additionalProperties": false
+    },
+    "facts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "adSetId": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "spend": {
+            "type": "number",
+            "minimum": 0
+          },
+          "impressions": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "reach": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "clicks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "conversations": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "date",
+          "adSetId",
+          "country",
+          "spend",
+          "impressions",
+          "reach",
+          "clicks",
+          "conversations"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "account": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "opportunityScore": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "recommendations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "date",
+          "opportunityScore",
+          "recommendations"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "meta",
+    "dimensions",
+    "facts",
+    "account"
+  ],
+  "additionalProperties": false
+}

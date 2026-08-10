@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991
+    },
+    "phrasings": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[a-z]+(\\.[a-z][a-z0-9-]*)+$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "headline": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "tier": {
+            "type": "string",
+            "enum": [
+              "immediate",
+              "process",
+              "strategic",
+              "observation"
+            ]
+          },
+          "authoredBy": {
+            "type": "string"
+          },
+          "authoredAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "headline",
+          "body",
+          "tier"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "phrasings"
+  ],
+  "additionalProperties": false
+}

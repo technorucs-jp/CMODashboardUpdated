@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "channel": {
+          "type": "string"
+        },
+        "lastSyncedAt": {
+          "type": "string"
+        },
+        "earliestRecordDate": {
+          "type": "string"
+        },
+        "latestRecordDate": {
+          "type": "string"
+        },
+        "syncSource": {
+          "type": "string"
+        },
+        "coworkRunId": {
+          "type": "string"
+        },
+        "rowCounts": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        }
+      },
+      "required": [
+        "channel",
+        "lastSyncedAt",
+        "earliestRecordDate",
+        "latestRecordDate",
+        "syncSource",
+        "coworkRunId",
+        "rowCounts"
+      ],
+      "additionalProperties": false
+    },
+    "leads": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "leadId": {
+            "type": "string"
+          },
+          "createdTime": {
+            "type": "string"
+          },
+          "leadSource": {
+            "type": "string",
+            "enum": [
+              "Meta Ads",
+              "SEO",
+              "Social Media",
+              "Email Campaign"
+            ]
+          },
+          "leadStatus": {
+            "type": "string",
+            "enum": [
+              "Contacted",
+              "Attempted to Contact",
+              "Lost / Not interested",
+              "Contact in Future",
+              "Junk",
+              "Meeting Scheduled"
+            ]
+          },
+          "owner": {
+            "type": "string"
+          },
+          "inquiryType": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "leadId",
+          "createdTime",
+          "leadSource",
+          "leadStatus",
+          "owner",
+          "inquiryType"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "meta",
+    "leads"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,250 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "channel": {
+          "type": "string"
+        },
+        "lastSyncedAt": {
+          "type": "string"
+        },
+        "earliestRecordDate": {
+          "type": "string"
+        },
+        "latestRecordDate": {
+          "type": "string"
+        },
+        "syncSource": {
+          "type": "string"
+        },
+        "coworkRunId": {
+          "type": "string"
+        },
+        "rowCounts": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        }
+      },
+      "required": [
+        "channel",
+        "lastSyncedAt",
+        "earliestRecordDate",
+        "latestRecordDate",
+        "syncSource",
+        "coworkRunId",
+        "rowCounts"
+      ],
+      "additionalProperties": false
+    },
+    "daily": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "clicks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "impressions": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "sumPosition": {
+            "type": "number",
+            "minimum": 0
+          },
+          "rows": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "truncated": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "date",
+          "clicks",
+          "impressions",
+          "sumPosition",
+          "rows"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "queries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "query": {
+            "type": "string"
+          },
+          "clicks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "impressions": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "sumPosition": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "date",
+          "query",
+          "clicks",
+          "impressions",
+          "sumPosition"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "pages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "page": {
+            "type": "string"
+          },
+          "clicks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "impressions": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "sumPosition": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "date",
+          "page",
+          "clicks",
+          "impressions",
+          "sumPosition"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "countries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "clicks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "impressions": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "sumPosition": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "date",
+          "country",
+          "clicks",
+          "impressions",
+          "sumPosition"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "devices": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "device": {
+            "type": "string"
+          },
+          "clicks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "impressions": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "sumPosition": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "date",
+          "device",
+          "clicks",
+          "impressions",
+          "sumPosition"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "meta",
+    "daily",
+    "queries",
+    "pages",
+    "countries",
+    "devices"
+  ],
+  "additionalProperties": false
+}

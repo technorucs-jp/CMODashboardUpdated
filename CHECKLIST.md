@@ -75,6 +75,7 @@ Last updated:         2026-08-10
 - [x] **0.3** Install dev deps: `vitest`, `@testing-library/react`, `jsdom`, `ajv`, `zod-to-json-schema`, `xlsx`, ESLint + TS plugin.
   *Verify:* `npm ls vitest ajv zod-to-json-schema xlsx` resolves all four.
       > `npm audit` flags `xlsx@0.18.5` (high — SheetJS prototype pollution / ReDoS advisories, no fix published to npm; SheetJS ships patches via their own CDN, not the registry). Accepted per TASK.md §4 — this package is used only in `scripts/linkedin/convert.ts`, a Node CLI tool processing the CMO's own manually-exported XLS files, never in the browser bundle or on untrusted network input. Not a STOP condition (package is available and mandated by name); flagged here for visibility, not silently ignored.
+      > **Update (item 1.9):** `zod-to-json-schema`, also installed here, was later found to silently produce empty output against Zod v4 and was removed in favour of Zod's own native `z.toJSONSchema()` — see item 1.9's note.
 
 - [x] **0.4** Add npm scripts: `dev`, `build`, `preview`, `typecheck`, `lint`, `test`, `test:recon`, `validate:data`, `schemas:build`, `scan:secrets`.
   *Verify:* `npm run typecheck && npm run lint` both exit 0.
@@ -174,8 +175,9 @@ Last updated:         2026-08-10
   *Verify:* unit test — a phrasing keyed by a date-range signature fails the flag-ID key pattern.
       > Confirmed `z.record(keySchema, valueSchema)` in Zod v4 does validate keys against a regex-refined string schema (not just typing) — tested directly. `flagIdSchema` tested against all real flag IDs from TAD §10.1 individually, not just the one range-signature rejection case.
 
-- [ ] **1.9** `scripts/build-schemas.mjs` generating `/schemas/*.schema.json` from the Zod schemas.
+- [x] **1.9** `scripts/build-schemas.mjs` generating `/schemas/*.schema.json` from the Zod schemas.
   *Verify:* `npm run schemas:build` produces six files in `schemas/`; re-running produces no diff.
+      > **Gap found and fixed**: the pinned `zod-to-json-schema` package (TASK.md §4) predates Zod v4's internal schema representation and silently produced an empty `{"definitions":{"meta-ads":{}}}` — no error, just wrong output, the worst kind of failure here. Switched to Zod v4's own native `z.toJSONSchema()`, which produces correct, fully-detailed output (verified by inspection) and is idempotent. Removed the now-unused `zod-to-json-schema` dependency; `TASK.md` §4 updated to match. Script runs under plain Node (v24 strips our schemas.ts's type-only syntax natively — confirmed directly) rather than needing `tsx`/`ts-node`.
 
 ### Time
 

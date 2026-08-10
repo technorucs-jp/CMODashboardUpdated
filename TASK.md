@@ -89,8 +89,8 @@ Exactly this. Do not substitute without asking (§8).
 | Routing | `react-router@6+` (`react-router-dom`) | Client-side routes; URL is still the single source of truth for range state |
 | Language | TypeScript, `strict: true` | No `any` in `src/lib/**` |
 | Auth | `@azure/msal-browser`, `@azure/msal-react` | Microsoft Entra ID, browser-only PKCE flow, **no server session** — TAD ADR-013 |
-| Validation | `zod` | Runtime parse in the client fetch layer; also the source for JSON Schemas |
-| Schema gen | `zod-to-json-schema` | Generates `/schemas/*.json` from the Zod schemas |
+| Validation | `zod` (v4) | Runtime parse in the client fetch layer; also the source for JSON Schemas |
+| Schema gen | `zod`'s native `z.toJSONSchema()` | Generates `/schemas/*.json` from the Zod schemas. **Not** the third-party `zod-to-json-schema` package originally pinned here — that package predates Zod v4's internal representation and silently produces an empty `{}` schema against it (verified while building item 1.9). Zod v4 ships this as a first-party API now, so this is a same-capability substitution, not an architecture change. |
 | Client cache | `@tanstack/react-query` | `staleTime: Infinity` — data is immutable per deployment |
 | Charts | `recharts` | Series colours read from CSS tokens, not library defaults |
 | Date picker | `react-day-picker` | Plus the seven custom presets |

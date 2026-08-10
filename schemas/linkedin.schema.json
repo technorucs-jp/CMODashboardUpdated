@@ -1,0 +1,326 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "channel": {
+          "type": "string"
+        },
+        "lastSyncedAt": {
+          "type": "string"
+        },
+        "earliestRecordDate": {
+          "type": "string"
+        },
+        "latestRecordDate": {
+          "type": "string"
+        },
+        "syncSource": {
+          "type": "string"
+        },
+        "coworkRunId": {
+          "type": "string"
+        },
+        "rowCounts": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "uploads": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "coversFrom": {
+                "type": "string"
+              },
+              "coversTo": {
+                "type": "string"
+              },
+              "uploadedAt": {
+                "type": "string"
+              },
+              "fileType": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "coversFrom",
+              "coversTo",
+              "uploadedAt",
+              "fileType"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "channel",
+        "lastSyncedAt",
+        "earliestRecordDate",
+        "latestRecordDate",
+        "syncSource",
+        "coworkRunId",
+        "rowCounts",
+        "uploads"
+      ],
+      "additionalProperties": false
+    },
+    "dailyTrend": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "newFollowers": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "impressions": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "clicks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "reactions": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "date",
+          "newFollowers",
+          "impressions",
+          "clicks",
+          "reactions"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "posts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "postId": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "impressions": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "clicks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "reactions": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "comments": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "videoViews": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "postId",
+          "date",
+          "title",
+          "impressions",
+          "clicks",
+          "reactions",
+          "comments",
+          "videoViews"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "audience": {
+      "type": "object",
+      "properties": {
+        "bySeniority": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "level": {
+                "type": "string"
+              },
+              "count": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "level",
+              "count"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "byJobFunction": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "function": {
+                "type": "string"
+              },
+              "count": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "function",
+              "count"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "byVisitorIndustry": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "industry": {
+                "type": "string"
+              },
+              "count": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "industry",
+              "count"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "byCompanySize": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "companySize": {
+                "type": "string"
+              },
+              "count": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "companySize",
+              "count"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "bySeniority",
+        "byJobFunction",
+        "byVisitorIndustry",
+        "byCompanySize"
+      ],
+      "additionalProperties": false
+    },
+    "competitors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "string"
+          },
+          "newFollowers": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "posts": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "comments": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "reactions": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "page",
+          "newFollowers",
+          "posts",
+          "comments",
+          "reactions"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "meta",
+    "dailyTrend",
+    "posts",
+    "audience",
+    "competitors"
+  ],
+  "additionalProperties": false
+}
