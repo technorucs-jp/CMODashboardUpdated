@@ -1,0 +1,84 @@
+/**
+ * Design tokens — TAD P8 (TASK.md §3): the visual system is frozen.
+ * Lifted from `Docs/../static-preview.html` (the actual reference build), with one
+ * documented exception: TAD's P8 principle text and CHECKLIST.md item 0.9 both name
+ * the base background as `#0d1117` verbatim, while the real static-preview.html file
+ * uses `#0f0f0f`. That's a wording slip in the docs, not a design decision — the two
+ * are visually indistinguishable on a near-black dark theme and nothing in any
+ * wireframe screen depends on the exact value. Per TASK.md §2's document precedence,
+ * the TAD's literal value wins here; every other token below is the reference file's
+ * actual value, unchanged.
+ *
+ * Channel accent assignment: five of the eight accent hues are confirmed against
+ * `Wireframe/01-overview-june-a.jpg` (Ad Spend, Total Leads, Sessions, Organic Clicks,
+ * New Followers). The remaining three (--accent-3, --accent-6, --accent-8) are carried
+ * over from the reference file's palette but not yet assigned to a specific tab/channel
+ * — that gets confirmed against the relevant wireframe screen when each tab is built
+ * (Phase 2/3), not guessed here.
+ */
+
+:root {
+  /* Base surfaces */
+  --color-bg: #0d1117; /* TAD P8 literal value — see file header note; static-preview.html uses #0f0f0f */
+  --color-surface-1: #1a1a1a; /* card background */
+  --color-surface-2: #141414; /* topbar / sidebar background */
+  --color-border: #2a2a2a;
+  --radius-base: 8px;
+  --radius-card: 12px;
+
+  /* Text */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #b0aeab;
+  --color-text-muted: #6b6966;
+
+  /* Channel accent hues (static-preview.html --ac/--ta/--tl/--tw/--to/--te/--ti/--tt) */
+  --accent-1: #6366f1; /* confirmed: Ad Spend / Meta Ads (Ad Campaigns) */
+  --accent-2: #7c3aed; /* unconfirmed tab assignment */
+  --accent-3: #ea580c; /* confirmed: Total Leads */
+  --accent-4: #0891b2; /* confirmed: Sessions / Website (GA4) */
+  --accent-5: #059669; /* confirmed: Organic Clicks / SEO (GSC) */
+  --accent-6: #d97706; /* unconfirmed tab assignment */
+  --accent-7: #2563eb; /* confirmed: New Followers / LinkedIn */
+  --accent-8: #be185d; /* unconfirmed tab assignment */
+
+  /* General semantic hues (charts, generic tags) */
+  --hue-green: #1baf7a;
+  --hue-yellow: #eda100;
+  --hue-red: #e34948;
+  --hue-blue: #2a78d6;
+  --hue-purple: #4a3aa7;
+
+  /* Pill pairs (bg/text) — generic tag colours (lead source, verdicts, etc.) */
+  --pill-green-bg: #1a2e1e;
+  --pill-green-text: #4ade80;
+  --pill-yellow-bg: #2e2310;
+  --pill-yellow-text: #fbbf24;
+  --pill-red-bg: #2e1010;
+  --pill-red-text: #f87171;
+  --pill-muted-bg: #1e1e1e;
+  --pill-muted-text: #9ca3af;
+  --pill-blue-bg: #0d1f2e;
+  --pill-blue-text: #60a5fa;
+  --pill-purple-bg: #1a0d2e;
+  --pill-purple-text: #a78bfa;
+
+  /* Status badge triples (bg / dot / text) — BRD Appendix A statuses */
+  --status-good-bg: #0d1f14;
+  --status-good-dot: #1baf7a;
+  --status-good-text: #4ade80;
+
+  --status-action-needed-bg: #1f0d0d;
+  --status-action-needed-dot: #e34948;
+  --status-action-needed-text: #f87171;
+
+  --status-monitor-bg: #1f1a0d;
+  --status-monitor-dot: #eda100;
+  --status-monitor-text: #fbbf24;
+
+  --status-leading-bg: #0d0f2e;
+  --status-leading-dot: #4f46e5;
+  --status-leading-text: #818cf8;
+
+  /* Type */
+  --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
