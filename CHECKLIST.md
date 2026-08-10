@@ -109,7 +109,7 @@ Last updated:         2026-08-10
   *Verify:* a router test navigates to each of the eight with a mocked authenticated `technorucs.com` MSAL account and finds a distinct placeholder heading per route; the same test with no account renders the login route for all eight instead.
       > 18 cases (`it.each`) covering all eight routes × authenticated/unauthenticated, plus `/` → `/overview` redirect in both auth states. Manually confirmed via `npm run dev` too.
 
-- [ ] **0.16** `scripts/scan-secrets.mjs` — scans `public/data/` and `src/` for bearer tokens, `AKIA`, PEM headers, `client_secret`, long base64 blobs. Exits non-zero on match.
+- [x] **0.16** `scripts/scan-secrets.mjs` — scans `public/data/` and `src/` for bearer tokens, `AKIA`, PEM headers, `client_secret`, long base64 blobs. Exits non-zero on match.
   *Verify:* `npm run scan:secrets` exits 0; add `client_secret=abc123def456` to a scratch file → exits 1. Remove it.
 
 - [ ] **0.17** GitHub Actions CI: `typecheck`, `lint`, `test`, `scan:secrets` on every PR.
