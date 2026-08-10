@@ -94,17 +94,20 @@ Last updated:         2026-08-10
   *Verify:* unit test — predicate returns `false` for a mock claims object with domain `gmail.com`, `true` for `technorucs.com`.
       > `npm test` required switching Vitest's pool from the default `forks` to `threads` in `vite.config.ts` — `forks` hangs waiting for a worker in this sandboxed dev environment (looks like restricted `child_process.fork`). Not a project-specific decision, just an environment accommodation; flagged in case it needs revisiting on a different machine/CI runner.
 
-- [ ] **0.12** `src/auth/AuthGuard.tsx` — wraps the protected route tree; no MSAL account or a rejected account (via 0.11) renders/redirects to `/login` instead of children. This is the client-side replacement for the old `middleware.ts` — there is no server-side matcher, so this must wrap **every** protected route, not rely on a single file catching all paths.
+- [x] **0.12** `src/auth/AuthGuard.tsx` — wraps the protected route tree; no MSAL account or a rejected account (via 0.11) renders/redirects to `/login` instead of children. This is the client-side replacement for the old `middleware.ts` — there is no server-side matcher, so this must wrap **every** protected route, not rely on a single file catching all paths.
   *Verify:* render test — `AuthGuard` with no active MSAL account renders the login route content, not its children; with a mock `technorucs.com` account, children render.
+      > Tested with `@azure/msal-react`'s `useIsAuthenticated`/`useMsal` mocked via `vi.mock` + `vi.hoisted` — also covers the case an authenticated-but-wrong-tenant account is rejected (item 0.11's predicate wired in), not just "no account at all".
 
-- [ ] **0.13** `/login` route with a single "Sign in with Microsoft" action (`msalInstance.loginRedirect()`). No anonymous data surface.
+- [x] **0.13** `/login` route with a single "Sign in with Microsoft" action (`msalInstance.loginRedirect()`). No anonymous data surface.
   *Verify:* render the `/login` route in isolation — contains no metric values anywhere in the output.
 
-- [ ] **0.14** Root layout route (`Sidebar` (8 items + source sublabels: Meta, Zoho, GA4, GSC, Instantly, Page, Meta) + `TopBar`) via `react-router` nested routes/`Outlet`. Mounted once so state survives navigation.
+- [x] **0.14** Root layout route (`Sidebar` (8 items + source sublabels: Meta, Zoho, GA4, GSC, Instantly, Page, Meta) + `TopBar`) via `react-router` nested routes/`Outlet`. Mounted once so state survives navigation.
   *Verify:* navigating between two child routes does not remount the sidebar (React DevTools, or a `console.count` in a `useEffect` with `[]` deps fires once).
+      > Verified by DOM node identity instead of a render counter — same `TopBar`/`Sidebar` DOM nodes before and after a simulated nav click, which can only hold if the layout route (and therefore its children) was never unmounted/remounted, only the `<Outlet/>` content swapped.
 
-- [ ] **0.15** All eight routes exist and render a placeholder, each wrapped in `AuthGuard`: `/overview`, `/ad-campaigns`, `/leads`, `/website`, `/seo`, `/email`, `/linkedin`, `/total-leads`. `/` redirects to `/overview`.
+- [x] **0.15** All eight routes exist and render a placeholder, each wrapped in `AuthGuard`: `/overview`, `/ad-campaigns`, `/leads`, `/website`, `/seo`, `/email`, `/linkedin`, `/total-leads`. `/` redirects to `/overview`.
   *Verify:* a router test navigates to each of the eight with a mocked authenticated `technorucs.com` MSAL account and finds a distinct placeholder heading per route; the same test with no account renders the login route for all eight instead.
+      > 18 cases (`it.each`) covering all eight routes × authenticated/unauthenticated, plus `/` → `/overview` redirect in both auth states. Manually confirmed via `npm run dev` too.
 
 - [ ] **0.16** `scripts/scan-secrets.mjs` — scans `public/data/` and `src/` for bearer tokens, `AKIA`, PEM headers, `client_secret`, long base64 blobs. Exits non-zero on match.
   *Verify:* `npm run scan:secrets` exits 0; add `client_secret=abc123def456` to a scratch file → exits 1. Remove it.
