@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "comment": "BRD Appendix A — starting point, tune with the CMO (BRD's own heading says so; not yet a settled decision, same spirit as TAD §16.2). Percentages are in favourable/unfavourable terms, resolved against a metric's registry polarity (TAD ADR-007) — 'unfavourable' for a lower-better metric is a positive % move, and vice versa.",
+  "leading": { "favourablePct": 15 },
+  "good": { "withinPct": 5 },
+  "monitor": { "unfavourablePctMin": 5, "unfavourablePctMax": 30 },
+  "actionNeeded": { "unfavourablePctMin": 30 },
+  "flatBand": { "pct": 2 },
+  "targetBands": {
+    "ga4.engagementRate": { "min": 0.6, "statusIfMet": "good" }
+  },
+  "floors": {
+    "gsc.nonBrandCtr": null
+  }
+}

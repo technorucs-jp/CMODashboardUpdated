@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "comment": "Longest-prefix match wins; consuming code sorts by prefix length descending. BRD §8.3 — GA4 has no notion of page type, this is a render-time lookup by URL path.",
+  "rules": [
+    { "prefix": "/blog/", "type": "Blog" },
+    { "prefix": "/careers/", "type": "Talent" },
+    { "prefix": "/contact-us/", "type": "Conversion" },
+    { "prefix": "/get-in-touch/", "type": "Conversion" },
+    { "prefix": "/request-a-demo/", "type": "Conversion" },
+    { "prefix": "/solutions/", "type": "Service" },
+    { "prefix": "/services/", "type": "Service" },
+    { "prefix": "/about-us/", "type": "About" },
+    { "prefix": "/about/", "type": "About" },
+    { "prefix": "/clients/", "type": "Trust" },
+    { "prefix": "/case-studies/", "type": "Trust" },
+    { "prefix": "/testimonials/", "type": "Trust" }
+  ],
+  "default": "Landing"
+}

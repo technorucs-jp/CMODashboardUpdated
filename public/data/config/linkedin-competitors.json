@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "comment": "BRD §11.2 — competitor Page names for the LinkedIn competitor comparison table. Editable without a re-sync (TAD §7.1).",
+  "competitors": [
+    { "page": "BytesTechnolab — HR" }
+  ]
+}

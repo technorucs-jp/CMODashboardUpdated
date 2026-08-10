@@ -143,8 +143,9 @@ Last updated:         2026-08-10
 
 ### Schemas and config
 
-- [ ] **1.1** `public/data/config/` seed files: `brand-terms.json` (technorucs + misspellings), `page-types.json` (path → Landing/Blog/Service/Conversion/Trust/Talent/About/Trust), `linkedin-competitors.json`, `thresholds.json` (BRD Appendix A), `sales-reps.json` (active roster).
+- [x] **1.1** `public/data/config/` seed files: `brand-terms.json` (technorucs + misspellings), `page-types.json` (path → Landing/Blog/Service/Conversion/Trust/Talent/About/Trust), `linkedin-competitors.json`, `thresholds.json` (BRD Appendix A), `sales-reps.json` (active roster).
   *Verify:* all five parse as JSON; `thresholds.json` contains `leading`, `good`, `monitor`, `actionNeeded`.
+      > `sales-reps.json` seeded with the four names the docs actually reference (Gopinath, Rathish, Mohan, Ram — BRD §7.3's concentration/zero-assignment findings) rather than an invented full roster; add more as real data surfaces. `thresholds.json` explicitly notes it's a starting point per BRD Appendix A's own heading, same "tune with CMO" spirit as TAD §16.2 — not re-litigated as a new open item, just not pretending it's final.
 
 - [ ] **1.2** Zod schema for the common envelope: `schemaVersion`, `meta` (`channel`, `lastSyncedAt`, `earliestRecordDate`, `latestRecordDate`, `syncSource`, `coworkRunId`, `rowCounts`).
   *Verify:* unit test — a file missing `meta.latestRecordDate` fails parse with a readable error.

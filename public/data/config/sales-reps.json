@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "comment": "Active roster, independent of the filtered lead set — a rep with zero assigned leads for a range must still appear in the Leads tab's rep table (BRD §7.3; TASK.md §9 trap). Source of truth for that table's rows, not zoho-crm.json.",
+  "reps": [
+    { "name": "Gopinath", "active": true },
+    { "name": "Rathish", "active": true },
+    { "name": "Mohan", "active": true },
+    { "name": "Ram", "active": true }
+  ]
+}
