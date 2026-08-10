@@ -159,7 +159,7 @@ Last updated:         2026-08-10
   *Verify:* unit test — a row with `leadSource: "Partner"` fails validation (excluded at ingestion, must never appear); a row containing a `notes` key of any kind fails `.strict()` parse.
       > `leadSource` is a 4-value enum (Meta Ads/SEO/Social Media/Email Campaign) rather than a free string with a separate exclusion check — Partner/Referral/ZoomInfo fail simply because they're not in the enum, which is the same "make it structural, not a convention" pattern as the `notes` omission. `leadStatus` enum covers the six statuses from BRD §7.1 (including Contact in Future and Junk, which item 3.8 depends on rendering even at zero count).
 
-- [ ] **1.5** Zod schema `ga4.json`: dimension slices `daily[] channels[] sources[] pages[] countries[] devices[] paths[]`. Counts not rates — `bouncedSessions`, `totalSessionDurationSec`.
+- [x] **1.5** Zod schema `ga4.json`: dimension slices `daily[] channels[] sources[] pages[] countries[] devices[] paths[]`. Counts not rates — `bouncedSessions`, `totalSessionDurationSec`.
   *Verify:* unit test — a `daily` row with `bounceRate` fails strict parse.
 
 - [ ] **1.6** Zod schema `gsc.json`: slices `daily[] queries[] pages[] countries[] devices[]`, with `sumPosition` not `position`.

@@ -124,3 +124,96 @@ export const zohoCrmFileSchema = envelopeSchema.extend({
 })
 
 export type ZohoCrmFile = z.infer<typeof zohoCrmFileSchema>
+
+// ---------------------------------------------------------------------------
+// ga4.json (TAD §7.3, ADR-008) — dimension-sliced arrays, each independently
+// summable. Counts only — `bouncedSessions`/`totalSessionDurationSec`, never
+// GA4's own `bounceRate`/`averageSessionDuration` rates (P1).
+// ---------------------------------------------------------------------------
+
+export const ga4DailySchema = z
+  .object({
+    date: z.string(),
+    /** Non-additive across days (TAD §9.2) — GA4 de-duplicates users. */
+    totalUsers: z.number().int().nonnegative(),
+    sessions: z.number().int().nonnegative(),
+    screenPageViews: z.number().int().nonnegative(),
+    engagedSessions: z.number().int().nonnegative(),
+    bouncedSessions: z.number().int().nonnegative(),
+    totalSessionDurationSec: z.number().nonnegative(),
+    // Deliberately NO bounceRate/engagementRate/averageSessionDuration — P1.
+  })
+  .strict()
+
+export const ga4ChannelSchema = z
+  .object({
+    date: z.string(),
+    channelGroup: z.string(),
+    sessions: z.number().int().nonnegative(),
+    engagedSessions: z.number().int().nonnegative(),
+    bouncedSessions: z.number().int().nonnegative(),
+  })
+  .strict()
+
+export const ga4SourceSchema = z
+  .object({
+    date: z.string(),
+    source: z.string(),
+    channelGroup: z.string(),
+    sessions: z.number().int().nonnegative(),
+    engagedSessions: z.number().int().nonnegative(),
+    bouncedSessions: z.number().int().nonnegative(),
+  })
+  .strict()
+
+export const ga4PageSchema = z
+  .object({
+    date: z.string(),
+    pagePath: z.string(),
+    screenPageViews: z.number().int().nonnegative(),
+    totalUsers: z.number().int().nonnegative(),
+    engagedSessions: z.number().int().nonnegative(),
+    bouncedSessions: z.number().int().nonnegative(),
+    totalSessionDurationSec: z.number().nonnegative(),
+  })
+  .strict()
+
+export const ga4CountrySchema = z
+  .object({
+    date: z.string(),
+    country: z.string(),
+    totalUsers: z.number().int().nonnegative(),
+    bouncedSessions: z.number().int().nonnegative(),
+    totalSessionDurationSec: z.number().nonnegative(),
+  })
+  .strict()
+
+export const ga4DeviceSchema = z
+  .object({
+    date: z.string(),
+    device: z.string(),
+    sessions: z.number().int().nonnegative(),
+    engagedSessions: z.number().int().nonnegative(),
+  })
+  .strict()
+
+export const ga4PathSchema = z
+  .object({
+    date: z.string(),
+    step1: z.string(),
+    step2: z.string(),
+    sessions: z.number().int().nonnegative(),
+  })
+  .strict()
+
+export const ga4FileSchema = envelopeSchema.extend({
+  daily: z.array(ga4DailySchema),
+  channels: z.array(ga4ChannelSchema),
+  sources: z.array(ga4SourceSchema),
+  pages: z.array(ga4PageSchema),
+  countries: z.array(ga4CountrySchema),
+  devices: z.array(ga4DeviceSchema),
+  paths: z.array(ga4PathSchema),
+})
+
+export type Ga4File = z.infer<typeof ga4FileSchema>
