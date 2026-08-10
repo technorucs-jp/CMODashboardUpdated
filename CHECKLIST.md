@@ -58,11 +58,13 @@ Last updated:         2026-08-10
   *Verify:* `npm ls react-router-dom @azure/msal-browser @azure/msal-react zod @tanstack/react-query recharts react-day-picker date-fns` resolves all eight with no `UNMET`.
       > Resolved versions: zod@4.4.3 (v4 API — `.strict()` semantics differ slightly from v3, will confirm when schemas land in Phase 1), react-day-picker@10.0.1, react-router-dom@7.18.2. All current-major, no substitutions.
 
-- [ ] **0.3** Install dev deps: `vitest`, `@testing-library/react`, `jsdom`, `ajv`, `zod-to-json-schema`, `xlsx`, ESLint + TS plugin.
+- [x] **0.3** Install dev deps: `vitest`, `@testing-library/react`, `jsdom`, `ajv`, `zod-to-json-schema`, `xlsx`, ESLint + TS plugin.
   *Verify:* `npm ls vitest ajv zod-to-json-schema xlsx` resolves all four.
+      > `npm audit` flags `xlsx@0.18.5` (high — SheetJS prototype pollution / ReDoS advisories, no fix published to npm; SheetJS ships patches via their own CDN, not the registry). Accepted per TASK.md §4 — this package is used only in `scripts/linkedin/convert.ts`, a Node CLI tool processing the CMO's own manually-exported XLS files, never in the browser bundle or on untrusted network input. Not a STOP condition (package is available and mandated by name); flagged here for visibility, not silently ignored.
 
-- [ ] **0.4** Add npm scripts: `dev`, `build`, `preview`, `typecheck`, `lint`, `test`, `test:recon`, `validate:data`, `schemas:build`, `scan:secrets`.
+- [x] **0.4** Add npm scripts: `dev`, `build`, `preview`, `typecheck`, `lint`, `test`, `test:recon`, `validate:data`, `schemas:build`, `scan:secrets`.
   *Verify:* `npm run typecheck && npm run lint` both exit 0.
+      > Scripts were added in item 0.1's package.json edit; `test`/`test:recon`/`validate:data`/`schemas:build`/`scan:secrets` reference files that don't exist until later items (0.16, 1.9, 5.4) — expected, this item's verify only checks typecheck+lint.
 
 - [ ] **0.5** ESLint rule enforcing **P5**: ban `new Date(` and `Date.parse(` outside `src/lib/time/**`.
   *Verify:* add `const d = new Date('2026-01-01')` to a scratch file in `src/lib/metrics/` → `npm run lint` fails. Remove it → passes.
