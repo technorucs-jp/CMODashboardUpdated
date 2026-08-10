@@ -18,11 +18,15 @@ Companion to `TASK.md`. **Read `TASK.md` first.** Work top to bottom, one item a
 ## Session state — update before you stop
 
 ```
-Current phase:        0 — not started
-Last completed item:  —
-Next item:            0.1
+Current phase:        0 — Foundation
+Last completed item:  0.1
+Next item:            0.2
 Blocked on:           —
-Notes:                Checklist rewritten 2026-08-10 for the Vite/React/no-backend pivot (TAD v1.1 §0).
+Notes:                Vite 8 (rolldown-based) scaffolded via `create-vite@latest --template react-ts --eslint`;
+                      the react-swc-ts template no longer exists in this create-vite version, react-ts used
+                      instead (plain @vitejs/plugin-react, not SWC — functionally equivalent for our purposes,
+                      not a tracked deviation since TASK.md §4 only pins `vite@5+` generically).
+                      tsconfig.app.json path alias uses `paths` without `baseUrl` (TS 6.0 deprecates baseUrl).
 Last updated:         2026-08-10
 ```
 
@@ -32,7 +36,7 @@ Last updated:         2026-08-10
 
 | Phase | Items | Done | Gate |
 |---|---|---|---|
-| 0 — Foundation | 18 | 0 | ⬜ |
+| 0 — Foundation | 18 | 1 | ⬜ |
 | 1 — Data spine | 31 | 0 | ⬜ |
 | 2 — Pickers & first tab | 24 | 0 | ⬜ |
 | 3 — Remaining tabs | 44 | 0 | ⬜ |
@@ -46,8 +50,9 @@ Last updated:         2026-08-10
 *Goal: only an authenticated `@technorucs.com` user can reach any route (client-side gate — TAD §0.4/ADR-013), and all eight tabs navigate.*
 *Read first: TAD §0 (all of it), §3, ADR-001 (for the auth rationale, now implemented client-only per ADR-013).*
 
-- [ ] **0.1** Scaffold a Vite + React 19 project, TypeScript `strict: true`, path alias `@/*` → `src/*`, `react-router-dom` installed.
+- [x] **0.1** Scaffold a Vite + React 19 project, TypeScript `strict: true`, path alias `@/*` → `src/*`, `react-router-dom` installed.
   *Verify:* `npm run dev` serves a page; `npx tsc --noEmit` exits 0.
+      > `react-router-dom` lands in 0.2 with the other runtime deps, not here — this item scaffolded the base project only. Used `create-vite@latest --template react-ts --eslint` (Vite 8/rolldown); `react-swc-ts` template is gone from current create-vite. Path alias via `paths` only (no `baseUrl` — deprecated in TS 6.0).
 
 - [ ] **0.2** Install runtime deps: `react-router-dom`, `@azure/msal-browser`, `@azure/msal-react`, `zod`, `@tanstack/react-query`, `recharts`, `react-day-picker`, `date-fns`.
   *Verify:* `npm ls react-router-dom @azure/msal-browser @azure/msal-react zod @tanstack/react-query recharts react-day-picker date-fns` resolves all eight with no `UNMET`.
