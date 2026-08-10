@@ -19,14 +19,16 @@ Companion to `TASK.md`. **Read `TASK.md` first.** Work top to bottom, one item a
 
 ```
 Current phase:        0 — Foundation
-Last completed item:  0.1
-Next item:            0.2
+Last completed item:  0.6
+Next item:            0.7
 Blocked on:           —
 Notes:                Vite 8 (rolldown-based) scaffolded via `create-vite@latest --template react-ts --eslint`;
                       the react-swc-ts template no longer exists in this create-vite version, react-ts used
                       instead (plain @vitejs/plugin-react, not SWC — functionally equivalent for our purposes,
                       not a tracked deviation since TASK.md §4 only pins `vite@5+` generically).
                       tsconfig.app.json path alias uses `paths` without `baseUrl` (TS 6.0 deprecates baseUrl).
+                      xlsx@0.18.5 has an unpatched npm-registry advisory (accepted, see item 0.3 note).
+                      P5/P6 ESLint rules verified working (item 0.6 note has detail on the import-boundary approach).
 Last updated:         2026-08-10
 ```
 
@@ -66,11 +68,12 @@ Last updated:         2026-08-10
   *Verify:* `npm run typecheck && npm run lint` both exit 0.
       > Scripts were added in item 0.1's package.json edit; `test`/`test:recon`/`validate:data`/`schemas:build`/`scan:secrets` reference files that don't exist until later items (0.16, 1.9, 5.4) — expected, this item's verify only checks typecheck+lint.
 
-- [ ] **0.5** ESLint rule enforcing **P5**: ban `new Date(` and `Date.parse(` outside `src/lib/time/**`.
+- [x] **0.5** ESLint rule enforcing **P5**: ban `new Date(` and `Date.parse(` outside `src/lib/time/**`.
   *Verify:* add `const d = new Date('2026-01-01')` to a scratch file in `src/lib/metrics/` → `npm run lint` fails. Remove it → passes.
 
-- [ ] **0.6** ESLint rule enforcing **P6**: `src/lib/**` may not import `src/routes/**`, `src/components/**`, `src/data/**`, `src/auth/**`, or `react`.
+- [x] **0.6** ESLint rule enforcing **P6**: `src/lib/**` may not import `src/routes/**`, `src/components/**`, `src/data/**`, `src/auth/**`, or `react`.
   *Verify:* add `import { useState } from 'react'` to a file in `src/lib/` → `npm run lint` fails. Remove it → passes.
+      > Also verified the app-layer bans with a relative import (`../../components/_scratch`) — failed as expected. Implemented via core ESLint `no-restricted-imports` `patterns` (glob match on the raw specifier string), not `eslint-plugin-import`'s resolver-based `no-restricted-paths` — tried that first, it silently no-ops without a configured TS resolver plugin, so the glob approach is more robust here and adds no extra dependency. Both 0.5 and 0.6 landed in the same `eslint.config.js` edit/commit (5f5cec6) since they're two rules in one config file — noted here rather than an empty second commit.
 
 - [ ] **0.7** `vercel.json` (or the equivalent config for whatever static host is used) with a `Cache-Control` header rule for `public/data/**`. This replaces the old `next.config.ts` concern — there is no server bundle to trace files into.
   *Verify:* `grep -A3 "public/data" vercel.json` shows a headers entry. (There is no "works locally, 500s in prod" failure mode anymore — the risk this used to guard against doesn't exist without a server — but caching still needs to be set explicitly or every range change re-downloads the full channel file.)
