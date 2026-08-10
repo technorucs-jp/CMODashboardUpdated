@@ -4,11 +4,122 @@
 
 Technical Architecture Document (TAD)
 
-Version 1.0 | August 10, 2026
+Version 1.1 | August 10, 2026 (v1.1 addendum same day as v1.0 baseline)
 
 Source documents: `TechnoRUCS_CMO_Dashboard_RealTime_Requirements_v2.1.md` (BRD), `TechnoRUCS_CMO_Dashboard_TRD_v1.0.md` (TRD), `/Wireframe` (25 screens, 8 tabs)
 
-Status: Baseline for build — four previously-open decisions are resolved in §4; two remain open and are isolated in §16
+Status: **Read §0 first.** §0 is a same-day architecture pivot, confirmed directly by the CMO, that supersedes ADR-002 and ADR-005 and everything downstream of them (§5, §6, §11 in particular). The rest of the v1.0 body below is kept intact as the historical record §17-style traceability depends on, but wherever it conflicts with §0, **§0 wins.** Two decisions from the original baseline remain open and are isolated in §16.
+
+---
+
+## 0. Addendum — v1.1 architecture pivot: static React SPA, no application backend
+
+**Confirmed with the CMO, 2026-08-10, same session as the v1.0 baseline above — before any code was written against it.**
+
+### 0.1 What changed and why
+
+v1.0 (§2, §4 ADR-002/ADR-005) chose a Next.js app with Node route handlers doing server-side aggregation, specifically so raw Zoho lead notes never reached the browser and so `/data` could sit outside any publicly-servable directory. The CMO has since directed a simpler stack: **Vite + React, fully client-side, no backend of any kind.** That is a real trade against the privacy guarantee ADR-002 was built to provide, not a cosmetic swap — this section says exactly what changes to keep the trade honest instead of silently dropping it.
+
+### 0.2 ADR-011 — Vite + React SPA, fully static, no server · [Confirmed]
+
+*Decision:* Vite + React 19 + TypeScript `strict` + `react-router`. The build output is 100% static assets (HTML/CSS/JS + `/public/data/*.json`) — no Node server process, no API routes, no middleware, no edge functions. Deployable to any static host (Vercel static output, GitHub Pages, Azure Static Web Apps, etc.) with no runtime dependency beyond serving files.
+
+*Supersedes:* ADR-005 in full (no Next.js, no App Router, no Node runtime requirement). Reverses ADR-002's "aggregate server-side by default" — the TRD's original §6.2 client-side-filtering default is restored, permanently this time, not as an escape hatch.
+
+*What does not change:* `src/lib/**` stays pure and framework-agnostic (P6) — the same `Ratio`/`Coverage`/rules/narrative code that would have run on a Node server now runs in the browser instead, unmodified. Every unit test in §13 still applies verbatim; only the caller (a React hook instead of a route handler) differs.
+
+*Rationale given:* simplicity — one deployable artifact, no server code to write, own, or debug; matches "database-free, JSON-backed" spirit of the BRD even more literally than the original design did.
+
+### 0.3 ADR-012 — PII minimisation moves from "server strips it per request" to "it is never written" · [Confirmed]
+
+*Context:* P3 ("raw records never reach the browser") was enforced by ADR-002's server aggregation step. With no server, nothing stands between `public/data/zoho-crm.json` and the browser — whatever is in that file, ships.
+
+*Decision:* **`zoho-crm.json`'s `notes` field is never included in the file the app ships at all.** Not redacted at read time — never written at ingestion time. The Zod schema for the shipped file has no `notes` property and is `.strict()`, so a stray `notes` key fails validation the same mechanical way an accidental `cpc` field fails P1's schemas. If a future feature needs the raw note (e.g. Cowork's own lead-intent classification pass, TAD §16.1 Path B), that pass reads notes from its own private Zoho pull — it never round-trips them through the committed file.
+
+*Consequence — P3 is restated:* ~~"Raw records never reach the browser, enforced by server-side aggregation."~~ → **"No field the browser has no legitimate reason to display is ever written into `public/data/**`, enforced by a `.strict()` schema with the field absent."** Same mechanical-not-cultural spirit as every other invariant in §3; the enforcement point just moved from request-time to ingestion-time.
+
+*Everything else in §7 (schemas, envelope, per-channel shapes) is unchanged except this one field removal and the path change in §0.5.*
+
+### 0.4 ADR-013 — Auth: MSAL.js browser SPA flow against Entra ID, no server session · [Confirmed, with a flagged residual risk]
+
+*Decision:* `@azure/msal-browser` + `@azure/msal-react`, Authorization Code + PKCE flow, entirely in the browser. Restricted to the `technorucs.com` Entra tenant via the ID token's tenant claim, checked client-side by a pure predicate function (unit-testable exactly like the old `signIn` callback was). No server, no session cookie, no JWT minted by this app — Entra's own ID token, held in memory (not `localStorage`), is the credential.
+
+*Rationale:* preserves ADR-001's original reasoning (Microsoft-partner org, real per-user identity, no new credential to issue) without a backend. MSAL.js is the standard, Microsoft-supported pattern for exactly this — SPA-only Entra auth with no server component.
+
+*The trade-off, stated plainly rather than glossed over:* **a static JSON file is fetchable by anyone who has its URL, whether or not they pass the login screen.** There is no server left to check a session before serving `/data/zoho-crm.json` — the login gate protects the *application UI*, not the *asset*. This is strictly weaker than the v1.0 design's guarantee and is the direct, unavoidable cost of "no backend." Two mitigations, neither alone sufficient:
+
+1. **ADR-012** — the worst-case leak is now a stripped-down marketing/CRM aggregate file with no free-text customer content, not raw lead notes.
+2. **Host-level access control, as defense in depth, not code** — enable the static host's built-in deployment/password protection (e.g. Vercel Deployment Protection) in front of the *entire* deployment including asset paths, so an anonymous request to any URL is challenged before anything is served. This is hosting configuration, and does not reintroduce an application backend.
+
+*Flagged for the CMO, per TASK.md §8's own convention:* is this residual exposure — a determined party with a direct file URL and no host-level password bypasses the login screen — acceptable for this data, or does it change the "no backend" decision specifically for the auth boundary? Recorded as an open item in §16.4. **Proceed with the design above in the meantime**; it is not a blocker for Phases 0–4, only for the final production security sign-off in Phase 5.
+
+### 0.5 ADR-014 — Data lives in `public/data/`; caching is host config, not a computed ETag · [Confirmed]
+
+*Decision:* `/data` moves from "repo root, server-read only" to **`public/data/`** — the opposite of the old placement rule, and deliberate. The app fetches `public/data/*.json` with plain `fetch()`; TanStack Query wraps the calls for in-session memoisation (`staleTime: Infinity` — same rationale as before, a deployment's data is immutable once built). There is no server to compute `ETag: sha:tab:rangeSig` (ADR-006 is retired); cache-busting instead relies on the static host's own caching for the `/data` path (configured once, e.g. in `vercel.json` headers) plus TanStack Query's in-memory cache for the browser session.
+
+*Consequence:* aggregation runs client-side on every range change, memoised only for the current tab's session (not across a reload). At the data volumes in BRD §15.3 this is expected to comfortably clear the 3-second budget — the budget is now a client-CPU number, not a server-response number, and is instrumented client-side (§12.1 update below).
+
+### 0.6 What is unaffected
+
+Every one of these is framework-agnostic and needs no rework: the six data-source schemas and their per-channel shapes (§7.2, §7.3, minus the `notes` removal above); `Ratio`/`Coverage`/time/rules/narrative (§9, §10) — same code, different host; the wireframe-derived visual system and component inventory (§11.6, §11.7, P8); the ingestion/Cowork contract (§8) — Cowork still writes JSON and pushes to `main`, it just writes to `public/data/` now and omits `notes`; the reconciliation/testing strategy (§13); the twelve rules and their fixtures (§10.1).
+
+### 0.7 Repository layout (supersedes Appendix A)
+
+```
+technorucs-cmo-dashboard/                 (private)
+├─ public/
+│  └─ data/                               ← now deliberately public — see ADR-012/014
+│     ├─ meta-ads.json  zoho-crm.json  ga4.json  gsc.json  linkedin.json
+│     ├─ narratives.json
+│     └─ config/
+│        ├─ brand-terms.json  page-types.json
+│        ├─ linkedin-competitors.json  thresholds.json
+│        └─ sales-reps.json
+├─ schemas/                               ← generated from Zod, unchanged in role
+├─ scripts/                               ← validate-data.mjs, scan-secrets.mjs, build-schemas.mjs,
+│                                            check-sync-timestamps.mjs, linkedin/convert.ts — all
+│                                            still Node/CI-time tooling; "no backend" means no
+│                                            request-serving server, not "no Node anywhere"
+├─ src/
+│  ├─ main.tsx                            ← Vite entry
+│  ├─ App.tsx                             ← router root: MsalProvider → QueryClientProvider → routes
+│  ├─ auth/                               ← msalConfig.ts, AuthGuard.tsx, tenant/allowlist predicate
+│  ├─ routes/                             ← one route module per tab, react-router
+│  │  ├─ layout.tsx                       ← Sidebar + TopBar shell, mounted once (was (dashboard)/layout.tsx)
+│  │  ├─ overview.tsx  adCampaigns.tsx  leads.tsx  website.tsx
+│  │  ├─ seo.tsx  email.tsx  linkedin.tsx  totalLeads.tsx
+│  │  └─ login.tsx
+│  ├─ data/                               ← client fetch+cache layer (was src/server/data/)
+│  │  ├─ loader.ts                        ← fetch → Zod parse → in-memory cache, replaces fs.readFile
+│  │  └─ schemas.ts
+│  ├─ viewmodels/                         ← same composition logic as before, called from hooks now
+│  ├─ lib/                                ← PURE, UNCHANGED (P6): time/ metrics/ coverage/ channels/ rules/ narrative/
+│  ├─ components/                         ← shell/ data/ states/ narrative/ — unchanged inventory
+│  └─ styles/tokens.css
+├─ tests/
+│  ├─ fixtures/  unit/  contract/
+│  └─ reconciliation/{may,june,july}-2026.golden.json
+├─ .github/workflows/ci.yml
+├─ vite.config.ts
+└─ vercel.json                            ← Cache-Control for /data/**, optional deployment password
+```
+
+### 0.8 Environment variables (supersedes Appendix B)
+
+No server secrets exist in this design — there is no server. MSAL client config is a **public client identifier, not a credential**, and is fine to compile into the bundle:
+
+| Variable | Where | Purpose |
+|---|---|---|
+| `VITE_MSAL_CLIENT_ID` | build-time (`.env`, committed-safe) | Entra app registration's public client ID |
+| `VITE_MSAL_TENANT_ID` | build-time | restricts login to the `technorucs.com` tenant |
+| `VITE_MSAL_REDIRECT_URI` | build-time | post-login redirect target |
+| `VITE_ALLOWED_EMAILS` | build-time, optional | optional extra allowlist on top of the tenant check; empty = tenant-only |
+
+Third-party channel credentials (Meta/Zoho/GA4/GSC/LinkedIn) still never appear anywhere in this repository, in any form — that part of P2 is untouched by this pivot; those live only in Claude Cowork, exactly as in v1.0.
+
+### 0.9 Sections of the v1.0 body below that are now historical, not instructional
+
+§2 (diagram — presentation plane is now "static host", not "Vercel + middleware + API"), §4 ADR-002 and ADR-005 (superseded above), §5–§6 (Node runtime, middleware, route handlers — none of this exists now), §11.2–11.5 (API contract, route handlers — replaced by the fetch layer and hooks in §0.7), Appendix A and B (replaced by §0.7/§0.8). Read them only for the *reasoning* that still applies (e.g. why P3/P4/P1 matter at all) — not for the *mechanism* (which changed). `TASK.md` and `CHECKLIST.md` are the literal, up-to-date build instructions; they have been rewritten in full against this addendum and are authoritative over the v1.0 body wherever the two differ.
 
 ---
 
@@ -922,6 +1033,10 @@ Either path populates the same field, so the decision changes the Cowork job and
 ### 16.2 Staleness visual treatment (TRD §12.3) — cosmetic
 
 Proposed: neutral within cadence, amber past 2×, red past 4×, per-tab placement. Implemented as config, so confirming or changing it is a value edit. *Owner: CMO. Needed by: Phase 5.*
+
+### 16.4 Residual exposure of static `/data` files under the no-backend design (§0.4, ADR-013) — not a blocker for Phases 0–4
+
+Under ADR-013, the login screen gates the application UI, not the static JSON files themselves — a direct request to a file URL bypasses MSAL entirely since no server is left to check a session. Mitigated by ADR-012 (no `notes`/free-text PII in the shipped files) and, optionally, host-level deployment password protection as defense in depth. Proceed on the design in §0.4 through Phase 4; **resolve explicitly before the Phase 5 production sign-off (item 5.24)** — either accept the residual exposure as-is, or add host-level password protection as a required step, not an optional one. *Owner: CMO. Needed by: Phase 5.*
 
 ### 16.3 Wireframe refresh (TRD §12.4) — not a blocker
 

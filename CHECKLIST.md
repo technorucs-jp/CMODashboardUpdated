@@ -2,6 +2,8 @@
 
 Companion to `TASK.md`. **Read `TASK.md` first.** Work top to bottom, one item at a time.
 
+*Rewritten 2026-08-10 against TAD v1.1 §0 (ADR-011–014) — Vite + React SPA, no application backend. Item numbering is preserved from the pre-pivot checklist for continuity; wording is updated wherever Next.js/server/API concepts no longer apply. Wireframe-derived figures and business logic are unchanged — this was a hosting/runtime pivot, not a requirements change.*
+
 **Rules for using this file**
 
 - Mark `[x]` **only after** the item's `Verify:` command passes. A checkbox is a claim about reality, not about intent.
@@ -20,8 +22,8 @@ Current phase:        0 — not started
 Last completed item:  —
 Next item:            0.1
 Blocked on:           —
-Notes:                —
-Last updated:         —
+Notes:                Checklist rewritten 2026-08-10 for the Vite/React/no-backend pivot (TAD v1.1 §0).
+Last updated:         2026-08-10
 ```
 
 ---
@@ -41,75 +43,75 @@ Last updated:         —
 
 # Phase 0 — Foundation
 
-*Goal: only an authenticated `@technorucs.com` user can reach any route, and all eight tabs navigate.*
-*Read first: TAD §5, §6, §11.1, §11.7, ADR-001, ADR-005.*
+*Goal: only an authenticated `@technorucs.com` user can reach any route (client-side gate — TAD §0.4/ADR-013), and all eight tabs navigate.*
+*Read first: TAD §0 (all of it), §3, ADR-001 (for the auth rationale, now implemented client-only per ADR-013).*
 
-- [ ] **0.1** Scaffold Next.js 15 App Router project, TypeScript `strict: true`, path alias `@/*` → `src/*`.
+- [ ] **0.1** Scaffold a Vite + React 19 project, TypeScript `strict: true`, path alias `@/*` → `src/*`, `react-router-dom` installed.
   *Verify:* `npm run dev` serves a page; `npx tsc --noEmit` exits 0.
 
-- [ ] **0.2** Install runtime deps: `next-auth@5`, `zod`, `@tanstack/react-query`, `recharts`, `react-day-picker`, `date-fns`.
-  *Verify:* `npm ls next-auth zod @tanstack/react-query recharts react-day-picker date-fns` resolves all six with no `UNMET`.
+- [ ] **0.2** Install runtime deps: `react-router-dom`, `@azure/msal-browser`, `@azure/msal-react`, `zod`, `@tanstack/react-query`, `recharts`, `react-day-picker`, `date-fns`.
+  *Verify:* `npm ls react-router-dom @azure/msal-browser @azure/msal-react zod @tanstack/react-query recharts react-day-picker date-fns` resolves all eight with no `UNMET`.
 
-- [ ] **0.3** Install dev deps: `vitest`, `ajv`, `zod-to-json-schema`, `xlsx`, ESLint + TS plugin.
+- [ ] **0.3** Install dev deps: `vitest`, `@testing-library/react`, `jsdom`, `ajv`, `zod-to-json-schema`, `xlsx`, ESLint + TS plugin.
   *Verify:* `npm ls vitest ajv zod-to-json-schema xlsx` resolves all four.
 
-- [ ] **0.4** Add npm scripts: `dev`, `build`, `typecheck`, `lint`, `test`, `test:recon`, `validate:data`, `schemas:build`, `scan:secrets`.
+- [ ] **0.4** Add npm scripts: `dev`, `build`, `preview`, `typecheck`, `lint`, `test`, `test:recon`, `validate:data`, `schemas:build`, `scan:secrets`.
   *Verify:* `npm run typecheck && npm run lint` both exit 0.
 
 - [ ] **0.5** ESLint rule enforcing **P5**: ban `new Date(` and `Date.parse(` outside `src/lib/time/**`.
   *Verify:* add `const d = new Date('2026-01-01')` to a scratch file in `src/lib/metrics/` → `npm run lint` fails. Remove it → passes.
 
-- [ ] **0.6** ESLint rule enforcing **P6**: `src/lib/**` may not import `src/server/**`, `src/app/**`, `src/components/**`, or `react`.
+- [ ] **0.6** ESLint rule enforcing **P6**: `src/lib/**` may not import `src/routes/**`, `src/components/**`, `src/data/**`, `src/auth/**`, or `react`.
   *Verify:* add `import { useState } from 'react'` to a file in `src/lib/` → `npm run lint` fails. Remove it → passes.
 
-- [ ] **0.7** `next.config.ts` with `outputFileTracingIncludes` for `/api/metrics/[tab]` and `/api/health/data` → `./data/**/*.json`.
-  *Verify:* `grep -A4 outputFileTracingIncludes next.config.ts` shows both entries. (Omitting this works locally and 500s in production — TAD ADR-005.)
+- [ ] **0.7** `vercel.json` (or the equivalent config for whatever static host is used) with a `Cache-Control` header rule for `public/data/**`. This replaces the old `next.config.ts` concern — there is no server bundle to trace files into.
+  *Verify:* `grep -A3 "public/data" vercel.json` shows a headers entry. (There is no "works locally, 500s in prod" failure mode anymore — the risk this used to guard against doesn't exist without a server — but caching still needs to be set explicitly or every range change re-downloads the full channel file.)
 
-- [ ] **0.8** Create `data/` at **repo root** with a `.gitkeep` and `data/config/`. Add a comment header in `data/README.md` stating it must never move to `/public`.
-  *Verify:* `test -d data && test ! -d public/data` exits 0.
+- [ ] **0.8** Create `public/data/` with a `.gitkeep` and `public/data/config/`. Add `public/data/README.md` stating plainly that this directory is **deliberately public** (TAD ADR-012/014 — the opposite of the pre-pivot rule) and therefore must never contain `notes` or any other lead free-text; cross-reference the `.strict()` schema that enforces it (item 1.4).
+  *Verify:* `test -d public/data` exits 0; `grep -qi "never" public/data/README.md` matches.
 
-- [ ] **0.9** Extract design tokens from the wireframe into `src/styles/tokens.css`: base `#0d1117`, surface/border/text neutrals, status colours (Leading, Good, Monitor, Action needed), channel accent hues.
+- [ ] **0.9** Extract design tokens from `static-preview.html` into `src/styles/tokens.css`: base `#0d1117` (per TAD P8 / TASK.md §3 — note in the file header that the actual reference file uses `#0f0f0f`, a documented wording slip, not a design change), surface/border/text neutrals, status colours (Leading, Good, Monitor, Action needed), channel accent hues.
   *Verify:* `grep -c '^\s*--' src/styles/tokens.css` ≥ 15; no literal hex values in any component file (`grep -rn '#[0-9a-fA-F]\{6\}' src/components/` returns nothing).
 
-- [ ] **0.10** Auth.js v5 config: Microsoft Entra ID provider, JWT session strategy, **no database adapter**, 8-hour rolling session.
-  *Verify:* `src/auth.ts` exports `handlers`, `auth`, `signIn`, `signOut`; `session.strategy === 'jwt'`; no adapter import.
+- [ ] **0.10** `src/auth/msalConfig.ts` — `PublicClientApplication` config built from `VITE_MSAL_CLIENT_ID` / `VITE_MSAL_TENANT_ID` / `VITE_MSAL_REDIRECT_URI`. Browser-only PKCE flow. No client secret anywhere (public clients don't have one — if you find yourself adding one, you've misread ADR-013).
+  *Verify:* `src/auth/msalConfig.ts` exports a config object with no `clientSecret`/`client_secret` key; `grep -rn "clientSecret" src/` returns nothing.
 
-- [ ] **0.11** `signIn` callback: reject any account whose verified email domain ≠ `AUTH_ALLOWED_DOMAIN`, and (if `AUTH_ALLOWED_EMAILS` is non-empty) not on the allowlist.
-  *Verify:* unit test — callback returns `false` for `x@gmail.com`, `true` for `x@technorucs.com`.
+- [ ] **0.11** `src/auth/isAllowedAccount.ts` — pure predicate: reject any account whose token tenant/verified domain ≠ `technorucs.com`, and (if `VITE_ALLOWED_EMAILS` is non-empty) not on the allowlist.
+  *Verify:* unit test — predicate returns `false` for a mock claims object with domain `gmail.com`, `true` for `technorucs.com`.
 
-- [ ] **0.12** `src/middleware.ts` with matcher `['/((?!login|api/auth|_next/static|_next/image|favicon.ico).*)']`.
-  *Verify:* with dev server running, `curl -sI localhost:3000/overview` returns a 3xx to `/login`; `curl -sI localhost:3000/api/metrics/leads` returns 3xx or 401 — **not** 200.
+- [ ] **0.12** `src/auth/AuthGuard.tsx` — wraps the protected route tree; no MSAL account or a rejected account (via 0.11) renders/redirects to `/login` instead of children. This is the client-side replacement for the old `middleware.ts` — there is no server-side matcher, so this must wrap **every** protected route, not rely on a single file catching all paths.
+  *Verify:* render test — `AuthGuard` with no active MSAL account renders the login route content, not its children; with a mock `technorucs.com` account, children render.
 
-- [ ] **0.13** `/login` page with a single "Sign in with Microsoft" action. No anonymous data surface.
-  *Verify:* `curl -s localhost:3000/login` returns 200 and contains no metric values.
+- [ ] **0.13** `/login` route with a single "Sign in with Microsoft" action (`msalInstance.loginRedirect()`). No anonymous data surface.
+  *Verify:* render the `/login` route in isolation — contains no metric values anywhere in the output.
 
-- [ ] **0.14** `(dashboard)` route group layout with `Sidebar` (8 items + source sublabels: Meta, Zoho, GA4, GSC, Instantly, Page, Meta) and `TopBar` shell. Mounted once so state survives navigation.
-  *Verify:* navigating between two tabs does not remount the sidebar (React DevTools, or a `console.count` in a `useEffect` with `[]` deps fires once).
+- [ ] **0.14** Root layout route (`Sidebar` (8 items + source sublabels: Meta, Zoho, GA4, GSC, Instantly, Page, Meta) + `TopBar`) via `react-router` nested routes/`Outlet`. Mounted once so state survives navigation.
+  *Verify:* navigating between two child routes does not remount the sidebar (React DevTools, or a `console.count` in a `useEffect` with `[]` deps fires once).
 
-- [ ] **0.15** All eight routes exist and render a placeholder: `/overview`, `/ad-campaigns`, `/leads`, `/website`, `/seo`, `/email`, `/linkedin`, `/total-leads`. `/` redirects to `/overview`.
-  *Verify:* each of the eight returns 200 when authenticated; `/` returns a redirect.
+- [ ] **0.15** All eight routes exist and render a placeholder, each wrapped in `AuthGuard`: `/overview`, `/ad-campaigns`, `/leads`, `/website`, `/seo`, `/email`, `/linkedin`, `/total-leads`. `/` redirects to `/overview`.
+  *Verify:* a router test navigates to each of the eight with a mocked authenticated `technorucs.com` MSAL account and finds a distinct placeholder heading per route; the same test with no account renders the login route for all eight instead.
 
-- [ ] **0.16** `scripts/scan-secrets.mjs` — scans `data/` and `src/` for bearer tokens, `AKIA`, PEM headers, `client_secret`, long base64 blobs. Exits non-zero on match.
+- [ ] **0.16** `scripts/scan-secrets.mjs` — scans `public/data/` and `src/` for bearer tokens, `AKIA`, PEM headers, `client_secret`, long base64 blobs. Exits non-zero on match.
   *Verify:* `npm run scan:secrets` exits 0; add `client_secret=abc123def456` to a scratch file → exits 1. Remove it.
 
 - [ ] **0.17** GitHub Actions CI: `typecheck`, `lint`, `test`, `scan:secrets` on every PR.
   *Verify:* `.github/workflows/ci.yml` exists and lists all four steps.
 
-- [ ] **0.18** Commit and push. Confirm Vercel preview deploys and gates on auth.
-  *Verify:* preview URL redirects an anonymous visitor to `/login`.
+- [ ] **0.18** Commit and push. Confirm the static deploy (Vercel or equivalent) serves the login screen to an anonymous visitor at `/overview`, and record in *Session state* whether host-level deployment password protection (TAD §16.4) is enabled yet — it is not required to pass this gate, but its absence must be a visible, tracked fact, not a silent gap.
+  *Verify:* preview URL, visited anonymously, renders the client-side login screen — not dashboard content. (This does **not** mean `public/data/*.json` is unreachable by direct URL — see TAD §16.4; that is a documented trade-off, not a bug in this item.)
 
-**Phase 0 gate:** `npm run typecheck && npm run lint && npm run scan:secrets && npm run build` — all green, and an anonymous request to `/overview` on the preview deployment does not return dashboard HTML.
+**Phase 0 gate:** `npm run typecheck && npm run lint && npm run scan:secrets && npm run build` — all green, and an anonymous visit to `/overview` on the preview deployment renders only the login screen.
 
 ---
 
 # Phase 1 — Data spine
 
 *Goal: metric unit tests and the June 2026 reconciliation test pass against fixtures — before a single chart exists.*
-*Read first: TAD §7 (schemas), §9 (computation core), ADR-007, ADR-008, ADR-009, and TASK.md §9 (traps).*
+*Read first: TAD §0.3/§0.5 (ADR-012, ADR-014), §7 (schemas — minus `notes`), §9 (computation core), ADR-007, ADR-008, ADR-009, and TASK.md §9 (traps).*
 
 ### Schemas and config
 
-- [ ] **1.1** `data/config/` seed files: `brand-terms.json` (technorucs + misspellings), `page-types.json` (path → Landing/Blog/Service/Conversion/Trust/Talent/About/Trust), `linkedin-competitors.json`, `thresholds.json` (BRD Appendix A), `sales-reps.json` (active roster).
+- [ ] **1.1** `public/data/config/` seed files: `brand-terms.json` (technorucs + misspellings), `page-types.json` (path → Landing/Blog/Service/Conversion/Trust/Talent/About/Trust), `linkedin-competitors.json`, `thresholds.json` (BRD Appendix A), `sales-reps.json` (active roster).
   *Verify:* all five parse as JSON; `thresholds.json` contains `leading`, `good`, `monitor`, `actionNeeded`.
 
 - [ ] **1.2** Zod schema for the common envelope: `schemaVersion`, `meta` (`channel`, `lastSyncedAt`, `earliestRecordDate`, `latestRecordDate`, `syncSource`, `coworkRunId`, `rowCounts`).
@@ -118,8 +120,8 @@ Last updated:         —
 - [ ] **1.3** Zod schema `meta-ads.json`: `dimensions.adSets[]` + `facts[]` + `account[]`. **No `cpc`/`cpm`/`ctr`/`frequency` fields** (P1, TAD §7.3).
   *Verify:* unit test — a fact row containing `cpc` fails strict parse.
 
-- [ ] **1.4** Zod schema `zoho-crm.json`: one row per lead, `inquiryType` nullable, `notes` present.
-  *Verify:* unit test — a row with `leadSource: "Partner"` fails validation (excluded at ingestion, must never appear).
+- [ ] **1.4** Zod schema `zoho-crm.json`: one row per lead, `inquiryType` nullable. **No `notes` field at all** — `.strict()`, the field is absent from the schema entirely (TAD ADR-012/P3′, supersedes the pre-pivot "`notes` present, kept server-side" design).
+  *Verify:* unit test — a row with `leadSource: "Partner"` fails validation (excluded at ingestion, must never appear); a row containing a `notes` key of any kind fails `.strict()` parse.
 
 - [ ] **1.5** Zod schema `ga4.json`: dimension slices `daily[] channels[] sources[] pages[] countries[] devices[] paths[]`. Counts not rates — `bouncedSessions`, `totalSessionDurationSec`.
   *Verify:* unit test — a `daily` row with `bounceRate` fails strict parse.
@@ -172,11 +174,11 @@ Last updated:         —
 
 ### Fixtures and loader
 
-- [ ] **1.20** `tests/fixtures/` — realistic fixture for every channel covering May–July 2026, with hand-calculable totals. Derive values from the wireframe screens so reconciliation is meaningful.
+- [ ] **1.20** `tests/fixtures/` — realistic fixture for every channel covering May–July 2026, with hand-calculable totals. Derive values from the wireframe screens so reconciliation is meaningful. Fixtures mirror the **shipped** shape exactly, including the absence of `notes` (item 1.4) — fixtures are not a place to smuggle back a field the real file will never have.
   *Verify:* every fixture passes its Zod schema; `npm run validate:data -- tests/fixtures` exits 0.
 
-- [ ] **1.21** `src/server/data/loader.ts` — `load(channel)`: `fs.readFile` → Zod parse → per-instance cache. Isolates failure to one channel.
-  *Verify:* test — a corrupt `gsc.json` fixture makes `load('gsc')` throw a typed error while `load('ga4')` still succeeds.
+- [ ] **1.21** `src/data/loader.ts` — `load(channel)`: `fetch(`${BASE_URL}data/${channel}.json`)` → Zod parse → in-memory cache for the browser session. This replaces the old `fs.readFile`-based server loader; the module-level cache now lives for the page's lifetime, not per server instance. Isolates failure to one channel.
+  *Verify:* test — mocking `fetch` to return a corrupt `gsc.json` body makes `load('gsc')` throw a typed error while `load('ga4')` still succeeds.
 
 - [ ] **1.22** Channel query modules `src/lib/channels/{metaAds,zoho,ga4,gsc,linkedin}.ts` — filter by range, return `ChannelResult` with coverage.
   *Verify:* test per channel — filtering to a known range returns hand-calculated totals.
@@ -196,16 +198,18 @@ Last updated:         —
 - [ ] **1.27** LinkedIn coverage rule: a range is servable only if fully inside the union of `meta.uploads[]` intervals; partial overlap yields `requires-full-coverage` with the gaps listed.
   *Verify:* test — range 15 Jun–15 Jul against a June-only upload returns `requires-full-coverage` with gap 1–15 Jul.
 
-### API skeleton
+### Client fetch & cache layer
 
-- [ ] **1.28** `GET /api/metrics/[tab]` — auth check, Zod-validated query params, `ETag` = `${VERCEL_GIT_COMMIT_SHA}:${tab}:${rangeSig}`, `Cache-Control: private, no-cache`, 304 on `If-None-Match`.
-  *Verify:* two identical authenticated requests — the second returns 304 with an empty body.
+*(Replaces the pre-pivot "API skeleton" section — there is no server, so there is no route handler, `ETag`, or 304 to build. The equivalent concerns — avoid redundant work, isolate per-tab failures, cache within a session — move into this plain client module + TanStack Query.)*
 
-- [ ] **1.29** Invalid/missing query params fall back to current month to date rather than erroring.
-  *Verify:* `GET /api/metrics/leads` with no params returns 200 for the current month.
+- [ ] **1.28** `src/data/loader.ts` `load(channel)` (built in 1.21) is the single fetch point for every channel; nothing else in the app calls `fetch()` directly against `public/data/`.
+  *Verify:* `grep -rn "fetch(" src/ --include=*.ts --include=*.tsx | grep -v src/data/loader.ts` returns nothing.
 
-- [ ] **1.30** Aggregate memoisation keyed on `sha:tab:rangeSig`.
-  *Verify:* instrument the aggregation step; a repeated identical request skips it.
+- [ ] **1.29** Invalid or missing URL query params (read via `react-router`'s `useSearchParams` + Zod) fall back to current month to date rather than erroring.
+  *Verify:* rendering `/leads` with no query params shows the current month's data, not an error screen.
+
+- [ ] **1.30** Aggregate memoisation keyed on `tab:rangeSig` for the current browser session (a `Map` or `useMemo`-backed cache — there is no commit SHA available client-side, and none is needed since the memo only needs to survive the tab, not a redeploy).
+  *Verify:* instrument the aggregation step; selecting the same range twice in one session skips recomputation the second time.
 
 - [ ] **1.31** **Reconciliation harness** — `tests/reconciliation/june-2026.golden.json` with the published June figures (₹38,423 spend, 101 conversations, ₹380 cost/conv, 1,720 sessions, 65.3% engagement, 469 clicks, 54,744 impressions, 0.81% CTR, 132 new followers, 522 reactions, 49 inbound leads, 30.6% contact rate). Test selects 1–30 June and asserts within ±1%.
   *Verify:* `npm run test:recon` green.
@@ -217,7 +221,7 @@ Last updated:         —
 # Phase 2 — Pickers and the first tab
 
 *Goal: selecting any custom range recomputes every figure on Ad Campaigns, and the URL round-trips.*
-*Read first: TAD §11.3–11.6, BRD §4, §6, wireframes `07-adcampaigns-*.jpg`.*
+*Read first: TAD §0.5 (ADR-014), §11.3–11.6 (mechanism superseded — no API contract; the UI/behaviour spec still applies), BRD §4, §6, wireframes `07-adcampaigns-*.jpg`.*
 
 - [ ] **2.1** `DateRangePicker` — calendar + the seven presets, IST-based.
   *Verify:* selecting "Last Month" on 2026-08-10 sets `from=2026-07-01&to=2026-07-31`.
@@ -225,22 +229,22 @@ Last updated:         —
 - [ ] **2.2** `ComparisonRangePicker` — off by default; options previous period / previous month / previous year / custom.
   *Verify:* enabling "previous period" for 1–30 June sets `cf=2026-05-02&ct=2026-05-31`.
 
-- [ ] **2.3** URL parse/serialise with Zod validation; URL is the only range state.
+- [ ] **2.3** URL parse/serialise with Zod validation, via `react-router`'s `useSearchParams`; the URL is the only range state.
   *Verify:* `grep -rn "useState.*[Rr]ange" src/` returns nothing outside the picker's transient input state.
 
-- [ ] **2.4** Both pickers live in `TopBar`, visible on every tab, surviving navigation.
+- [ ] **2.4** Both pickers live in the root layout's `TopBar`, visible on every tab, surviving navigation across `react-router` routes.
   *Verify:* set a range on `/leads`, navigate to `/seo` — the range persists and the URL carries it.
 
-- [ ] **2.5** Bookmark/share works: pasting a full URL into a new tab reproduces the exact view.
-  *Verify:* manual — copy URL, open in a fresh session, same figures render.
+- [ ] **2.5** Bookmark/share works: pasting a full URL into a new tab reproduces the exact view (after MSAL sign-in, since every route is behind `AuthGuard` — this is expected, not a regression; the URL itself is what round-trips, not anonymous access to it).
+  *Verify:* manual — copy URL, open in a fresh session, sign in, same figures render.
 
 - [ ] **2.6** TanStack Query provider, key `['metrics', tab, rangeSig, compareSig]`, `staleTime: Infinity`.
-  *Verify:* switching away and back to a tab issues no second network request.
+  *Verify:* switching away and back to a tab issues no second `fetch` call.
 
-- [ ] **2.7** Idle prefetch of the other seven tabs for the current range after first paint.
-  *Verify:* network panel shows seven prefetches after `/ad-campaigns` settles; a tab switch issues none.
+- [ ] **2.7** Idle prefetch of the other seven tabs' channel data (via `load()`, item 1.21) for the current range after first paint.
+  *Verify:* network panel shows the other channels' JSON fetched after `/ad-campaigns` settles; a tab switch issues no new fetch.
 
-- [ ] **2.8** `CardSkeleton` shown per card during fetch — not a full-page spinner. Sidebar and pickers stay interactive.
+- [ ] **2.8** `CardSkeleton` shown per card during fetch/aggregation — not a full-page spinner. Sidebar and pickers stay interactive.
   *Verify:* throttle the network; the shell remains usable while cards are skeletons.
 
 - [ ] **2.9** `KpiCard` — primary value + supporting detail lines, channel accent, `tabular-nums`.
@@ -258,8 +262,8 @@ Last updated:         —
 - [ ] **2.13** `DonutChart` and `HorizontalBarChart`, colours from CSS tokens.
   *Verify:* `grep -rn "fill=\"#" src/components/` returns nothing.
 
-- [ ] **2.14** `src/server/viewmodels/adCampaigns.ts` — composes the Ad Campaigns view model.
-  *Verify:* contract test — the returned object matches the published TS type; contains no raw fact rows.
+- [ ] **2.14** `src/viewmodels/adCampaigns.ts` (client-side, was `src/server/viewmodels/` pre-pivot) — composes the Ad Campaigns view model.
+  *Verify:* contract test — the returned object matches the published TS type.
 
 - [ ] **2.15** Account overview cards: spend, impressions, reach, clicks, conversations, avg. CPC, CPM, frequency, cost/conversation. All ratios computed for the range.
   *Verify:* 1–30 June returns ₹38,423 / 95,823 / 655 / 101 / ₹58.66 / ₹401 / 1.82× / ₹380 within ±1%.
@@ -288,7 +292,7 @@ Last updated:         —
 - [ ] **2.23** Empty/partial states wired on this tab via `Coverage`.
   *Verify:* selecting 1–30 April 2026 (before history) renders "no data before 2026-05-01", not zeros.
 
-- [ ] **2.24** Performance instrumentation: `performance.mark` around aggregation; log p95.
+- [ ] **2.24** Performance instrumentation: `performance.mark` around client-side aggregation; log p95.
   *Verify:* a 12-month range change completes well inside the 3-second ceiling; record the measured number in the Session state notes.
 
 **Phase 2 gate:** pick three arbitrary ranges (including one crossing a month boundary and one single day). Every figure on `/ad-campaigns` recomputes, no zeros stand in for absent data, and the URL reproduces each view.
@@ -303,7 +307,7 @@ Last updated:         —
 ### Shared state components
 
 - [ ] **3.1** `EmptyState`, `NoDataBeforeDate`, `PartialDataWarning`, `LaggingDataNotice`, `NotConnectedPanel` — used by every tab, never reimplemented per tab.
-  *Verify:* each renders from a `Coverage` value; `grep -rn "No data" src/app/` returns nothing (copy lives in the shared components).
+  *Verify:* each renders from a `Coverage` value; `grep -rn "No data" src/routes/` returns nothing (copy lives in the shared components).
 
 ### Overview
 
@@ -324,8 +328,8 @@ Last updated:         —
 
 ### Leads
 
-- [ ] **3.7** `src/server/viewmodels/leads.ts` — counts and rates only; `notes` never in the payload (**P3**).
-  *Verify:* contract test asserts the serialised response contains no `notes` key; `curl` the endpoint and grep for a known fixture note string → no match.
+- [ ] **3.7** `src/viewmodels/leads.ts` — counts and rates only; `notes` never appears anywhere in the fetched data or the view model (**P3′**) — this is now enforced two layers deep: the `.strict()` schema (item 1.4) rejects the field on parse, and this view model would have nothing to leak even if it slipped through.
+  *Verify:* contract test asserts the parsed `zoho-crm.json` fixture (i.e. the exact shape the browser receives) contains no `notes` key at all; `grep` the raw fixture file for a known note string used pre-pivot → no match.
 
 - [ ] **3.8** Overview cards: total inbound, leads by source, Contacted, Attempted, Lost/Not interested, **Contact in Future**, **Junk**, Meetings scheduled, Active days.
   *Verify:* all statuses render for June including the zero-count ones (BRD v2.1 §7.1) — this is the specific bug the current static build has.
@@ -351,7 +355,7 @@ Last updated:         —
 - [ ] **3.15** Contacted vs. attempted by rep chart.
   *Verify:* matches `02-leads-bottom.jpg`.
 
-- [ ] **[!] 3.16** Intent bucket panel — renders the "not yet classified" state while `inquiryType` is null. **Do not implement either classifier** (TASK.md §8).
+- [ ] **[!] 3.16** Intent bucket panel — renders the "not yet classified" state while `inquiryType` is null. **Do not implement either classifier** (TASK.md §8). Note: whichever classification path the CMO eventually picks, the resulting bucket label is all that may ever appear in `zoho-crm.json` — the underlying `notes` text stays out per item 3.7 regardless.
   *Verify:* with null `inquiryType` throughout the fixture, the panel renders an explicit unclassified state, not an empty table.
 
 ### Website
@@ -455,10 +459,10 @@ Last updated:         —
 # Phase 4 — Rules and narrative
 
 *Goal: narratives render correctly for an arbitrary range Cowork has never seen.*
-*Read first: TAD §10, ADR-004.*
+*Read first: TAD §10, ADR-004. Unaffected by the architecture pivot — this is all `src/lib/**`, framework-agnostic by construction.*
 
 - [ ] **4.1** `Flag` type + `src/lib/rules/engine.ts` — pure `(viewModel, thresholds) => Flag[]`.
-  *Verify:* engine is importable in a Node test with no React or fs in the module graph.
+  *Verify:* engine is importable in a Node test with no React, `fetch`, or DOM global in the module graph.
 
 - [ ] **4.2** `meta.adset.cost-per-conv-outlier` — ad set cost/conv > N× account average.
   *Verify:* fires on BC Australia 17 Jun (₹1,923, 4.6×); silent on Azure TN (₹186).
@@ -514,17 +518,17 @@ Last updated:         —
 - [ ] **4.19** **Arbitrary-range narrative test** — select 14 Jun–2 Aug (a range no signature could exist for) and assert the narrative renders with numbers matching that exact range.
   *Verify:* test green. This is the regression guard for ADR-004.
 
-**Phase 4 gate:** delete `data/narratives.json`, reload every tab — narratives still render correctly. Restore it; authored wording appears with live numbers.
+**Phase 4 gate:** delete `public/data/narratives.json`, reload every tab — narratives still render correctly. Restore it; authored wording appears with live numbers.
 
 ---
 
 # Phase 5 — Ingestion contract and hardening
 
-*Goal: a Cowork run updates `/data`, auto-deploys, and the dashboard reflects it with accurate sync badges.*
-*Read first: TAD §8, §12, §15, ADR-003, ADR-010.*
+*Goal: a Cowork run updates `public/data`, auto-deploys, and the dashboard reflects it with accurate sync badges.*
+*Read first: TAD §8 (mechanism unaffected by the pivot — Cowork still writes JSON and pushes), §0.3/§0.4 (ADR-012/013, the parts of this phase that materially changed), ADR-010.*
 
-- [ ] **5.1** `Docs/COWORK_SYNC_SPEC.md` — the ingestion contract: per-channel cadence, lookback windows, natural keys, the 12-step run algorithm, validation gates, commit message format.
-  *Verify:* spec covers all five channels and every gate in TAD §8.3.
+- [ ] **5.1** `Docs/COWORK_SYNC_SPEC.md` — the ingestion contract: per-channel cadence, lookback windows, natural keys, the 12-step run algorithm, validation gates, commit message format. Must state explicitly that Cowork writes to **`public/data/`**, not a server-only `data/` root, and that `zoho-crm.json`'s `notes` field is read from Zoho for Cowork's own use (e.g. an eventual intent classifier) but is **never written into the committed file**.
+  *Verify:* spec covers all five channels, every gate in TAD §8.3, and explicitly documents the `notes`-exclusion rule with the reason (TAD ADR-012).
 
 - [ ] **5.2** Spec states Zoho's lookback keys on **`Modified_Time` as well as `Created_Time`**.
   *Verify:* explicitly documented with the reason (lead status mutates after creation — TAD D9).
@@ -532,32 +536,32 @@ Last updated:         —
 - [ ] **5.3** Spec states ratios are decomposed at ingestion: GA4 `bounceRate` → `bouncedSessions`; GSC `position` → `sumPosition`.
   *Verify:* both documented with worked examples.
 
-- [ ] **5.4** `scripts/validate-data.mjs` — ajv, every `/data` file against `/schemas`.
-  *Verify:* `npm run validate:data` exits 0 on good data, 1 on a deliberately broken file.
+- [ ] **5.4** `scripts/validate-data.mjs` — ajv, every `public/data` file against `/schemas`.
+  *Verify:* `npm run validate:data` exits 0 on good data, 1 on a deliberately broken file (including one with a stray `notes` field).
 
-- [ ] **5.5** Validation gates: missing `meta`, empty records where previous run had data, `latestRecordDate` moving backward, row count drop > 50%.
-  *Verify:* four fixture cases each fail with a distinct message.
+- [ ] **5.5** Validation gates: missing `meta`, empty records where previous run had data, `latestRecordDate` moving backward, row count drop > 50%, **any `notes` (or similarly named free-text) field present in `zoho-crm.json`**.
+  *Verify:* five fixture cases each fail with a distinct message.
 
-- [ ] **5.6** `scripts/check-sync-timestamps.mjs` — asserts each changed data file's `lastSyncedAt` is within tolerance of its commit timestamp (**BRD §16 criterion 7**).
+- [ ] **5.6** `scripts/check-sync-timestamps.mjs` — asserts each changed data file's `lastSyncedAt` is within tolerance of its commit timestamp (**BRD §16 criterion 7**). Unaffected by the pivot — this is a Git-history check, not a server check.
   *Verify:* passes on a good commit; fails on a file whose `lastSyncedAt` is a week off.
 
-- [ ] **5.7** CI job running `validate:data` and `check-sync-timestamps` on PRs touching `data/**`, checked out with `fetch-depth: 0`.
+- [ ] **5.7** CI job running `validate:data` and `check-sync-timestamps` on PRs touching `public/data/**`, checked out with `fetch-depth: 0`.
   *Verify:* workflow includes both and the full-history checkout (shallow clone breaks 5.6).
 
-- [ ] **5.8** `scripts/linkedin/convert.ts` — pure `convertLinkedInExport(sheets) => {data, coverage, warnings}`. No fs, no network, no globals.
+- [ ] **5.8** `scripts/linkedin/convert.ts` — pure `convertLinkedInExport(sheets) => {data, coverage, warnings}`. No fs, no network, no globals. (Runs under Node as a build/CI-time tool; this is unrelated to the app itself having no server.)
   *Verify:* unit-testable with in-memory sheet objects; no `fs` import in the module.
 
 - [ ] **5.9** Coverage derived from actual min/max dates in the sheets, not the filename.
   *Verify:* test — a file named "june" containing 3 Jun–28 Jun data yields coverage 2026-06-03..2026-06-28.
 
-- [ ] **5.10** CLI wrapper `npm run convert:linkedin -- <paths>` handling file I/O and the `meta.uploads[]` append.
-  *Verify:* running against fixture XLS files produces a schema-valid `linkedin.json`.
+- [ ] **5.10** CLI wrapper `npm run convert:linkedin -- <paths>` handling file I/O and the `meta.uploads[]` append, writing into `public/data/linkedin.json`.
+  *Verify:* running against fixture XLS files produces a schema-valid `linkedin.json` in `public/data/`.
 
 - [ ] **5.11** Committed fixture XLS files (Followers, Visitors, Content) + conversion tests.
   *Verify:* `npm test` covers the conversion path.
 
-- [ ] **5.12** `GET /api/health/data` — per-channel `lastSyncedAt`, `latestRecordDate`, row counts, computed `stale` boolean.
-  *Verify:* authenticated request returns all five channels; a stale fixture flags `stale: true`.
+- [ ] **5.12** A client-side data-health view, `src/data/health.ts` (`getHealthSnapshot()`) — per-channel `lastSyncedAt`, `latestRecordDate`, row counts, computed `stale` boolean, read directly from each channel's already-loaded `meta` block via `load()` (item 1.21). Replaces the pre-pivot `GET /api/health/data` route — there is no server to expose it from, so this is a pure function the `LastSyncedBadge`s (and, optionally, a simple authenticated `/data-health` debug route) call directly in the browser.
+  *Verify:* unit test — given five loaded channel datasets, returns all five with correct `stale` flags; a fixture with an old `lastSyncedAt` flags `stale: true`.
 
 - [ ] **5.13** `LastSyncedBadge` — neutral within cadence, amber past 2×, red past 4×, absolute IST timestamp on hover. Thresholds in config.
   *Verify:* three fixtures render the three states; changing the config value changes the threshold with no code edit.
@@ -569,12 +573,12 @@ Last updated:         —
   *Verify:* force a throw in one chart; the rest of the tab still renders.
 
 - [ ] **5.16** Loader failure isolation end-to-end: one corrupt channel file degrades that channel only.
-  *Verify:* corrupt `gsc.json` → SEO shows an error state, other tabs unaffected.
+  *Verify:* mock a corrupt `gsc.json` response → SEO shows an error state, other tabs unaffected.
 
-- [ ] **5.17** Performance budget measured: p95 cold aggregate < 800ms, warm < 150ms, 304 < 50ms.
-  *Verify:* record measured numbers in the Session state notes. Investigate before shipping if any exceeds budget.
+- [ ] **5.17** Performance budget measured, redefined for a client-only architecture (no server, so no "cold Node start" or "304" — those don't exist): p95 first `fetch`+parse per channel < 800ms; p95 aggregate against an already-loaded channel < 150ms.
+  *Verify:* record measured numbers in the Session state notes. Investigate before shipping if either exceeds budget.
 
-- [ ] **5.18** 12-month range change stays inside the 3-second ceiling (BRD §15.3).
+- [ ] **5.18** 12-month range change stays inside the 3-second ceiling (BRD §15.3), measured as client CPU time end-to-end (fetch, if not cached, + parse + aggregate + render).
   *Verify:* measured and recorded.
 
 - [ ] **5.19** Responsive pass: sidebar collapses to a drawer, KPI rows reflow to two columns, tables scroll inside their own container.
@@ -583,25 +587,25 @@ Last updated:         —
 - [ ] **5.20** Accessibility pass: keyboard-navigable picker and sidebar, visible focus rings on dark ground, status conveyed by text as well as colour, every chart paired with its table.
   *Verify:* full keyboard traversal of one tab without a mouse; no colour-only status.
 
-- [ ] **5.21** Vercel Analytics + Speed Insights enabled. No PII in logs.
-  *Verify:* aggregation error logs carry channel + range only — no lead content.
+- [ ] **5.21** Vercel Analytics + Speed Insights enabled (SPA-mode client packages — no server integration needed). No PII in logs.
+  *Verify:* browser console/network logs on an aggregation error carry channel + range only — no lead content.
 
-- [ ] **5.22** `Docs/RUNBOOK.md` for the CMO, plain language: trigger an out-of-schedule sync; hand over a LinkedIn XLS; read the sync badges; edit brand terms / page types / competitors / thresholds; who to contact when a channel goes stale.
+- [ ] **5.22** `Docs/RUNBOOK.md` for the CMO, plain language: trigger an out-of-schedule sync; hand over a LinkedIn XLS; read the sync badges; edit brand terms / page types / competitors / thresholds; sign in via Microsoft; who to contact when a channel goes stale.
   *Verify:* a non-technical reader can follow it without reading any other document.
 
-- [ ] **5.23** Full acceptance-criteria pass against BRD §16 items 1–8 (`TASK.md` §11).
-  *Verify:* each of the eight demonstrated and recorded.
+- [ ] **5.23** Full acceptance-criteria pass against BRD §16 items 1–8 **and** TASK.md §11's items 9–10 (`notes` exclusion; CMO sign-off on the §16.4 residual exposure).
+  *Verify:* each of the ten demonstrated and recorded.
 
-- [ ] **5.24** Production auth verified: non-`technorucs.com` account rejected; `/data` unreachable by URL.
-  *Verify:* `curl https://<prod>/data/zoho-crm.json` returns 404 — **not** JSON.
+- [ ] **[!] 5.24** Production auth and data-exposure verified: a non-`technorucs.com` account is rejected by `AuthGuard`; a direct request to `https://<prod>/data/zoho-crm.json` **is expected to return the file** (there is no server to 404 it, per TAD §16.4) — the check that matters is that the returned JSON contains **no `notes` key and no other lead free-text**, verified by `curl … | grep` for a known note string with no match. This item cannot be marked `[x]` until the CMO has explicitly recorded a decision on TAD §16.4 (accept the exposure as-is, or require host-level password protection first) — leave it `[!]` with that blocker noted until then.
+  *Verify:* `curl https://<prod>/data/zoho-crm.json | grep -i "how does the software work"` (or another known pre-pivot note fragment) returns no match; CMO's §16.4 decision is recorded in this file's Session state notes.
 
-- [ ] **5.25** `npm run scan:secrets` green against the real `/data` (BRD §16 criterion 6).
+- [ ] **5.25** `npm run scan:secrets` green against the real `public/data` (BRD §16 criterion 6).
   *Verify:* exits 0.
 
-- [ ] **5.26** End-to-end pipeline test: a real Cowork run writes `/data`, pushes, Vercel deploys, the dashboard reflects it with correct badges.
+- [ ] **5.26** End-to-end pipeline test: a real Cowork run writes `public/data`, pushes, the static host deploys, the dashboard reflects it with correct badges.
   *Verify:* observed once, start to finish.
 
-**Phase 5 gate:** all eight BRD §16 acceptance criteria demonstrated, plus 5.24 and 5.25 green in production.
+**Phase 5 gate:** all eight BRD §16 acceptance criteria plus TASK.md §11's items 9–10 demonstrated, and 5.24's CMO decision plus 5.25 green in production.
 
 ---
 
@@ -611,8 +615,9 @@ Last updated:         —
 |---|---|---|
 | Lead intent classification (Zoho picklist vs. Cowork classifier) | CMO | TAD §16.1, item 3.16 |
 | Staleness thresholds sign-off | CMO — defaults implemented, confirmation pending | TAD §16.2, item 5.13 |
+| Host-level deployment password protection as a required (not optional) mitigation for the residual `public/data` exposure | CMO | TAD §16.4, item 5.24 |
 | Wireframe refresh for the new picker | Not a blocker; update the wireframe from the Phase 2 build | TAD §16.3 |
 | Instantly.ai email integration | Out of scope this phase | BRD §10 |
 | Ubersuggest / backlinks | Connector unreliable; out of scope | BRD §9.3 |
-| In-app LinkedIn upload UI | Would put a GitHub write token in the app — needs an explicit decision to accept | TAD ADR-003 |
+| In-app LinkedIn upload UI | There is no server to hold a GitHub write token even if this were approved — would require reintroducing a backend, which is a bigger decision than the upload feature itself | TAD ADR-003, §0.1 |
 | UTM parameters on Meta Ads URLs | **Ads team, not the developer** — but until it lands, GA4 paid attribution is structurally zero | BRD §8.3 note |

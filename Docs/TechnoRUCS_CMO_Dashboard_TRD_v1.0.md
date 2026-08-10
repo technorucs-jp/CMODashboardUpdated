@@ -10,7 +10,20 @@ Source BRD: TechnoRUCS_CMO_Dashboard_RealTime_Requirements_v2.1.md
 
 Prepared for: Development Team
 
-Status: Draft — items in Section 12 are open decisions, not yet resolved by the CMO
+Status: Draft — items in Section 12 are open decisions, not yet resolved by the CMO. **Superseded in part, same day, by the Technical Architecture Document v1.1 §0** — the TAD's ADR-011 through ADR-014 replace this document's Next.js-flavoured framing (Section 3's tech stack row for the frontend framework, Section 6.2's "or a lightweight edge/serverless function" escape hatch, and Section 8.1's server-side credential note) with a Vite + React, fully client-side, no-backend build. See the summary in Section 0 below before reading the rest of this document; where they conflict, the TAD's §0 wins per this document's own role as "authoritative except where the TAD supersedes it" (TASK.md §2).
+
+---
+
+**0. Addendum — architecture pivot summary (2026-08-10)**
+
+Full reasoning lives in TAD v1.1 §0 (ADR-011–014); this is the pointer so a reader of this TRD alone isn't misled by the sections below.
+
+- **Section 3 (tech stack):** frontend is Vite + React 19 + TypeScript strict + `react-router`, not Next.js. No ORM/database line changes (none was ever proposed). "Sync job runtime" and "Hosting"/"Repo" rows are unchanged.
+- **Section 4 (data architecture):** file layout in Section 4.1 moves from repo-root `/data` to `public/data/` — deliberately public now, not a mistake. `zoho-crm.json`'s record shape in Section 4.4 drops the `notes` field entirely; it is never written to the shipped file (TAD ADR-012). Everything else in Section 4 (envelope, per-channel shapes, the derived-ratio discipline) is unchanged.
+- **Section 6.2 ("where filtering runs"):** the "move to a serverless/edge function later" escape hatch no longer applies — there is no server to move it to. Filtering is client-side, permanently, per TAD ADR-011/014.
+- **Section 7 (frontend structure):** "Route / page inventory" (7.1) becomes `react-router` routes instead of Next.js file routes, same eight destinations. "State management" (7.3) is unchanged in spirit — URL is still the source of truth for range state — via `react-router`'s `useSearchParams` instead of Next's router.
+- **Section 8.1 (security):** "minimum viable is a shared login… or a simple auth middleware" is replaced by TAD ADR-013 — MSAL.js browser-only Entra ID SSO, no server, with the residual-exposure trade-off documented there and in TAD §16.4.
+- **Section 12.4 (date-range-picker rollout):** resolved in practice — proceed directly from the updated TASK.md/CHECKLIST.md; no interim wireframe revision is on the critical path (TAD §16.3, unchanged by this pivot).
 
 ---
 
