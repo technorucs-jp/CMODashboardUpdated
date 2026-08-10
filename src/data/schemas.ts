@@ -217,3 +217,71 @@ export const ga4FileSchema = envelopeSchema.extend({
 })
 
 export type Ga4File = z.infer<typeof ga4FileSchema>
+
+// ---------------------------------------------------------------------------
+// gsc.json (TAD §7.3, ADR-008) — `sumPosition` (position × impressions), never
+// `position` itself, so range average position is impression-weighted (P1).
+// ---------------------------------------------------------------------------
+
+export const gscDailySchema = z
+  .object({
+    date: z.string(),
+    clicks: z.number().int().nonnegative(),
+    impressions: z.number().int().nonnegative(),
+    sumPosition: z.number().nonnegative(),
+    rows: z.number().int().nonnegative(),
+    /** Set when the queries/pages slices for this day hit the top-N cap (TAD §7.3). */
+    truncated: z.boolean().optional(),
+    // Deliberately NO `position` — P1; range average is Σ sumPosition ÷ Σ impressions.
+  })
+  .strict()
+
+export const gscQuerySchema = z
+  .object({
+    date: z.string(),
+    query: z.string(),
+    clicks: z.number().int().nonnegative(),
+    impressions: z.number().int().nonnegative(),
+    sumPosition: z.number().nonnegative(),
+  })
+  .strict()
+
+export const gscPageSchema = z
+  .object({
+    date: z.string(),
+    page: z.string(),
+    clicks: z.number().int().nonnegative(),
+    impressions: z.number().int().nonnegative(),
+    sumPosition: z.number().nonnegative(),
+  })
+  .strict()
+
+export const gscCountrySchema = z
+  .object({
+    date: z.string(),
+    country: z.string(),
+    clicks: z.number().int().nonnegative(),
+    impressions: z.number().int().nonnegative(),
+    sumPosition: z.number().nonnegative(),
+  })
+  .strict()
+
+export const gscDeviceSchema = z
+  .object({
+    date: z.string(),
+    device: z.string(),
+    clicks: z.number().int().nonnegative(),
+    impressions: z.number().int().nonnegative(),
+    sumPosition: z.number().nonnegative(),
+  })
+  .strict()
+
+export const gscFileSchema = envelopeSchema.extend({
+  daily: z.array(gscDailySchema),
+  queries: z.array(gscQuerySchema),
+  pages: z.array(gscPageSchema),
+  countries: z.array(gscCountrySchema),
+  devices: z.array(gscDeviceSchema),
+})
+
+export type GscFile = z.infer<typeof gscFileSchema>

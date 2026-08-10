@@ -162,8 +162,9 @@ Last updated:         2026-08-10
 - [x] **1.5** Zod schema `ga4.json`: dimension slices `daily[] channels[] sources[] pages[] countries[] devices[] paths[]`. Counts not rates — `bouncedSessions`, `totalSessionDurationSec`.
   *Verify:* unit test — a `daily` row with `bounceRate` fails strict parse.
 
-- [ ] **1.6** Zod schema `gsc.json`: slices `daily[] queries[] pages[] countries[] devices[]`, with `sumPosition` not `position`.
+- [x] **1.6** Zod schema `gsc.json`: slices `daily[] queries[] pages[] countries[] devices[]`, with `sumPosition` not `position`.
   *Verify:* unit test — a row with `position` fails strict parse.
+      > `daily` includes the optional `truncated` flag from TAD §7.3 (top-N-per-day cap marker) so a real capped file still validates.
 
 - [ ] **1.7** Zod schema `linkedin.json`: `meta.uploads[]` coverage windows, `dailyTrend[]`, `posts[]`, `audience`, `competitors[]`. Counts only in `dailyTrend` — no stored `engagementRate`.
   *Verify:* unit test — `meta.uploads[]` with `coversFrom > coversTo` fails validation.
