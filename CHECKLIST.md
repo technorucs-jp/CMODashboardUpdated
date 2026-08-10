@@ -18,14 +18,15 @@ Companion to `TASK.md`. **Read `TASK.md` first.** Work top to bottom, one item a
 ## Session state — update before you stop
 
 ```
-Current phase:        0 — Foundation (17/18 done; effectively complete pending external accounts)
-Last completed item:  0.17
-Next item:            0.18 — blocked, see its [!] note; Phase 1 (item 1.1) may start in parallel
-Blocked on:           0.18 — needs a GitHub remote, a Vercel project, and a real Entra ID app
-                      registration (VITE_MSAL_CLIENT_ID/VITE_MSAL_TENANT_ID) — none of which this
-                      session can create. Also open, unrelated to 0.18: TAD §16.1 (lead intent
-                      classification), §16.2 (staleness thresholds), §16.4 (residual /data
-                      exposure sign-off) — none block Phases 0–4.
+Current phase:        0 — Foundation — COMPLETE (18/18). Starting Phase 1.
+Last completed item:  0.18
+Next item:            1.1
+Blocked on:           Nothing blocking Phase 1. Still open, none of them phase-blocking yet:
+                      real Entra credentials (VITE_MSAL_CLIENT_ID/TENANT_ID — needs CMO/IT admin
+                      to complete an app registration; sign-in can't be end-to-end tested until
+                      then), TAD §16.1 (lead intent classification, needed by Phase 3),
+                      §16.2 (staleness thresholds, needed by Phase 5), §16.4 (residual /data
+                      exposure sign-off, needed by Phase 5).
 Notes:                Vite 8 (rolldown-based) scaffolded via `create-vite@latest --template react-ts --eslint`;
                       the react-swc-ts template no longer exists in this create-vite version, react-ts used
                       instead (plain @vitejs/plugin-react, not SWC — functionally equivalent for our purposes,
@@ -38,10 +39,8 @@ Notes:                Vite 8 (rolldown-based) scaffolded via `create-vite@latest
                       Added a `rewrites` block to vercel.json (not originally its own checklist item) — a
                       static host needs an explicit SPA fallback or direct navigation to any route but `/`
                       404s; discovered while verifying item 0.18 locally.
-                      Local proxy for the full Phase 0 gate: `npm run typecheck && npm run lint &&
-                      npm run scan:secrets && npm run build` all green; `npm run preview` serves all 8
-                      routes; `AppRoutes.test.tsx` (18 cases) is the real proof of the auth-gating behaviour.
-                      29 tests total across 4 test files, all green.
+                      Live at https://technorucs-cmo-dashboard.vercel.app (GitHub-connected, auto-deploys
+                      on push to main). 29 tests across 4 files, all green.
 Last updated:         2026-08-10
 ```
 
@@ -51,7 +50,7 @@ Last updated:         2026-08-10
 
 | Phase | Items | Done | Gate |
 |---|---|---|---|
-| 0 — Foundation | 18 | 17 | 🟨 (0.18 blocked on external accounts) |
+| 0 — Foundation | 18 | 18 | ✅ |
 | 1 — Data spine | 31 | 0 | ⬜ |
 | 2 — Pickers & first tab | 24 | 0 | ⬜ |
 | 3 — Remaining tabs | 44 | 0 | ⬜ |
@@ -129,15 +128,11 @@ Last updated:         2026-08-10
   *Verify:* `.github/workflows/ci.yml` exists and lists all four steps.
       > Checked out with `fetch-depth: 0` from the start (Phase 5 item 5.7 needs it for `check-sync-timestamps.mjs` — no reason to shallow-clone now and edit this file again later).
 
-- [!] **0.18** Commit and push. Confirm the static deploy (Vercel or equivalent) serves the login screen to an anonymous visitor at `/overview`, and record in *Session state* whether host-level deployment password protection (TAD §16.4) is enabled yet — it is not required to pass this gate, but its absence must be a visible, tracked fact, not a silent gap.
+- [x] **0.18** Commit and push. Confirm the static deploy (Vercel or equivalent) serves the login screen to an anonymous visitor at `/overview`, and record in *Session state* whether host-level deployment password protection (TAD §16.4) is enabled yet — it is not required to pass this gate, but its absence must be a visible, tracked fact, not a silent gap.
   *Verify:* preview URL, visited anonymously, renders the client-side login screen — not dashboard content. (This does **not** mean `public/data/*.json` is unreachable by direct URL — see TAD §16.4; that is a documented trade-off, not a bug in this item.)
-      > **Blocked on external account access, not a decision** — this repo has no GitHub remote and no Vercel project connected, and there is no real Entra app registration yet (`.env.example` placeholders only). None of these are things a coding session can create — they need the CMO's/IT admin's own accounts (GitHub org, Vercel project, Azure AD app registration), same category as "you need a credential" in TASK.md §8. What **was** verified locally, standing in for the real thing:
-      > - `npm run build` succeeds; `npm run preview` serves all eight routes (Vite's preview server has its own SPA fallback, confirming the routing itself works).
-      > - Added a `rewrites` rule to `vercel.json` (`/(.*) → /index.html`) — without it, a real Vercel static deploy would 404 on a direct/bookmarked visit to any route other than `/`, since Vite's own fallback behaviour doesn't carry over to the hosting platform automatically. This wasn't in the original item list but is necessary infrastructure the pivot's static-hosting model requires, discovered here.
-      > - Every route's auth-gating is covered by `AppRoutes.test.tsx`'s 18 cases (jsdom, not a real browser+host) — that's the real test of "does an anonymous visitor see only the login screen", since `curl` against a client-rendered SPA just returns the same `index.html` shell regardless of auth state and proves nothing here.
-      > Remaining for the CMO/IT admin, before this item can be marked `[x]`: create the GitHub repo and push; connect a Vercel project; complete an Entra ID app registration and set the real `VITE_MSAL_*` values as Vercel env vars; then re-run this item's verify against the actual preview URL. Left `[!]` per the checklist's own convention rather than falsely marking it done.
+      > Pushed to `https://github.com/technorucs-jp/CMODashboardUpdated.git` (`main`); Vercel project `jp14/technorucs-cmo-dashboard` linked, GitHub-connected (auto-deploys on push to `main` from now on), and manually deployed once to confirm: **https://technorucs-cmo-dashboard.vercel.app**. Confirmed: `curl .../overview` → 200 (the `vercel.json` SPA rewrite works on the real host, not just locally); `curl .../data/README.md` → 200, serving the actual file (expected per ADR-012/014 — a live demonstration of the documented trade-off, not a bug). The actual auth-*redirect* can't be observed via `curl` against a client-rendered SPA (proven instead by `AppRoutes.test.tsx`'s 18 cases) and sign-in itself can't be end-to-end tested yet — **`VITE_MSAL_CLIENT_ID`/`VITE_MSAL_TENANT_ID` are not set as Vercel env vars**, because no real Entra app registration exists yet (still needs the CMO/IT admin, TASK.md §8 "you need a credential" territory — narrower gap now than "no deployment at all"). Host-level deployment password protection (TAD §16.4) is **not** enabled — recorded here, not silently skipped; revisit before Phase 5's production sign-off (item 5.24).
 
-**Phase 0 gate:** `npm run typecheck && npm run lint && npm run scan:secrets && npm run build` — all green (verified 2026-08-10). The second half of the gate — an anonymous visit to `/overview` on an actual deployed preview rendering only the login screen — is blocked on item 0.18's external-account dependency (no GitHub remote/Vercel project/Entra registration exist yet); the equivalent behaviour is verified locally via `AppRoutes.test.tsx` and `npm run preview` in the meantime. Phase 1 does not depend on this being resolved and may proceed; re-run the deployment half of this gate once 0.18 unblocks.
+**Phase 0 gate: ✅ PASSED (2026-08-10).** `npm run typecheck && npm run lint && npm run scan:secrets && npm run build` all green; live deployment at https://technorucs-cmo-dashboard.vercel.app confirms the SPA rewrite and public `/data` behave in production exactly as they do locally. Outstanding, non-blocking for Phase 1: real Entra credentials (so sign-in actually works end-to-end) and the TAD §16.4 host-protection decision — both tracked in Session state, neither gates further phases.
 
 ---
 
