@@ -151,8 +151,9 @@ Last updated:         2026-08-10
   *Verify:* unit test — a file missing `meta.latestRecordDate` fails parse with a readable error.
       > Added an ESLint allowance for `^_`-prefixed unused vars/args — the idiomatic way to test field-*absence* (destructure a field out, assert the rest still validates or now fails) is exactly the pattern P1/P3′ tests need throughout Phase 1, and it would otherwise trip `no-unused-vars` on every such test.
 
-- [ ] **1.3** Zod schema `meta-ads.json`: `dimensions.adSets[]` + `facts[]` + `account[]`. **No `cpc`/`cpm`/`ctr`/`frequency` fields** (P1, TAD §7.3).
+- [x] **1.3** Zod schema `meta-ads.json`: `dimensions.adSets[]` + `facts[]` + `account[]`. **No `cpc`/`cpm`/`ctr`/`frequency` fields** (P1, TAD §7.3).
   *Verify:* unit test — a fact row containing `cpc` fails strict parse.
+      > Confirmed `envelopeSchema.extend(...)` preserves `.strict()` on the base fields in Zod v4 — the nested `factSchema.strict()` is what actually catches `cpc`/`cpm`/`ctr`/`frequency`, tested individually.
 
 - [ ] **1.4** Zod schema `zoho-crm.json`: one row per lead, `inquiryType` nullable. **No `notes` field at all** — `.strict()`, the field is absent from the schema entirely (TAD ADR-012/P3′, supersedes the pre-pivot "`notes` present, kept server-side" design).
   *Verify:* unit test — a row with `leadSource: "Partner"` fails validation (excluded at ingestion, must never appear); a row containing a `notes` key of any kind fails `.strict()` parse.
