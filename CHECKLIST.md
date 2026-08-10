@@ -112,8 +112,9 @@ Last updated:         2026-08-10
 - [x] **0.16** `scripts/scan-secrets.mjs` — scans `public/data/` and `src/` for bearer tokens, `AKIA`, PEM headers, `client_secret`, long base64 blobs. Exits non-zero on match.
   *Verify:* `npm run scan:secrets` exits 0; add `client_secret=abc123def456` to a scratch file → exits 1. Remove it.
 
-- [ ] **0.17** GitHub Actions CI: `typecheck`, `lint`, `test`, `scan:secrets` on every PR.
+- [x] **0.17** GitHub Actions CI: `typecheck`, `lint`, `test`, `scan:secrets` on every PR.
   *Verify:* `.github/workflows/ci.yml` exists and lists all four steps.
+      > Checked out with `fetch-depth: 0` from the start (Phase 5 item 5.7 needs it for `check-sync-timestamps.mjs` — no reason to shallow-clone now and edit this file again later).
 
 - [ ] **0.18** Commit and push. Confirm the static deploy (Vercel or equivalent) serves the login screen to an anonymous visitor at `/overview`, and record in *Session state* whether host-level deployment password protection (TAD §16.4) is enabled yet — it is not required to pass this gate, but its absence must be a visible, tracked fact, not a silent gap.
   *Verify:* preview URL, visited anonymously, renders the client-side login screen — not dashboard content. (This does **not** mean `public/data/*.json` is unreachable by direct URL — see TAD §16.4; that is a documented trade-off, not a bug in this item.)
