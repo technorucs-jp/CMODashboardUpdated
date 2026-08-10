@@ -44,6 +44,11 @@ export default defineConfig([
     languageOptions: {
       globals: globals.browser,
     },
+    rules: {
+      // Idiomatic in this codebase for destructuring-to-omit a field (exactly how
+      // P1/P3′ field-absence gets tested) — `_dropped` is intentionally unused.
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+    },
   },
 
   // P5 — banned everywhere except src/lib/time/**

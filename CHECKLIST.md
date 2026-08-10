@@ -147,8 +147,9 @@ Last updated:         2026-08-10
   *Verify:* all five parse as JSON; `thresholds.json` contains `leading`, `good`, `monitor`, `actionNeeded`.
       > `sales-reps.json` seeded with the four names the docs actually reference (Gopinath, Rathish, Mohan, Ram — BRD §7.3's concentration/zero-assignment findings) rather than an invented full roster; add more as real data surfaces. `thresholds.json` explicitly notes it's a starting point per BRD Appendix A's own heading, same "tune with CMO" spirit as TAD §16.2 — not re-litigated as a new open item, just not pretending it's final.
 
-- [ ] **1.2** Zod schema for the common envelope: `schemaVersion`, `meta` (`channel`, `lastSyncedAt`, `earliestRecordDate`, `latestRecordDate`, `syncSource`, `coworkRunId`, `rowCounts`).
+- [x] **1.2** Zod schema for the common envelope: `schemaVersion`, `meta` (`channel`, `lastSyncedAt`, `earliestRecordDate`, `latestRecordDate`, `syncSource`, `coworkRunId`, `rowCounts`).
   *Verify:* unit test — a file missing `meta.latestRecordDate` fails parse with a readable error.
+      > Added an ESLint allowance for `^_`-prefixed unused vars/args — the idiomatic way to test field-*absence* (destructure a field out, assert the rest still validates or now fails) is exactly the pattern P1/P3′ tests need throughout Phase 1, and it would otherwise trip `no-unused-vars` on every such test.
 
 - [ ] **1.3** Zod schema `meta-ads.json`: `dimensions.adSets[]` + `facts[]` + `account[]`. **No `cpc`/`cpm`/`ctr`/`frequency` fields** (P1, TAD §7.3).
   *Verify:* unit test — a fact row containing `cpc` fails strict parse.
