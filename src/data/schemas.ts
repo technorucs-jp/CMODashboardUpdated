@@ -285,3 +285,84 @@ export const gscFileSchema = envelopeSchema.extend({
 })
 
 export type GscFile = z.infer<typeof gscFileSchema>
+
+// ---------------------------------------------------------------------------
+// linkedin.json (TAD §7.3, TRD §4.7) — upload-derived, `meta.uploads[]` is the
+// coverage source of truth. Counts only throughout — P1 applies here just as
+// everywhere else, even though the TRD's illustrative example pre-computed
+// `engagementRate`/`ctr`/`reactionsPerPost`. That was never converted when the
+// TAD introduced P1; the schema here closes the gap rather than reproduce it
+// (same spirit as TAD §17 D5/D7/D8, just not individually listed there).
+// ---------------------------------------------------------------------------
+
+export const linkedInUploadSchema = z
+  .object({
+    coversFrom: z.string(),
+    coversTo: z.string(),
+    uploadedAt: z.string(),
+    fileType: z.string(),
+  })
+  .strict()
+  .refine((u) => u.coversFrom <= u.coversTo, {
+    message: 'coversFrom must be on or before coversTo',
+    path: ['coversFrom'],
+  })
+
+export const linkedInMetaSchema = envelopeMetaSchema.extend({
+  uploads: z.array(linkedInUploadSchema),
+})
+
+export const linkedInDailyTrendSchema = z
+  .object({
+    date: z.string(),
+    newFollowers: z.number().int().nonnegative(),
+    impressions: z.number().int().nonnegative(),
+    clicks: z.number().int().nonnegative(),
+    reactions: z.number().int().nonnegative(),
+    // Deliberately NO engagementRate — P1; derived from reactions/impressions per range.
+  })
+  .strict()
+
+export const linkedInPostSchema = z
+  .object({
+    postId: z.string(),
+    date: z.string(),
+    title: z.string(),
+    impressions: z.number().int().nonnegative(),
+    clicks: z.number().int().nonnegative(),
+    reactions: z.number().int().nonnegative(),
+    comments: z.number().int().nonnegative(),
+    videoViews: z.number().int().nonnegative().nullable(),
+    // Deliberately NO engagementRate/ctr — P1; derived at render, same as everywhere else.
+  })
+  .strict()
+
+export const linkedInAudienceSchema = z
+  .object({
+    bySeniority: z.array(z.object({ level: z.string(), count: z.number().int().nonnegative() }).strict()),
+    byJobFunction: z.array(z.object({ function: z.string(), count: z.number().int().nonnegative() }).strict()),
+    byVisitorIndustry: z.array(z.object({ industry: z.string(), count: z.number().int().nonnegative() }).strict()),
+    byCompanySize: z.array(z.object({ companySize: z.string(), count: z.number().int().nonnegative() }).strict()),
+  })
+  .strict()
+
+export const linkedInCompetitorSchema = z
+  .object({
+    page: z.string(),
+    newFollowers: z.number().int().nonnegative(),
+    posts: z.number().int().nonnegative(),
+    comments: z.number().int().nonnegative(),
+    reactions: z.number().int().nonnegative(),
+    // Deliberately NO reactionsPerPost — P1; derived as ratio(reactions, posts) at render.
+  })
+  .strict()
+
+export const linkedInFileSchema = envelopeSchema.extend({
+  meta: linkedInMetaSchema,
+  dailyTrend: z.array(linkedInDailyTrendSchema),
+  posts: z.array(linkedInPostSchema),
+  audience: linkedInAudienceSchema,
+  competitors: z.array(linkedInCompetitorSchema),
+})
+
+export type LinkedInFile = z.infer<typeof linkedInFileSchema>

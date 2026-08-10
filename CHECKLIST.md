@@ -166,8 +166,9 @@ Last updated:         2026-08-10
   *Verify:* unit test — a row with `position` fails strict parse.
       > `daily` includes the optional `truncated` flag from TAD §7.3 (top-N-per-day cap marker) so a real capped file still validates.
 
-- [ ] **1.7** Zod schema `linkedin.json`: `meta.uploads[]` coverage windows, `dailyTrend[]`, `posts[]`, `audience`, `competitors[]`. Counts only in `dailyTrend` — no stored `engagementRate`.
+- [x] **1.7** Zod schema `linkedin.json`: `meta.uploads[]` coverage windows, `dailyTrend[]`, `posts[]`, `audience`, `competitors[]`. Counts only in `dailyTrend` — no stored `engagementRate`.
   *Verify:* unit test — `meta.uploads[]` with `coversFrom > coversTo` fails validation.
+      > Extended P1 to `posts[]` (no stored `engagementRate`/`ctr`) and `competitors[]` (no stored `reactionsPerPost`) as well, not just `dailyTrend[]` — the TRD's illustrative examples for both still show pre-computed ratios, which is the same not-yet-converted-to-P1 gap the TAD's §17 table already closes for meta-ads/GA4/GSC (D5/D7/D8), just not individually listed for LinkedIn. P1's text ("no ratio... is ever stored") is unqualified, so this isn't a judgement call requiring sign-off — it's applying an already-settled invariant to a spot the docs were inconsistent about. `audience` includes `byVisitorIndustry`/`byCompanySize` (BRD §11.2, item 3.40) alongside the TRD's `bySeniority`/`byJobFunction` example.
 
 - [ ] **1.8** Zod schema `narratives.json`: `phrasings` keyed by flag ID, each with `headline`, `body`, `tier`.
   *Verify:* unit test — a phrasing keyed by a date-range signature fails the flag-ID key pattern.
