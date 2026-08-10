@@ -155,8 +155,9 @@ Last updated:         2026-08-10
   *Verify:* unit test — a fact row containing `cpc` fails strict parse.
       > Confirmed `envelopeSchema.extend(...)` preserves `.strict()` on the base fields in Zod v4 — the nested `factSchema.strict()` is what actually catches `cpc`/`cpm`/`ctr`/`frequency`, tested individually.
 
-- [ ] **1.4** Zod schema `zoho-crm.json`: one row per lead, `inquiryType` nullable. **No `notes` field at all** — `.strict()`, the field is absent from the schema entirely (TAD ADR-012/P3′, supersedes the pre-pivot "`notes` present, kept server-side" design).
+- [x] **1.4** Zod schema `zoho-crm.json`: one row per lead, `inquiryType` nullable. **No `notes` field at all** — `.strict()`, the field is absent from the schema entirely (TAD ADR-012/P3′, supersedes the pre-pivot "`notes` present, kept server-side" design).
   *Verify:* unit test — a row with `leadSource: "Partner"` fails validation (excluded at ingestion, must never appear); a row containing a `notes` key of any kind fails `.strict()` parse.
+      > `leadSource` is a 4-value enum (Meta Ads/SEO/Social Media/Email Campaign) rather than a free string with a separate exclusion check — Partner/Referral/ZoomInfo fail simply because they're not in the enum, which is the same "make it structural, not a convention" pattern as the `notes` omission. `leadStatus` enum covers the six statuses from BRD §7.1 (including Contact in Future and Junk, which item 3.8 depends on rendering even at zero count).
 
 - [ ] **1.5** Zod schema `ga4.json`: dimension slices `daily[] channels[] sources[] pages[] countries[] devices[] paths[]`. Counts not rates — `bouncedSessions`, `totalSessionDurationSec`.
   *Verify:* unit test — a `daily` row with `bounceRate` fails strict parse.
