@@ -187,7 +187,7 @@ Last updated:         2026-08-10
       > **Gap found and fixed**: `npx vitest run <specific-file-path>` hangs indefinitely in this sandbox (confirmed reproducible, killed via TaskStop); the unfiltered `npm test` (`vitest run`, no path arg) works reliably and picks up the same files. Verification from here on uses `npm test` against the full suite, not per-file `vitest run` invocations.
       > Also hit a TS overload-resolution issue: `TZDate`'s constructor is overloaded per-argument-type (`string`, `Date`, `number` separately) rather than accepting a union, so `new TZDate(input, tz)` with `input: string | Date` didn't typecheck — fixed by branching on `typeof input` so TS narrows to the matching overload per branch.
 
-- [ ] **1.11** `src/lib/time/range.ts` — `DateRange`, inclusive containment, length in days, range signature, previous-period-of-equal-length.
+- [x] **1.11** `src/lib/time/range.ts` — `DateRange`, inclusive containment, length in days, range signature, previous-period-of-equal-length.
   *Verify:* test — 1–30 June has length 30; previous period is 2–31 May.
 
 - [ ] **1.12** `src/lib/time/presets.ts` — the seven presets, computed against IST today.
