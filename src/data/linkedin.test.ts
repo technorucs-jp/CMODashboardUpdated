@@ -20,7 +20,7 @@ const validFile = {
     rowCounts: { posts: 1 },
     uploads: [validUpload],
   },
-  dailyTrend: [{ date: '2026-06-01', newFollowers: 3, impressions: 1385, clicks: 129, reactions: 45 }],
+  dailyTrend: [{ date: '2026-06-01', newFollowers: 3, pageViews: 78, uniqueVisitors: 26, impressions: 1385, clicks: 129, reactions: 45 }],
   posts: [
     {
       postId: 'urn:li:1',

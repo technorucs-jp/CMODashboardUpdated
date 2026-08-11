@@ -1,0 +1,2628 @@
+{
+  "schemaVersion": 1,
+  "meta": {
+    "channel": "meta-ads",
+    "lastSyncedAt": "2026-08-10T09:03:11+05:30",
+    "earliestRecordDate": "2026-05-01",
+    "latestRecordDate": "2026-08-09",
+    "coworkRunId": "run_2026-08-10T0900",
+    "syncSource": "Meta Marketing API",
+    "rowCounts": {
+      "facts": 209
+    }
+  },
+  "dimensions": {
+    "adSets": [
+      {
+        "adSetId": "as-bc-au-10jun",
+        "adSetName": "Business Central — Australia (10 Jun)",
+        "campaignId": "camp-construction-au",
+        "campaignName": "Construction AU",
+        "launchDate": "2026-06-10",
+        "region": "AU"
+      },
+      {
+        "adSetId": "as-bc-au-11jun",
+        "adSetName": "Business Central — Australia (11 Jun)",
+        "campaignId": "camp-construction-au",
+        "campaignName": "Construction AU",
+        "launchDate": "2026-06-11",
+        "region": "AU"
+      },
+      {
+        "adSetId": "as-bc-au-17jun",
+        "adSetName": "Business Central — Australia (17 Jun)",
+        "campaignId": "camp-construction-au",
+        "campaignName": "Construction AU",
+        "launchDate": "2026-06-17",
+        "region": "AU"
+      },
+      {
+        "adSetId": "as-bc-au-22jun-video",
+        "adSetName": "Business Central — Australia — Video (22 Jun)",
+        "campaignId": "camp-construction-au",
+        "campaignName": "Construction AU",
+        "launchDate": "2026-06-22",
+        "region": "AU"
+      },
+      {
+        "adSetId": "as-azure-tn",
+        "adSetName": "Azure Migration — Tamil Nadu",
+        "campaignId": "camp-azure-tn",
+        "campaignName": "Azure Migration TN",
+        "launchDate": "2026-05-05",
+        "region": "IN"
+      },
+      {
+        "adSetId": "as-d365-fo-in",
+        "adSetName": "Dynamics 365 F&O — India",
+        "campaignId": "camp-d365-in",
+        "campaignName": "Dynamics 365 India",
+        "launchDate": "2026-05-01",
+        "region": "IN"
+      },
+      {
+        "adSetId": "as-powerbi-in",
+        "adSetName": "Power BI Consulting — India",
+        "campaignId": "camp-powerbi",
+        "campaignName": "Power BI Consulting",
+        "launchDate": "2026-05-12",
+        "region": "IN"
+      }
+    ]
+  },
+  "facts": [
+    {
+      "date": "2026-06-01",
+      "adSetId": "as-bc-au-10jun",
+      "country": "AU",
+      "spend": 280,
+      "impressions": 700,
+      "reach": 385,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-02",
+      "adSetId": "as-bc-au-10jun",
+      "country": "AU",
+      "spend": 280,
+      "impressions": 700,
+      "reach": 385,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-03",
+      "adSetId": "as-bc-au-10jun",
+      "country": "AU",
+      "spend": 280,
+      "impressions": 700,
+      "reach": 385,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-04",
+      "adSetId": "as-bc-au-10jun",
+      "country": "AU",
+      "spend": 280,
+      "impressions": 700,
+      "reach": 385,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-05",
+      "adSetId": "as-bc-au-10jun",
+      "country": "AU",
+      "spend": 280,
+      "impressions": 700,
+      "reach": 385,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-06",
+      "adSetId": "as-bc-au-10jun",
+      "country": "AU",
+      "spend": 280,
+      "impressions": 700,
+      "reach": 385,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-07",
+      "adSetId": "as-bc-au-10jun",
+      "country": "AU",
+      "spend": 280,
+      "impressions": 700,
+      "reach": 385,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-08",
+      "adSetId": "as-bc-au-10jun",
+      "country": "AU",
+      "spend": 280,
+      "impressions": 700,
+      "reach": 385,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-09",
+      "adSetId": "as-bc-au-10jun",
+      "country": "AU",
+      "spend": 280,
+      "impressions": 700,
+      "reach": 385,
+      "clicks": 4,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-10",
+      "adSetId": "as-bc-au-10jun",
+      "country": "AU",
+      "spend": 280,
+      "impressions": 700,
+      "reach": 385,
+      "clicks": 4,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-11",
+      "adSetId": "as-bc-au-10jun",
+      "country": "AU",
+      "spend": 280,
+      "impressions": 700,
+      "reach": 385,
+      "clicks": 4,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-12",
+      "adSetId": "as-bc-au-10jun",
+      "country": "AU",
+      "spend": 280,
+      "impressions": 700,
+      "reach": 385,
+      "clicks": 4,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-13",
+      "adSetId": "as-bc-au-10jun",
+      "country": "AU",
+      "spend": 280,
+      "impressions": 700,
+      "reach": 385,
+      "clicks": 4,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-14",
+      "adSetId": "as-bc-au-10jun",
+      "country": "AU",
+      "spend": 280,
+      "impressions": 700,
+      "reach": 385,
+      "clicks": 4,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-15",
+      "adSetId": "as-bc-au-10jun",
+      "country": "AU",
+      "spend": 280,
+      "impressions": 700,
+      "reach": 385,
+      "clicks": 4,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-02",
+      "adSetId": "as-bc-au-11jun",
+      "country": "AU",
+      "spend": 300,
+      "impressions": 747,
+      "reach": 411,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-03",
+      "adSetId": "as-bc-au-11jun",
+      "country": "AU",
+      "spend": 300,
+      "impressions": 747,
+      "reach": 411,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-04",
+      "adSetId": "as-bc-au-11jun",
+      "country": "AU",
+      "spend": 300,
+      "impressions": 747,
+      "reach": 411,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-05",
+      "adSetId": "as-bc-au-11jun",
+      "country": "AU",
+      "spend": 300,
+      "impressions": 747,
+      "reach": 411,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-06",
+      "adSetId": "as-bc-au-11jun",
+      "country": "AU",
+      "spend": 300,
+      "impressions": 747,
+      "reach": 411,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-07",
+      "adSetId": "as-bc-au-11jun",
+      "country": "AU",
+      "spend": 300,
+      "impressions": 747,
+      "reach": 411,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-08",
+      "adSetId": "as-bc-au-11jun",
+      "country": "AU",
+      "spend": 300,
+      "impressions": 747,
+      "reach": 411,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-09",
+      "adSetId": "as-bc-au-11jun",
+      "country": "AU",
+      "spend": 300,
+      "impressions": 747,
+      "reach": 411,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-10",
+      "adSetId": "as-bc-au-11jun",
+      "country": "AU",
+      "spend": 300,
+      "impressions": 747,
+      "reach": 411,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-11",
+      "adSetId": "as-bc-au-11jun",
+      "country": "AU",
+      "spend": 300,
+      "impressions": 747,
+      "reach": 411,
+      "clicks": 5,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-12",
+      "adSetId": "as-bc-au-11jun",
+      "country": "AU",
+      "spend": 300,
+      "impressions": 746,
+      "reach": 410,
+      "clicks": 5,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-13",
+      "adSetId": "as-bc-au-11jun",
+      "country": "AU",
+      "spend": 300,
+      "impressions": 746,
+      "reach": 410,
+      "clicks": 4,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-14",
+      "adSetId": "as-bc-au-11jun",
+      "country": "AU",
+      "spend": 300,
+      "impressions": 746,
+      "reach": 410,
+      "clicks": 4,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-15",
+      "adSetId": "as-bc-au-11jun",
+      "country": "AU",
+      "spend": 300,
+      "impressions": 746,
+      "reach": 410,
+      "clicks": 4,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-16",
+      "adSetId": "as-bc-au-11jun",
+      "country": "AU",
+      "spend": 300,
+      "impressions": 746,
+      "reach": 410,
+      "clicks": 4,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-08",
+      "adSetId": "as-bc-au-17jun",
+      "country": "AU",
+      "spend": 686.87,
+      "impressions": 1336,
+      "reach": 735,
+      "clicks": 9,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-09",
+      "adSetId": "as-bc-au-17jun",
+      "country": "AU",
+      "spend": 686.86,
+      "impressions": 1336,
+      "reach": 735,
+      "clicks": 9,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-10",
+      "adSetId": "as-bc-au-17jun",
+      "country": "AU",
+      "spend": 686.86,
+      "impressions": 1336,
+      "reach": 735,
+      "clicks": 9,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-11",
+      "adSetId": "as-bc-au-17jun",
+      "country": "AU",
+      "spend": 686.86,
+      "impressions": 1336,
+      "reach": 735,
+      "clicks": 9,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-12",
+      "adSetId": "as-bc-au-17jun",
+      "country": "AU",
+      "spend": 686.86,
+      "impressions": 1336,
+      "reach": 735,
+      "clicks": 9,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-13",
+      "adSetId": "as-bc-au-17jun",
+      "country": "AU",
+      "spend": 686.86,
+      "impressions": 1336,
+      "reach": 735,
+      "clicks": 9,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-14",
+      "adSetId": "as-bc-au-17jun",
+      "country": "AU",
+      "spend": 686.86,
+      "impressions": 1336,
+      "reach": 735,
+      "clicks": 9,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-15",
+      "adSetId": "as-bc-au-17jun",
+      "country": "AU",
+      "spend": 686.86,
+      "impressions": 1336,
+      "reach": 735,
+      "clicks": 9,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-16",
+      "adSetId": "as-bc-au-17jun",
+      "country": "AU",
+      "spend": 686.86,
+      "impressions": 1336,
+      "reach": 735,
+      "clicks": 9,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-17",
+      "adSetId": "as-bc-au-17jun",
+      "country": "AU",
+      "spend": 686.86,
+      "impressions": 1336,
+      "reach": 735,
+      "clicks": 9,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-18",
+      "adSetId": "as-bc-au-17jun",
+      "country": "AU",
+      "spend": 686.86,
+      "impressions": 1335,
+      "reach": 734,
+      "clicks": 9,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-19",
+      "adSetId": "as-bc-au-17jun",
+      "country": "AU",
+      "spend": 686.86,
+      "impressions": 1335,
+      "reach": 734,
+      "clicks": 9,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-20",
+      "adSetId": "as-bc-au-17jun",
+      "country": "AU",
+      "spend": 686.86,
+      "impressions": 1335,
+      "reach": 734,
+      "clicks": 9,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-21",
+      "adSetId": "as-bc-au-17jun",
+      "country": "AU",
+      "spend": 686.86,
+      "impressions": 1335,
+      "reach": 734,
+      "clicks": 8,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-13",
+      "adSetId": "as-bc-au-22jun-video",
+      "country": "AU",
+      "spend": 179.56,
+      "impressions": 714,
+      "reach": 393,
+      "clicks": 5,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-14",
+      "adSetId": "as-bc-au-22jun-video",
+      "country": "AU",
+      "spend": 179.56,
+      "impressions": 714,
+      "reach": 393,
+      "clicks": 5,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-15",
+      "adSetId": "as-bc-au-22jun-video",
+      "country": "AU",
+      "spend": 179.56,
+      "impressions": 714,
+      "reach": 393,
+      "clicks": 5,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-16",
+      "adSetId": "as-bc-au-22jun-video",
+      "country": "AU",
+      "spend": 179.56,
+      "impressions": 714,
+      "reach": 393,
+      "clicks": 5,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-17",
+      "adSetId": "as-bc-au-22jun-video",
+      "country": "AU",
+      "spend": 179.56,
+      "impressions": 714,
+      "reach": 393,
+      "clicks": 5,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-18",
+      "adSetId": "as-bc-au-22jun-video",
+      "country": "AU",
+      "spend": 179.55,
+      "impressions": 714,
+      "reach": 393,
+      "clicks": 4,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-19",
+      "adSetId": "as-bc-au-22jun-video",
+      "country": "AU",
+      "spend": 179.55,
+      "impressions": 713,
+      "reach": 392,
+      "clicks": 4,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-20",
+      "adSetId": "as-bc-au-22jun-video",
+      "country": "AU",
+      "spend": 179.55,
+      "impressions": 713,
+      "reach": 392,
+      "clicks": 4,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-21",
+      "adSetId": "as-bc-au-22jun-video",
+      "country": "AU",
+      "spend": 179.55,
+      "impressions": 713,
+      "reach": 392,
+      "clicks": 4,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-01",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 111.6,
+      "impressions": 500,
+      "reach": 275,
+      "clicks": 4,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-02",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 111.6,
+      "impressions": 500,
+      "reach": 275,
+      "clicks": 4,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-03",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 111.6,
+      "impressions": 500,
+      "reach": 275,
+      "clicks": 4,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-04",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 111.6,
+      "impressions": 500,
+      "reach": 275,
+      "clicks": 4,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-05",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 111.6,
+      "impressions": 500,
+      "reach": 275,
+      "clicks": 4,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-06",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 111.6,
+      "impressions": 500,
+      "reach": 275,
+      "clicks": 3,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-07",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 111.6,
+      "impressions": 500,
+      "reach": 275,
+      "clicks": 3,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-08",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 111.6,
+      "impressions": 500,
+      "reach": 275,
+      "clicks": 3,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-09",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 111.6,
+      "impressions": 500,
+      "reach": 275,
+      "clicks": 3,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-10",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 111.6,
+      "impressions": 500,
+      "reach": 275,
+      "clicks": 3,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-11",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 111.6,
+      "impressions": 500,
+      "reach": 275,
+      "clicks": 3,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-12",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 111.6,
+      "impressions": 500,
+      "reach": 275,
+      "clicks": 3,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-13",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 111.6,
+      "impressions": 500,
+      "reach": 275,
+      "clicks": 3,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-14",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 111.6,
+      "impressions": 500,
+      "reach": 275,
+      "clicks": 3,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-15",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 111.6,
+      "impressions": 500,
+      "reach": 275,
+      "clicks": 3,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-16",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 111.6,
+      "impressions": 500,
+      "reach": 275,
+      "clicks": 3,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-17",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 111.6,
+      "impressions": 500,
+      "reach": 275,
+      "clicks": 3,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-18",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 111.6,
+      "impressions": 500,
+      "reach": 275,
+      "clicks": 3,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-19",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 111.6,
+      "impressions": 500,
+      "reach": 275,
+      "clicks": 3,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-20",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 111.6,
+      "impressions": 500,
+      "reach": 275,
+      "clicks": 3,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-21",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 111.6,
+      "impressions": 500,
+      "reach": 275,
+      "clicks": 3,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-22",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 111.6,
+      "impressions": 500,
+      "reach": 275,
+      "clicks": 3,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-23",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 111.6,
+      "impressions": 500,
+      "reach": 275,
+      "clicks": 3,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-24",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 111.6,
+      "impressions": 500,
+      "reach": 275,
+      "clicks": 3,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-25",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 111.6,
+      "impressions": 500,
+      "reach": 275,
+      "clicks": 3,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-26",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 111.6,
+      "impressions": 500,
+      "reach": 275,
+      "clicks": 3,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-27",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 111.6,
+      "impressions": 500,
+      "reach": 275,
+      "clicks": 3,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-28",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 111.6,
+      "impressions": 500,
+      "reach": 275,
+      "clicks": 3,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-29",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 111.6,
+      "impressions": 500,
+      "reach": 275,
+      "clicks": 3,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-30",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 111.6,
+      "impressions": 500,
+      "reach": 275,
+      "clicks": 3,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-01",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 304.78,
+      "impressions": 667,
+      "reach": 367,
+      "clicks": 5,
+      "conversations": 2
+    },
+    {
+      "date": "2026-06-02",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 304.78,
+      "impressions": 667,
+      "reach": 367,
+      "clicks": 5,
+      "conversations": 2
+    },
+    {
+      "date": "2026-06-03",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 304.78,
+      "impressions": 667,
+      "reach": 367,
+      "clicks": 5,
+      "conversations": 2
+    },
+    {
+      "date": "2026-06-04",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 304.78,
+      "impressions": 667,
+      "reach": 367,
+      "clicks": 5,
+      "conversations": 2
+    },
+    {
+      "date": "2026-06-05",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 304.78,
+      "impressions": 667,
+      "reach": 367,
+      "clicks": 5,
+      "conversations": 2
+    },
+    {
+      "date": "2026-06-06",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 304.78,
+      "impressions": 667,
+      "reach": 367,
+      "clicks": 5,
+      "conversations": 2
+    },
+    {
+      "date": "2026-06-07",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 304.78,
+      "impressions": 667,
+      "reach": 367,
+      "clicks": 5,
+      "conversations": 2
+    },
+    {
+      "date": "2026-06-08",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 304.78,
+      "impressions": 667,
+      "reach": 367,
+      "clicks": 5,
+      "conversations": 2
+    },
+    {
+      "date": "2026-06-09",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 304.78,
+      "impressions": 667,
+      "reach": 367,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-10",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 304.78,
+      "impressions": 667,
+      "reach": 367,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-11",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 304.78,
+      "impressions": 667,
+      "reach": 367,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-12",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 304.78,
+      "impressions": 667,
+      "reach": 367,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-13",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 304.78,
+      "impressions": 667,
+      "reach": 367,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-14",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 304.78,
+      "impressions": 667,
+      "reach": 367,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-15",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 304.78,
+      "impressions": 667,
+      "reach": 367,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-16",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 304.78,
+      "impressions": 667,
+      "reach": 367,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-17",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 304.77,
+      "impressions": 667,
+      "reach": 367,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-18",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 304.77,
+      "impressions": 667,
+      "reach": 367,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-19",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 304.77,
+      "impressions": 667,
+      "reach": 367,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-20",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 304.77,
+      "impressions": 667,
+      "reach": 367,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-21",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 304.77,
+      "impressions": 666,
+      "reach": 366,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-22",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 304.77,
+      "impressions": 666,
+      "reach": 366,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-23",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 304.77,
+      "impressions": 666,
+      "reach": 366,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-24",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 304.77,
+      "impressions": 666,
+      "reach": 366,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-25",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 304.77,
+      "impressions": 666,
+      "reach": 366,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-26",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 304.77,
+      "impressions": 666,
+      "reach": 366,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-27",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 304.77,
+      "impressions": 666,
+      "reach": 366,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-28",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 304.77,
+      "impressions": 666,
+      "reach": 366,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-29",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 304.77,
+      "impressions": 666,
+      "reach": 366,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-30",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 304.77,
+      "impressions": 666,
+      "reach": 366,
+      "clicks": 5,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-01",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 200,
+      "impressions": 467,
+      "reach": 257,
+      "clicks": 4,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-02",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 200,
+      "impressions": 467,
+      "reach": 257,
+      "clicks": 4,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-03",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 200,
+      "impressions": 467,
+      "reach": 257,
+      "clicks": 4,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-04",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 200,
+      "impressions": 467,
+      "reach": 257,
+      "clicks": 4,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-05",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 200,
+      "impressions": 467,
+      "reach": 257,
+      "clicks": 4,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-06",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 200,
+      "impressions": 467,
+      "reach": 257,
+      "clicks": 4,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-07",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 200,
+      "impressions": 467,
+      "reach": 257,
+      "clicks": 4,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-08",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 200,
+      "impressions": 467,
+      "reach": 257,
+      "clicks": 4,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-09",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 200,
+      "impressions": 467,
+      "reach": 257,
+      "clicks": 4,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-10",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 200,
+      "impressions": 467,
+      "reach": 257,
+      "clicks": 4,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-11",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 200,
+      "impressions": 467,
+      "reach": 257,
+      "clicks": 4,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-12",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 200,
+      "impressions": 467,
+      "reach": 257,
+      "clicks": 4,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-13",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 200,
+      "impressions": 467,
+      "reach": 257,
+      "clicks": 4,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-14",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 200,
+      "impressions": 467,
+      "reach": 257,
+      "clicks": 4,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-15",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 200,
+      "impressions": 467,
+      "reach": 257,
+      "clicks": 4,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-16",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 200,
+      "impressions": 467,
+      "reach": 257,
+      "clicks": 3,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-17",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 200,
+      "impressions": 467,
+      "reach": 257,
+      "clicks": 3,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-18",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 200,
+      "impressions": 467,
+      "reach": 257,
+      "clicks": 3,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-19",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 200,
+      "impressions": 467,
+      "reach": 257,
+      "clicks": 3,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-20",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 200,
+      "impressions": 467,
+      "reach": 257,
+      "clicks": 3,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-21",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 200,
+      "impressions": 466,
+      "reach": 256,
+      "clicks": 3,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-22",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 200,
+      "impressions": 466,
+      "reach": 256,
+      "clicks": 3,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-23",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 200,
+      "impressions": 466,
+      "reach": 256,
+      "clicks": 3,
+      "conversations": 1
+    },
+    {
+      "date": "2026-06-24",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 200,
+      "impressions": 466,
+      "reach": 256,
+      "clicks": 3,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-25",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 200,
+      "impressions": 466,
+      "reach": 256,
+      "clicks": 3,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-26",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 200,
+      "impressions": 466,
+      "reach": 256,
+      "clicks": 3,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-27",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 200,
+      "impressions": 466,
+      "reach": 256,
+      "clicks": 3,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-28",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 200,
+      "impressions": 466,
+      "reach": 256,
+      "clicks": 3,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-29",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 200,
+      "impressions": 466,
+      "reach": 256,
+      "clicks": 3,
+      "conversations": 0
+    },
+    {
+      "date": "2026-06-30",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 200,
+      "impressions": 466,
+      "reach": 256,
+      "clicks": 3,
+      "conversations": 0
+    },
+    {
+      "date": "2026-05-01",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 250,
+      "impressions": 800,
+      "reach": 500,
+      "clicks": 6,
+      "conversations": 1
+    },
+    {
+      "date": "2026-05-04",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 310,
+      "impressions": 1100,
+      "reach": 680,
+      "clicks": 9,
+      "conversations": 0
+    },
+    {
+      "date": "2026-05-07",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 370,
+      "impressions": 900,
+      "reach": 560,
+      "clicks": 8,
+      "conversations": 1
+    },
+    {
+      "date": "2026-05-10",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 290,
+      "impressions": 1200,
+      "reach": 740,
+      "clicks": 7,
+      "conversations": 0
+    },
+    {
+      "date": "2026-05-13",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 350,
+      "impressions": 1000,
+      "reach": 620,
+      "clicks": 6,
+      "conversations": 1
+    },
+    {
+      "date": "2026-05-16",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 270,
+      "impressions": 800,
+      "reach": 500,
+      "clicks": 9,
+      "conversations": 0
+    },
+    {
+      "date": "2026-05-19",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 330,
+      "impressions": 1100,
+      "reach": 680,
+      "clicks": 8,
+      "conversations": 1
+    },
+    {
+      "date": "2026-05-22",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 250,
+      "impressions": 900,
+      "reach": 560,
+      "clicks": 7,
+      "conversations": 0
+    },
+    {
+      "date": "2026-05-25",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 310,
+      "impressions": 1200,
+      "reach": 740,
+      "clicks": 6,
+      "conversations": 1
+    },
+    {
+      "date": "2026-05-28",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 370,
+      "impressions": 1000,
+      "reach": 620,
+      "clicks": 9,
+      "conversations": 0
+    },
+    {
+      "date": "2026-05-31",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 290,
+      "impressions": 800,
+      "reach": 500,
+      "clicks": 8,
+      "conversations": 1
+    },
+    {
+      "date": "2026-05-01",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 250,
+      "impressions": 800,
+      "reach": 500,
+      "clicks": 6,
+      "conversations": 1
+    },
+    {
+      "date": "2026-05-04",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 310,
+      "impressions": 1100,
+      "reach": 680,
+      "clicks": 9,
+      "conversations": 0
+    },
+    {
+      "date": "2026-05-07",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 370,
+      "impressions": 900,
+      "reach": 560,
+      "clicks": 8,
+      "conversations": 1
+    },
+    {
+      "date": "2026-05-10",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 290,
+      "impressions": 1200,
+      "reach": 740,
+      "clicks": 7,
+      "conversations": 0
+    },
+    {
+      "date": "2026-05-13",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 350,
+      "impressions": 1000,
+      "reach": 620,
+      "clicks": 6,
+      "conversations": 1
+    },
+    {
+      "date": "2026-05-16",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 270,
+      "impressions": 800,
+      "reach": 500,
+      "clicks": 9,
+      "conversations": 0
+    },
+    {
+      "date": "2026-05-19",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 330,
+      "impressions": 1100,
+      "reach": 680,
+      "clicks": 8,
+      "conversations": 1
+    },
+    {
+      "date": "2026-05-22",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 250,
+      "impressions": 900,
+      "reach": 560,
+      "clicks": 7,
+      "conversations": 0
+    },
+    {
+      "date": "2026-05-25",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 310,
+      "impressions": 1200,
+      "reach": 740,
+      "clicks": 6,
+      "conversations": 1
+    },
+    {
+      "date": "2026-05-28",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 370,
+      "impressions": 1000,
+      "reach": 620,
+      "clicks": 9,
+      "conversations": 0
+    },
+    {
+      "date": "2026-05-31",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 290,
+      "impressions": 800,
+      "reach": 500,
+      "clicks": 8,
+      "conversations": 1
+    },
+    {
+      "date": "2026-05-01",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 250,
+      "impressions": 800,
+      "reach": 500,
+      "clicks": 6,
+      "conversations": 1
+    },
+    {
+      "date": "2026-05-04",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 310,
+      "impressions": 1100,
+      "reach": 680,
+      "clicks": 9,
+      "conversations": 0
+    },
+    {
+      "date": "2026-05-07",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 370,
+      "impressions": 900,
+      "reach": 560,
+      "clicks": 8,
+      "conversations": 1
+    },
+    {
+      "date": "2026-05-10",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 290,
+      "impressions": 1200,
+      "reach": 740,
+      "clicks": 7,
+      "conversations": 0
+    },
+    {
+      "date": "2026-05-13",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 350,
+      "impressions": 1000,
+      "reach": 620,
+      "clicks": 6,
+      "conversations": 1
+    },
+    {
+      "date": "2026-05-16",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 270,
+      "impressions": 800,
+      "reach": 500,
+      "clicks": 9,
+      "conversations": 0
+    },
+    {
+      "date": "2026-05-19",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 330,
+      "impressions": 1100,
+      "reach": 680,
+      "clicks": 8,
+      "conversations": 1
+    },
+    {
+      "date": "2026-05-22",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 250,
+      "impressions": 900,
+      "reach": 560,
+      "clicks": 7,
+      "conversations": 0
+    },
+    {
+      "date": "2026-05-25",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 310,
+      "impressions": 1200,
+      "reach": 740,
+      "clicks": 6,
+      "conversations": 1
+    },
+    {
+      "date": "2026-05-28",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 370,
+      "impressions": 1000,
+      "reach": 620,
+      "clicks": 9,
+      "conversations": 0
+    },
+    {
+      "date": "2026-05-31",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 290,
+      "impressions": 800,
+      "reach": 500,
+      "clicks": 8,
+      "conversations": 1
+    },
+    {
+      "date": "2026-07-01",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 250,
+      "impressions": 800,
+      "reach": 500,
+      "clicks": 6,
+      "conversations": 1
+    },
+    {
+      "date": "2026-07-04",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 310,
+      "impressions": 1100,
+      "reach": 680,
+      "clicks": 9,
+      "conversations": 0
+    },
+    {
+      "date": "2026-07-07",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 370,
+      "impressions": 900,
+      "reach": 560,
+      "clicks": 8,
+      "conversations": 1
+    },
+    {
+      "date": "2026-07-10",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 290,
+      "impressions": 1200,
+      "reach": 740,
+      "clicks": 7,
+      "conversations": 0
+    },
+    {
+      "date": "2026-07-13",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 350,
+      "impressions": 1000,
+      "reach": 620,
+      "clicks": 6,
+      "conversations": 1
+    },
+    {
+      "date": "2026-07-16",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 270,
+      "impressions": 800,
+      "reach": 500,
+      "clicks": 9,
+      "conversations": 0
+    },
+    {
+      "date": "2026-07-19",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 330,
+      "impressions": 1100,
+      "reach": 680,
+      "clicks": 8,
+      "conversations": 1
+    },
+    {
+      "date": "2026-07-22",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 250,
+      "impressions": 900,
+      "reach": 560,
+      "clicks": 7,
+      "conversations": 0
+    },
+    {
+      "date": "2026-07-25",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 310,
+      "impressions": 1200,
+      "reach": 740,
+      "clicks": 6,
+      "conversations": 1
+    },
+    {
+      "date": "2026-07-28",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 370,
+      "impressions": 1000,
+      "reach": 620,
+      "clicks": 9,
+      "conversations": 0
+    },
+    {
+      "date": "2026-07-31",
+      "adSetId": "as-azure-tn",
+      "country": "IN",
+      "spend": 290,
+      "impressions": 800,
+      "reach": 500,
+      "clicks": 8,
+      "conversations": 1
+    },
+    {
+      "date": "2026-07-01",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 250,
+      "impressions": 800,
+      "reach": 500,
+      "clicks": 6,
+      "conversations": 1
+    },
+    {
+      "date": "2026-07-04",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 310,
+      "impressions": 1100,
+      "reach": 680,
+      "clicks": 9,
+      "conversations": 0
+    },
+    {
+      "date": "2026-07-07",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 370,
+      "impressions": 900,
+      "reach": 560,
+      "clicks": 8,
+      "conversations": 1
+    },
+    {
+      "date": "2026-07-10",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 290,
+      "impressions": 1200,
+      "reach": 740,
+      "clicks": 7,
+      "conversations": 0
+    },
+    {
+      "date": "2026-07-13",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 350,
+      "impressions": 1000,
+      "reach": 620,
+      "clicks": 6,
+      "conversations": 1
+    },
+    {
+      "date": "2026-07-16",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 270,
+      "impressions": 800,
+      "reach": 500,
+      "clicks": 9,
+      "conversations": 0
+    },
+    {
+      "date": "2026-07-19",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 330,
+      "impressions": 1100,
+      "reach": 680,
+      "clicks": 8,
+      "conversations": 1
+    },
+    {
+      "date": "2026-07-22",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 250,
+      "impressions": 900,
+      "reach": 560,
+      "clicks": 7,
+      "conversations": 0
+    },
+    {
+      "date": "2026-07-25",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 310,
+      "impressions": 1200,
+      "reach": 740,
+      "clicks": 6,
+      "conversations": 1
+    },
+    {
+      "date": "2026-07-28",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 370,
+      "impressions": 1000,
+      "reach": 620,
+      "clicks": 9,
+      "conversations": 0
+    },
+    {
+      "date": "2026-07-31",
+      "adSetId": "as-d365-fo-in",
+      "country": "IN",
+      "spend": 290,
+      "impressions": 800,
+      "reach": 500,
+      "clicks": 8,
+      "conversations": 1
+    },
+    {
+      "date": "2026-07-01",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 250,
+      "impressions": 800,
+      "reach": 500,
+      "clicks": 6,
+      "conversations": 1
+    },
+    {
+      "date": "2026-07-04",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 310,
+      "impressions": 1100,
+      "reach": 680,
+      "clicks": 9,
+      "conversations": 0
+    },
+    {
+      "date": "2026-07-07",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 370,
+      "impressions": 900,
+      "reach": 560,
+      "clicks": 8,
+      "conversations": 1
+    },
+    {
+      "date": "2026-07-10",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 290,
+      "impressions": 1200,
+      "reach": 740,
+      "clicks": 7,
+      "conversations": 0
+    },
+    {
+      "date": "2026-07-13",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 350,
+      "impressions": 1000,
+      "reach": 620,
+      "clicks": 6,
+      "conversations": 1
+    },
+    {
+      "date": "2026-07-16",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 270,
+      "impressions": 800,
+      "reach": 500,
+      "clicks": 9,
+      "conversations": 0
+    },
+    {
+      "date": "2026-07-19",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 330,
+      "impressions": 1100,
+      "reach": 680,
+      "clicks": 8,
+      "conversations": 1
+    },
+    {
+      "date": "2026-07-22",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 250,
+      "impressions": 900,
+      "reach": 560,
+      "clicks": 7,
+      "conversations": 0
+    },
+    {
+      "date": "2026-07-25",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 310,
+      "impressions": 1200,
+      "reach": 740,
+      "clicks": 6,
+      "conversations": 1
+    },
+    {
+      "date": "2026-07-28",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 370,
+      "impressions": 1000,
+      "reach": 620,
+      "clicks": 9,
+      "conversations": 0
+    },
+    {
+      "date": "2026-07-31",
+      "adSetId": "as-powerbi-in",
+      "country": "IN",
+      "spend": 290,
+      "impressions": 800,
+      "reach": 500,
+      "clicks": 8,
+      "conversations": 1
+    }
+  ],
+  "account": [
+    {
+      "date": "2026-05-01",
+      "opportunityScore": 82,
+      "recommendations": []
+    },
+    {
+      "date": "2026-05-02",
+      "opportunityScore": 83,
+      "recommendations": []
+    },
+    {
+      "date": "2026-05-03",
+      "opportunityScore": 84,
+      "recommendations": []
+    },
+    {
+      "date": "2026-05-04",
+      "opportunityScore": 85,
+      "recommendations": []
+    },
+    {
+      "date": "2026-05-05",
+      "opportunityScore": 86,
+      "recommendations": []
+    },
+    {
+      "date": "2026-05-06",
+      "opportunityScore": 87,
+      "recommendations": []
+    },
+    {
+      "date": "2026-05-07",
+      "opportunityScore": 88,
+      "recommendations": []
+    },
+    {
+      "date": "2026-05-08",
+      "opportunityScore": 89,
+      "recommendations": []
+    },
+    {
+      "date": "2026-05-09",
+      "opportunityScore": 90,
+      "recommendations": []
+    },
+    {
+      "date": "2026-05-10",
+      "opportunityScore": 91,
+      "recommendations": []
+    },
+    {
+      "date": "2026-05-11",
+      "opportunityScore": 92,
+      "recommendations": []
+    },
+    {
+      "date": "2026-05-12",
+      "opportunityScore": 93,
+      "recommendations": []
+    },
+    {
+      "date": "2026-05-13",
+      "opportunityScore": 94,
+      "recommendations": []
+    },
+    {
+      "date": "2026-05-14",
+      "opportunityScore": 95,
+      "recommendations": []
+    },
+    {
+      "date": "2026-05-15",
+      "opportunityScore": 96,
+      "recommendations": []
+    },
+    {
+      "date": "2026-05-16",
+      "opportunityScore": 82,
+      "recommendations": []
+    },
+    {
+      "date": "2026-05-17",
+      "opportunityScore": 83,
+      "recommendations": []
+    },
+    {
+      "date": "2026-05-18",
+      "opportunityScore": 84,
+      "recommendations": []
+    },
+    {
+      "date": "2026-05-19",
+      "opportunityScore": 85,
+      "recommendations": []
+    },
+    {
+      "date": "2026-05-20",
+      "opportunityScore": 86,
+      "recommendations": []
+    },
+    {
+      "date": "2026-05-21",
+      "opportunityScore": 87,
+      "recommendations": []
+    },
+    {
+      "date": "2026-05-22",
+      "opportunityScore": 88,
+      "recommendations": []
+    },
+    {
+      "date": "2026-05-23",
+      "opportunityScore": 89,
+      "recommendations": []
+    },
+    {
+      "date": "2026-05-24",
+      "opportunityScore": 90,
+      "recommendations": []
+    },
+    {
+      "date": "2026-05-25",
+      "opportunityScore": 91,
+      "recommendations": []
+    },
+    {
+      "date": "2026-05-26",
+      "opportunityScore": 92,
+      "recommendations": []
+    },
+    {
+      "date": "2026-05-27",
+      "opportunityScore": 93,
+      "recommendations": []
+    },
+    {
+      "date": "2026-05-28",
+      "opportunityScore": 94,
+      "recommendations": []
+    },
+    {
+      "date": "2026-05-29",
+      "opportunityScore": 95,
+      "recommendations": []
+    },
+    {
+      "date": "2026-05-30",
+      "opportunityScore": 96,
+      "recommendations": []
+    },
+    {
+      "date": "2026-05-31",
+      "opportunityScore": 82,
+      "recommendations": []
+    },
+    {
+      "date": "2026-06-01",
+      "opportunityScore": 82,
+      "recommendations": []
+    },
+    {
+      "date": "2026-06-02",
+      "opportunityScore": 83,
+      "recommendations": []
+    },
+    {
+      "date": "2026-06-03",
+      "opportunityScore": 84,
+      "recommendations": []
+    },
+    {
+      "date": "2026-06-04",
+      "opportunityScore": 85,
+      "recommendations": []
+    },
+    {
+      "date": "2026-06-05",
+      "opportunityScore": 86,
+      "recommendations": []
+    },
+    {
+      "date": "2026-06-06",
+      "opportunityScore": 87,
+      "recommendations": []
+    },
+    {
+      "date": "2026-06-07",
+      "opportunityScore": 88,
+      "recommendations": []
+    },
+    {
+      "date": "2026-06-08",
+      "opportunityScore": 89,
+      "recommendations": []
+    },
+    {
+      "date": "2026-06-09",
+      "opportunityScore": 90,
+      "recommendations": []
+    },
+    {
+      "date": "2026-06-10",
+      "opportunityScore": 91,
+      "recommendations": []
+    },
+    {
+      "date": "2026-06-11",
+      "opportunityScore": 92,
+      "recommendations": []
+    },
+    {
+      "date": "2026-06-12",
+      "opportunityScore": 93,
+      "recommendations": []
+    },
+    {
+      "date": "2026-06-13",
+      "opportunityScore": 94,
+      "recommendations": []
+    },
+    {
+      "date": "2026-06-14",
+      "opportunityScore": 95,
+      "recommendations": []
+    },
+    {
+      "date": "2026-06-15",
+      "opportunityScore": 96,
+      "recommendations": []
+    },
+    {
+      "date": "2026-06-16",
+      "opportunityScore": 82,
+      "recommendations": []
+    },
+    {
+      "date": "2026-06-17",
+      "opportunityScore": 83,
+      "recommendations": []
+    },
+    {
+      "date": "2026-06-18",
+      "opportunityScore": 84,
+      "recommendations": []
+    },
+    {
+      "date": "2026-06-19",
+      "opportunityScore": 85,
+      "recommendations": []
+    },
+    {
+      "date": "2026-06-20",
+      "opportunityScore": 86,
+      "recommendations": []
+    },
+    {
+      "date": "2026-06-21",
+      "opportunityScore": 87,
+      "recommendations": []
+    },
+    {
+      "date": "2026-06-22",
+      "opportunityScore": 88,
+      "recommendations": []
+    },
+    {
+      "date": "2026-06-23",
+      "opportunityScore": 89,
+      "recommendations": []
+    },
+    {
+      "date": "2026-06-24",
+      "opportunityScore": 90,
+      "recommendations": []
+    },
+    {
+      "date": "2026-06-25",
+      "opportunityScore": 91,
+      "recommendations": []
+    },
+    {
+      "date": "2026-06-26",
+      "opportunityScore": 92,
+      "recommendations": []
+    },
+    {
+      "date": "2026-06-27",
+      "opportunityScore": 93,
+      "recommendations": []
+    },
+    {
+      "date": "2026-06-28",
+      "opportunityScore": 94,
+      "recommendations": []
+    },
+    {
+      "date": "2026-06-29",
+      "opportunityScore": 95,
+      "recommendations": []
+    },
+    {
+      "date": "2026-06-30",
+      "opportunityScore": 96,
+      "recommendations": []
+    },
+    {
+      "date": "2026-07-01",
+      "opportunityScore": 82,
+      "recommendations": []
+    },
+    {
+      "date": "2026-07-02",
+      "opportunityScore": 83,
+      "recommendations": []
+    },
+    {
+      "date": "2026-07-03",
+      "opportunityScore": 84,
+      "recommendations": []
+    },
+    {
+      "date": "2026-07-04",
+      "opportunityScore": 85,
+      "recommendations": []
+    },
+    {
+      "date": "2026-07-05",
+      "opportunityScore": 86,
+      "recommendations": []
+    },
+    {
+      "date": "2026-07-06",
+      "opportunityScore": 87,
+      "recommendations": []
+    },
+    {
+      "date": "2026-07-07",
+      "opportunityScore": 88,
+      "recommendations": []
+    },
+    {
+      "date": "2026-07-08",
+      "opportunityScore": 89,
+      "recommendations": []
+    },
+    {
+      "date": "2026-07-09",
+      "opportunityScore": 90,
+      "recommendations": []
+    },
+    {
+      "date": "2026-07-10",
+      "opportunityScore": 91,
+      "recommendations": []
+    },
+    {
+      "date": "2026-07-11",
+      "opportunityScore": 92,
+      "recommendations": []
+    },
+    {
+      "date": "2026-07-12",
+      "opportunityScore": 93,
+      "recommendations": []
+    },
+    {
+      "date": "2026-07-13",
+      "opportunityScore": 94,
+      "recommendations": []
+    },
+    {
+      "date": "2026-07-14",
+      "opportunityScore": 95,
+      "recommendations": []
+    },
+    {
+      "date": "2026-07-15",
+      "opportunityScore": 96,
+      "recommendations": []
+    },
+    {
+      "date": "2026-07-16",
+      "opportunityScore": 82,
+      "recommendations": []
+    },
+    {
+      "date": "2026-07-17",
+      "opportunityScore": 83,
+      "recommendations": []
+    },
+    {
+      "date": "2026-07-18",
+      "opportunityScore": 84,
+      "recommendations": []
+    },
+    {
+      "date": "2026-07-19",
+      "opportunityScore": 85,
+      "recommendations": []
+    },
+    {
+      "date": "2026-07-20",
+      "opportunityScore": 86,
+      "recommendations": []
+    },
+    {
+      "date": "2026-07-21",
+      "opportunityScore": 87,
+      "recommendations": []
+    },
+    {
+      "date": "2026-07-22",
+      "opportunityScore": 88,
+      "recommendations": []
+    },
+    {
+      "date": "2026-07-23",
+      "opportunityScore": 89,
+      "recommendations": []
+    },
+    {
+      "date": "2026-07-24",
+      "opportunityScore": 90,
+      "recommendations": []
+    },
+    {
+      "date": "2026-07-25",
+      "opportunityScore": 91,
+      "recommendations": []
+    },
+    {
+      "date": "2026-07-26",
+      "opportunityScore": 92,
+      "recommendations": []
+    },
+    {
+      "date": "2026-07-27",
+      "opportunityScore": 93,
+      "recommendations": []
+    },
+    {
+      "date": "2026-07-28",
+      "opportunityScore": 94,
+      "recommendations": []
+    },
+    {
+      "date": "2026-07-29",
+      "opportunityScore": 95,
+      "recommendations": []
+    },
+    {
+      "date": "2026-07-30",
+      "opportunityScore": 96,
+      "recommendations": []
+    },
+    {
+      "date": "2026-07-31",
+      "opportunityScore": 82,
+      "recommendations": []
+    }
+  ]
+}

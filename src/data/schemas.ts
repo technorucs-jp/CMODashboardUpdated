@@ -316,6 +316,11 @@ export const linkedInDailyTrendSchema = z
   .object({
     date: z.string(),
     newFollowers: z.number().int().nonnegative(),
+    /** Page views on the LinkedIn Page itself (BRD §11.1) — distinct from post impressions. */
+    pageViews: z.number().int().nonnegative(),
+    /** Non-additive across days, same as ga4.totalUsers/meta.reach (TAD §9.2) — LinkedIn
+     *  de-duplicates unique visitors itself; summing days over-counts repeat visitors. */
+    uniqueVisitors: z.number().int().nonnegative(),
     impressions: z.number().int().nonnegative(),
     clicks: z.number().int().nonnegative(),
     reactions: z.number().int().nonnegative(),

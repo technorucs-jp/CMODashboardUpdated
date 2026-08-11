@@ -92,6 +92,16 @@
             "minimum": 0,
             "maximum": 9007199254740991
           },
+          "pageViews": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "uniqueVisitors": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
           "impressions": {
             "type": "integer",
             "minimum": 0,
@@ -111,6 +121,8 @@
         "required": [
           "date",
           "newFollowers",
+          "pageViews",
+          "uniqueVisitors",
           "impressions",
           "clicks",
           "reactions"

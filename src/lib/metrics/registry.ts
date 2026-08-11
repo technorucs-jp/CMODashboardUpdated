@@ -64,6 +64,8 @@ export const registry = {
 
   // --- LinkedIn ---
   'linkedin.newFollowers': { id: 'linkedin.newFollowers', label: 'New Followers', unit: '', polarity: 'higher-better', additive: true, format: 'integer' },
+  'linkedin.pageViews': { id: 'linkedin.pageViews', label: 'Page Views', unit: '', polarity: 'higher-better', additive: true, format: 'integer' },
+  'linkedin.uniqueVisitors': { id: 'linkedin.uniqueVisitors', label: 'Unique Visitors', unit: '', polarity: 'higher-better', additive: false, format: 'integer' },
   'linkedin.impressions': { id: 'linkedin.impressions', label: 'Impressions', unit: '', polarity: 'higher-better', additive: true, format: 'integer' },
   'linkedin.clicks': { id: 'linkedin.clicks', label: 'Clicks', unit: '', polarity: 'higher-better', additive: true, format: 'integer' },
   'linkedin.reactions': { id: 'linkedin.reactions', label: 'Reactions', unit: '', polarity: 'higher-better', additive: true, format: 'integer' },
