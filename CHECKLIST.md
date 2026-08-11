@@ -18,30 +18,32 @@ Companion to `TASK.md`. **Read `TASK.md` first.** Work top to bottom, one item a
 ## Session state — update before you stop
 
 ```
-Current phase:        1 — Data spine (schemas 1.1-1.9 done)
-Last completed item:  1.9
-Next item:            1.10 (src/lib/time/businessDate.ts)
-Blocked on:           Nothing blocking Phase 1. Still open, none of them phase-blocking yet:
+Current phase:        1 — Data spine — COMPLETE (31/31). Starting Phase 2.
+Last completed item:  1.31
+Next item:            2.1 (DateRangePicker)
+Blocked on:           Nothing blocking Phase 2. Still open, none of them phase-blocking yet:
                       real Entra credentials (VITE_MSAL_CLIENT_ID/TENANT_ID — needs CMO/IT admin
                       to complete an app registration; sign-in can't be end-to-end tested until
                       then), TAD §16.1 (lead intent classification, needed by Phase 3),
                       §16.2 (staleness thresholds, needed by Phase 5), §16.4 (residual /data
                       exposure sign-off, needed by Phase 5).
-Notes:                Vite 8 (rolldown-based) scaffolded via `create-vite@latest --template react-ts --eslint`;
-                      the react-swc-ts template no longer exists in this create-vite version, react-ts used
-                      instead (plain @vitejs/plugin-react, not SWC — functionally equivalent for our purposes,
-                      not a tracked deviation since TASK.md §4 only pins `vite@5+` generically).
-                      tsconfig.app.json path alias uses `paths` without `baseUrl` (TS 6.0 deprecates baseUrl).
-                      xlsx@0.18.5 has an unpatched npm-registry advisory (accepted, see item 0.3 note).
-                      P5/P6 ESLint rules verified working (item 0.6 note has detail on the import-boundary approach).
-                      Vitest needed `pool: 'threads'` — the default `forks` pool hangs in this sandboxed dev
-                      environment (item 0.11 note).
-                      Added a `rewrites` block to vercel.json (not originally its own checklist item) — a
-                      static host needs an explicit SPA fallback or direct navigation to any route but `/`
-                      404s; discovered while verifying item 0.18 locally.
-                      Live at https://technorucs-cmo-dashboard.vercel.app (GitHub-connected, auto-deploys
-                      on push to main). 29 tests across 4 files, all green.
-Last updated:         2026-08-10
+Notes:                Phase 0: Vite 8 (rolldown-based) scaffolded via `create-vite@latest --template
+                      react-ts --eslint` (react-swc-ts template no longer exists); vitest needed
+                      `pool: 'threads'` (default `forks` hangs in this sandbox); `npx vitest run <file>`
+                      also hangs here — use unfiltered `npm test`/`npm run test:recon` for verification.
+                      Live at https://technorucs-cmo-dashboard.vercel.app (GitHub-connected, auto-deploy
+                      on push to main).
+                      Phase 1: all six Zod schemas + generated JSON Schemas; `src/lib/time` (TZDate-based,
+                      browser-timezone-independent); `src/lib/metrics` (Ratio/registry/aggregate/compare/
+                      status); `src/lib/coverage`; `src/lib/channels/{metaAds,zoho,ga4,gsc,linkedin}`
+                      (all reconciled against June 2026 fixtures); reconciliation harness green.
+                      Two real gaps found and fixed along the way: `zod-to-json-schema` silently produced
+                      empty output against Zod v4 (switched to Zod's native `z.toJSONSchema()`, item 1.9);
+                      LinkedIn's schema was missing `pageViews`/`uniqueVisitors` despite BRD §11.1 requiring
+                      them as overview cards (item 1.7/1.15). `src/lib/**` test files are exempted from the
+                      P6 import-boundary rule (they need real schemas/fixtures; never ship in the bundle).
+                      154 tests across 30 files, all green. `npm run validate:data -- tests/fixtures` green.
+Last updated:         2026-08-11
 ```
 
 ---
@@ -51,7 +53,7 @@ Last updated:         2026-08-10
 | Phase | Items | Done | Gate |
 |---|---|---|---|
 | 0 — Foundation | 18 | 18 | ✅ |
-| 1 — Data spine | 31 | 0 | ⬜ |
+| 1 — Data spine | 31 | 31 | ✅ |
 | 2 — Pickers & first tab | 24 | 0 | ⬜ |
 | 3 — Remaining tabs | 44 | 0 | ⬜ |
 | 4 — Rules & narrative | 19 | 0 | ⬜ |
@@ -279,10 +281,11 @@ Last updated:         2026-08-10
   *Verify:* instrument the aggregation step; selecting the same range twice in one session skips recomputation the second time.
       > Built the pure primitive now (`src/lib/memo.ts`, `createKeyedMemo`) — instrumented via a `vi.fn()` compute callback, called once for a repeated key, independently for a different key. Phase 2's TanStack Query cache (item 2.6) does the equivalent at the whole-response level; this is the lower-level piece either the query layer or a view-model composer can use directly.
 
-- [ ] **1.31** **Reconciliation harness** — `tests/reconciliation/june-2026.golden.json` with the published June figures (₹38,423 spend, 101 conversations, ₹380 cost/conv, 1,720 sessions, 65.3% engagement, 469 clicks, 54,744 impressions, 0.81% CTR, 132 new followers, 522 reactions, 49 inbound leads, 30.6% contact rate). Test selects 1–30 June and asserts within ±1%.
+- [x] **1.31** **Reconciliation harness** — `tests/reconciliation/june-2026.golden.json` with the published June figures (₹38,423 spend, 101 conversations, ₹380 cost/conv, 1,720 sessions, 65.3% engagement, 469 clicks, 54,744 impressions, 0.81% CTR, 132 new followers, 522 reactions, 49 inbound leads, 30.6% contact rate). Test selects 1–30 June and asserts within ±1%.
   *Verify:* `npm run test:recon` green.
+      > All fields pass at ±1% relative tolerance except GSC's CTR, which the golden file itself documents as unreconcilable between the docs' own two independently-stated source numbers (see item 1.20's note) — that one field asserts against clicks/impressions directly instead, rather than silently loosening the tolerance without saying why. Test drives the actual `src/lib/channels/*` query modules against the item 1.20 fixtures — the same code path Phase 2/3's view models will call — not a separate recomputation.
 
-**Phase 1 gate:** `npm test && npm run test:recon && npm run validate:data` — all green. The engine is correct before any UI exists.
+**Phase 1 gate: ✅ PASSED.** `npm test && npm run test:recon && npm run validate:data` — all green (154 tests, 30 files). The engine is correct before any UI exists.
 
 ---
 

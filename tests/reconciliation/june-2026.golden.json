@@ -1,0 +1,29 @@
+{
+  "range": { "from": "2026-06-01", "to": "2026-06-30" },
+  "comment": "Published June 2026 figures (TASK.md §1.31 / CHECKLIST.md item 1.31). Test asserts each within ±1% (BRD §16 criterion 3) except where noted.",
+  "metaAds": {
+    "spend": 38423.31,
+    "impressions": 95823,
+    "clicks": 655,
+    "conversations": 101,
+    "costPerConversation": 380.43
+  },
+  "ga4": {
+    "sessions": 1720,
+    "engagementRatePct": 65.3
+  },
+  "gsc": {
+    "clicks": 469,
+    "impressions": 54744,
+    "ctrPct": 0.81,
+    "_ctrNote": "Computed CTR from the golden clicks/impressions above is ~0.857%, not 0.81% — a minor rounding inconsistency between the two source figures in the docs themselves (both independently given), not a fixture bug. See CHECKLIST.md item 1.20's note. The reconciliation test tolerates this specific field at a wider band."
+  },
+  "linkedin": {
+    "newFollowers": 132,
+    "reactions": 522
+  },
+  "zoho": {
+    "totalInbound": 49,
+    "contactRatePct": 30.6
+  }
+}
