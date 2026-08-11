@@ -181,8 +181,11 @@ Last updated:         2026-08-10
 
 ### Time
 
-- [ ] **1.10** `src/lib/time/businessDate.ts` — `toBusinessDate(input): BusinessDate` ('YYYY-MM-DD' in Asia/Kolkata). The only date parser in the codebase.
+- [x] **1.10** `src/lib/time/businessDate.ts` — `toBusinessDate(input): BusinessDate` ('YYYY-MM-DD' in Asia/Kolkata). The only date parser in the codebase.
   *Verify:* test — `toBusinessDate('2026-06-01T00:15:00+05:30') === '2026-06-01'`; `toBusinessDate('2026-05-31T23:45:00+05:30') === '2026-05-31'`; a UTC-midnight input maps to the correct IST day.
+      > Installed `@date-fns/tz` (the official date-fns v4 companion) rather than hand-rolling offset arithmetic — plain `date-fns` functions read a `Date`'s *local* getters, which reflect the host machine's OS timezone. Since this app runs entirely in the CMO's browser (no server we control), that would make date bucketing depend on whatever timezone the browser happens to be set to — exactly what P5 forbids. `TZDate` overrides the local getters to always reflect Asia/Kolkata, so every date-fns call downstream (range.ts, presets.ts) is correct regardless of the machine. TASK.md §4 left "a timezone helper" unspecified for exactly this decision.
+      > **Gap found and fixed**: `npx vitest run <specific-file-path>` hangs indefinitely in this sandbox (confirmed reproducible, killed via TaskStop); the unfiltered `npm test` (`vitest run`, no path arg) works reliably and picks up the same files. Verification from here on uses `npm test` against the full suite, not per-file `vitest run` invocations.
+      > Also hit a TS overload-resolution issue: `TZDate`'s constructor is overloaded per-argument-type (`string`, `Date`, `number` separately) rather than accepting a union, so `new TZDate(input, tz)` with `input: string | Date` didn't typecheck — fixed by branching on `typeof input` so TS narrows to the matching overload per branch.
 
 - [ ] **1.11** `src/lib/time/range.ts` — `DateRange`, inclusive containment, length in days, range signature, previous-period-of-equal-length.
   *Verify:* test — 1–30 June has length 30; previous period is 2–31 May.
