@@ -1,5 +1,15 @@
 import { describe, expect, it } from 'vitest'
-import { containsDate, gapsInRange, lengthInDays, mergeIntervals, nextDay, previousPeriodOfEqualLength, rangeSignature } from './range'
+import {
+  containsDate,
+  gapsInRange,
+  lengthInDays,
+  mergeIntervals,
+  nextDay,
+  previousMonth,
+  previousPeriodOfEqualLength,
+  previousYear,
+  rangeSignature,
+} from './range'
 
 describe('range.ts (item 1.11)', () => {
   const june = { from: '2026-06-01', to: '2026-06-30' }
@@ -54,5 +64,18 @@ describe('range.ts (item 1.11)', () => {
 
   it('gapsInRange is empty when the range is fully covered', () => {
     expect(gapsInRange(june, [{ from: '2026-05-01', to: '2026-08-09' }])).toEqual([])
+  })
+
+  // Added while building item 2.2's ComparisonRangePicker.
+  it('previousMonth shifts each endpoint back one calendar month', () => {
+    expect(previousMonth({ from: '2026-08-01', to: '2026-08-10' })).toEqual({ from: '2026-07-01', to: '2026-07-10' })
+  })
+
+  it('previousMonth clamps to the target month\'s real day count (documented edge case)', () => {
+    expect(previousMonth(june)).toEqual({ from: '2026-05-01', to: '2026-05-30' }) // not 05-31
+  })
+
+  it('previousYear shifts each endpoint back one calendar year', () => {
+    expect(previousYear(june)).toEqual({ from: '2025-06-01', to: '2025-06-30' })
   })
 })

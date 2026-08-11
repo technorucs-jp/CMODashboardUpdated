@@ -1,4 +1,4 @@
-import { addDays, differenceInCalendarDays, subDays } from 'date-fns'
+import { addDays, differenceInCalendarDays, subDays, subMonths, subYears } from 'date-fns'
 import { TZDate } from '@date-fns/tz'
 import { IST_TIME_ZONE, toBusinessDate, type BusinessDate } from './businessDate'
 
@@ -34,6 +34,25 @@ export function previousPeriodOfEqualLength(range: DateRange): DateRange {
   const to = subDays(anchor(range.from), 1)
   const from = subDays(to, length - 1)
   return { from: toBusinessDate(from), to: toBusinessDate(to) }
+}
+
+/**
+ * Each endpoint shifted back exactly one calendar month (item 2.2 — "previous
+ * month", distinct from "previous period": a partial-month range shifts by a
+ * month, not by its own length). Note the edge case this implies: `date-fns`'
+ * `subMonths` clamps to the target month's real day count, so 1-30 June ->
+ * 1-30 May (not 1-31 May) — the 30th of June has no "31st of May" equivalent
+ * to shift to. This is the same convention most analytics tools use for
+ * same-day-of-month comparisons; it is not "the previous full calendar month"
+ * for a range that doesn't start on the 1st.
+ */
+export function previousMonth(range: DateRange): DateRange {
+  return { from: toBusinessDate(subMonths(anchor(range.from), 1)), to: toBusinessDate(subMonths(anchor(range.to), 1)) }
+}
+
+/** Same span of days, exactly one calendar year earlier (item 2.2 — "previous year"). */
+export function previousYear(range: DateRange): DateRange {
+  return { from: toBusinessDate(subYears(anchor(range.from), 1)), to: toBusinessDate(subYears(anchor(range.to), 1)) }
 }
 
 /** One business date later — used by interval-merging logic (e.g. LinkedIn's
