@@ -212,8 +212,11 @@ Last updated:         2026-08-10
 - [x] **1.17** `src/lib/metrics/compare.ts` — `Delta` with `pct`, `direction`, `favourable`. Flat band `|pct| ≤ 2%`. `pct === null` when comparison is 0 and current is not.
   *Verify:* test — 100→101 is `flat`; 100→0 is `down` with `pct === -100`; 0→50 has `pct === null` (renders "new", not `∞%`).
 
-- [ ] **1.18** `src/lib/metrics/status.ts` — Appendix A thresholds from `config/thresholds.json`, using registry polarity.
+- [x] **1.18** `src/lib/metrics/status.ts` — Appendix A thresholds from `config/thresholds.json`, using registry polarity.
   *Verify:* test — cost/conversation +116% → `action-needed`; sessions +6% → `leading`; engagement rate 65.3% flat → `good`.
+      > **Real gap found in BRD Appendix A**: its ladder only defines Monitor (5-30%) and Action needed (>30%) for *unfavourable* movement — favourable movement between the flat/good band and the literal "+15%" Leading figure is undefined by the text. This item's own test (`sessions +6% → leading`, well under 15%) pins the resolution: the same 5%/30% magnitude boundaries mirror onto the favourable side, so any favourable move outside the good band is `leading` — treating BRD's "+15%" as illustrative rather than a second hard gate with a dead zone below it. Not a judgement call I made unprompted — the checklist's own concrete example determines this, I just made the reasoning explicit since it isn't obvious from Appendix A's prose alone.
+      > Also implemented the target-band rescue (`good.withinPct`/target bands are an OR per Appendix A's "or meeting a defined target band") with its own dedicated test — a metric whose delta alone would read `monitor` still reads `good` if its current value clears a configured floor (e.g. GA4 engagement ≥ 60%).
+      > `pct === null` or a neutral-polarity metric defaults to `good` rather than fabricating a verdict from no baseline — untested by the literal checklist wording but covered here since `statusOf` must be total over every `Delta` shape `compare.ts` can produce.
 
 - [ ] **1.19** `src/lib/coverage/coverage.ts` — the `Coverage` union (`full`, `partial`, `none`, `lagging`, `requires-full-coverage`, `not-connected`) and `ChannelResult<T>` where `data` is `null` for every non-renderable kind.
   *Verify:* test — a range entirely before `earliestRecordDate` yields `{kind:'none'}` with `data: null`.
