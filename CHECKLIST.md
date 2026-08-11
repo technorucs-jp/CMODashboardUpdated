@@ -43,6 +43,16 @@ Notes:                Phase 0: Vite 8 (rolldown-based) scaffolded via `create-vi
                       them as overview cards (item 1.7/1.15). `src/lib/**` test files are exempted from the
                       P6 import-boundary rule (they need real schemas/fixtures; never ship in the bundle).
                       154 tests across 30 files, all green. `npm run validate:data -- tests/fixtures` green.
+                      Phase 2 (in progress): DateRangePicker/ComparisonRangePicker/useRangeState (URL is sole
+                      range state)/useMetricsQuery/useIdlePrefetch/CardSkeleton done (2.1-2.8). Actually looked
+                      at Wireframe/07-adcampaigns-*.jpg closely (hadn't before) and reworked the meta-ads.json
+                      fixture's 13 ad sets to the REAL wireframe figures instead of approximations — found the
+                      wireframe itself demonstrates the reach non-additivity trap concretely: summing all 13
+                      ad sets' reach gives exactly 58,392 (matching the wireframe's own Total Leads tab, which
+                      is wrong/double-counted), while the true account-level reach for the same June is 52,527
+                      (Ad Campaigns tab's account overview). Confirms item 2.16's "null for multi-day, never a
+                      summed total" design is the only defensible option, not just a cautious one.
+                      185 tests across 37 files, all green.
 Last updated:         2026-08-11
 ```
 

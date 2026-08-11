@@ -41,10 +41,26 @@ describe('queryMetaAds (item 1.22)', () => {
     expect(result.data).toBeNull()
   })
 
-  it('an ad set with spend and zero conversions resolves cost/conversation to null, not 0', () => {
+  it('an ad set with spend and zero conversions resolves cost/conversation to null, not 0 (item 2.18/4.3)', () => {
     const result = queryMetaAds(fixture, { from: '2026-06-22', to: '2026-06-22' })
-    const videoFacts = result.data!.facts.filter((f) => f.adSetId === 'as-bc-au-22jun-video')
+    const videoFacts = result.data!.facts.filter((f) => f.adSetId === 'as-bc-au-video-22jun')
     expect(videoFacts.length).toBeGreaterThan(0)
     expect(videoFacts.every((f) => f.conversations === 0)).toBe(true)
+  })
+
+  it('the BC Australia 17 Jun outlier (item 4.2, TAD §10.2) has cost/conversation exactly ₹1,923.21', () => {
+    const result = queryMetaAds(fixture, { from: '2026-06-01', to: '2026-06-30' })
+    const outlierFacts = result.data!.facts.filter((f) => f.adSetId === 'as-bc-au-17jun')
+    const spend = outlierFacts.reduce((s, f) => s + f.spend, 0)
+    const conversations = outlierFacts.reduce((s, f) => s + f.conversations, 0)
+    expect(conversations).toBe(1)
+    expect(spend / conversations).toBeCloseTo(1923.21, 1)
+  })
+
+  it('summing reach across all 13 ad sets gives 58,392 — the wireframe\'s own double-counted figure, not the true 52,527 (documents why item 2.16 refuses to sum reach)', () => {
+    const result = queryMetaAds(fixture, { from: '2026-06-01', to: '2026-06-30' })
+    const naiveSummedReach = result.data!.facts.reduce((s, f) => s + f.reach, 0)
+    expect(naiveSummedReach).toBe(58392)
+    expect(naiveSummedReach).not.toBe(52527) // the true account-level reach for the same period
   })
 })

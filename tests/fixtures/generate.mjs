@@ -65,30 +65,61 @@ const ENVELOPE_META = {
 // meta-ads.json
 // ===========================================================================
 function buildMetaAds() {
+  // Real data read directly off Wireframe/07-adcampaigns-{top,mid1,mid2,bottom}.jpg
+  // (item 1.20's original generation predates an actual close look at these images —
+  // corrected here once the wireframe was actually inspected while building Phase 2's
+  // Ad Campaigns tab). All 13 rows sum exactly to the June headline totals already
+  // reconciled (spend 38,423.31 / impressions 95,823 / clicks 655 / conversations 101).
+  //
+  // Campaign grouping matches the wireframe's own narrative: "Consolidate the four
+  // simultaneous BC Australia campaigns... launched on 10 Jun, 11 Jun, 17 Jun, and
+  // 22 Jun" — that's exactly bc-au-10jun/bc-au-11jun/bc-au-17jun/bc-au-video-22jun,
+  // one campaign (camp-bc-au), which is what item 4.4's audience-overlap rule fires on.
+  //
+  // Reach note (worth its own line): summing all 13 ad sets' reach below gives exactly
+  // 58,392 — which is precisely the (double-counted, wrong) figure the wireframe's own
+  // Total Leads tab shows, while the Ad Campaigns tab's account-overview card shows the
+  // true deduplicated reach as 52,527 for the same June period. This is the wireframe
+  // itself demonstrating the exact non-additive-reach trap P1/TAD §9.2 exists to
+  // prevent — concrete evidence for why this app's reach handling (item 2.16: null for
+  // multi-day ranges, never a summed total) is the only defensible choice, not merely
+  // a cautious one.
   const adSets = [
-    { adSetId: 'as-bc-au-10jun', adSetName: 'Business Central — Australia (10 Jun)', campaignId: 'camp-construction-au', campaignName: 'Construction AU', launchDate: '2026-06-10', region: 'AU' },
-    { adSetId: 'as-bc-au-11jun', adSetName: 'Business Central — Australia (11 Jun)', campaignId: 'camp-construction-au', campaignName: 'Construction AU', launchDate: '2026-06-11', region: 'AU' },
-    { adSetId: 'as-bc-au-17jun', adSetName: 'Business Central — Australia (17 Jun)', campaignId: 'camp-construction-au', campaignName: 'Construction AU', launchDate: '2026-06-17', region: 'AU' },
-    { adSetId: 'as-bc-au-22jun-video', adSetName: 'Business Central — Australia — Video (22 Jun)', campaignId: 'camp-construction-au', campaignName: 'Construction AU', launchDate: '2026-06-22', region: 'AU' },
-    { adSetId: 'as-azure-tn', adSetName: 'Azure Migration — Tamil Nadu', campaignId: 'camp-azure-tn', campaignName: 'Azure Migration TN', launchDate: '2026-05-05', region: 'IN' },
-    { adSetId: 'as-d365-fo-in', adSetName: 'Dynamics 365 F&O — India', campaignId: 'camp-d365-in', campaignName: 'Dynamics 365 India', launchDate: '2026-05-01', region: 'IN' },
-    { adSetId: 'as-powerbi-in', adSetName: 'Power BI Consulting — India', campaignId: 'camp-powerbi', campaignName: 'Power BI Consulting', launchDate: '2026-05-12', region: 'IN' },
+    { adSetId: 'as-construction-au-11jun', adSetName: 'Construction Co. Australia', campaignId: 'camp-construction-au', campaignName: 'Construction AU', launchDate: '2026-06-11', region: 'AU' },
+    { adSetId: 'as-bc-3-emirates', adSetName: 'Business Central — 3 Emirates', campaignId: 'camp-bc-3-emirates', campaignName: 'Business Central Emirates', launchDate: '2026-06-03', region: 'AE/ME' },
+    { adSetId: 'as-azure-india-video', adSetName: 'Azure — India (Video)', campaignId: 'camp-azure-india', campaignName: 'Azure Migration India', launchDate: '2026-06-22', region: 'IN/Kerala' },
+    { adSetId: 'as-azure-srilanka-video', adSetName: 'Azure — Sri Lanka (Video)', campaignId: 'camp-azure-srilanka', campaignName: 'Azure Migration Sri Lanka', launchDate: '2026-06-22', region: 'LK' },
+    { adSetId: 'as-bc-au-11jun', adSetName: 'Business Central — Australia', campaignId: 'camp-bc-au', campaignName: 'Business Central AU', launchDate: '2026-06-11', region: 'AU' },
+    { adSetId: 'as-bc-uae-sa', adSetName: 'Business Central — UAE & SA', campaignId: 'camp-bc-uae-sa', campaignName: 'Business Central UAE & SA', launchDate: '2026-06-01', region: 'AE/SA' },
+    { adSetId: 'as-construction-au-17jun', adSetName: 'Construction Co. Australia', campaignId: 'camp-construction-au', campaignName: 'Construction AU', launchDate: '2026-06-17', region: 'AU' },
+    { adSetId: 'as-bc-au-17jun', adSetName: 'Business Central — Australia', campaignId: 'camp-bc-au', campaignName: 'Business Central AU', launchDate: '2026-06-17', region: 'AU' },
+    { adSetId: 'as-azure-tn', adSetName: 'Azure — Tamil Nadu', campaignId: 'camp-azure-tn', campaignName: 'Azure Migration TN', launchDate: '2026-05-22', region: 'IN/TN' },
+    { adSetId: 'as-bc-middle-east', adSetName: 'Business Central — Middle East', campaignId: 'camp-bc-me', campaignName: 'Business Central Middle East', launchDate: '2026-06-11', region: 'ME' },
+    { adSetId: 'as-bc-au-video-22jun', adSetName: 'BC Australia — Video', campaignId: 'camp-bc-au', campaignName: 'Business Central AU', launchDate: '2026-06-22', region: 'AU' },
+    { adSetId: 'as-azure-managed-india', adSetName: 'Azure Managed — India', campaignId: 'camp-azure-managed-india', campaignName: 'Azure Managed India', launchDate: '2026-06-29', region: 'IN' },
+    { adSetId: 'as-bc-au-10jun', adSetName: 'Business Central — Australia', campaignId: 'camp-bc-au', campaignName: 'Business Central AU', launchDate: '2026-06-10', region: 'AU' },
   ]
 
   const facts = []
 
-  // June — precise, reconciled ad-set totals (see header comment).
+  // June — the 13 real ad sets, exact figures from the wireframe. { days, startOffset }
+  // give each a plausible active window starting on its launchDate through month-end.
   const juneAdSetTotals = [
-    // startOffset aligns each ad set's first fact row with its declared launchDate above
-    // (offset 0 = 2026-06-01) — a launchDate with fact rows predating it would be a data
-    // integrity bug (caught by metaAds.test.ts while building item 1.22).
-    { adSetId: 'as-bc-au-10jun', country: 'AU', days: 15, startOffset: 9, spend: 4200.0, impressions: 10500, clicks: 68, conversations: 8 },
-    { adSetId: 'as-bc-au-11jun', country: 'AU', days: 15, startOffset: 10, spend: 4500.0, impressions: 11200, clicks: 71, conversations: 9 },
-    { adSetId: 'as-bc-au-17jun', country: 'AU', days: 14, startOffset: 16, spend: 9616.05, impressions: 18700, clicks: 125, conversations: 5 },
-    { adSetId: 'as-bc-au-22jun-video', country: 'AU', days: 9, startOffset: 21, spend: 1616.0, impressions: 6423, clicks: 41, conversations: 0 },
-    { adSetId: 'as-azure-tn', country: 'IN', days: 30, startOffset: 0, spend: 3348.0, impressions: 15000, clicks: 95, conversations: 18 },
-    { adSetId: 'as-d365-fo-in', country: 'IN', days: 30, startOffset: 0, spend: 9143.26, impressions: 20000, clicks: 150, conversations: 38 },
-    { adSetId: 'as-powerbi-in', country: 'IN', days: 30, startOffset: 0, spend: 6000.0, impressions: 14000, clicks: 105, conversations: 23 },
+    { adSetId: 'as-construction-au-11jun', country: 'AU', days: 20, startOffset: 10, spend: 9255.62, impressions: 5368, reach: 2970, clicks: 105, conversations: 22 },
+    { adSetId: 'as-bc-3-emirates', country: 'AE', days: 28, startOffset: 2, spend: 4442.18, impressions: 8782, reach: 5846, clicks: 62, conversations: 8 },
+    { adSetId: 'as-azure-india-video', country: 'IN', days: 9, startOffset: 21, spend: 4077.38, impressions: 26890, reach: 15930, clicks: 61, conversations: 13 },
+    { adSetId: 'as-azure-srilanka-video', country: 'LK', days: 9, startOffset: 21, spend: 4052.15, impressions: 19335, reach: 7753, clicks: 193, conversations: 15 },
+    { adSetId: 'as-bc-au-11jun', country: 'AU', days: 20, startOffset: 10, spend: 2799.15, impressions: 1690, reach: 1177, clicks: 27, conversations: 4 },
+    { adSetId: 'as-bc-uae-sa', country: 'AE', days: 30, startOffset: 0, spend: 2670.33, impressions: 4237, reach: 2820, clicks: 35, conversations: 8 },
+    { adSetId: 'as-construction-au-17jun', country: 'AU', days: 14, startOffset: 16, spend: 2274.80, impressions: 1259, reach: 925, clicks: 30, conversations: 9 },
+    // The outlier item 4.2/TAD §10.2 example fires on — 1 conversation at cost 1,923.21 exactly.
+    { adSetId: 'as-bc-au-17jun', country: 'AU', days: 14, startOffset: 16, spend: 1923.21, impressions: 958, reach: 779, clicks: 13, conversations: 1 },
+    { adSetId: 'as-azure-tn', country: 'IN', days: 30, startOffset: 0, spend: 1866.06, impressions: 10723, reach: 7362, clicks: 57, conversations: 10 },
+    { adSetId: 'as-bc-middle-east', country: 'AE', days: 20, startOffset: 10, spend: 1655.91, impressions: 5490, reach: 4112, clicks: 29, conversations: 4 },
+    // Spend, zero conversions — item 2.18/4.3's example.
+    { adSetId: 'as-bc-au-video-22jun', country: 'AU', days: 9, startOffset: 21, spend: 1615.67, impressions: 902, reach: 783, clicks: 3, conversations: 0 },
+    { adSetId: 'as-azure-managed-india', country: 'IN', days: 2, startOffset: 28, spend: 1229.19, impressions: 9842, reach: 7640, clicks: 36, conversations: 7 },
+    { adSetId: 'as-bc-au-10jun', country: 'AU', days: 21, startOffset: 9, spend: 561.66, impressions: 347, reach: 295, clicks: 4, conversations: 0 },
   ]
 
   for (const t of juneAdSetTotals) {
@@ -96,7 +127,10 @@ function buildMetaAds() {
     const impressions = splitInt(t.impressions, t.days)
     const clicks = splitInt(t.clicks, t.days)
     const conversations = splitInt(t.conversations, t.days)
-    const reach = impressions.map((i) => Math.round(i * 0.55)) // plausible, non-additive by design (not reconciled to a stored total)
+    // Daily split is an approximation (reach isn't additive across days either); the
+    // *monthly total per ad set* matches the wireframe exactly, which is what item
+    // 2.17's table and the Phase 4 rule-engine fixtures depend on.
+    const reach = splitInt(t.reach, t.days)
     for (let d = 0; d < t.days; d++) {
       facts.push({
         date: iso('2026-06-01', t.startOffset + d),
