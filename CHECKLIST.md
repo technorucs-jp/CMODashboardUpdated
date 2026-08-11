@@ -318,8 +318,9 @@ Last updated:         2026-08-11
   *Verify:* switching away and back to a tab issues no second `fetch` call.
       > `QueryClientProvider`/`staleTime: Infinity` already existed from Phase 0's `App.tsx`. Built the shared `useMetricsQuery` hook establishing the key pattern every tab's view-model hook will use (Phase 2/3) — verified the actual cache-hit behavior (unmount + remount with the same key issues no second call to the query function) rather than just asserting the key shape.
 
-- [ ] **2.7** Idle prefetch of the other seven tabs' channel data (via `load()`, item 1.21) for the current range after first paint.
+- [x] **2.7** Idle prefetch of the other seven tabs' channel data (via `load()`, item 1.21) for the current range after first paint.
   *Verify:* network panel shows the other channels' JSON fetched after `/ad-campaigns` settles; a tab switch issues no new fetch.
+      > Prefetches by *channel* (5 files), not per-tab (8 tabs) — several tabs share a channel (e.g. Ad Campaigns and Total Leads both read `meta-ads`), and Overview needs all five, so "prefetch every channel once" covers every tab regardless of which one loads first. Wired into `DashboardLayout` (mounts once for every tab) with no channel excluded — whichever tab the user actually lands on calls `load()` for its own channel too, but `loader.ts`'s in-flight-promise dedup (item 1.21) turns that into a join, not a second fetch, verified directly via a mocked `load`. `requestIdleCallback` feature-detected with a `setTimeout` fallback (Safari has no `requestIdleCallback`).
 
 - [ ] **2.8** `CardSkeleton` shown per card during fetch/aggregation — not a full-page spinner. Sidebar and pickers stay interactive.
   *Verify:* throttle the network; the shell remains usable while cards are skeletons.
