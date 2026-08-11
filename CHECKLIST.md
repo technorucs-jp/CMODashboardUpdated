@@ -236,23 +236,32 @@ Last updated:         2026-08-10
   *Verify:* test — mocking `fetch` to return a corrupt `gsc.json` body makes `load('gsc')` throw a typed error while `load('ga4')` still succeeds.
       > Added `"node"` to `tsconfig.app.json`'s `types` array so test files that read fixture JSON via `node:fs` (this one, and likely more later in Phase 1/3) typecheck — Vite's own app code never needs it, only test helpers do. `ChannelLoadError` uses the native ES2022 `Error` `cause` option rather than a custom field.
 
-- [ ] **1.22** Channel query modules `src/lib/channels/{metaAds,zoho,ga4,gsc,linkedin}.ts` — filter by range, return `ChannelResult` with coverage.
+- [x] **1.22** Channel query modules `src/lib/channels/{metaAds,zoho,ga4,gsc,linkedin}.ts` — filter by range, return `ChannelResult` with coverage.
   *Verify:* test per channel — filtering to a known range returns hand-calculated totals.
+      > All five reconcile exactly against the item 1.20 fixtures for June 2026. Each module declares its own **local** TypeScript interfaces for the shapes it reads (`MetaAdsFactShape` etc.) rather than importing the Zod-inferred types from `src/data/schemas.ts` — confirmed by lint that importing from `@/data` there trips the P6 boundary rule even for `import type`, and the fix is architecturally the right one anyway (structural typing means `src/data/loader.ts`'s real return values satisfy these shapes with zero explicit coupling). Exempted `src/lib/**/*.test.{ts,tsx}` from the P6 import-boundary rule in `eslint.config.js` — tests legitimately need real schemas/fixtures for realistic data and never ship in the production bundle the invariant protects.
+      > GSC's coverage wraps any `'full'` result as `'lagging'` (GSC always carries Google's reporting lag, TAD §7.2) — `'partial'`/`'none'` pass through unchanged since they already carry a stronger signal.
+      > LinkedIn's coverage needed real interval-merging logic (union of possibly-overlapping/adjacent upload windows, gap detection) — added `nextDay`/`mergeIntervals`/`gapsInRange` to `src/lib/time/range.ts` (beyond item 1.11's original scope) with their own tests, since `computeCoverage`'s generic single-earliest/latest-pair logic doesn't fit LinkedIn's multiple-disjoint-upload-window reality.
+      > **Gap found while writing metaAds.test.ts**: the fixture's four BC Australia ad sets had fact rows starting *before* their own declared `launchDate` (a startOffset miscalculation in the generator) — fixed in `tests/fixtures/generate.mjs`, regenerated, June totals re-verified unchanged (they don't depend on which days the total is spread across).
 
-- [ ] **1.23** Zoho date bucketing uses `toBusinessDate(createdTime)`, not the raw string.
+- [x] **1.23** Zoho date bucketing uses `toBusinessDate(createdTime)`, not the raw string.
   *Verify:* test — a lead at `2026-06-01T00:15:00+05:30` is in a 1–30 June range and not in a 1–31 May range.
+      > Covered directly in `zoho.test.ts` as part of item 1.22's module.
 
-- [ ] **1.24** Zoho excludes Partner / Referral / ZoomInfo defensively at query time (belt and braces — ingestion already excludes them).
+- [x] **1.24** Zoho excludes Partner / Referral / ZoomInfo defensively at query time (belt and braces — ingestion already excludes them).
   *Verify:* test — a fixture deliberately containing a Partner lead is excluded from every count.
+      > Covered directly in `zoho.test.ts`. `queryZoho` re-checks `INBOUND_SOURCES` at query time even though the schema's enum (item 1.4) already makes Partner/Referral/ZoomInfo impossible to load in the first place — belt and braces, as the item says.
 
-- [ ] **1.25** GSC average position computed as `Σ sumPosition ÷ Σ impressions`.
+- [x] **1.25** GSC average position computed as `Σ sumPosition ÷ Σ impressions`.
   *Verify:* test — a 2-day fixture where the impression-weighted average differs from the daily mean; assert the weighted value.
+      > The full June fixture's days are close enough in volume that a naive mean wouldn't diverge meaningfully from the true weighted average, so — same as item 1.14's own dedicated fixture — added a small dedicated 2-day skewed fixture directly in `gsc.test.ts` (low-volume/low-position day vs. high-volume/high-position day) where the two visibly differ (weighted ≈59.4 vs. naive mean 32.5).
 
-- [ ] **1.26** GA4 bounce rate and avg. session duration computed from summed counts.
+- [x] **1.26** GA4 bounce rate and avg. session duration computed from summed counts.
   *Verify:* test — range bounce rate ≠ mean of daily bounce rates; assert `Σbounced/Σsessions`.
+      > Same pattern as 1.25 — a dedicated 2-day skewed fixture in `ga4.test.ts` (weighted ≈10.7% vs. naive mean 45%) demonstrates the actual divergence the full-month fixture is too uniform to show.
 
-- [ ] **1.27** LinkedIn coverage rule: a range is servable only if fully inside the union of `meta.uploads[]` intervals; partial overlap yields `requires-full-coverage` with the gaps listed.
+- [x] **1.27** LinkedIn coverage rule: a range is servable only if fully inside the union of `meta.uploads[]` intervals; partial overlap yields `requires-full-coverage` with the gaps listed.
   *Verify:* test — range 15 Jun–15 Jul against a June-only upload returns `requires-full-coverage` with gap 1–15 Jul.
+      > Covered directly in `linkedin.test.ts` — the exact worked example from this item's own verify text passes, plus a range entirely outside any upload (gap = the whole range) and the full-coverage case.
 
 ### Client fetch & cache layer
 

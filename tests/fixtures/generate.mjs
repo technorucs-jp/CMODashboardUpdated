@@ -79,10 +79,13 @@ function buildMetaAds() {
 
   // June — precise, reconciled ad-set totals (see header comment).
   const juneAdSetTotals = [
-    { adSetId: 'as-bc-au-10jun', country: 'AU', days: 15, startOffset: 0, spend: 4200.0, impressions: 10500, clicks: 68, conversations: 8 },
-    { adSetId: 'as-bc-au-11jun', country: 'AU', days: 15, startOffset: 1, spend: 4500.0, impressions: 11200, clicks: 71, conversations: 9 },
-    { adSetId: 'as-bc-au-17jun', country: 'AU', days: 14, startOffset: 7, spend: 9616.05, impressions: 18700, clicks: 125, conversations: 5 },
-    { adSetId: 'as-bc-au-22jun-video', country: 'AU', days: 9, startOffset: 12, spend: 1616.0, impressions: 6423, clicks: 41, conversations: 0 },
+    // startOffset aligns each ad set's first fact row with its declared launchDate above
+    // (offset 0 = 2026-06-01) — a launchDate with fact rows predating it would be a data
+    // integrity bug (caught by metaAds.test.ts while building item 1.22).
+    { adSetId: 'as-bc-au-10jun', country: 'AU', days: 15, startOffset: 9, spend: 4200.0, impressions: 10500, clicks: 68, conversations: 8 },
+    { adSetId: 'as-bc-au-11jun', country: 'AU', days: 15, startOffset: 10, spend: 4500.0, impressions: 11200, clicks: 71, conversations: 9 },
+    { adSetId: 'as-bc-au-17jun', country: 'AU', days: 14, startOffset: 16, spend: 9616.05, impressions: 18700, clicks: 125, conversations: 5 },
+    { adSetId: 'as-bc-au-22jun-video', country: 'AU', days: 9, startOffset: 21, spend: 1616.0, impressions: 6423, clicks: 41, conversations: 0 },
     { adSetId: 'as-azure-tn', country: 'IN', days: 30, startOffset: 0, spend: 3348.0, impressions: 15000, clicks: 95, conversations: 18 },
     { adSetId: 'as-d365-fo-in', country: 'IN', days: 30, startOffset: 0, spend: 9143.26, impressions: 20000, clicks: 150, conversations: 38 },
     { adSetId: 'as-powerbi-in', country: 'IN', days: 30, startOffset: 0, spend: 6000.0, impressions: 14000, clicks: 105, conversations: 23 },

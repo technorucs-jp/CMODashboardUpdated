@@ -60,9 +60,13 @@ export default defineConfig([
     },
   },
 
-  // P6 — src/lib/** may not import react or the app layers (routes/components/data/auth)
+  // P6 — src/lib/** may not import react or the app layers (routes/components/data/auth).
+  // Test files are exempt: the invariant protects what ships in the production
+  // bundle, which test files never do — they legitimately need real schemas/
+  // fixtures for realistic test data.
   {
     files: ['src/lib/**/*.{ts,tsx}'],
+    ignores: ['src/lib/**/*.test.{ts,tsx}'],
     rules: {
       'no-restricted-imports': [
         'error',
