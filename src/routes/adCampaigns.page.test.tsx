@@ -55,9 +55,9 @@ describe('AdCampaignsPage — end-to-end against the real June fixture (items 2.
     await waitFor(() => expect(container.textContent).toContain('100/100'))
   })
 
-  it('a range before earliestRecordDate shows an explicit no-data state, not zeros (item 2.23)', async () => {
+  it('a range before earliestRecordDate shows an explicit no-data state, not zeros (item 2.23/3.1)', async () => {
     renderAt('/ad-campaigns?from=2026-04-01&to=2026-04-30')
-    await waitFor(() => expect(screen.getByText(/No data for the selected range/)).toBeInTheDocument())
+    await waitFor(() => expect(screen.getByText(/No data before 2026-05-01/)).toBeInTheDocument())
     expect(screen.queryByText('₹0')).not.toBeInTheDocument()
   })
 })

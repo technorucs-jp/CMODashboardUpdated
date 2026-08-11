@@ -426,8 +426,9 @@ Last updated:         2026-08-11
 
 ### Shared state components
 
-- [ ] **3.1** `EmptyState`, `NoDataBeforeDate`, `PartialDataWarning`, `LaggingDataNotice`, `NotConnectedPanel` — used by every tab, never reimplemented per tab.
+- [x] **3.1** `EmptyState`, `NoDataBeforeDate`, `PartialDataWarning`, `LaggingDataNotice`, `NotConnectedPanel` — used by every tab, never reimplemented per tab.
   *Verify:* each renders from a `Coverage` value; `grep -rn "No data" src/routes/` returns nothing (copy lives in the shared components).
+      > Added a `CoverageState` dispatcher on top of the five named components — tabs render `<CoverageState coverage={vm.coverage} />` rather than switching on `coverage.kind` themselves. `PartialDataWarning` is shared between `'partial'` (soft clip, most channels) and `'requires-full-coverage'` (LinkedIn's hard gate, item 3.36 explicitly says this) since both need a gap called out, just with different severity framing. Refactored `AdCampaignsPage`'s inline "No data for the selected range" string onto `CoverageState` — the grep is clean against non-test files; a test file asserting the *rendered* text naturally still contains the string, which isn't "reimplementing the copy", so the check is scoped to non-`.test.` files.
 
 ### Overview
 

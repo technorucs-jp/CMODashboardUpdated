@@ -6,6 +6,7 @@ import { DataTable, type DataTableColumn } from '@/components/data/DataTable'
 import { DonutChart } from '@/components/data/DonutChart'
 import { HorizontalBarChart } from '@/components/data/HorizontalBarChart'
 import { KpiCard } from '@/components/data/KpiCard'
+import { CoverageState } from '@/components/states/CoverageState'
 import { useMetricsQuery } from './useMetricsQuery'
 import { useRangeState } from './useRangeState'
 import type { AdSetTableRow } from '@/viewmodels/adCampaigns'
@@ -48,11 +49,7 @@ export default function AdCampaignsPage() {
         </div>
       )}
 
-      {!isLoading && vm && !vm.hasData && (
-        <div className="card" style={{ padding: 16 }}>
-          {vm.coverage.kind === 'none' ? 'No data for the selected range.' : 'Data is not fully available for the selected range.'}
-        </div>
-      )}
+      {!isLoading && vm && !vm.hasData && <CoverageState coverage={vm.coverage} />}
 
       {!isLoading && vm && vm.hasData && vm.accountCards && (
         <>
