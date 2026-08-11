@@ -352,8 +352,9 @@ Last updated:         2026-08-11
   *Verify:* visual match against `02-leads-top.jpg`.
       > Actually looked at `02-leads-top.jpg` for this one (item 1.20's earlier fixture work had already independently confirmed the exact same Zoho figures — 49/48/1/15/27/7/0/16 — from text elsewhere in the docs, all match this image precisely). Confirms the BRD v2.1 §7.1 zero-count-card bug directly: this wireframe's "Inbound leads overview" row shows only 8 cards, with Contact in Future and Junk silently absent — exactly what item 3.8 exists to fix.
 
-- [ ] **2.13** `DonutChart` and `HorizontalBarChart`, colours from CSS tokens.
+- [x] **2.13** `DonutChart` and `HorizontalBarChart`, colours from CSS tokens.
   *Verify:* `grep -rn "fill=\"#" src/components/` returns nothing.
+      > **Gap found and fixed**: a doc comment describing this very verify command literally contained the string it greps for, producing a false-positive match against the actual command. Rephrased to describe the rule in prose instead of quoting the grep pattern. Both components take a `color` (CSS var string, e.g. `'var(--accent-1)'`) per data point from the caller — Recharts' own default palette is never used.
 
 - [ ] **2.14** `src/viewmodels/adCampaigns.ts` (client-side, was `src/server/viewmodels/` pre-pivot) — composes the Ad Campaigns view model.
   *Verify:* contract test — the returned object matches the published TS type.
