@@ -31,10 +31,17 @@ export interface MetaAdsAdSet {
   readonly region: string
 }
 
+export interface MetaAdsAccountRow {
+  readonly date: string
+  readonly opportunityScore: number
+  readonly recommendations: readonly string[]
+}
+
 export interface MetaAdsFileShape {
   readonly meta: { readonly earliestRecordDate: string; readonly latestRecordDate: string }
   readonly dimensions: { readonly adSets: readonly MetaAdsAdSet[] }
   readonly facts: readonly MetaAdsFact[]
+  readonly account: readonly MetaAdsAccountRow[]
 }
 
 export interface MetaAdsSummary {
@@ -55,6 +62,8 @@ export interface MetaAdsQueryResult {
   readonly facts: readonly MetaAdsFact[]
   readonly adSets: readonly MetaAdsAdSet[]
   readonly summary: MetaAdsSummary
+  /** Account rows filtered to the range (item 2.22's opportunity score panel). */
+  readonly accountRows: readonly MetaAdsAccountRow[]
 }
 
 export function queryMetaAds(file: MetaAdsFileShape, range: DateRange): ChannelResult<MetaAdsQueryResult> {
@@ -93,6 +102,7 @@ export function queryMetaAds(file: MetaAdsFileShape, range: DateRange): ChannelR
     return {
       facts,
       adSets: file.dimensions.adSets,
+      accountRows: file.account.filter((a) => containsDate(range, a.date)),
       summary: {
         spend,
         impressions,

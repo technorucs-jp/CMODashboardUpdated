@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { AppRoutes } from './AppRoutes'
 
 const { useIsAuthenticatedMock, useMsalMock } = vi.hoisted(() => ({
@@ -14,10 +15,15 @@ vi.mock('@azure/msal-react', () => ({
 }))
 
 function renderAt(path: string) {
+  // Matches App.tsx's real provider tree — tabs using useMetricsQuery (item 2.14+)
+  // need a QueryClientProvider in scope, same as production.
+  const client = new QueryClient({ defaultOptions: { queries: { staleTime: Infinity, retry: false } } })
   return render(
-    <MemoryRouter initialEntries={[path]}>
-      <AppRoutes />
-    </MemoryRouter>,
+    <QueryClientProvider client={client}>
+      <MemoryRouter initialEntries={[path]}>
+        <AppRoutes />
+      </MemoryRouter>
+    </QueryClientProvider>,
   )
 }
 

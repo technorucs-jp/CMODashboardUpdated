@@ -63,4 +63,12 @@ describe('queryMetaAds (item 1.22)', () => {
     expect(naiveSummedReach).toBe(58392)
     expect(naiveSummedReach).not.toBe(52527) // the true account-level reach for the same period
   })
+
+  it('Phase 2 gate — a range crossing a month boundary (15 Jun-15 Jul) recomputes, not a stale carry-forward', () => {
+    const june = queryMetaAds(fixture, { from: '2026-06-01', to: '2026-06-30' })
+    const crossing = queryMetaAds(fixture, { from: '2026-06-15', to: '2026-07-15' })
+    expect(crossing.coverage.kind).toBe('full')
+    expect(crossing.data!.summary.spend).not.toBeCloseTo(june.data!.summary.spend, 0)
+    expect(crossing.data!.summary.conversations).toBeGreaterThan(0)
+  })
 })

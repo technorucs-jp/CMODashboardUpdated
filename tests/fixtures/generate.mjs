@@ -163,10 +163,12 @@ function buildMetaAds() {
     }
   }
 
+  // June is 100/100 "Perfect score — account fully optimised" per
+  // Wireframe/07-adcampaigns-mid2.jpg — not an arbitrary varying score.
   const account = []
-  for (const [monthStart, days] of [['2026-05-01', 31], ['2026-06-01', 30], ['2026-07-01', 31]]) {
+  for (const [monthStart, days, score] of [['2026-05-01', 31, 88], ['2026-06-01', 30, 100], ['2026-07-01', 31, 92]]) {
     for (let d = 0; d < days; d++) {
-      account.push({ date: iso(monthStart, d), opportunityScore: 82 + (d % 15), recommendations: [] })
+      account.push({ date: iso(monthStart, d), opportunityScore: score, recommendations: [] })
     }
   }
 
