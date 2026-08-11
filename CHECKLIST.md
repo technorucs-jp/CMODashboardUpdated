@@ -196,7 +196,7 @@ Last updated:         2026-08-10
 
 ### Metrics core
 
-- [ ] **1.13** `src/lib/metrics/ratio.ts` — `Ratio {n,d}`, `ratio()`, `sumRatios()`, `resolve()` returning `null` when `d === 0`. No arithmetic operators exposed on `Ratio`.
+- [x] **1.13** `src/lib/metrics/ratio.ts` — `Ratio {n,d}`, `ratio()`, `sumRatios()`, `resolve()` returning `null` when `d === 0`. No arithmetic operators exposed on `Ratio`.
   *Verify:* test — `resolve(ratio(5, 0)) === null` (not 0, not Infinity, not NaN).
 
 - [ ] **1.14** **Ratio invariant test** — for a 3-day fixture, the range CTR computed as `Σclicks/Σimpressions` differs from the mean of daily CTRs, and the engine returns the former.
