@@ -267,14 +267,17 @@ Last updated:         2026-08-10
 
 *(Replaces the pre-pivot "API skeleton" section — there is no server, so there is no route handler, `ETag`, or 304 to build. The equivalent concerns — avoid redundant work, isolate per-tab failures, cache within a session — move into this plain client module + TanStack Query.)*
 
-- [ ] **1.28** `src/data/loader.ts` `load(channel)` (built in 1.21) is the single fetch point for every channel; nothing else in the app calls `fetch()` directly against `public/data/`.
+- [x] **1.28** `src/data/loader.ts` `load(channel)` (built in 1.21) is the single fetch point for every channel; nothing else in the app calls `fetch()` directly against `public/data/`.
   *Verify:* `grep -rn "fetch(" src/ --include=*.ts --include=*.tsx | grep -v src/data/loader.ts` returns nothing.
+      > Already true — no other module has needed to call `fetch()` yet. Will stay true because every channel module (item 1.22) takes an already-loaded file, never fetches itself.
 
-- [ ] **1.29** Invalid or missing URL query params (read via `react-router`'s `useSearchParams` + Zod) fall back to current month to date rather than erroring.
+- [x] **1.29** Invalid or missing URL query params (read via `react-router`'s `useSearchParams` + Zod) fall back to current month to date rather than erroring.
   *Verify:* rendering `/leads` with no query params shows the current month's data, not an error screen.
+      > Built the pure fallback core now (`src/lib/time/rangeFromParams.ts`, `parseRangeParams`) since it belongs in `src/lib/**`, not React — the actual `useSearchParams()` wiring into `/leads` and the other routes is Phase 2 (items 2.1-2.8), which will call this directly. Missing, malformed, and inverted (`from > to`) params all fall back to `computePreset('this-month', today)` rather than erroring.
 
-- [ ] **1.30** Aggregate memoisation keyed on `tab:rangeSig` for the current browser session (a `Map` or `useMemo`-backed cache — there is no commit SHA available client-side, and none is needed since the memo only needs to survive the tab, not a redeploy).
+- [x] **1.30** Aggregate memoisation keyed on `tab:rangeSig` for the current browser session (a `Map` or `useMemo`-backed cache — there is no commit SHA available client-side, and none is needed since the memo only needs to survive the tab, not a redeploy).
   *Verify:* instrument the aggregation step; selecting the same range twice in one session skips recomputation the second time.
+      > Built the pure primitive now (`src/lib/memo.ts`, `createKeyedMemo`) — instrumented via a `vi.fn()` compute callback, called once for a repeated key, independently for a different key. Phase 2's TanStack Query cache (item 2.6) does the equivalent at the whole-response level; this is the lower-level piece either the query layer or a view-model composer can use directly.
 
 - [ ] **1.31** **Reconciliation harness** — `tests/reconciliation/june-2026.golden.json` with the published June figures (₹38,423 spend, 101 conversations, ₹380 cost/conv, 1,720 sessions, 65.3% engagement, 469 clicks, 54,744 impressions, 0.81% CTR, 132 new followers, 522 reactions, 49 inbound leads, 30.6% contact rate). Test selects 1–30 June and asserts within ±1%.
   *Verify:* `npm run test:recon` green.
