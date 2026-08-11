@@ -340,8 +340,9 @@ Last updated:         2026-08-11
   *Verify:* renders the Ad Spend card matching `07-adcampaigns-top.jpg`.
       > Added a shared `.card` CSS class (surface/border/radius) that both `KpiCard` and `CardSkeleton` build on — `CardSkeleton` was reusing its own `.skeleton` class for this before, which worked but was semantically backwards (a loaded card borrowing a "loading" class name). All values arrive pre-formatted (`value: string`, not `number`) — this component never computes anything, per the `components/` layering rule.
 
-- [ ] **2.10** `StatusTag` — Leading / Good / Monitor / Action needed, colour **and** text label.
+- [x] **2.10** `StatusTag` — Leading / Good / Monitor / Action needed, colour **and** text label.
   *Verify:* all four variants render; label text is present, not colour-only.
+      > Takes the `Status` type directly from `src/lib/metrics/status.ts` (item 1.18) — the four values can never drift apart from what the status ladder actually produces.
 
 - [ ] **2.11** `DataTable` — sortable columns, totals row, `tabular-nums`, `overflow-x: auto` container.
   *Verify:* the ad-set table sorts by spend and by cost/conv; the page body never scrolls horizontally at 1280px.
