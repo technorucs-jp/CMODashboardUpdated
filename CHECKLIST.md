@@ -18,9 +18,9 @@ Companion to `TASK.md`. **Read `TASK.md` first.** Work top to bottom, one item a
 ## Session state — update before you stop
 
 ```
-Current phase:        0 — Foundation — COMPLETE (18/18). Starting Phase 1.
-Last completed item:  0.18
-Next item:            1.1
+Current phase:        1 — Data spine (schemas 1.1-1.9 done)
+Last completed item:  1.9
+Next item:            1.10 (src/lib/time/businessDate.ts)
 Blocked on:           Nothing blocking Phase 1. Still open, none of them phase-blocking yet:
                       real Entra credentials (VITE_MSAL_CLIENT_ID/TENANT_ID — needs CMO/IT admin
                       to complete an app registration; sign-in can't be end-to-end tested until
