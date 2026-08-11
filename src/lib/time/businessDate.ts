@@ -36,3 +36,38 @@ export function toBusinessDate(input: string | Date): BusinessDate {
 export function nowInIst(): TZDate {
   return TZDate.tz(IST_TIME_ZONE)
 }
+
+/**
+ * Calendar-widget boundary (item 2.1) — deliberately distinct from `toBusinessDate`.
+ *
+ * `react-day-picker`'s `Date` objects have no IST awareness: the library reads a
+ * `Date`'s *local* getters (whatever timezone the viewer's OS happens to be set
+ * to) to decide which calendar cell it represents. A calendar click carries no
+ * "instant" to convert — "the 15th" isn't a moment in time, it's a cell — so
+ * running it through `toBusinessDate`'s IST-shift logic would be wrong: for a
+ * viewer west of India that shift can land on the *previous* day, silently
+ * moving their click by one.
+ *
+ * The correct conversion at this one boundary is a naive extraction of the
+ * `Date`'s own local Y/M/D fields, with no shifting at all — the picker already
+ * put the user on the calendar cell they clicked; this just reads which one.
+ */
+export function businessDateFromCalendarDate(date: Date): BusinessDate {
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
+}
+
+/**
+ * The inverse of `businessDateFromCalendarDate` — constructs a `Date` via the
+ * local-timezone constructor (not a UTC/ISO string parse) so its local Y/M/D
+ * getters — which is what `react-day-picker` and its own DateLib read — match
+ * the given business date's digits exactly, regardless of the viewer's system
+ * timezone. Feeds the picker's `selected` prop; never used for anything that
+ * needs true IST semantics (use `toBusinessDate`/`nowInIst` for that).
+ */
+export function calendarDateFromBusinessDate(date: BusinessDate): Date {
+  const [year, month, day] = date.split('-').map(Number)
+  return new Date(year, month - 1, day)
+}

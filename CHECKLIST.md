@@ -294,8 +294,9 @@ Last updated:         2026-08-11
 *Goal: selecting any custom range recomputes every figure on Ad Campaigns, and the URL round-trips.*
 *Read first: TAD §0.5 (ADR-014), §11.3–11.6 (mechanism superseded — no API contract; the UI/behaviour spec still applies), BRD §4, §6, wireframes `07-adcampaigns-*.jpg`.*
 
-- [ ] **2.1** `DateRangePicker` — calendar + the seven presets, IST-based.
+- [x] **2.1** `DateRangePicker` — calendar + the seven presets, IST-based.
   *Verify:* selecting "Last Month" on 2026-08-10 sets `from=2026-07-01&to=2026-07-31`.
+      > Controlled component — no internal range state, only "is the calendar popover open" (item 2.3 needs the URL to be the only range state; this component just calls `onChange`, the parent/TopBar owns the URL wiring). **Found a genuinely subtle correctness issue integrating `react-day-picker`**: the library's `Date` objects use the *viewer's local system timezone* for calendar-cell semantics (a click isn't an instant, it's a cell), which is a different conversion than `toBusinessDate`'s IST-shift — running a picker selection through `toBusinessDate` could silently move a click by ±1 day depending on the viewer's clock. Added two narrowly-scoped, clearly-documented helpers to `businessDate.ts` (`calendarDateFromBusinessDate`/`businessDateFromCalendarDate`, naive local-getter extraction, deliberately *not* IST-aware) specifically for this one UI boundary, tested via a timezone-independent round-trip property rather than a hardcoded-TZ assertion. Verified `react-day-picker@10.0.1`'s actual `mode="range"`/`selected`/`onSelect` API by reading its shipped `.d.ts` rather than assuming — it's a very new major version.
 
 - [ ] **2.2** `ComparisonRangePicker` — off by default; options previous period / previous month / previous year / custom.
   *Verify:* enabling "previous period" for 1–30 June sets `cf=2026-05-02&ct=2026-05-31`.
