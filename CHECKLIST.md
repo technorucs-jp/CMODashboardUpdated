@@ -190,8 +190,9 @@ Last updated:         2026-08-10
 - [x] **1.11** `src/lib/time/range.ts` — `DateRange`, inclusive containment, length in days, range signature, previous-period-of-equal-length.
   *Verify:* test — 1–30 June has length 30; previous period is 2–31 May.
 
-- [ ] **1.12** `src/lib/time/presets.ts` — the seven presets, computed against IST today.
+- [x] **1.12** `src/lib/time/presets.ts` — the seven presets, computed against IST today.
   *Verify:* test with a frozen clock — "This Month" on 2026-08-10 IST returns 2026-08-01..2026-08-10.
+      > `computePreset(preset, today)` takes `today` as an explicit parameter rather than reading the clock internally — reading the live clock would make it impure, which P6 forbids for `src/lib/**`. The impure read is isolated in a one-line `todayInIst()` wrapper instead. This gives the identical testable guarantee the item asks for (pin what "today" is, assert the computed range) without `vi.useFakeTimers()` or any global mocking — arguably more robust since there's no global state to leak between tests.
 
 ### Metrics core
 
