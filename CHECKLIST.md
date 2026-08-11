@@ -206,7 +206,7 @@ Last updated:         2026-08-10
   *Verify:* test — `registry['meta.costPerConversation'].polarity === 'lower-better'`; `registry['ga4.totalUsers'].additive === false`.
       > 34 metrics across the five channels — covers everything named in BRD §5-12 and the channel-health table's four key metrics (cost/conversation, engagement rate, non-brand clicks, reactions/post). Not claimed exhaustive; a later phase needing a metric not yet listed here is a normal addition, not a gap in this item. `as const satisfies Record<string, MetricDefinition>` keeps literal key lookup (`registry['meta.costPerConversation']`) typed while still validating every entry's shape.
 
-- [ ] **1.16** `src/lib/metrics/aggregate.ts` — sum additive metrics over filtered rows; **throw** on an attempt to sum a non-additive metric across >1 day.
+- [x] **1.16** `src/lib/metrics/aggregate.ts` — sum additive metrics over filtered rows; **throw** on an attempt to sum a non-additive metric across >1 day.
   *Verify:* test — summing `reach` over a 2-day range throws; over a 1-day range returns the value.
 
 - [ ] **1.17** `src/lib/metrics/compare.ts` — `Delta` with `pct`, `direction`, `favourable`. Flat band `|pct| ≤ 2%`. `pct === null` when comparison is 0 and current is not.
