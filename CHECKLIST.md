@@ -218,8 +218,9 @@ Last updated:         2026-08-10
       > Also implemented the target-band rescue (`good.withinPct`/target bands are an OR per Appendix A's "or meeting a defined target band") with its own dedicated test — a metric whose delta alone would read `monitor` still reads `good` if its current value clears a configured floor (e.g. GA4 engagement ≥ 60%).
       > `pct === null` or a neutral-polarity metric defaults to `good` rather than fabricating a verdict from no baseline — untested by the literal checklist wording but covered here since `statusOf` must be total over every `Delta` shape `compare.ts` can produce.
 
-- [ ] **1.19** `src/lib/coverage/coverage.ts` — the `Coverage` union (`full`, `partial`, `none`, `lagging`, `requires-full-coverage`, `not-connected`) and `ChannelResult<T>` where `data` is `null` for every non-renderable kind.
+- [x] **1.19** `src/lib/coverage/coverage.ts` — the `Coverage` union (`full`, `partial`, `none`, `lagging`, `requires-full-coverage`, `not-connected`) and `ChannelResult<T>` where `data` is `null` for every non-renderable kind.
   *Verify:* test — a range entirely before `earliestRecordDate` yields `{kind:'none'}` with `data: null`.
+      > `isRenderable()`/`toChannelResult()` make the null-for-non-renderable rule mechanical rather than a convention each channel module has to remember — a caller cannot attach data to a `none`/`requires-full-coverage`/`not-connected` result even by passing a `computeData` function, since it's simply never called for those kinds. Clarified from TAD §9.4's prose: `lagging` (GSC) IS renderable — it's a banner alongside real data, not a blocking state like the other three non-renderable kinds. `computeCoverage()` handles the common full/partial/none case (Meta Ads/Zoho/GA4); GSC's `lagging`, LinkedIn's `requires-full-coverage`, and Email's `not-connected` are constructed directly by their own channel modules (item 1.22/Phase 3) since none of those reduce to a single earliest/latest pair.
 
 ### Fixtures and loader
 
