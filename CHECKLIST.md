@@ -314,8 +314,9 @@ Last updated:         2026-08-11
   *Verify:* manual — copy URL, open in a fresh session, sign in, same figures render.
       > Automated equivalent of the "manual" verify: render `/overview?from=...&to=...&cf=...&ct=...` fresh (no prior navigation) and assert both the primary and comparison ranges appear correctly — this is the same code path a pasted URL would hit.
 
-- [ ] **2.6** TanStack Query provider, key `['metrics', tab, rangeSig, compareSig]`, `staleTime: Infinity`.
+- [x] **2.6** TanStack Query provider, key `['metrics', tab, rangeSig, compareSig]`, `staleTime: Infinity`.
   *Verify:* switching away and back to a tab issues no second `fetch` call.
+      > `QueryClientProvider`/`staleTime: Infinity` already existed from Phase 0's `App.tsx`. Built the shared `useMetricsQuery` hook establishing the key pattern every tab's view-model hook will use (Phase 2/3) — verified the actual cache-hit behavior (unmount + remount with the same key issues no second call to the query function) rather than just asserting the key shape.
 
 - [ ] **2.7** Idle prefetch of the other seven tabs' channel data (via `load()`, item 1.21) for the current range after first paint.
   *Verify:* network panel shows the other channels' JSON fetched after `/ad-campaigns` settles; a tab switch issues no new fetch.
