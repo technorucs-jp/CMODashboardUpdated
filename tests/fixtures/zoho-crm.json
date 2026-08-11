@@ -1,0 +1,664 @@
+{
+  "schemaVersion": 1,
+  "meta": {
+    "channel": "zoho-crm",
+    "lastSyncedAt": "2026-08-10T09:03:11+05:30",
+    "earliestRecordDate": "2026-05-01",
+    "latestRecordDate": "2026-08-09",
+    "coworkRunId": "run_2026-08-10T0900",
+    "syncSource": "Zoho CRM",
+    "rowCounts": {
+      "leads": 81
+    }
+  },
+  "leads": [
+    {
+      "leadId": "4800",
+      "createdTime": "2026-06-01T09:00:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4801",
+      "createdTime": "2026-06-02T10:07:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4802",
+      "createdTime": "2026-06-03T11:14:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4803",
+      "createdTime": "2026-06-05T12:21:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4804",
+      "createdTime": "2026-06-06T13:28:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4805",
+      "createdTime": "2026-06-08T14:35:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4806",
+      "createdTime": "2026-06-09T15:42:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4807",
+      "createdTime": "2026-06-11T16:49:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4808",
+      "createdTime": "2026-06-13T09:56:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4809",
+      "createdTime": "2026-06-16T10:03:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4810",
+      "createdTime": "2026-06-18T11:10:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4811",
+      "createdTime": "2026-06-20T12:17:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4812",
+      "createdTime": "2026-06-22T13:24:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4813",
+      "createdTime": "2026-06-25T14:31:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4814",
+      "createdTime": "2026-06-27T15:38:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4815",
+      "createdTime": "2026-06-29T16:45:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4816",
+      "createdTime": "2026-06-01T09:52:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4817",
+      "createdTime": "2026-06-02T10:59:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4818",
+      "createdTime": "2026-06-03T11:06:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4819",
+      "createdTime": "2026-06-05T12:13:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4820",
+      "createdTime": "2026-06-06T13:20:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4821",
+      "createdTime": "2026-06-08T14:27:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4822",
+      "createdTime": "2026-06-09T15:34:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4823",
+      "createdTime": "2026-06-11T16:41:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4824",
+      "createdTime": "2026-06-13T09:48:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Contacted",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4825",
+      "createdTime": "2026-06-16T10:55:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Contacted",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4826",
+      "createdTime": "2026-06-18T11:02:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Contacted",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4827",
+      "createdTime": "2026-06-20T12:09:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Contacted",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4828",
+      "createdTime": "2026-06-22T13:16:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Contacted",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4829",
+      "createdTime": "2026-06-25T14:23:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Contacted",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4830",
+      "createdTime": "2026-06-27T15:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Contacted",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4831",
+      "createdTime": "2026-06-29T16:37:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Contacted",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4832",
+      "createdTime": "2026-06-01T09:44:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Contacted",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4833",
+      "createdTime": "2026-06-02T10:51:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Contacted",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4834",
+      "createdTime": "2026-06-03T11:58:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Contacted",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4835",
+      "createdTime": "2026-06-05T12:05:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Contacted",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4836",
+      "createdTime": "2026-06-06T13:12:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Lost / Not interested",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4837",
+      "createdTime": "2026-06-08T14:19:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Lost / Not interested",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4838",
+      "createdTime": "2026-06-09T15:26:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Lost / Not interested",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4839",
+      "createdTime": "2026-06-11T16:33:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Lost / Not interested",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4840",
+      "createdTime": "2026-06-13T09:40:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Lost / Not interested",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4841",
+      "createdTime": "2026-06-16T10:47:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Lost / Not interested",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4842",
+      "createdTime": "2026-06-18T11:54:00+05:30",
+      "leadSource": "SEO",
+      "leadStatus": "Contacted",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4843",
+      "createdTime": "2026-06-20T12:01:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Priya",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4844",
+      "createdTime": "2026-06-22T13:08:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Priya",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4845",
+      "createdTime": "2026-06-25T14:15:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Priya",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4846",
+      "createdTime": "2026-06-27T15:22:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Contacted",
+      "owner": "Priya",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4847",
+      "createdTime": "2026-06-29T16:29:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Contacted",
+      "owner": "Priya",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4848",
+      "createdTime": "2026-06-01T09:36:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Lost / Not interested",
+      "owner": "Priya",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4849",
+      "createdTime": "2026-05-01T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4850",
+      "createdTime": "2026-05-03T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4851",
+      "createdTime": "2026-05-05T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Priya",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4852",
+      "createdTime": "2026-05-07T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4853",
+      "createdTime": "2026-05-09T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4854",
+      "createdTime": "2026-05-11T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4855",
+      "createdTime": "2026-05-13T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4856",
+      "createdTime": "2026-05-15T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Priya",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4857",
+      "createdTime": "2026-05-17T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4858",
+      "createdTime": "2026-05-19T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4859",
+      "createdTime": "2026-05-21T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4860",
+      "createdTime": "2026-05-23T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4861",
+      "createdTime": "2026-05-25T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Priya",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4862",
+      "createdTime": "2026-05-27T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4863",
+      "createdTime": "2026-05-29T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4864",
+      "createdTime": "2026-05-31T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4865",
+      "createdTime": "2026-07-01T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4866",
+      "createdTime": "2026-07-03T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4867",
+      "createdTime": "2026-07-05T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Priya",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4868",
+      "createdTime": "2026-07-07T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4869",
+      "createdTime": "2026-07-09T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4870",
+      "createdTime": "2026-07-11T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4871",
+      "createdTime": "2026-07-13T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4872",
+      "createdTime": "2026-07-15T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Priya",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4873",
+      "createdTime": "2026-07-17T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4874",
+      "createdTime": "2026-07-19T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4875",
+      "createdTime": "2026-07-21T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4876",
+      "createdTime": "2026-07-23T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4877",
+      "createdTime": "2026-07-25T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Priya",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4878",
+      "createdTime": "2026-07-27T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4879",
+      "createdTime": "2026-07-29T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    },
+    {
+      "leadId": "4880",
+      "createdTime": "2026-07-31T11:30:00+05:30",
+      "leadSource": "Meta Ads",
+      "leadStatus": "Attempted to Contact",
+      "owner": "Gopinath",
+      "inquiryType": null
+    }
+  ]
+}

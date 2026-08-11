@@ -1,0 +1,2532 @@
+{
+  "schemaVersion": 1,
+  "meta": {
+    "channel": "ga4",
+    "lastSyncedAt": "2026-08-10T09:03:11+05:30",
+    "earliestRecordDate": "2026-05-01",
+    "latestRecordDate": "2026-08-09",
+    "coworkRunId": "run_2026-08-10T0900",
+    "syncSource": "GA4 Data API",
+    "rowCounts": {
+      "daily": 92
+    }
+  },
+  "daily": [
+    {
+      "date": "2026-06-01",
+      "totalUsers": 30,
+      "sessions": 58,
+      "screenPageViews": 84,
+      "engagedSessions": 38,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 6135
+    },
+    {
+      "date": "2026-06-02",
+      "totalUsers": 34,
+      "sessions": 58,
+      "screenPageViews": 84,
+      "engagedSessions": 38,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 6135
+    },
+    {
+      "date": "2026-06-03",
+      "totalUsers": 38,
+      "sessions": 58,
+      "screenPageViews": 84,
+      "engagedSessions": 38,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 6135
+    },
+    {
+      "date": "2026-06-04",
+      "totalUsers": 42,
+      "sessions": 58,
+      "screenPageViews": 84,
+      "engagedSessions": 38,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 6135
+    },
+    {
+      "date": "2026-06-05",
+      "totalUsers": 46,
+      "sessions": 58,
+      "screenPageViews": 84,
+      "engagedSessions": 38,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 6135
+    },
+    {
+      "date": "2026-06-06",
+      "totalUsers": 50,
+      "sessions": 58,
+      "screenPageViews": 84,
+      "engagedSessions": 38,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 6135
+    },
+    {
+      "date": "2026-06-07",
+      "totalUsers": 54,
+      "sessions": 58,
+      "screenPageViews": 84,
+      "engagedSessions": 38,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 6135
+    },
+    {
+      "date": "2026-06-08",
+      "totalUsers": 58,
+      "sessions": 58,
+      "screenPageViews": 84,
+      "engagedSessions": 38,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 6135
+    },
+    {
+      "date": "2026-06-09",
+      "totalUsers": 62,
+      "sessions": 58,
+      "screenPageViews": 84,
+      "engagedSessions": 38,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 6135
+    },
+    {
+      "date": "2026-06-10",
+      "totalUsers": 66,
+      "sessions": 58,
+      "screenPageViews": 84,
+      "engagedSessions": 38,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 6135
+    },
+    {
+      "date": "2026-06-11",
+      "totalUsers": 70,
+      "sessions": 57,
+      "screenPageViews": 84,
+      "engagedSessions": 38,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 6135
+    },
+    {
+      "date": "2026-06-12",
+      "totalUsers": 30,
+      "sessions": 57,
+      "screenPageViews": 84,
+      "engagedSessions": 38,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 6135
+    },
+    {
+      "date": "2026-06-13",
+      "totalUsers": 34,
+      "sessions": 57,
+      "screenPageViews": 84,
+      "engagedSessions": 38,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 6135
+    },
+    {
+      "date": "2026-06-14",
+      "totalUsers": 38,
+      "sessions": 57,
+      "screenPageViews": 84,
+      "engagedSessions": 37,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 6135
+    },
+    {
+      "date": "2026-06-15",
+      "totalUsers": 42,
+      "sessions": 57,
+      "screenPageViews": 84,
+      "engagedSessions": 37,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 6135
+    },
+    {
+      "date": "2026-06-16",
+      "totalUsers": 46,
+      "sessions": 57,
+      "screenPageViews": 84,
+      "engagedSessions": 37,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 6135
+    },
+    {
+      "date": "2026-06-17",
+      "totalUsers": 50,
+      "sessions": 57,
+      "screenPageViews": 84,
+      "engagedSessions": 37,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 6135
+    },
+    {
+      "date": "2026-06-18",
+      "totalUsers": 54,
+      "sessions": 57,
+      "screenPageViews": 84,
+      "engagedSessions": 37,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 6135
+    },
+    {
+      "date": "2026-06-19",
+      "totalUsers": 58,
+      "sessions": 57,
+      "screenPageViews": 84,
+      "engagedSessions": 37,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 6135
+    },
+    {
+      "date": "2026-06-20",
+      "totalUsers": 62,
+      "sessions": 57,
+      "screenPageViews": 84,
+      "engagedSessions": 37,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 6135
+    },
+    {
+      "date": "2026-06-21",
+      "totalUsers": 66,
+      "sessions": 57,
+      "screenPageViews": 84,
+      "engagedSessions": 37,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 6134
+    },
+    {
+      "date": "2026-06-22",
+      "totalUsers": 70,
+      "sessions": 57,
+      "screenPageViews": 84,
+      "engagedSessions": 37,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 6134
+    },
+    {
+      "date": "2026-06-23",
+      "totalUsers": 30,
+      "sessions": 57,
+      "screenPageViews": 84,
+      "engagedSessions": 37,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 6134
+    },
+    {
+      "date": "2026-06-24",
+      "totalUsers": 34,
+      "sessions": 57,
+      "screenPageViews": 83,
+      "engagedSessions": 37,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 6134
+    },
+    {
+      "date": "2026-06-25",
+      "totalUsers": 38,
+      "sessions": 57,
+      "screenPageViews": 83,
+      "engagedSessions": 37,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 6134
+    },
+    {
+      "date": "2026-06-26",
+      "totalUsers": 42,
+      "sessions": 57,
+      "screenPageViews": 83,
+      "engagedSessions": 37,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 6134
+    },
+    {
+      "date": "2026-06-27",
+      "totalUsers": 46,
+      "sessions": 57,
+      "screenPageViews": 83,
+      "engagedSessions": 37,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 6134
+    },
+    {
+      "date": "2026-06-28",
+      "totalUsers": 50,
+      "sessions": 57,
+      "screenPageViews": 83,
+      "engagedSessions": 37,
+      "bouncedSessions": 19,
+      "totalSessionDurationSec": 6134
+    },
+    {
+      "date": "2026-06-29",
+      "totalUsers": 54,
+      "sessions": 57,
+      "screenPageViews": 83,
+      "engagedSessions": 37,
+      "bouncedSessions": 19,
+      "totalSessionDurationSec": 6134
+    },
+    {
+      "date": "2026-06-30",
+      "totalUsers": 58,
+      "sessions": 57,
+      "screenPageViews": 83,
+      "engagedSessions": 37,
+      "bouncedSessions": 19,
+      "totalSessionDurationSec": 6134
+    },
+    {
+      "date": "2026-05-01",
+      "totalUsers": 25,
+      "sessions": 40,
+      "screenPageViews": 60,
+      "engagedSessions": 22,
+      "bouncedSessions": 12,
+      "totalSessionDurationSec": 3800
+    },
+    {
+      "date": "2026-05-02",
+      "totalUsers": 28,
+      "sessions": 44,
+      "screenPageViews": 66,
+      "engagedSessions": 25,
+      "bouncedSessions": 14,
+      "totalSessionDurationSec": 4180
+    },
+    {
+      "date": "2026-05-03",
+      "totalUsers": 31,
+      "sessions": 48,
+      "screenPageViews": 72,
+      "engagedSessions": 28,
+      "bouncedSessions": 16,
+      "totalSessionDurationSec": 4560
+    },
+    {
+      "date": "2026-05-04",
+      "totalUsers": 34,
+      "sessions": 52,
+      "screenPageViews": 78,
+      "engagedSessions": 31,
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 4940
+    },
+    {
+      "date": "2026-05-05",
+      "totalUsers": 37,
+      "sessions": 56,
+      "screenPageViews": 84,
+      "engagedSessions": 34,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 5320
+    },
+    {
+      "date": "2026-05-06",
+      "totalUsers": 40,
+      "sessions": 60,
+      "screenPageViews": 90,
+      "engagedSessions": 37,
+      "bouncedSessions": 22,
+      "totalSessionDurationSec": 5700
+    },
+    {
+      "date": "2026-05-07",
+      "totalUsers": 43,
+      "sessions": 64,
+      "screenPageViews": 96,
+      "engagedSessions": 40,
+      "bouncedSessions": 12,
+      "totalSessionDurationSec": 6080
+    },
+    {
+      "date": "2026-05-08",
+      "totalUsers": 46,
+      "sessions": 68,
+      "screenPageViews": 102,
+      "engagedSessions": 43,
+      "bouncedSessions": 14,
+      "totalSessionDurationSec": 6460
+    },
+    {
+      "date": "2026-05-09",
+      "totalUsers": 49,
+      "sessions": 72,
+      "screenPageViews": 108,
+      "engagedSessions": 22,
+      "bouncedSessions": 16,
+      "totalSessionDurationSec": 6840
+    },
+    {
+      "date": "2026-05-10",
+      "totalUsers": 25,
+      "sessions": 76,
+      "screenPageViews": 114,
+      "engagedSessions": 25,
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 7220
+    },
+    {
+      "date": "2026-05-11",
+      "totalUsers": 28,
+      "sessions": 40,
+      "screenPageViews": 60,
+      "engagedSessions": 28,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 3800
+    },
+    {
+      "date": "2026-05-12",
+      "totalUsers": 31,
+      "sessions": 44,
+      "screenPageViews": 66,
+      "engagedSessions": 31,
+      "bouncedSessions": 22,
+      "totalSessionDurationSec": 4180
+    },
+    {
+      "date": "2026-05-13",
+      "totalUsers": 34,
+      "sessions": 48,
+      "screenPageViews": 72,
+      "engagedSessions": 34,
+      "bouncedSessions": 12,
+      "totalSessionDurationSec": 4560
+    },
+    {
+      "date": "2026-05-14",
+      "totalUsers": 37,
+      "sessions": 52,
+      "screenPageViews": 78,
+      "engagedSessions": 37,
+      "bouncedSessions": 14,
+      "totalSessionDurationSec": 4940
+    },
+    {
+      "date": "2026-05-15",
+      "totalUsers": 40,
+      "sessions": 56,
+      "screenPageViews": 84,
+      "engagedSessions": 40,
+      "bouncedSessions": 16,
+      "totalSessionDurationSec": 5320
+    },
+    {
+      "date": "2026-05-16",
+      "totalUsers": 43,
+      "sessions": 60,
+      "screenPageViews": 90,
+      "engagedSessions": 43,
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 5700
+    },
+    {
+      "date": "2026-05-17",
+      "totalUsers": 46,
+      "sessions": 64,
+      "screenPageViews": 96,
+      "engagedSessions": 22,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 6080
+    },
+    {
+      "date": "2026-05-18",
+      "totalUsers": 49,
+      "sessions": 68,
+      "screenPageViews": 102,
+      "engagedSessions": 25,
+      "bouncedSessions": 22,
+      "totalSessionDurationSec": 6460
+    },
+    {
+      "date": "2026-05-19",
+      "totalUsers": 25,
+      "sessions": 72,
+      "screenPageViews": 108,
+      "engagedSessions": 28,
+      "bouncedSessions": 12,
+      "totalSessionDurationSec": 6840
+    },
+    {
+      "date": "2026-05-20",
+      "totalUsers": 28,
+      "sessions": 76,
+      "screenPageViews": 114,
+      "engagedSessions": 31,
+      "bouncedSessions": 14,
+      "totalSessionDurationSec": 7220
+    },
+    {
+      "date": "2026-05-21",
+      "totalUsers": 31,
+      "sessions": 40,
+      "screenPageViews": 60,
+      "engagedSessions": 34,
+      "bouncedSessions": 16,
+      "totalSessionDurationSec": 3800
+    },
+    {
+      "date": "2026-05-22",
+      "totalUsers": 34,
+      "sessions": 44,
+      "screenPageViews": 66,
+      "engagedSessions": 37,
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 4180
+    },
+    {
+      "date": "2026-05-23",
+      "totalUsers": 37,
+      "sessions": 48,
+      "screenPageViews": 72,
+      "engagedSessions": 40,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 4560
+    },
+    {
+      "date": "2026-05-24",
+      "totalUsers": 40,
+      "sessions": 52,
+      "screenPageViews": 78,
+      "engagedSessions": 43,
+      "bouncedSessions": 22,
+      "totalSessionDurationSec": 4940
+    },
+    {
+      "date": "2026-05-25",
+      "totalUsers": 43,
+      "sessions": 56,
+      "screenPageViews": 84,
+      "engagedSessions": 22,
+      "bouncedSessions": 12,
+      "totalSessionDurationSec": 5320
+    },
+    {
+      "date": "2026-05-26",
+      "totalUsers": 46,
+      "sessions": 60,
+      "screenPageViews": 90,
+      "engagedSessions": 25,
+      "bouncedSessions": 14,
+      "totalSessionDurationSec": 5700
+    },
+    {
+      "date": "2026-05-27",
+      "totalUsers": 49,
+      "sessions": 64,
+      "screenPageViews": 96,
+      "engagedSessions": 28,
+      "bouncedSessions": 16,
+      "totalSessionDurationSec": 6080
+    },
+    {
+      "date": "2026-05-28",
+      "totalUsers": 25,
+      "sessions": 68,
+      "screenPageViews": 102,
+      "engagedSessions": 31,
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 6460
+    },
+    {
+      "date": "2026-05-29",
+      "totalUsers": 28,
+      "sessions": 72,
+      "screenPageViews": 108,
+      "engagedSessions": 34,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 6840
+    },
+    {
+      "date": "2026-05-30",
+      "totalUsers": 31,
+      "sessions": 76,
+      "screenPageViews": 114,
+      "engagedSessions": 37,
+      "bouncedSessions": 22,
+      "totalSessionDurationSec": 7220
+    },
+    {
+      "date": "2026-05-31",
+      "totalUsers": 34,
+      "sessions": 40,
+      "screenPageViews": 60,
+      "engagedSessions": 40,
+      "bouncedSessions": 12,
+      "totalSessionDurationSec": 3800
+    },
+    {
+      "date": "2026-07-01",
+      "totalUsers": 25,
+      "sessions": 40,
+      "screenPageViews": 60,
+      "engagedSessions": 22,
+      "bouncedSessions": 12,
+      "totalSessionDurationSec": 3800
+    },
+    {
+      "date": "2026-07-02",
+      "totalUsers": 28,
+      "sessions": 44,
+      "screenPageViews": 66,
+      "engagedSessions": 25,
+      "bouncedSessions": 14,
+      "totalSessionDurationSec": 4180
+    },
+    {
+      "date": "2026-07-03",
+      "totalUsers": 31,
+      "sessions": 48,
+      "screenPageViews": 72,
+      "engagedSessions": 28,
+      "bouncedSessions": 16,
+      "totalSessionDurationSec": 4560
+    },
+    {
+      "date": "2026-07-04",
+      "totalUsers": 34,
+      "sessions": 52,
+      "screenPageViews": 78,
+      "engagedSessions": 31,
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 4940
+    },
+    {
+      "date": "2026-07-05",
+      "totalUsers": 37,
+      "sessions": 56,
+      "screenPageViews": 84,
+      "engagedSessions": 34,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 5320
+    },
+    {
+      "date": "2026-07-06",
+      "totalUsers": 40,
+      "sessions": 60,
+      "screenPageViews": 90,
+      "engagedSessions": 37,
+      "bouncedSessions": 22,
+      "totalSessionDurationSec": 5700
+    },
+    {
+      "date": "2026-07-07",
+      "totalUsers": 43,
+      "sessions": 64,
+      "screenPageViews": 96,
+      "engagedSessions": 40,
+      "bouncedSessions": 12,
+      "totalSessionDurationSec": 6080
+    },
+    {
+      "date": "2026-07-08",
+      "totalUsers": 46,
+      "sessions": 68,
+      "screenPageViews": 102,
+      "engagedSessions": 43,
+      "bouncedSessions": 14,
+      "totalSessionDurationSec": 6460
+    },
+    {
+      "date": "2026-07-09",
+      "totalUsers": 49,
+      "sessions": 72,
+      "screenPageViews": 108,
+      "engagedSessions": 22,
+      "bouncedSessions": 16,
+      "totalSessionDurationSec": 6840
+    },
+    {
+      "date": "2026-07-10",
+      "totalUsers": 25,
+      "sessions": 76,
+      "screenPageViews": 114,
+      "engagedSessions": 25,
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 7220
+    },
+    {
+      "date": "2026-07-11",
+      "totalUsers": 28,
+      "sessions": 40,
+      "screenPageViews": 60,
+      "engagedSessions": 28,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 3800
+    },
+    {
+      "date": "2026-07-12",
+      "totalUsers": 31,
+      "sessions": 44,
+      "screenPageViews": 66,
+      "engagedSessions": 31,
+      "bouncedSessions": 22,
+      "totalSessionDurationSec": 4180
+    },
+    {
+      "date": "2026-07-13",
+      "totalUsers": 34,
+      "sessions": 48,
+      "screenPageViews": 72,
+      "engagedSessions": 34,
+      "bouncedSessions": 12,
+      "totalSessionDurationSec": 4560
+    },
+    {
+      "date": "2026-07-14",
+      "totalUsers": 37,
+      "sessions": 52,
+      "screenPageViews": 78,
+      "engagedSessions": 37,
+      "bouncedSessions": 14,
+      "totalSessionDurationSec": 4940
+    },
+    {
+      "date": "2026-07-15",
+      "totalUsers": 40,
+      "sessions": 56,
+      "screenPageViews": 84,
+      "engagedSessions": 40,
+      "bouncedSessions": 16,
+      "totalSessionDurationSec": 5320
+    },
+    {
+      "date": "2026-07-16",
+      "totalUsers": 43,
+      "sessions": 60,
+      "screenPageViews": 90,
+      "engagedSessions": 43,
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 5700
+    },
+    {
+      "date": "2026-07-17",
+      "totalUsers": 46,
+      "sessions": 64,
+      "screenPageViews": 96,
+      "engagedSessions": 22,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 6080
+    },
+    {
+      "date": "2026-07-18",
+      "totalUsers": 49,
+      "sessions": 68,
+      "screenPageViews": 102,
+      "engagedSessions": 25,
+      "bouncedSessions": 22,
+      "totalSessionDurationSec": 6460
+    },
+    {
+      "date": "2026-07-19",
+      "totalUsers": 25,
+      "sessions": 72,
+      "screenPageViews": 108,
+      "engagedSessions": 28,
+      "bouncedSessions": 12,
+      "totalSessionDurationSec": 6840
+    },
+    {
+      "date": "2026-07-20",
+      "totalUsers": 28,
+      "sessions": 76,
+      "screenPageViews": 114,
+      "engagedSessions": 31,
+      "bouncedSessions": 14,
+      "totalSessionDurationSec": 7220
+    },
+    {
+      "date": "2026-07-21",
+      "totalUsers": 31,
+      "sessions": 40,
+      "screenPageViews": 60,
+      "engagedSessions": 34,
+      "bouncedSessions": 16,
+      "totalSessionDurationSec": 3800
+    },
+    {
+      "date": "2026-07-22",
+      "totalUsers": 34,
+      "sessions": 44,
+      "screenPageViews": 66,
+      "engagedSessions": 37,
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 4180
+    },
+    {
+      "date": "2026-07-23",
+      "totalUsers": 37,
+      "sessions": 48,
+      "screenPageViews": 72,
+      "engagedSessions": 40,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 4560
+    },
+    {
+      "date": "2026-07-24",
+      "totalUsers": 40,
+      "sessions": 52,
+      "screenPageViews": 78,
+      "engagedSessions": 43,
+      "bouncedSessions": 22,
+      "totalSessionDurationSec": 4940
+    },
+    {
+      "date": "2026-07-25",
+      "totalUsers": 43,
+      "sessions": 56,
+      "screenPageViews": 84,
+      "engagedSessions": 22,
+      "bouncedSessions": 12,
+      "totalSessionDurationSec": 5320
+    },
+    {
+      "date": "2026-07-26",
+      "totalUsers": 46,
+      "sessions": 60,
+      "screenPageViews": 90,
+      "engagedSessions": 25,
+      "bouncedSessions": 14,
+      "totalSessionDurationSec": 5700
+    },
+    {
+      "date": "2026-07-27",
+      "totalUsers": 49,
+      "sessions": 64,
+      "screenPageViews": 96,
+      "engagedSessions": 28,
+      "bouncedSessions": 16,
+      "totalSessionDurationSec": 6080
+    },
+    {
+      "date": "2026-07-28",
+      "totalUsers": 25,
+      "sessions": 68,
+      "screenPageViews": 102,
+      "engagedSessions": 31,
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 6460
+    },
+    {
+      "date": "2026-07-29",
+      "totalUsers": 28,
+      "sessions": 72,
+      "screenPageViews": 108,
+      "engagedSessions": 34,
+      "bouncedSessions": 20,
+      "totalSessionDurationSec": 6840
+    },
+    {
+      "date": "2026-07-30",
+      "totalUsers": 31,
+      "sessions": 76,
+      "screenPageViews": 114,
+      "engagedSessions": 37,
+      "bouncedSessions": 22,
+      "totalSessionDurationSec": 7220
+    },
+    {
+      "date": "2026-07-31",
+      "totalUsers": 34,
+      "sessions": 40,
+      "screenPageViews": 60,
+      "engagedSessions": 40,
+      "bouncedSessions": 12,
+      "totalSessionDurationSec": 3800
+    }
+  ],
+  "channels": [
+    {
+      "date": "2026-06-01",
+      "channelGroup": "Organic Search",
+      "sessions": 31,
+      "engagedSessions": 21,
+      "bouncedSessions": 11
+    },
+    {
+      "date": "2026-06-02",
+      "channelGroup": "Organic Search",
+      "sessions": 31,
+      "engagedSessions": 21,
+      "bouncedSessions": 11
+    },
+    {
+      "date": "2026-06-03",
+      "channelGroup": "Organic Search",
+      "sessions": 31,
+      "engagedSessions": 21,
+      "bouncedSessions": 11
+    },
+    {
+      "date": "2026-06-04",
+      "channelGroup": "Organic Search",
+      "sessions": 31,
+      "engagedSessions": 21,
+      "bouncedSessions": 11
+    },
+    {
+      "date": "2026-06-05",
+      "channelGroup": "Organic Search",
+      "sessions": 31,
+      "engagedSessions": 21,
+      "bouncedSessions": 11
+    },
+    {
+      "date": "2026-06-06",
+      "channelGroup": "Organic Search",
+      "sessions": 31,
+      "engagedSessions": 21,
+      "bouncedSessions": 11
+    },
+    {
+      "date": "2026-06-07",
+      "channelGroup": "Organic Search",
+      "sessions": 31,
+      "engagedSessions": 20,
+      "bouncedSessions": 11
+    },
+    {
+      "date": "2026-06-08",
+      "channelGroup": "Organic Search",
+      "sessions": 31,
+      "engagedSessions": 20,
+      "bouncedSessions": 11
+    },
+    {
+      "date": "2026-06-09",
+      "channelGroup": "Organic Search",
+      "sessions": 31,
+      "engagedSessions": 20,
+      "bouncedSessions": 11
+    },
+    {
+      "date": "2026-06-10",
+      "channelGroup": "Organic Search",
+      "sessions": 31,
+      "engagedSessions": 20,
+      "bouncedSessions": 11
+    },
+    {
+      "date": "2026-06-11",
+      "channelGroup": "Organic Search",
+      "sessions": 31,
+      "engagedSessions": 20,
+      "bouncedSessions": 11
+    },
+    {
+      "date": "2026-06-12",
+      "channelGroup": "Organic Search",
+      "sessions": 31,
+      "engagedSessions": 20,
+      "bouncedSessions": 11
+    },
+    {
+      "date": "2026-06-13",
+      "channelGroup": "Organic Search",
+      "sessions": 31,
+      "engagedSessions": 20,
+      "bouncedSessions": 11
+    },
+    {
+      "date": "2026-06-14",
+      "channelGroup": "Organic Search",
+      "sessions": 31,
+      "engagedSessions": 20,
+      "bouncedSessions": 11
+    },
+    {
+      "date": "2026-06-15",
+      "channelGroup": "Organic Search",
+      "sessions": 31,
+      "engagedSessions": 20,
+      "bouncedSessions": 11
+    },
+    {
+      "date": "2026-06-16",
+      "channelGroup": "Organic Search",
+      "sessions": 31,
+      "engagedSessions": 20,
+      "bouncedSessions": 11
+    },
+    {
+      "date": "2026-06-17",
+      "channelGroup": "Organic Search",
+      "sessions": 31,
+      "engagedSessions": 20,
+      "bouncedSessions": 11
+    },
+    {
+      "date": "2026-06-18",
+      "channelGroup": "Organic Search",
+      "sessions": 31,
+      "engagedSessions": 20,
+      "bouncedSessions": 11
+    },
+    {
+      "date": "2026-06-19",
+      "channelGroup": "Organic Search",
+      "sessions": 31,
+      "engagedSessions": 20,
+      "bouncedSessions": 11
+    },
+    {
+      "date": "2026-06-20",
+      "channelGroup": "Organic Search",
+      "sessions": 31,
+      "engagedSessions": 20,
+      "bouncedSessions": 11
+    },
+    {
+      "date": "2026-06-21",
+      "channelGroup": "Organic Search",
+      "sessions": 31,
+      "engagedSessions": 20,
+      "bouncedSessions": 11
+    },
+    {
+      "date": "2026-06-22",
+      "channelGroup": "Organic Search",
+      "sessions": 31,
+      "engagedSessions": 20,
+      "bouncedSessions": 11
+    },
+    {
+      "date": "2026-06-23",
+      "channelGroup": "Organic Search",
+      "sessions": 31,
+      "engagedSessions": 20,
+      "bouncedSessions": 11
+    },
+    {
+      "date": "2026-06-24",
+      "channelGroup": "Organic Search",
+      "sessions": 31,
+      "engagedSessions": 20,
+      "bouncedSessions": 10
+    },
+    {
+      "date": "2026-06-25",
+      "channelGroup": "Organic Search",
+      "sessions": 31,
+      "engagedSessions": 20,
+      "bouncedSessions": 10
+    },
+    {
+      "date": "2026-06-26",
+      "channelGroup": "Organic Search",
+      "sessions": 31,
+      "engagedSessions": 20,
+      "bouncedSessions": 10
+    },
+    {
+      "date": "2026-06-27",
+      "channelGroup": "Organic Search",
+      "sessions": 31,
+      "engagedSessions": 20,
+      "bouncedSessions": 10
+    },
+    {
+      "date": "2026-06-28",
+      "channelGroup": "Organic Search",
+      "sessions": 31,
+      "engagedSessions": 20,
+      "bouncedSessions": 10
+    },
+    {
+      "date": "2026-06-29",
+      "channelGroup": "Organic Search",
+      "sessions": 31,
+      "engagedSessions": 20,
+      "bouncedSessions": 10
+    },
+    {
+      "date": "2026-06-30",
+      "channelGroup": "Organic Search",
+      "sessions": 30,
+      "engagedSessions": 20,
+      "bouncedSessions": 10
+    },
+    {
+      "date": "2026-06-01",
+      "channelGroup": "Direct",
+      "sessions": 24,
+      "engagedSessions": 16,
+      "bouncedSessions": 8
+    },
+    {
+      "date": "2026-06-02",
+      "channelGroup": "Direct",
+      "sessions": 24,
+      "engagedSessions": 16,
+      "bouncedSessions": 8
+    },
+    {
+      "date": "2026-06-03",
+      "channelGroup": "Direct",
+      "sessions": 23,
+      "engagedSessions": 15,
+      "bouncedSessions": 8
+    },
+    {
+      "date": "2026-06-04",
+      "channelGroup": "Direct",
+      "sessions": 23,
+      "engagedSessions": 15,
+      "bouncedSessions": 8
+    },
+    {
+      "date": "2026-06-05",
+      "channelGroup": "Direct",
+      "sessions": 23,
+      "engagedSessions": 15,
+      "bouncedSessions": 8
+    },
+    {
+      "date": "2026-06-06",
+      "channelGroup": "Direct",
+      "sessions": 23,
+      "engagedSessions": 15,
+      "bouncedSessions": 8
+    },
+    {
+      "date": "2026-06-07",
+      "channelGroup": "Direct",
+      "sessions": 23,
+      "engagedSessions": 15,
+      "bouncedSessions": 8
+    },
+    {
+      "date": "2026-06-08",
+      "channelGroup": "Direct",
+      "sessions": 23,
+      "engagedSessions": 15,
+      "bouncedSessions": 8
+    },
+    {
+      "date": "2026-06-09",
+      "channelGroup": "Direct",
+      "sessions": 23,
+      "engagedSessions": 15,
+      "bouncedSessions": 8
+    },
+    {
+      "date": "2026-06-10",
+      "channelGroup": "Direct",
+      "sessions": 23,
+      "engagedSessions": 15,
+      "bouncedSessions": 8
+    },
+    {
+      "date": "2026-06-11",
+      "channelGroup": "Direct",
+      "sessions": 23,
+      "engagedSessions": 15,
+      "bouncedSessions": 8
+    },
+    {
+      "date": "2026-06-12",
+      "channelGroup": "Direct",
+      "sessions": 23,
+      "engagedSessions": 15,
+      "bouncedSessions": 8
+    },
+    {
+      "date": "2026-06-13",
+      "channelGroup": "Direct",
+      "sessions": 23,
+      "engagedSessions": 15,
+      "bouncedSessions": 8
+    },
+    {
+      "date": "2026-06-14",
+      "channelGroup": "Direct",
+      "sessions": 23,
+      "engagedSessions": 15,
+      "bouncedSessions": 8
+    },
+    {
+      "date": "2026-06-15",
+      "channelGroup": "Direct",
+      "sessions": 23,
+      "engagedSessions": 15,
+      "bouncedSessions": 8
+    },
+    {
+      "date": "2026-06-16",
+      "channelGroup": "Direct",
+      "sessions": 23,
+      "engagedSessions": 15,
+      "bouncedSessions": 8
+    },
+    {
+      "date": "2026-06-17",
+      "channelGroup": "Direct",
+      "sessions": 23,
+      "engagedSessions": 15,
+      "bouncedSessions": 8
+    },
+    {
+      "date": "2026-06-18",
+      "channelGroup": "Direct",
+      "sessions": 23,
+      "engagedSessions": 15,
+      "bouncedSessions": 8
+    },
+    {
+      "date": "2026-06-19",
+      "channelGroup": "Direct",
+      "sessions": 23,
+      "engagedSessions": 15,
+      "bouncedSessions": 8
+    },
+    {
+      "date": "2026-06-20",
+      "channelGroup": "Direct",
+      "sessions": 23,
+      "engagedSessions": 15,
+      "bouncedSessions": 8
+    },
+    {
+      "date": "2026-06-21",
+      "channelGroup": "Direct",
+      "sessions": 23,
+      "engagedSessions": 15,
+      "bouncedSessions": 8
+    },
+    {
+      "date": "2026-06-22",
+      "channelGroup": "Direct",
+      "sessions": 23,
+      "engagedSessions": 15,
+      "bouncedSessions": 8
+    },
+    {
+      "date": "2026-06-23",
+      "channelGroup": "Direct",
+      "sessions": 23,
+      "engagedSessions": 15,
+      "bouncedSessions": 8
+    },
+    {
+      "date": "2026-06-24",
+      "channelGroup": "Direct",
+      "sessions": 23,
+      "engagedSessions": 15,
+      "bouncedSessions": 8
+    },
+    {
+      "date": "2026-06-25",
+      "channelGroup": "Direct",
+      "sessions": 23,
+      "engagedSessions": 15,
+      "bouncedSessions": 8
+    },
+    {
+      "date": "2026-06-26",
+      "channelGroup": "Direct",
+      "sessions": 23,
+      "engagedSessions": 15,
+      "bouncedSessions": 8
+    },
+    {
+      "date": "2026-06-27",
+      "channelGroup": "Direct",
+      "sessions": 23,
+      "engagedSessions": 15,
+      "bouncedSessions": 8
+    },
+    {
+      "date": "2026-06-28",
+      "channelGroup": "Direct",
+      "sessions": 23,
+      "engagedSessions": 15,
+      "bouncedSessions": 8
+    },
+    {
+      "date": "2026-06-29",
+      "channelGroup": "Direct",
+      "sessions": 23,
+      "engagedSessions": 15,
+      "bouncedSessions": 8
+    },
+    {
+      "date": "2026-06-30",
+      "channelGroup": "Direct",
+      "sessions": 23,
+      "engagedSessions": 15,
+      "bouncedSessions": 8
+    },
+    {
+      "date": "2026-06-01",
+      "channelGroup": "Organic Social",
+      "sessions": 3,
+      "engagedSessions": 2,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-02",
+      "channelGroup": "Organic Social",
+      "sessions": 3,
+      "engagedSessions": 2,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-03",
+      "channelGroup": "Organic Social",
+      "sessions": 2,
+      "engagedSessions": 2,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-04",
+      "channelGroup": "Organic Social",
+      "sessions": 2,
+      "engagedSessions": 2,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-05",
+      "channelGroup": "Organic Social",
+      "sessions": 2,
+      "engagedSessions": 2,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-06",
+      "channelGroup": "Organic Social",
+      "sessions": 2,
+      "engagedSessions": 2,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-07",
+      "channelGroup": "Organic Social",
+      "sessions": 2,
+      "engagedSessions": 2,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-08",
+      "channelGroup": "Organic Social",
+      "sessions": 2,
+      "engagedSessions": 2,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-09",
+      "channelGroup": "Organic Social",
+      "sessions": 2,
+      "engagedSessions": 2,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-10",
+      "channelGroup": "Organic Social",
+      "sessions": 2,
+      "engagedSessions": 2,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-11",
+      "channelGroup": "Organic Social",
+      "sessions": 2,
+      "engagedSessions": 1,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-12",
+      "channelGroup": "Organic Social",
+      "sessions": 2,
+      "engagedSessions": 1,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-13",
+      "channelGroup": "Organic Social",
+      "sessions": 2,
+      "engagedSessions": 1,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-14",
+      "channelGroup": "Organic Social",
+      "sessions": 2,
+      "engagedSessions": 1,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-15",
+      "channelGroup": "Organic Social",
+      "sessions": 2,
+      "engagedSessions": 1,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-16",
+      "channelGroup": "Organic Social",
+      "sessions": 2,
+      "engagedSessions": 1,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-17",
+      "channelGroup": "Organic Social",
+      "sessions": 2,
+      "engagedSessions": 1,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-18",
+      "channelGroup": "Organic Social",
+      "sessions": 2,
+      "engagedSessions": 1,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-19",
+      "channelGroup": "Organic Social",
+      "sessions": 2,
+      "engagedSessions": 1,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-20",
+      "channelGroup": "Organic Social",
+      "sessions": 2,
+      "engagedSessions": 1,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-21",
+      "channelGroup": "Organic Social",
+      "sessions": 2,
+      "engagedSessions": 1,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-22",
+      "channelGroup": "Organic Social",
+      "sessions": 2,
+      "engagedSessions": 1,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-23",
+      "channelGroup": "Organic Social",
+      "sessions": 2,
+      "engagedSessions": 1,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-24",
+      "channelGroup": "Organic Social",
+      "sessions": 2,
+      "engagedSessions": 1,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-25",
+      "channelGroup": "Organic Social",
+      "sessions": 2,
+      "engagedSessions": 1,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-26",
+      "channelGroup": "Organic Social",
+      "sessions": 2,
+      "engagedSessions": 1,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-27",
+      "channelGroup": "Organic Social",
+      "sessions": 2,
+      "engagedSessions": 1,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-28",
+      "channelGroup": "Organic Social",
+      "sessions": 2,
+      "engagedSessions": 1,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-29",
+      "channelGroup": "Organic Social",
+      "sessions": 2,
+      "engagedSessions": 1,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-30",
+      "channelGroup": "Organic Social",
+      "sessions": 2,
+      "engagedSessions": 1,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-01",
+      "channelGroup": "Referral",
+      "sessions": 1,
+      "engagedSessions": 1,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-02",
+      "channelGroup": "Referral",
+      "sessions": 1,
+      "engagedSessions": 1,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-03",
+      "channelGroup": "Referral",
+      "sessions": 1,
+      "engagedSessions": 1,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-04",
+      "channelGroup": "Referral",
+      "sessions": 1,
+      "engagedSessions": 1,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-05",
+      "channelGroup": "Referral",
+      "sessions": 1,
+      "engagedSessions": 1,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-06",
+      "channelGroup": "Referral",
+      "sessions": 1,
+      "engagedSessions": 1,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-07",
+      "channelGroup": "Referral",
+      "sessions": 1,
+      "engagedSessions": 1,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-08",
+      "channelGroup": "Referral",
+      "sessions": 1,
+      "engagedSessions": 1,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-09",
+      "channelGroup": "Referral",
+      "sessions": 1,
+      "engagedSessions": 1,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-10",
+      "channelGroup": "Referral",
+      "sessions": 1,
+      "engagedSessions": 1,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-11",
+      "channelGroup": "Referral",
+      "sessions": 1,
+      "engagedSessions": 1,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-12",
+      "channelGroup": "Referral",
+      "sessions": 1,
+      "engagedSessions": 1,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-13",
+      "channelGroup": "Referral",
+      "sessions": 1,
+      "engagedSessions": 1,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-14",
+      "channelGroup": "Referral",
+      "sessions": 1,
+      "engagedSessions": 1,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-15",
+      "channelGroup": "Referral",
+      "sessions": 1,
+      "engagedSessions": 1,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-16",
+      "channelGroup": "Referral",
+      "sessions": 1,
+      "engagedSessions": 0,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-17",
+      "channelGroup": "Referral",
+      "sessions": 1,
+      "engagedSessions": 0,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-18",
+      "channelGroup": "Referral",
+      "sessions": 1,
+      "engagedSessions": 0,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-19",
+      "channelGroup": "Referral",
+      "sessions": 1,
+      "engagedSessions": 0,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-20",
+      "channelGroup": "Referral",
+      "sessions": 1,
+      "engagedSessions": 0,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-21",
+      "channelGroup": "Referral",
+      "sessions": 1,
+      "engagedSessions": 0,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-22",
+      "channelGroup": "Referral",
+      "sessions": 1,
+      "engagedSessions": 0,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-23",
+      "channelGroup": "Referral",
+      "sessions": 1,
+      "engagedSessions": 0,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-01",
+      "channelGroup": "AI Assistant",
+      "sessions": 1,
+      "engagedSessions": 1,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-02",
+      "channelGroup": "AI Assistant",
+      "sessions": 1,
+      "engagedSessions": 1,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-03",
+      "channelGroup": "AI Assistant",
+      "sessions": 1,
+      "engagedSessions": 1,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-04",
+      "channelGroup": "AI Assistant",
+      "sessions": 1,
+      "engagedSessions": 1,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-05",
+      "channelGroup": "AI Assistant",
+      "sessions": 1,
+      "engagedSessions": 0,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-01",
+      "channelGroup": "Unassigned",
+      "sessions": 1,
+      "engagedSessions": 1,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-02",
+      "channelGroup": "Unassigned",
+      "sessions": 1,
+      "engagedSessions": 1,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-03",
+      "channelGroup": "Unassigned",
+      "sessions": 1,
+      "engagedSessions": 1,
+      "bouncedSessions": 1
+    },
+    {
+      "date": "2026-06-04",
+      "channelGroup": "Unassigned",
+      "sessions": 1,
+      "engagedSessions": 1,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-05",
+      "channelGroup": "Unassigned",
+      "sessions": 1,
+      "engagedSessions": 1,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-06",
+      "channelGroup": "Unassigned",
+      "sessions": 1,
+      "engagedSessions": 1,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-07",
+      "channelGroup": "Unassigned",
+      "sessions": 1,
+      "engagedSessions": 0,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-08",
+      "channelGroup": "Unassigned",
+      "sessions": 1,
+      "engagedSessions": 0,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-09",
+      "channelGroup": "Unassigned",
+      "sessions": 1,
+      "engagedSessions": 0,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-05-01",
+      "channelGroup": "Organic Search",
+      "sessions": 20,
+      "engagedSessions": 13,
+      "bouncedSessions": 7
+    },
+    {
+      "date": "2026-05-01",
+      "channelGroup": "Direct",
+      "sessions": 15,
+      "engagedSessions": 10,
+      "bouncedSessions": 5
+    },
+    {
+      "date": "2026-05-06",
+      "channelGroup": "Organic Search",
+      "sessions": 20,
+      "engagedSessions": 13,
+      "bouncedSessions": 7
+    },
+    {
+      "date": "2026-05-06",
+      "channelGroup": "Direct",
+      "sessions": 15,
+      "engagedSessions": 10,
+      "bouncedSessions": 5
+    },
+    {
+      "date": "2026-05-11",
+      "channelGroup": "Organic Search",
+      "sessions": 20,
+      "engagedSessions": 13,
+      "bouncedSessions": 7
+    },
+    {
+      "date": "2026-05-11",
+      "channelGroup": "Direct",
+      "sessions": 15,
+      "engagedSessions": 10,
+      "bouncedSessions": 5
+    },
+    {
+      "date": "2026-05-16",
+      "channelGroup": "Organic Search",
+      "sessions": 20,
+      "engagedSessions": 13,
+      "bouncedSessions": 7
+    },
+    {
+      "date": "2026-05-16",
+      "channelGroup": "Direct",
+      "sessions": 15,
+      "engagedSessions": 10,
+      "bouncedSessions": 5
+    },
+    {
+      "date": "2026-05-21",
+      "channelGroup": "Organic Search",
+      "sessions": 20,
+      "engagedSessions": 13,
+      "bouncedSessions": 7
+    },
+    {
+      "date": "2026-05-21",
+      "channelGroup": "Direct",
+      "sessions": 15,
+      "engagedSessions": 10,
+      "bouncedSessions": 5
+    },
+    {
+      "date": "2026-05-26",
+      "channelGroup": "Organic Search",
+      "sessions": 20,
+      "engagedSessions": 13,
+      "bouncedSessions": 7
+    },
+    {
+      "date": "2026-05-26",
+      "channelGroup": "Direct",
+      "sessions": 15,
+      "engagedSessions": 10,
+      "bouncedSessions": 5
+    },
+    {
+      "date": "2026-05-31",
+      "channelGroup": "Organic Search",
+      "sessions": 20,
+      "engagedSessions": 13,
+      "bouncedSessions": 7
+    },
+    {
+      "date": "2026-05-31",
+      "channelGroup": "Direct",
+      "sessions": 15,
+      "engagedSessions": 10,
+      "bouncedSessions": 5
+    },
+    {
+      "date": "2026-07-01",
+      "channelGroup": "Organic Search",
+      "sessions": 20,
+      "engagedSessions": 13,
+      "bouncedSessions": 7
+    },
+    {
+      "date": "2026-07-01",
+      "channelGroup": "Direct",
+      "sessions": 15,
+      "engagedSessions": 10,
+      "bouncedSessions": 5
+    },
+    {
+      "date": "2026-07-06",
+      "channelGroup": "Organic Search",
+      "sessions": 20,
+      "engagedSessions": 13,
+      "bouncedSessions": 7
+    },
+    {
+      "date": "2026-07-06",
+      "channelGroup": "Direct",
+      "sessions": 15,
+      "engagedSessions": 10,
+      "bouncedSessions": 5
+    },
+    {
+      "date": "2026-07-11",
+      "channelGroup": "Organic Search",
+      "sessions": 20,
+      "engagedSessions": 13,
+      "bouncedSessions": 7
+    },
+    {
+      "date": "2026-07-11",
+      "channelGroup": "Direct",
+      "sessions": 15,
+      "engagedSessions": 10,
+      "bouncedSessions": 5
+    },
+    {
+      "date": "2026-07-16",
+      "channelGroup": "Organic Search",
+      "sessions": 20,
+      "engagedSessions": 13,
+      "bouncedSessions": 7
+    },
+    {
+      "date": "2026-07-16",
+      "channelGroup": "Direct",
+      "sessions": 15,
+      "engagedSessions": 10,
+      "bouncedSessions": 5
+    },
+    {
+      "date": "2026-07-21",
+      "channelGroup": "Organic Search",
+      "sessions": 20,
+      "engagedSessions": 13,
+      "bouncedSessions": 7
+    },
+    {
+      "date": "2026-07-21",
+      "channelGroup": "Direct",
+      "sessions": 15,
+      "engagedSessions": 10,
+      "bouncedSessions": 5
+    },
+    {
+      "date": "2026-07-26",
+      "channelGroup": "Organic Search",
+      "sessions": 20,
+      "engagedSessions": 13,
+      "bouncedSessions": 7
+    },
+    {
+      "date": "2026-07-26",
+      "channelGroup": "Direct",
+      "sessions": 15,
+      "engagedSessions": 10,
+      "bouncedSessions": 5
+    },
+    {
+      "date": "2026-07-31",
+      "channelGroup": "Organic Search",
+      "sessions": 20,
+      "engagedSessions": 13,
+      "bouncedSessions": 7
+    },
+    {
+      "date": "2026-07-31",
+      "channelGroup": "Direct",
+      "sessions": 15,
+      "engagedSessions": 10,
+      "bouncedSessions": 5
+    }
+  ],
+  "sources": [
+    {
+      "date": "2026-06-15",
+      "source": "chatgpt.com",
+      "channelGroup": "AI Assistant",
+      "sessions": 3,
+      "engagedSessions": 3,
+      "bouncedSessions": 0
+    },
+    {
+      "date": "2026-06-20",
+      "source": "perplexity.ai",
+      "channelGroup": "AI Assistant",
+      "sessions": 2,
+      "engagedSessions": 1,
+      "bouncedSessions": 1
+    }
+  ],
+  "pages": [
+    {
+      "date": "2026-06-15",
+      "pagePath": "/",
+      "screenPageViews": 620,
+      "totalUsers": 480,
+      "engagedSessions": 410,
+      "bouncedSessions": 180,
+      "totalSessionDurationSec": 55000
+    },
+    {
+      "date": "2026-06-15",
+      "pagePath": "/solutions/power-bi-consulting/",
+      "screenPageViews": 210,
+      "totalUsers": 160,
+      "engagedSessions": 140,
+      "bouncedSessions": 55,
+      "totalSessionDurationSec": 22000
+    },
+    {
+      "date": "2026-06-15",
+      "pagePath": "/contact-us/",
+      "screenPageViews": 95,
+      "totalUsers": 88,
+      "engagedSessions": 80,
+      "bouncedSessions": 12,
+      "totalSessionDurationSec": 9000
+    },
+    {
+      "date": "2026-06-15",
+      "pagePath": "/careers/",
+      "screenPageViews": 130,
+      "totalUsers": 110,
+      "engagedSessions": 90,
+      "bouncedSessions": 40,
+      "totalSessionDurationSec": 11000
+    },
+    {
+      "date": "2026-06-15",
+      "pagePath": "/about-us/",
+      "screenPageViews": 140,
+      "totalUsers": 120,
+      "engagedSessions": 95,
+      "bouncedSessions": 45,
+      "totalSessionDurationSec": 12500
+    },
+    {
+      "date": "2026-06-15",
+      "pagePath": "/blog/d365-fo/",
+      "screenPageViews": 180,
+      "totalUsers": 150,
+      "engagedSessions": 120,
+      "bouncedSessions": 60,
+      "totalSessionDurationSec": 17000
+    }
+  ],
+  "countries": [
+    {
+      "date": "2026-06-15",
+      "country": "IN",
+      "totalUsers": 20,
+      "bouncedSessions": 9,
+      "totalSessionDurationSec": 2593
+    },
+    {
+      "date": "2026-06-15",
+      "country": "US",
+      "totalUsers": 20,
+      "bouncedSessions": 9,
+      "totalSessionDurationSec": 2593
+    },
+    {
+      "date": "2026-06-15",
+      "country": "GB",
+      "totalUsers": 20,
+      "bouncedSessions": 9,
+      "totalSessionDurationSec": 2593
+    },
+    {
+      "date": "2026-06-15",
+      "country": "AU",
+      "totalUsers": 20,
+      "bouncedSessions": 9,
+      "totalSessionDurationSec": 2593
+    },
+    {
+      "date": "2026-06-15",
+      "country": "CA",
+      "totalUsers": 20,
+      "bouncedSessions": 9,
+      "totalSessionDurationSec": 2593
+    },
+    {
+      "date": "2026-06-15",
+      "country": "DE",
+      "totalUsers": 20,
+      "bouncedSessions": 9,
+      "totalSessionDurationSec": 2593
+    },
+    {
+      "date": "2026-06-15",
+      "country": "FR",
+      "totalUsers": 20,
+      "bouncedSessions": 9,
+      "totalSessionDurationSec": 2593
+    },
+    {
+      "date": "2026-06-15",
+      "country": "SG",
+      "totalUsers": 20,
+      "bouncedSessions": 9,
+      "totalSessionDurationSec": 2593
+    },
+    {
+      "date": "2026-06-15",
+      "country": "AE",
+      "totalUsers": 20,
+      "bouncedSessions": 9,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "NL",
+      "totalUsers": 20,
+      "bouncedSessions": 9,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "SE",
+      "totalUsers": 20,
+      "bouncedSessions": 9,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "CH",
+      "totalUsers": 20,
+      "bouncedSessions": 9,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "JP",
+      "totalUsers": 20,
+      "bouncedSessions": 9,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "BR",
+      "totalUsers": 20,
+      "bouncedSessions": 9,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "ZA",
+      "totalUsers": 20,
+      "bouncedSessions": 9,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "NZ",
+      "totalUsers": 20,
+      "bouncedSessions": 9,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "IE",
+      "totalUsers": 19,
+      "bouncedSessions": 9,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "ES",
+      "totalUsers": 19,
+      "bouncedSessions": 9,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "IT",
+      "totalUsers": 19,
+      "bouncedSessions": 9,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "PL",
+      "totalUsers": 19,
+      "bouncedSessions": 9,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "BE",
+      "totalUsers": 19,
+      "bouncedSessions": 9,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "DK",
+      "totalUsers": 19,
+      "bouncedSessions": 9,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "NO",
+      "totalUsers": 19,
+      "bouncedSessions": 9,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "FI",
+      "totalUsers": 19,
+      "bouncedSessions": 9,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "PT",
+      "totalUsers": 19,
+      "bouncedSessions": 9,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "AT",
+      "totalUsers": 19,
+      "bouncedSessions": 9,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "CZ",
+      "totalUsers": 19,
+      "bouncedSessions": 9,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "HU",
+      "totalUsers": 19,
+      "bouncedSessions": 9,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "GR",
+      "totalUsers": 19,
+      "bouncedSessions": 9,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "TR",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "MX",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "AR",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "CL",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "CO",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "PE",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "CN",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "HK",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "TW",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "KR",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "TH",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "VN",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "PH",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "ID",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "MY",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "PK",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "BD",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "LK",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "NP",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "SA",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "QA",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "KW",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "EG",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "NG",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "KE",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "GH",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "MA",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "IL",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "RU",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "UA",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "RO",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "BG",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "HR",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "SI",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "SK",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "LT",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "LV",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "EE",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "IS",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "LU",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "CY",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    },
+    {
+      "date": "2026-06-15",
+      "country": "MT",
+      "totalUsers": 19,
+      "bouncedSessions": 8,
+      "totalSessionDurationSec": 2592
+    }
+  ],
+  "devices": [
+    {
+      "date": "2026-06-15",
+      "device": "desktop",
+      "sessions": 1180,
+      "engagedSessions": 780
+    },
+    {
+      "date": "2026-06-15",
+      "device": "mobile",
+      "sessions": 540,
+      "engagedSessions": 343
+    }
+  ],
+  "paths": [
+    {
+      "date": "2026-06-15",
+      "step1": "/",
+      "step2": "/contact-us/",
+      "sessions": 45
+    },
+    {
+      "date": "2026-06-15",
+      "step1": "/about-us/",
+      "step2": "/clients/",
+      "sessions": 22
+    }
+  ]
+}
