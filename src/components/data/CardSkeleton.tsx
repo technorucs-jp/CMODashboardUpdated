@@ -10,5 +10,5 @@ export interface CardSkeletonProps {
 }
 
 export function CardSkeleton({ height = 96 }: CardSkeletonProps) {
-  return <div className="skeleton" role="status" aria-label="Loading" style={{ height }} />
+  return <div className="card skeleton" role="status" aria-label="Loading" style={{ height }} />
 }

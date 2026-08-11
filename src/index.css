@@ -21,8 +21,18 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Shared card surface (KpiCard, item 2.9, and others) — the base look every
+   card variant sits on, loaded or not. */
+.card {
+  background: var(--color-surface-1);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+}
+
 /* CardSkeleton (item 2.8) — per-card loading state, never a full-page spinner;
-   the shell (sidebar, pickers) stays interactive while cards are skeletons. */
+   the shell (sidebar, pickers) stays interactive while cards are skeletons.
+   Builds on .card's surface/border so a skeleton is the same shape as the
+   card it stands in for. */
 @keyframes skeleton-pulse {
   0%,
   100% {
@@ -34,9 +44,6 @@ body {
 }
 
 .skeleton {
-  background: var(--color-surface-1);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-card);
   animation: skeleton-pulse 1.5s ease-in-out infinite;
 }
 
