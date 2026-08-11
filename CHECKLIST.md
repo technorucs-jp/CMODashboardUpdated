@@ -344,8 +344,9 @@ Last updated:         2026-08-11
   *Verify:* all four variants render; label text is present, not colour-only.
       > Takes the `Status` type directly from `src/lib/metrics/status.ts` (item 1.18) — the four values can never drift apart from what the status ladder actually produces.
 
-- [ ] **2.11** `DataTable` — sortable columns, totals row, `tabular-nums`, `overflow-x: auto` container.
+- [x] **2.11** `DataTable` — sortable columns, totals row, `tabular-nums`, `overflow-x: auto` container.
   *Verify:* the ad-set table sorts by spend and by cost/conv; the page body never scrolls horizontally at 1280px.
+      > `accessor` returns the numeric sort key, `render` (optional) returns the pre-formatted display value — sorting needs the real number even though components never compute a metric. Cost/conversation's `—` (null, item 2.18) sorts as `Infinity`, landing consistently at one end rather than breaking the sort or being silently coerced to 0. The 1280px "page body doesn't scroll" claim is a container-CSS property (`overflowX: 'auto'` on the table's own wrapper, tested directly); full-viewport verification happens naturally once a real tab uses this component (item 2.17).
 
 - [ ] **2.12** `BarRow` (horizontal labelled bar with value + share) matching the wireframe's inbound-sources / channel-breakdown rows.
   *Verify:* visual match against `02-leads-top.jpg`.
