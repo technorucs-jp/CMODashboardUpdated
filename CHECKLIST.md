@@ -302,14 +302,17 @@ Last updated:         2026-08-11
   *Verify:* enabling "previous period" for 1–30 June sets `cf=2026-05-02&ct=2026-05-31`.
       > Added `previousMonth`/`previousYear` to `range.ts` (alongside the already-built `previousPeriodOfEqualLength`). Documented a real edge case in `previousMonth`: `date-fns`' `subMonths` clamps to the target month's actual day count, so 1-30 June → 1-30 May, not 1-31 May — "previous month" is a same-day-of-month shift (the standard analytics-tool convention), not "the previous full calendar month" for a range that doesn't start on the 1st. No checklist verify pins an exact value for this case, so this is a documented judgement call, not a guess passed off as certain.
 
-- [ ] **2.3** URL parse/serialise with Zod validation, via `react-router`'s `useSearchParams`; the URL is the only range state.
+- [x] **2.3** URL parse/serialise with Zod validation, via `react-router`'s `useSearchParams`; the URL is the only range state.
   *Verify:* `grep -rn "useState.*[Rr]ange" src/` returns nothing outside the picker's transient input state.
+      > `src/routes/useRangeState.ts` is the single read/write point for `from`/`to`/`preset`/`cf`/`ct`/`cpreset`. Comparison parsing deliberately does *not* reuse `parseRangeParams`'s fallback (which is specifically for the primary range defaulting to "this month") — missing/invalid `cf`/`ct` just means comparison is off (`null`), matching BRD §4.1's "off by default", not a fallback to some other comparison range.
 
-- [ ] **2.4** Both pickers live in the root layout's `TopBar`, visible on every tab, surviving navigation across `react-router` routes.
+- [x] **2.4** Both pickers live in the root layout's `TopBar`, visible on every tab, surviving navigation across `react-router` routes.
   *Verify:* set a range on `/leads`, navigate to `/seo` — the range persists and the URL carries it.
+      > **Gap found and fixed**: `react-router`'s `<NavLink to="/other-tab">` drops the current query string by default — without a fix, clicking any sidebar item would have silently reset the CMO's selected range on every tab switch, which is exactly the bug item 2.4 exists to prevent. Fixed in `Sidebar.tsx` by carrying `useLocation().search` forward into each nav link's `to` prop. Verified end-to-end (not just unit-tested in isolation): render `/leads?from=2026-06-01&to=2026-06-30`, click through to SEO, assert the TopBar's rendered range is still June.
 
-- [ ] **2.5** Bookmark/share works: pasting a full URL into a new tab reproduces the exact view (after MSAL sign-in, since every route is behind `AuthGuard` — this is expected, not a regression; the URL itself is what round-trips, not anonymous access to it).
+- [x] **2.5** Bookmark/share works: pasting a full URL into a new tab reproduces the exact view (after MSAL sign-in, since every route is behind `AuthGuard` — this is expected, not a regression; the URL itself is what round-trips, not anonymous access to it).
   *Verify:* manual — copy URL, open in a fresh session, sign in, same figures render.
+      > Automated equivalent of the "manual" verify: render `/overview?from=...&to=...&cf=...&ct=...` fresh (no prior navigation) and assert both the primary and comparison ranges appear correctly — this is the same code path a pasted URL would hit.
 
 - [ ] **2.6** TanStack Query provider, key `['metrics', tab, rangeSig, compareSig]`, `staleTime: Infinity`.
   *Verify:* switching away and back to a tab issues no second `fetch` call.

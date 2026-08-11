@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 
 /**
  * Fixed left nav, 8 items + source sublabels (TAD §11.6 / CHECKLIST.md 0.14).
@@ -16,13 +16,19 @@ const NAV_ITEMS = [
 ] as const
 
 export function Sidebar() {
+  // Preserve the current range (item 2.4/2.3) across tab switches — react-router's
+  // <NavLink to="/other-tab"> drops the query string by default, which would silently
+  // reset the CMO's selected range every time they change tabs. Carrying `location.search`
+  // forward is what makes the URL-as-only-state design (item 2.3) actually hold across navigation.
+  const location = useLocation()
+
   return (
     <nav aria-label="Channels">
       <p>Channels</p>
       <ul>
         {NAV_ITEMS.map((item) => (
           <li key={item.to}>
-            <NavLink to={item.to}>
+            <NavLink to={{ pathname: item.to, search: location.search }}>
               <span>{item.label}</span>
               {item.source && (
                 <>
