@@ -348,8 +348,9 @@ Last updated:         2026-08-11
   *Verify:* the ad-set table sorts by spend and by cost/conv; the page body never scrolls horizontally at 1280px.
       > `accessor` returns the numeric sort key, `render` (optional) returns the pre-formatted display value — sorting needs the real number even though components never compute a metric. Cost/conversation's `—` (null, item 2.18) sorts as `Infinity`, landing consistently at one end rather than breaking the sort or being silently coerced to 0. The 1280px "page body doesn't scroll" claim is a container-CSS property (`overflowX: 'auto'` on the table's own wrapper, tested directly); full-viewport verification happens naturally once a real tab uses this component (item 2.17).
 
-- [ ] **2.12** `BarRow` (horizontal labelled bar with value + share) matching the wireframe's inbound-sources / channel-breakdown rows.
+- [x] **2.12** `BarRow` (horizontal labelled bar with value + share) matching the wireframe's inbound-sources / channel-breakdown rows.
   *Verify:* visual match against `02-leads-top.jpg`.
+      > Actually looked at `02-leads-top.jpg` for this one (item 1.20's earlier fixture work had already independently confirmed the exact same Zoho figures — 49/48/1/15/27/7/0/16 — from text elsewhere in the docs, all match this image precisely). Confirms the BRD v2.1 §7.1 zero-count-card bug directly: this wireframe's "Inbound leads overview" row shows only 8 cards, with Contact in Future and Junk silently absent — exactly what item 3.8 exists to fix.
 
 - [ ] **2.13** `DonutChart` and `HorizontalBarChart`, colours from CSS tokens.
   *Verify:* `grep -rn "fill=\"#" src/components/` returns nothing.
