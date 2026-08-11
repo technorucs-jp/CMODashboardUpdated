@@ -202,8 +202,9 @@ Last updated:         2026-08-10
 - [x] **1.14** **Ratio invariant test** — for a 3-day fixture, the range CTR computed as `Σclicks/Σimpressions` differs from the mean of daily CTRs, and the engine returns the former.
   *Verify:* test asserts both the correct value and that it is *not* equal to the naive daily mean.
 
-- [ ] **1.15** `src/lib/metrics/registry.ts` — every metric with `id`, `label`, `unit`, `polarity` (`higher-better`/`lower-better`/`neutral`), `additive`, `format`. Mark `reach` and `totalUsers` `additive: false`.
+- [x] **1.15** `src/lib/metrics/registry.ts` — every metric with `id`, `label`, `unit`, `polarity` (`higher-better`/`lower-better`/`neutral`), `additive`, `format`. Mark `reach` and `totalUsers` `additive: false`.
   *Verify:* test — `registry['meta.costPerConversation'].polarity === 'lower-better'`; `registry['ga4.totalUsers'].additive === false`.
+      > 34 metrics across the five channels — covers everything named in BRD §5-12 and the channel-health table's four key metrics (cost/conversation, engagement rate, non-brand clicks, reactions/post). Not claimed exhaustive; a later phase needing a metric not yet listed here is a normal addition, not a gap in this item. `as const satisfies Record<string, MetricDefinition>` keeps literal key lookup (`registry['meta.costPerConversation']`) typed while still validating every entry's shape.
 
 - [ ] **1.16** `src/lib/metrics/aggregate.ts` — sum additive metrics over filtered rows; **throw** on an attempt to sum a non-additive metric across >1 day.
   *Verify:* test — summing `reach` over a 2-day range throws; over a 1-day range returns the value.
