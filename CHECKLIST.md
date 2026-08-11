@@ -68,6 +68,14 @@ Notes:                Phase 0: Vite 8 (rolldown-based) scaffolded via `create-vi
                       and 2.14's missing account[] field on MetaAdsFileShape were both found and fixed while
                       building this tab — see their notes.
                       227 tests across 45 files, all green. Production build succeeds.
+                      Ad-hoc, user-requested: `AuthGuard` now bypasses the real MSAL check when
+                      `import.meta.env.MODE === 'development'` (i.e. only `npm run dev`) so the dashboard
+                      can be checked locally without real Entra credentials. Deliberately NOT gated on the
+                      more obvious `DEV` flag — Vitest also sets `DEV: true` for test runs (its `MODE` is
+                      `'test'`), so that would have silently disabled every auth test; confirmed empirically
+                      (234/234 tests still pass, same assertions, after the change). `vite build`'s `MODE`
+                      is `'production'`, so the deployed site is unaffected — still gated on real sign-in.
+                      234 tests across 46 files, all green.
 Last updated:         2026-08-11
 ```
 
