@@ -209,7 +209,7 @@ Last updated:         2026-08-10
 - [x] **1.16** `src/lib/metrics/aggregate.ts` — sum additive metrics over filtered rows; **throw** on an attempt to sum a non-additive metric across >1 day.
   *Verify:* test — summing `reach` over a 2-day range throws; over a 1-day range returns the value.
 
-- [ ] **1.17** `src/lib/metrics/compare.ts` — `Delta` with `pct`, `direction`, `favourable`. Flat band `|pct| ≤ 2%`. `pct === null` when comparison is 0 and current is not.
+- [x] **1.17** `src/lib/metrics/compare.ts` — `Delta` with `pct`, `direction`, `favourable`. Flat band `|pct| ≤ 2%`. `pct === null` when comparison is 0 and current is not.
   *Verify:* test — 100→101 is `flat`; 100→0 is `down` with `pct === -100`; 0→50 has `pct === null` (renders "new", not `∞%`).
 
 - [ ] **1.18** `src/lib/metrics/status.ts` — Appendix A thresholds from `config/thresholds.json`, using registry polarity.
