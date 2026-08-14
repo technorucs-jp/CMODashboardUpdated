@@ -28,6 +28,23 @@ export function rangeSignature(range: DateRange): string {
   return `${range.from}_${range.to}`
 }
 
+/**
+ * Every business date in the range, inclusive, in ascending order.
+ *
+ * Exists so a daily chart's axis comes from the *range* rather than from the
+ * rows that happen to exist (item 3.13): deriving the axis from the data
+ * silently collapses empty days, and for the Leads tab's daily-volume chart the
+ * empty days are the finding ("active on 16 of 30 days"). Same P4 spirit as
+ * `Coverage` — absence has to be visible, not omitted.
+ */
+export function eachDateInRange(range: DateRange): BusinessDate[] {
+  const dates: BusinessDate[] = []
+  for (let cursor = range.from; cursor <= range.to; cursor = nextDay(cursor)) {
+    dates.push(cursor)
+  }
+  return dates
+}
+
 /** The immediately-preceding period of equal length — the default comparison (BRD §9.6/TAD §9.6). */
 export function previousPeriodOfEqualLength(range: DateRange): DateRange {
   const length = lengthInDays(range)

@@ -430,3 +430,10 @@ export const brandTermsConfigSchema = z.object({
 })
 
 export type BrandTermsConfigFile = z.infer<typeof brandTermsConfigSchema>
+
+export const salesRepsConfigSchema = z.object({
+  schemaVersion: z.number().int().positive(),
+  reps: z.array(z.object({ name: z.string(), active: z.boolean() })),
+})
+
+export type SalesRepsConfigFile = z.infer<typeof salesRepsConfigSchema>

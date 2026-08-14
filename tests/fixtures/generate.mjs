@@ -539,39 +539,76 @@ function buildZohoCrm() {
   const leads = []
   let leadIdCounter = 4800
 
-  // June — precise, reconciled cross-tabulation (see header comment):
+  // June — precise, reconciled cross-tabulation against Wireframe/02-leads-top.jpg
+  // and 02-leads-mid.jpg (items 3.7-3.15, built 2026-08-14):
   //   Total 49, Contacted 15, Attempted 27, Lost 7, ContactInFuture 0, Junk 0,
-  //   Meetings 0. Meta Ads 48 / SEO 1. Gopinath 43 (incl. the 1 SEO lead,
-  //   Contacted), Priya 6.
+  //   Meetings 0. Meta Ads 48 / SEO 1.
+  //   Per rep: Gopinath 43 (12 contacted / 24 attempted / 7 lost → 27.9% contact
+  //   rate), Jeevanantham J. 6 (3 contacted / 3 attempted / 0 lost → 50.0%).
+  //
+  // **Fixture bug found and fixed here (2026-08-14).** The original item 1.20 split
+  // gave Gopinath 12 Meta-Contacted + 6 Meta-Lost and named the second rep "Priya",
+  // producing Gopinath 13C/6L (30.2% contact rate) and Priya 2C/1L (33.3%) — the
+  // *headline* totals (49/15/27/7) were right, so Phase 1's reconciliation never
+  // caught it, but every per-rep figure in 02-leads-mid.jpg disagreed. The Leads
+  // tab's rep table (item 3.14) is the first thing that ever displayed a per-rep
+  // breakdown, which is what surfaced it. The wireframe's own arithmetic pins the
+  // correct split exactly: Gopinath 12+24+7=43 and Jeevanantham 3+3+0=6 sum to 49,
+  // and the Meta-only donut (27 attempted / 14 contacted / 7 lost of 48) forces the
+  // single SEO lead to be one of Gopinath's contacted ones.
   const JUNE_LEADS = [
     // owner, source, status, count
     { owner: 'Gopinath', source: 'Meta Ads', status: 'Attempted to Contact', count: 24 },
-    { owner: 'Gopinath', source: 'Meta Ads', status: 'Contacted', count: 12 },
-    { owner: 'Gopinath', source: 'Meta Ads', status: 'Lost / Not interested', count: 6 },
+    { owner: 'Gopinath', source: 'Meta Ads', status: 'Contacted', count: 11 },
+    { owner: 'Gopinath', source: 'Meta Ads', status: 'Lost / Not interested', count: 7 },
     { owner: 'Gopinath', source: 'SEO', status: 'Contacted', count: 1 },
-    { owner: 'Priya', source: 'Meta Ads', status: 'Attempted to Contact', count: 3 },
-    { owner: 'Priya', source: 'Meta Ads', status: 'Contacted', count: 2 },
-    { owner: 'Priya', source: 'Meta Ads', status: 'Lost / Not interested', count: 1 },
+    { owner: 'Jeevanantham J.', source: 'Meta Ads', status: 'Attempted to Contact', count: 3 },
+    { owner: 'Jeevanantham J.', source: 'Meta Ads', status: 'Contacted', count: 3 },
   ]
-  // 16 distinct active days in June (item 3.13).
-  const ACTIVE_JUNE_DAYS = [1, 2, 3, 5, 6, 8, 9, 11, 13, 16, 18, 20, 22, 25, 27, 29]
-  let dayCursor = 0
-  for (const bucket of JUNE_LEADS) {
-    for (let i = 0; i < bucket.count; i++) {
-      const day = ACTIVE_JUNE_DAYS[dayCursor % ACTIVE_JUNE_DAYS.length]
-      dayCursor++
-      const hh = String(9 + (leadIdCounter % 8)).padStart(2, '0')
-      const mm = String((leadIdCounter * 7) % 60).padStart(2, '0')
-      leads.push({
-        leadId: String(leadIdCounter++),
-        createdTime: `2026-06-${String(day).padStart(2, '0')}T${hh}:${mm}:00+05:30`,
-        leadSource: bucket.source,
-        leadStatus: bucket.status,
-        owner: bucket.owner,
-        inquiryType: null,
-      })
-    }
+
+  // Daily distribution (item 3.13) — the 16 active days are read off
+  // 02-leads-top.jpg's "Daily inbound volume" x-axis, and Jun 15 is its stated
+  // peak at 6 leads. Counts on the other 15 days are plausible readings of the
+  // bar heights that sum to exactly 49; they are NOT pixel-verified, and nothing
+  // in the checklist pins them individually (item 3.13's verify asks only for
+  // "30 day slots, active on 16"). The wireframe's two gap captions disagree with
+  // each other ("Jun 3,5-7,13-17…" on the card vs "…19-21,26-28" on the chart), so
+  // the x-axis labels are used as the authority rather than either caption.
+  const JUNE_DAY_COUNTS = [
+    { day: 1, count: 3 }, { day: 2, count: 1 }, { day: 4, count: 2 }, { day: 8, count: 3 },
+    { day: 9, count: 2 }, { day: 10, count: 1 }, { day: 11, count: 3 }, { day: 12, count: 3 },
+    { day: 15, count: 6 }, { day: 18, count: 5 }, { day: 22, count: 3 }, { day: 23, count: 3 },
+    { day: 24, count: 2 }, { day: 25, count: 4 }, { day: 28, count: 5 }, { day: 30, count: 3 },
+  ]
+  const daySchedule = JUNE_DAY_COUNTS.flatMap(({ day, count }) => Array.from({ length: count }, () => day))
+
+  const juneSpecs = JUNE_LEADS.flatMap((bucket) =>
+    Array.from({ length: bucket.count }, () => ({ source: bucket.source, status: bucket.status, owner: bucket.owner })),
+  )
+  // `daySchedule` is ordered by day, so index 6 is the first Jun 8 slot — the day
+  // 02-leads-top.jpg draws the single green (SEO) segment on. Move the one SEO
+  // lead there so the stacked chart's SEO bar lands where the wireframe shows it.
+  const SEO_TARGET_INDEX = 6
+  const seoIndex = juneSpecs.findIndex((s) => s.source === 'SEO')
+  juneSpecs.splice(SEO_TARGET_INDEX, 0, ...juneSpecs.splice(seoIndex, 1))
+
+  if (daySchedule.length !== juneSpecs.length) {
+    throw new Error(`June day schedule (${daySchedule.length}) must match lead count (${juneSpecs.length})`)
   }
+
+  juneSpecs.forEach((spec, i) => {
+    const day = daySchedule[i]
+    const hh = String(9 + (leadIdCounter % 8)).padStart(2, '0')
+    const mm = String((leadIdCounter * 7) % 60).padStart(2, '0')
+    leads.push({
+      leadId: String(leadIdCounter++),
+      createdTime: `2026-06-${String(day).padStart(2, '0')}T${hh}:${mm}:00+05:30`,
+      leadSource: spec.source,
+      leadStatus: spec.status,
+      owner: spec.owner,
+      inquiryType: null,
+    })
+  })
 
   // May — reconciled to Wireframe/08-overview-may2026.jpg and 09-overview-comparemom.jpg
   // (Overview tab, 2026-08-14): 64 total leads, 9 Contacted → 9/64 = 14.0625%, which
@@ -586,7 +623,7 @@ function buildZohoCrm() {
       createdTime: `2026-05-${String(day).padStart(2, '0')}T11:30:00+05:30`,
       leadSource: 'Meta Ads',
       leadStatus: i < MAY_CONTACTED ? 'Contacted' : 'Attempted to Contact',
-      owner: i % 5 === 0 ? 'Priya' : 'Gopinath',
+      owner: i % 5 === 0 ? 'Jeevanantham J.' : 'Gopinath',
       inquiryType: null,
     })
   }
@@ -598,7 +635,7 @@ function buildZohoCrm() {
       createdTime: `2026-07-${String(d).padStart(2, '0')}T11:30:00+05:30`,
       leadSource: 'Meta Ads',
       leadStatus: d % 6 === 0 ? 'Contacted' : 'Attempted to Contact',
-      owner: d % 5 === 0 ? 'Priya' : 'Gopinath',
+      owner: d % 5 === 0 ? 'Jeevanantham J.' : 'Gopinath',
       inquiryType: null,
     })
   }

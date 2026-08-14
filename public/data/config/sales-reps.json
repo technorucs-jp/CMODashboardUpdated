@@ -1,8 +1,9 @@
 {
   "schemaVersion": 1,
-  "comment": "Active roster, independent of the filtered lead set — a rep with zero assigned leads for a range must still appear in the Leads tab's rep table (BRD §7.3; TASK.md §9 trap). Source of truth for that table's rows, not zoho-crm.json.",
+  "comment": "Active roster, independent of the filtered lead set — a rep with zero assigned leads for a range must still appear in the Leads tab's rep table (BRD §7.3; TASK.md §9 trap). Source of truth for that table's rows, not zoho-crm.json. Note the Leads view model renders the UNION of this roster and any owner actually observed in the range, so a lead assigned to someone missing from this list is never silently dropped from the table's totals — see src/viewmodels/leads.ts.",
   "reps": [
     { "name": "Gopinath", "active": true },
+    { "name": "Jeevanantham J.", "active": true },
     { "name": "Rathish", "active": true },
     { "name": "Mohan", "active": true },
     { "name": "Ram", "active": true }

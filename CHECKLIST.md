@@ -21,9 +21,10 @@ Companion to `TASK.md`. **Read `TASK.md` first.** Work top to bottom, one item a
 ## Session state — update before you stop
 
 ```
-Current phase:        3 — Remaining tabs (6/44 done: items 3.1-3.6). Overview tab complete.
-Last completed item:  3.6
-Next item:            3.7 (Leads viewmodel — no-notes guarantee, P3′ contract test)
+Current phase:        3 — Remaining tabs (16/44 done: items 3.1-3.16). Overview + Leads tabs complete.
+Last completed item:  3.16 (left [!] — the TAD §16.1 decision it waits on is still open; the
+                      "not yet classified" state it asks for IS built and tested)
+Next item:            3.17 (Website tab — eight GA4 overview cards)
 Blocked on:           Nothing blocking Phase 3. Still open, none of them phase-blocking yet:
                       TAD §16.1 (lead intent classification, needed by Phase 3 item 3.16),
                       §16.2 (staleness thresholds, needed by Phase 5),
@@ -148,6 +149,33 @@ Notes:                Phase 0: Vite 8 (rolldown-based) scaffolded via `create-vi
                       Verified: typecheck ✓, lint ✓, scan:secrets ✓, validate:data ✓, test:recon ✓
                       (5/5, May's reconciliation didn't touch June), build ✓. 303 tests across 50
                       files, all green (was 258/48 before this item).
+
+                      Leads tab built (items 3.7-3.16). New src/viewmodels/leads.ts +
+                      src/routes/leads.tsx + shared SeriesBarChart (stacked or grouped by one
+                      flag — items 3.13 and 3.15 differ only in that). Added eachDateInRange()
+                      to src/lib/time/range.ts so the daily chart's axis comes from the RANGE,
+                      not the rows that exist — deriving it from data collapses the gaps, and
+                      "active on 16 of 30 days" IS the finding. Added sales-reps to loadConfig.
+                      SECOND REAL FIXTURE BUG FOUND (same class as item 2.22's): June's per-rep
+                      split was wrong — Gopinath 13C/6L @30.2% and a rep named "Priya" 2C/1L
+                      @33.3%, where 02-leads-mid.jpg shows Gopinath 12C/24A/7L @27.9% and
+                      "Jeevanantham J." 3C/3A/0L @50.0%. Headline totals (49/15/27/7) were right
+                      either way, which is exactly why Phase 1 reconciliation never caught it —
+                      the rep table is the first thing that ever rendered a per-rep breakdown.
+                      The wireframe's arithmetic pins the fix uniquely (12+24+7=43, 3+3+0=6, and
+                      the Meta donut's 14-of-48 contacted forces the lone SEO lead to be one of
+                      Gopinath's). Also rebuilt June's day distribution onto the 16 days actually
+                      labelled on the chart's x-axis, Jun 15 peak = 6, SEO lead on Jun 8. Added
+                      Jeevanantham J. to config/sales-reps.json (item 1.1 anticipated this).
+                      Rep table renders the UNION of roster + observed owners — roster guarantees
+                      a row, it doesn't gate one; without the union a lead owned by someone off
+                      the config would vanish from the table while still counting in the total.
+                      Item 3.16 left [!]: the state is built and tested, but the TAD §16.1
+                      decision it waits on is the CMO's and is still open. NEITHER classifier
+                      implemented, per TASK.md §8.
+                      Verified: typecheck ✓, lint ✓, scan:secrets ✓, validate:data ✓, test:recon ✓
+                      (5/5 — the rep-split fix didn't move any headline figure), build ✓.
+                      348 tests across 52 files, all green.
 Last updated:         2026-08-14
 ```
 
@@ -160,7 +188,7 @@ Last updated:         2026-08-14
 | 0 — Foundation | 18 | 18 | ✅ (re-verified 2026-08-14 after ADR-015) |
 | 1 — Data spine | 31 | 31 | ✅ |
 | 2 — Pickers & first tab | 24 | 24 | ✅ |
-| 3 — Remaining tabs | 44 | 6 | ⬜ |
+| 3 — Remaining tabs | 44 | 16 | ⬜ |
 | 4 — Rules & narrative | 19 | 0 | ⬜ |
 | 5 — Ingestion & hardening | 26 | 0 | ⬜ |
 
@@ -549,35 +577,49 @@ Last updated:         2026-08-14
 
 ### Leads
 
-- [ ] **3.7** `src/viewmodels/leads.ts` — counts and rates only; `notes` never appears anywhere in the fetched data or the view model (**P3′**) — this is now enforced two layers deep: the `.strict()` schema (item 1.4) rejects the field on parse, and this view model would have nothing to leak even if it slipped through.
+- [x] **3.7** `src/viewmodels/leads.ts` — counts and rates only; `notes` never appears anywhere in the fetched data or the view model (**P3′**) — this is now enforced two layers deep: the `.strict()` schema (item 1.4) rejects the field on parse, and this view model would have nothing to leak even if it slipped through.
   *Verify:* contract test asserts the parsed `zoho-crm.json` fixture (i.e. the exact shape the browser receives) contains no `notes` key at all; `grep` the raw fixture file for a known note string used pre-pivot → no match.
+      > Five separate assertions, covering both layers rather than just the one the item names: the raw file text has no `"notes"` substring and no known pre-pivot note fragment; the *parsed* file (the exact object the browser receives) has no `notes` key on any lead; a deliberately-corrupted file carrying a `notes` field **fails `.strict()` parse** (proving the schema layer actually catches it rather than being assumed to); and the serialised view model itself contains no lead free-text. The last one is the layer the item calls "would have nothing to leak" — now asserted, not just argued.
 
-- [ ] **3.8** Overview cards: total inbound, leads by source, Contacted, Attempted, Lost/Not interested, **Contact in Future**, **Junk**, Meetings scheduled, Active days.
+- [x] **3.8** Overview cards: total inbound, leads by source, Contacted, Attempted, Lost/Not interested, **Contact in Future**, **Junk**, Meetings scheduled, Active days.
   *Verify:* all statuses render for June including the zero-count ones (BRD v2.1 §7.1) — this is the specific bug the current static build has.
+      > `STATUS_CARD_ORDER` and `SOURCE_ORDER` are fixed lists in the view model, never derived from the filtered leads — that is the mechanical reason a zero-count card cannot vanish, rather than a convention to remember. Confirmed the wireframe has the bug: `02-leads-top.jpg` shows 8 overview cards, silently omitting Contact in Future and Junk; this build renders all 10 (plus zero-count Social Media / Email Campaign source cards, which the wireframe also drops). Asserted at both the view-model and rendered-page level.
 
-- [ ] **3.9** Contact rate = Contacted ÷ Total, computed for the range.
+- [x] **3.9** Contact rate = Contacted ÷ Total, computed for the range.
   *Verify:* June reads 30.6% (15 of 49).
+      > 15/49 = 30.6122% → displays "30.61%" on the shared 2dp `percent` convention (same as every other rate in the app; the wireframe's own precision is inconsistent — 30.6%, 55.1%, 98% all appear with different decimal counts on one screen).
 
-- [ ] **3.10** Lead source breakdown bar rows with % of total.
+- [x] **3.10** Lead source breakdown bar rows with % of total.
   *Verify:* June reads Meta Ads 48 (98%), SEO 1 (2%).
+      > 48 (97.96%) and 1 (2.04%) — round to the wireframe's 98%/2%. Shares sum to exactly 100%, asserted directly.
 
-- [ ] **3.11** Meta Ads lead-status donut.
+- [x] **3.11** Meta Ads lead-status donut.
   *Verify:* June reads Attempted 27 (56%), Contacted 14 (29%), Lost 7 (15%).
+      > Exact. Note Contacted is **14** here vs. 15 in the all-inbound distribution — the difference is the single SEO lead, which is Contacted but not a Meta Ads lead. That relationship is what pins the fixture's rep/source cross-tabulation (see item 3.14's note). Zero-count statuses are present in the view model's `metaStatusBreakdown` but filtered out of the donut's slices only (a 0%-area wedge is not a rendering); they still appear in the accompanying text list beside it.
 
-- [ ] **3.12** All-inbound status distribution bar list.
+- [x] **3.12** All-inbound status distribution bar list.
   *Verify:* matches `02-leads-top.jpg`.
+      > Attempted 27 (55.10%), Contacted 15 (30.61%), Lost 7 (14.29%) — exact. All six statuses render in fixed order including the three at zero, which the wireframe omits.
 
-- [ ] **3.13** Daily inbound volume stacked bar by source, one bar per day in range including zero days.
+- [x] **3.13** Daily inbound volume stacked bar by source, one bar per day in range including zero days.
   *Verify:* June shows 30 day slots with gaps visible, active on 16.
+      > Added `eachDateInRange()` to `src/lib/time/range.ts` specifically so the axis comes from the **range**, not from the rows that happen to exist — deriving it from the data silently collapses the gaps, and here the gaps *are* the finding ("active on 16 of 30 days"). 30 slots, 16 active, 14 explicit zeros, daily totals summing to 49 — all asserted. Also rebuilt the fixture's June day distribution to the 16 days actually labelled on `02-leads-top.jpg`'s x-axis with Jun 15 as the stated 6-lead peak and the single SEO lead on Jun 8 (where the wireframe draws its green segment). The wireframe's two gap captions contradict each other ("Jun 3,5–7,13–17…" on the card vs "…19–21,26–28" on the chart), so the x-axis labels were used as the authority and the per-day heights on the other 15 days are documented as plausible readings, not pixel-verified.
+      > New shared `SeriesBarChart` component (stacked or grouped by one flag) — items 3.13 and 3.15 differ only in that flag, so a second component would have been the same code with one prop hardcoded.
 
-- [ ] **3.14** Sales rep table including **every active rep with zero assigned leads**, sourced from `config/sales-reps.json`.
+- [x] **3.14** Sales rep table including **every active rep with zero assigned leads**, sourced from `config/sales-reps.json`.
   *Verify:* June shows Rathish, Mohan, Ram with 0 / "Not assigned" — the single-point-of-failure finding depends on these rows existing.
+      > **Real fixture bug found and fixed.** The item 1.20 fixture's June rep split gave Gopinath 13 contacted / 6 lost (30.2% contact rate) and named the second rep "Priya" at 2C/1L (33.3%) — but `02-leads-mid.jpg` shows Gopinath 12C/24A/7L (27.9%) and **Jeevanantham J.** 3C/3A/0L (50.0%). The *headline* totals (49/15/27/7) were correct either way, which is exactly why Phase 1's reconciliation never caught it — this rep table is the first thing in the build that ever displayed a per-rep breakdown. The wireframe's own arithmetic pins the correct split uniquely: 12+24+7=43 and 3+3+0=6 sum to 49, and the Meta-only donut (14 contacted of 48) forces the single SEO lead to be one of Gopinath's contacted ones. Fixed in `generate.mjs`, regenerated, all figures now exact. Added "Jeevanantham J." to `config/sales-reps.json` (item 1.1's note explicitly anticipated this: *"add more as real data surfaces"*).
+      > The table renders the **union** of the configured roster and any owner actually observed in the range — the roster guarantees a rep a row, it does not gate who may have one. Without the union, a lead assigned to someone missing from the config would vanish from the table while still counting in the headline total, so the columns would silently stop summing to 49. Asserted directly, including with a deliberately-short roster.
+      > A zero-assignment rep shows `—` for every count column and "Not assigned" for the rate, not a row of zeroes — "no leads were routed here" and "leads arrived and none were contacted" are different statements, and the wireframe distinguishes them the same way.
 
-- [ ] **3.15** Contacted vs. attempted by rep chart.
+- [x] **3.15** Contacted vs. attempted by rep chart.
   *Verify:* matches `02-leads-bottom.jpg`.
+      > Grouped (not stacked) `SeriesBarChart` with Contacted/Attempted/Lost series, one group per rep — including the zero-assignment reps, so the visual concentration on one rep is as obvious in the chart as in the table.
 
-- [ ] **[!] 3.16** Intent bucket panel — renders the "not yet classified" state while `inquiryType` is null. **Do not implement either classifier** (TASK.md §8). Note: whichever classification path the CMO eventually picks, the resulting bucket label is all that may ever appear in `zoho-crm.json` — the underlying `notes` text stays out per item 3.7 regardless.
+- [x] **[!] 3.16** Intent bucket panel — renders the "not yet classified" state while `inquiryType` is null. **Do not implement either classifier** (TASK.md §8). Note: whichever classification path the CMO eventually picks, the resulting bucket label is all that may ever appear in `zoho-crm.json` — the underlying `notes` text stays out per item 3.7 regardless.
   *Verify:* with null `inquiryType` throughout the fixture, the panel renders an explicit unclassified state, not an empty table.
+      > Built the state only; **neither classifier is implemented**, per TASK.md §8. `intentBuckets` is typed `null` (not an empty array) so there is no shape for a future caller to accidentally render as "0 buckets found". The panel names the concrete count of unclassified leads (49) and states both candidate paths plus the fact that it is an open decision, so a reader sees why it is empty rather than assuming the feature is broken.
+      > **Left `[!]`** — the underlying TAD §16.1 decision is still the CMO's and is not resolved by building this state. The item is functionally complete; the marker tracks the open decision, matching how item 5.24 is handled.
 
 ### Website
 

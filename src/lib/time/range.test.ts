@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import {
   containsDate,
+  eachDateInRange,
   gapsInRange,
   lengthInDays,
   mergeIntervals,
@@ -77,5 +78,32 @@ describe('range.ts (item 1.11)', () => {
 
   it('previousYear shifts each endpoint back one calendar year', () => {
     expect(previousYear(june)).toEqual({ from: '2025-06-01', to: '2025-06-30' })
+  })
+
+  describe('eachDateInRange (item 3.13 — the daily axis comes from the range, not the data)', () => {
+    it('returns every day in June, inclusive, ascending', () => {
+      const dates = eachDateInRange(june)
+      expect(dates).toHaveLength(30)
+      expect(dates[0]).toBe('2026-06-01')
+      expect(dates[29]).toBe('2026-06-30')
+    })
+
+    it('agrees with lengthInDays for any range', () => {
+      const r = { from: '2026-05-28', to: '2026-06-03' }
+      expect(eachDateInRange(r)).toHaveLength(lengthInDays(r))
+    })
+
+    it('crosses a month boundary correctly', () => {
+      expect(eachDateInRange({ from: '2026-05-30', to: '2026-06-02' })).toEqual([
+        '2026-05-30',
+        '2026-05-31',
+        '2026-06-01',
+        '2026-06-02',
+      ])
+    })
+
+    it('a single-day range returns exactly that day', () => {
+      expect(eachDateInRange({ from: '2026-06-15', to: '2026-06-15' })).toEqual(['2026-06-15'])
+    })
   })
 })

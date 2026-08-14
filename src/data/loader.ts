@@ -5,6 +5,7 @@ import {
   linkedInFileSchema,
   metaAdsFileSchema,
   narrativesFileSchema,
+  salesRepsConfigSchema,
   thresholdsConfigSchema,
   zohoCrmFileSchema,
   type BrandTermsConfigFile,
@@ -13,6 +14,7 @@ import {
   type LinkedInFile,
   type MetaAdsFile,
   type NarrativesFile,
+  type SalesRepsConfigFile,
   type ThresholdsConfigFile,
   type ZohoCrmFile,
 } from './schemas'
@@ -128,6 +130,7 @@ export function clearLoaderCacheForTests(): void {
 const CONFIG_SCHEMAS = {
   thresholds: thresholdsConfigSchema,
   'brand-terms': brandTermsConfigSchema,
+  'sales-reps': salesRepsConfigSchema,
 } as const
 
 export type ConfigName = keyof typeof CONFIG_SCHEMAS
@@ -135,6 +138,7 @@ export type ConfigName = keyof typeof CONFIG_SCHEMAS
 export interface ConfigFileMap {
   thresholds: ThresholdsConfigFile
   'brand-terms': BrandTermsConfigFile
+  'sales-reps': SalesRepsConfigFile
 }
 
 export class ConfigLoadError extends Error {
