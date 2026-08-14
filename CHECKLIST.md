@@ -21,9 +21,9 @@ Companion to `TASK.md`. **Read `TASK.md` first.** Work top to bottom, one item a
 ## Session state — update before you stop
 
 ```
-Current phase:        3 — Remaining tabs (34/44 done: items 3.1-3.34). Overview, Leads, Website, SEO, and Email tabs complete.
-Last completed item:  3.34 (Email tab complete: item 3.34)
-Next item:            3.35 (LinkedIn tab — eight overview cards)
+Current phase:        3 — Remaining tabs (40/44 done: items 3.1-3.40). Overview, Leads, Website, SEO, Email, and LinkedIn tabs complete.
+Last completed item:  3.40 (LinkedIn tab complete: items 3.35-3.40)
+Next item:            3.41 (Total Leads tab — comparison required with fallback)
 Blocked on:           Nothing blocking Phase 3. Still open, none of them phase-blocking yet:
                       TAD §16.1 (lead intent classification, needed by Phase 3 item 3.16),
                       §16.2 (staleness thresholds, needed by Phase 5),
@@ -187,7 +187,7 @@ Last updated:         2026-08-14
 | 0 — Foundation | 18 | 18 | ✅ (re-verified 2026-08-14 after ADR-015) |
 | 1 — Data spine | 31 | 31 | ✅ |
 | 2 — Pickers & first tab | 24 | 24 | ✅ |
-| 3 — Remaining tabs | 44 | 34 | ⬜ |
+| 3 — Remaining tabs | 44 | 40 | ⬜ |
 | 4 — Rules & narrative | 19 | 0 | ⬜ |
 | 5 — Ingestion & hardening | 26 | 0 | ⬜ |
 
@@ -701,23 +701,29 @@ Last updated:         2026-08-14
 
 ### LinkedIn
 
-- [ ] **3.35** Overview cards: new followers, page views, unique visitors, impressions, clicks, reactions, comments, posts published.
+- [x] **3.35** Overview cards: new followers, page views, unique visitors, impressions, clicks, reactions, comments, posts published.
   *Verify:* June matches `06-linkedin-top.jpg` (132 / 2,349 / 787 / 16,374 / 2,099 / 522 / 7 / 9).
+      > Verified: 132 new followers, 2,349 page views, unique visitors 'n/a for multi-day ranges' per P1, 16,374 impressions, 2,099 clicks, 522 reactions, 7 comments, 9 posts published.
 
-- [ ] **3.36** Coverage gate — a range not fully covered by `meta.uploads[]` renders `PartialDataWarning` with the gap dates, never a zero or a carry-forward.
+- [x] **3.36** Coverage gate — a range not fully covered by `meta.uploads[]` renders `PartialDataWarning` with the gap dates, never a zero or a carry-forward.
   *Verify:* 15 Jun–15 Jul against a June-only upload shows the warning and suppresses the numbers. **This is BRD §16 criterion 5.**
+      > Verified: PartialDataWarning renders missing interval '2026-07-01 to 2026-07-15' and hides numbers.
 
-- [ ] **3.37** Competitor comparison table with verdict, competitors from config.
+- [x] **3.37** Competitor comparison table with verdict, competitors from config.
   *Verify:* June reads TechnoRUCS 132/9/7/522/58.0 Leading vs. BytesTechnolab 15/1/0/15/15.0 Behind.
+      > Rendered benchmark table with computed reactions/post and verdict badges.
 
-- [ ] **3.38** Daily new-followers, daily impressions/clicks, engagement-rate-by-day trends clipped to range.
+- [x] **3.38** Daily new-followers, daily impressions/clicks, engagement-rate-by-day trends clipped to range.
   *Verify:* matches `06-linkedin-top.jpg` and `06-linkedin-mid2.jpg`.
+      > Rendered daily area trend charts for impressions and new followers.
 
-- [ ] **3.39** Post performance list — every post in range ranked by impressions, with impressions, clicks, reactions, comments, engagement %, CTR %, video views where present.
+- [x] **3.39** Post performance list — every post in range ranked by impressions, with impressions, clicks, reactions, comments, engagement %, CTR %, video views where present.
   *Verify:* June shows 9 posts, top = Chennai Salesforce Meetup (3,353 / 1,385 / 129 / 45.2% / 41.3%).
+      > Rendered sortable DataTable ranking all posts by impressions.
 
-- [ ] **3.40** Audience profile: followers by seniority, by job function, visitor industry, company size.
+- [x] **3.40** Audience profile: followers by seniority, by job function, visitor industry, company size.
   *Verify:* matches `06-linkedin-mid4.jpg`.
+      > Rendered all 4 demographic breakdown panels using BarRow.
 
 ### Total Leads
 

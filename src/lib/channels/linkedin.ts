@@ -38,11 +38,39 @@ export interface LinkedInCompetitor {
   readonly reactions: number
 }
 
+export interface LinkedInSeniority {
+  readonly level: string
+  readonly count: number
+}
+
+export interface LinkedInJobFunction {
+  readonly function: string
+  readonly count: number
+}
+
+export interface LinkedInVisitorIndustry {
+  readonly industry: string
+  readonly count: number
+}
+
+export interface LinkedInCompanySize {
+  readonly companySize: string
+  readonly count: number
+}
+
+export interface LinkedInAudience {
+  readonly bySeniority: readonly LinkedInSeniority[]
+  readonly byJobFunction: readonly LinkedInJobFunction[]
+  readonly byVisitorIndustry: readonly LinkedInVisitorIndustry[]
+  readonly byCompanySize: readonly LinkedInCompanySize[]
+}
+
 export interface LinkedInFileShape {
   readonly meta: { readonly uploads: readonly LinkedInUpload[] }
   readonly dailyTrend: readonly LinkedInDailyTrend[]
   readonly posts: readonly LinkedInPost[]
-  readonly competitors: readonly LinkedInCompetitor[]
+  readonly competitors?: readonly LinkedInCompetitor[]
+  readonly audience?: LinkedInAudience
 }
 
 export interface LinkedInSummary {
@@ -63,6 +91,8 @@ export interface LinkedInSummary {
 export interface LinkedInQueryResult {
   readonly dailyTrend: readonly LinkedInDailyTrend[]
   readonly posts: readonly LinkedInPost[]
+  readonly competitors: readonly LinkedInCompetitor[]
+  readonly audience: LinkedInAudience | null
   readonly summary: LinkedInSummary
 }
 
@@ -120,6 +150,8 @@ export function queryLinkedIn(file: LinkedInFileShape, range: DateRange): Channe
     return {
       dailyTrend,
       posts,
+      competitors: file.competitors ?? [],
+      audience: file.audience ?? null,
       summary: {
         newFollowers,
         pageViews,
