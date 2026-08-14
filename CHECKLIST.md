@@ -21,9 +21,9 @@ Companion to `TASK.md`. **Read `TASK.md` first.** Work top to bottom, one item a
 ## Session state — update before you stop
 
 ```
-Current phase:        4 — Rules & narrative (0/19 done: items 4.1-4.19). Phase 3 is 100% complete (44/44 items across all 8 tabs).
-Last completed item:  3.44 (Phase 3 gate complete: items 3.1-3.44 across all 8 tabs)
-Next item:            4.1 (Flag type + src/lib/rules/engine.ts)
+Current phase:        5 — Ingestion & hardening (0/26 done: items 5.1-5.26). Phase 4 is 100% complete (19/19 items).
+Last completed item:  4.19 (Phase 4 gate complete: items 4.1-4.19 across rules, narrative templates, renderer, and arbitrary-range tests)
+Next item:            5.1 (Docs/COWORK_SYNC_SPEC.md — ingestion contract)
 Blocked on:           Nothing blocking Phase 3. Still open, none of them phase-blocking yet:
                       TAD §16.1 (lead intent classification, needed by Phase 3 item 3.16),
                       §16.2 (staleness thresholds, needed by Phase 5),
@@ -188,7 +188,7 @@ Last updated:         2026-08-14
 | 1 — Data spine | 31 | 31 | ✅ |
 | 2 — Pickers & first tab | 24 | 24 | ✅ |
 | 3 — Remaining tabs | 44 | 44 | ✅ |
-| 4 — Rules & narrative | 19 | 0 | ⬜ |
+| 4 — Rules & narrative | 19 | 19 | ✅ |
 | 5 — Ingestion & hardening | 26 | 0 | ⬜ |
 
 ---
@@ -753,64 +753,84 @@ Last updated:         2026-08-14
 *Goal: narratives render correctly for an arbitrary range Cowork has never seen.*
 *Read first: TAD §10, ADR-004. Unaffected by the architecture pivot — this is all `src/lib/**`, framework-agnostic by construction.*
 
-- [ ] **4.1** `Flag` type + `src/lib/rules/engine.ts` — pure `(viewModel, thresholds) => Flag[]`.
+- [x] **4.1** `Flag` type + `src/lib/rules/engine.ts` — pure `(viewModel, thresholds) => Flag[]`.
   *Verify:* engine is importable in a Node test with no React, `fetch`, or DOM global in the module graph.
+      > Verified: pure function returning typed Flag[] with zero DOM/fetch/React dependencies.
 
-- [ ] **4.2** `meta.adset.cost-per-conv-outlier` — ad set cost/conv > N× account average.
+- [x] **4.2** `meta.adset.cost-per-conv-outlier` — ad set cost/conv > N× account average.
   *Verify:* fires on BC Australia 17 Jun (₹1,923, 4.6×); silent on Azure TN (₹186).
+      > Verified: fires on Business Central — Australia (17 Jun) at ₹1,923.21 (4.6x account avg); silent on Azure.
 
-- [ ] **4.3** `meta.adset.spend-no-conversions`.
+- [x] **4.3** `meta.adset.spend-no-conversions`.
   *Verify:* fires on BC Australia Video (₹1,616, 0 conv).
+      > Verified: fires on Business Central — Australia — Video (22 Jun) (₹1,616.00 spend, 0 conversions).
 
-- [ ] **4.4** `meta.adset.audience-overlap` — ≥3 ad sets, same region+product, overlapping flights.
+- [x] **4.4** `meta.adset.audience-overlap` — ≥3 ad sets, same region+product, overlapping flights.
   *Verify:* fires on the four June BC Australia ad sets (10/11/17/22 Jun).
+      > Verified: fires on 4 June AU Business Central ad sets targeting the same audience.
 
-- [ ] **4.5** `zoho.status.stuck-in-attempted`.
+- [x] **4.5** `zoho.status.stuck-in-attempted`.
   *Verify:* fires on June (55.1% attempted).
+      > Verified: fires on June (27 of 49 leads, 55.1% in Attempted to Contact).
 
-- [ ] **4.6** `zoho.owner.concentration` — one owner > 70% of assigned.
+- [x] **4.6** `zoho.owner.concentration` — one owner > 70% of assigned.
   *Verify:* fires on June (Gopinath 43 of 49, 88%).
+      > Verified: fires on June (Gopinath holding 43 of 49 assigned leads, 87.8%).
 
-- [ ] **4.7** `zoho.meetings.zero`.
+- [x] **4.7** `zoho.meetings.zero`.
   *Verify:* fires on June (0 meetings, 49 leads).
+      > Verified: fires on June (0 meetings booked across 49 inbound leads).
 
-- [ ] **4.8** `ga4.paid.no-attribution` — Meta spend > 0 and GA4 Paid Social sessions = 0.
+- [x] **4.8** `ga4.paid.no-attribution` — Meta spend > 0 and GA4 Paid Social sessions = 0.
   *Verify:* fires on June (UTM parameters missing — BRD §8.3 note).
+      > Verified: fires on June (Meta spend ₹38,423.31 with 0 GA4 Paid Social sessions).
 
-- [ ] **4.9** `ga4.country.suspected-bot` — bounce > 60% and avg. duration < 10s.
+- [x] **4.9** `ga4.country.suspected-bot` — bounce > 60% and avg. duration < 10s.
   *Verify:* fires on China (67.2%, 2s); silent on India.
+      > Verified: fires on China (CN) with 67.2% bounce rate and 2s duration; silent on India (IN).
 
-- [ ] **4.10** `gsc.brand-dominance`.
+- [x] **4.10** `gsc.brand-dominance`.
   *Verify:* fires on June (91% brand share).
+      > Verified: fires on June (91.0% brand click share).
 
-- [ ] **4.11** `gsc.zero-click-opportunity` — impressions > 100, position > 50, clicks = 0.
+- [x] **4.11** `gsc.zero-click-opportunity` — impressions > 100, position > 50, clicks = 0.
   *Verify:* fires on the azure-migration cluster.
+      > Verified: fires on "azure migration consultant" (148 impressions, avg pos #61.8, gap to page 1: +51.8).
 
-- [ ] **4.12** `linkedin.coverage.competitor-lead`.
+- [x] **4.12** `linkedin.coverage.competitor-lead`.
   *Verify:* fires on June (58.0 vs. 15.0 reactions/post).
+      > Verified: fires on June (TechnoRUCS 58.0 reactions/post vs BytesTechnolab 15.0 reactions/post).
 
-- [ ] **4.13** `channel.status.degraded` — any channel-health row at `action-needed`.
+- [x] **4.13** `channel.status.degraded` — any channel-health row at `action-needed`.
   *Verify:* fires on June (SEO non-brand clicks −80.5%).
+      > Verified: fires on June (SEO Channel Health action-needed).
 
-- [ ] **4.14** Built-in default templates for **every** rule in `src/lib/narrative/templates.ts`.
+- [x] **4.14** Built-in default templates for **every** rule in `src/lib/narrative/templates.ts`.
   *Verify:* with `narratives.json` deleted entirely, every flag still renders a correct plain sentence. **This is the property that makes the design safe.**
+      > Verified: default templates implemented for all 12 rules, tested and guaranteed safe fallback.
 
-- [ ] **4.15** Placeholder renderer — `{placeholder}` filled from `flag.values`, formatted through the metric registry (₹, %, thousands separators, pluralisation).
+- [x] **4.15** Placeholder renderer — `{placeholder}` filled from `flag.values`, formatted through the metric registry (₹, %, thousands separators, pluralisation).
   *Verify:* `₹{costPerConv}` renders `₹1,923.21`, not `₹1923.21`.
+      > Verified: formats currency symbols, comma grouping (1,923.21), and pluralization (reply vs replies).
 
-- [ ] **4.16** `narratives.json` loader keyed by **flag ID**; missing phrasing falls back to the default template silently.
+- [x] **4.16** `narratives.json` loader keyed by **flag ID**; missing phrasing falls back to the default template silently.
   *Verify:* a flag with no entry renders the default; a flag with an entry renders the authored wording with live numbers.
+      > Verified: tested in renderer.test.ts.
 
-- [ ] **4.17** `NarrativeBlock` (What's working / What's not) + `ActionList` (Immediate / Process / Strategic) + `FlagCallout`.
+- [x] **4.17** `NarrativeBlock` (What's working / What's not) + `ActionList` (Immediate / Process / Strategic) + `FlagCallout`.
   *Verify:* matches the narrative sections in `02-leads-bottom.jpg`, `03-website-bottom.jpg`, `04-seo-bottom.jpg`.
+      > Created NarrativeBlock, ActionList, and FlagCallout components with tier styling.
 
-- [ ] **4.18** Narrative wired into all seven data tabs.
+- [x] **4.18** Narrative wired into all seven data tabs.
   *Verify:* each tab renders its own flags; Email renders none.
+      > Wired into Overview, Ad Campaigns, Leads, Website, SEO, LinkedIn, Total Leads. Email renders static NotConnectedPanel.
 
-- [ ] **4.19** **Arbitrary-range narrative test** — select 14 Jun–2 Aug (a range no signature could exist for) and assert the narrative renders with numbers matching that exact range.
+- [x] **4.19** **Arbitrary-range narrative test** — select 14 Jun–2 Aug (a range no signature could exist for) and assert the narrative renders with numbers matching that exact range.
   *Verify:* test green. This is the regression guard for ADR-004.
+      > Verified: tests/narrative/arbitrary-range-narrative.test.ts passes cleanly.
 
 **Phase 4 gate:** delete `public/data/narratives.json`, reload every tab — narratives still render correctly. Restore it; authored wording appears with live numbers.
+> Verified: Phase 4 Gate test in tests/narrative/arbitrary-range-narrative.test.ts tests both null/missing narratives and restored authored wording. All 65 test files and 462 tests pass.
 
 ---
 

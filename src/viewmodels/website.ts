@@ -1,3 +1,6 @@
+import { composeTabNarrative, type NarrativesMap } from '@/lib/narrative/compose'
+import type { NarrativeRenderResult } from '@/lib/narrative/renderer'
+import { queryMetaAds, type MetaAdsFileShape } from '@/lib/channels/metaAds'
 import {
   queryGa4,
   type Ga4Country,
@@ -121,6 +124,7 @@ export interface PathRow {
 export interface WebsiteViewModel {
   readonly coverage: ChannelResult<unknown>['coverage']
   readonly hasData: boolean
+  readonly narrativeFlags: readonly NarrativeRenderResult[]
   readonly overviewCards: readonly WebsiteCard[] | null
   readonly dailySessions: readonly DailySessionPoint[] | null
   readonly channelBreakdown: readonly ChannelRow[] | null
@@ -183,6 +187,8 @@ export function buildWebsiteViewModel(
   file: Ga4FileShape,
   range: DateRange,
   pageTypes: PageTypesConfig,
+  metaFile?: MetaAdsFileShape | null,
+  narratives?: NarrativesMap | null,
 ): WebsiteViewModel {
   const result = queryGa4(file, range)
 
@@ -190,6 +196,7 @@ export function buildWebsiteViewModel(
     return {
       coverage: result.coverage,
       hasData: false,
+      narrativeFlags: [],
       overviewCards: null,
       dailySessions: null,
       channelBreakdown: null,
@@ -384,9 +391,13 @@ export function buildWebsiteViewModel(
 
   void sessionsOf // retained for readers: documents the engaged+bounced identity used above
 
+  const metaResult = metaFile ? queryMetaAds(metaFile, range).data : null
+  const narrativeFlags = composeTabNarrative('ga4', { ga4: result.data, metaAds: metaResult }, narratives)
+
   return {
     coverage: result.coverage,
     hasData: true,
+    narrativeFlags,
     overviewCards,
     dailySessions,
     channelBreakdown,

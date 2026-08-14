@@ -1,3 +1,5 @@
+import { composeTabNarrative, type NarrativesMap } from '@/lib/narrative/compose'
+import type { NarrativeRenderResult } from '@/lib/narrative/renderer'
 import { queryMetaAds, type MetaAdsFileShape, type MetaAdsQueryResult } from '@/lib/channels/metaAds'
 import type { ChannelResult } from '@/lib/coverage/coverage'
 import { formatMetricValue } from '@/lib/metrics/format'
@@ -56,6 +58,7 @@ export interface TotalLeadsViewModel {
   readonly coverage: ChannelResult<unknown>['coverage']
   readonly comparisonCoverage: ChannelResult<unknown>['coverage']
   readonly hasData: boolean
+  readonly narrativeFlags: readonly NarrativeRenderResult[]
   readonly primaryRange: DateRange
   readonly comparisonRange: DateRange
   readonly isFallbackComparison: boolean
@@ -129,6 +132,7 @@ export function buildTotalLeadsViewModel(
   file: MetaAdsFileShape,
   range: DateRange,
   requestedComparisonRange?: DateRange | null,
+  narratives?: NarrativesMap | null,
 ): TotalLeadsViewModel {
   const isFallbackComparison = !requestedComparisonRange
   const effectiveComparisonRange = requestedComparisonRange ?? previousPeriodOfEqualLength(range)
@@ -145,6 +149,7 @@ export function buildTotalLeadsViewModel(
       coverage: primaryResult.coverage,
       comparisonCoverage: compResult.coverage,
       hasData: false,
+      narrativeFlags: [],
       primaryRange: range,
       comparisonRange: effectiveComparisonRange,
       isFallbackComparison,
@@ -252,10 +257,13 @@ export function buildTotalLeadsViewModel(
     comparisonConversations: c.comparison.conversations,
   }))
 
+  const narrativeFlags = composeTabNarrative('meta-ads', { metaAds: primaryResult.data }, narratives)
+
   return {
     coverage: primaryResult.coverage,
     comparisonCoverage: compResult.coverage,
     hasData: true,
+    narrativeFlags,
     primaryRange: range,
     comparisonRange: effectiveComparisonRange,
     isFallbackComparison,

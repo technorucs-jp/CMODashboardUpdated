@@ -1,3 +1,5 @@
+import { composeTabNarrative, type NarrativesMap } from '@/lib/narrative/compose'
+import type { NarrativeRenderResult } from '@/lib/narrative/renderer'
 import { queryMetaAds, type MetaAdsFileShape, type MetaAdsAdSet, type MetaAdsFact } from '@/lib/channels/metaAds'
 import type { ChannelResult } from '@/lib/coverage/coverage'
 import { formatMetricValue } from '@/lib/metrics/format'
@@ -56,6 +58,7 @@ export interface CountryRow {
 export interface AdCampaignsViewModel {
   readonly coverage: ChannelResult<unknown>['coverage']
   readonly hasData: boolean
+  readonly narrativeFlags: readonly NarrativeRenderResult[]
   readonly accountCards: {
     readonly spend: string
     readonly impressions: string
@@ -87,13 +90,18 @@ function groupBy<T, K>(items: readonly T[], keyFn: (item: T) => K): Map<K, T[]> 
   return map
 }
 
-export function buildAdCampaignsViewModel(file: MetaAdsFileShape, range: DateRange): AdCampaignsViewModel {
+export function buildAdCampaignsViewModel(
+  file: MetaAdsFileShape,
+  range: DateRange,
+  narratives?: NarrativesMap | null,
+): AdCampaignsViewModel {
   const result = queryMetaAds(file, range)
 
   if (result.data === null) {
     return {
       coverage: result.coverage,
       hasData: false,
+      narrativeFlags: [],
       accountCards: null,
       adSetTable: null,
       totalsRow: null,
@@ -206,9 +214,12 @@ export function buildAdCampaignsViewModel(file: MetaAdsFileShape, range: DateRan
   const sortedAccountRows = [...accountRows].sort((a, b) => (a.date < b.date ? -1 : 1))
   const opportunityScore = sortedAccountRows.length > 0 ? sortedAccountRows[sortedAccountRows.length - 1].opportunityScore : null
 
+  const narrativeFlags = composeTabNarrative('meta-ads', { metaAds: result.data }, narratives)
+
   return {
     coverage: result.coverage,
     hasData: true,
+    narrativeFlags,
     accountCards,
     adSetTable,
     totalsRow,

@@ -12,7 +12,15 @@ const CONFIG_DIR = join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'pu
 const linkedInFixture = JSON.parse(readFileSync(join(FIXTURES_DIR, 'linkedin.json'), 'utf8'))
 const compConfig = JSON.parse(readFileSync(join(CONFIG_DIR, 'linkedin-competitors.json'), 'utf8'))
 
-const loadMock = vi.hoisted(() => vi.fn(async () => linkedInFixture))
+const narrativesFixture = JSON.parse(readFileSync(join(FIXTURES_DIR, 'narratives.json'), 'utf8'))
+
+const loadMock = vi.hoisted(() =>
+  vi.fn(async (ch: string) => {
+    if (ch === 'linkedin') return linkedInFixture
+    if (ch === 'narratives') return narrativesFixture
+    return null
+  }),
+)
 const loadConfigMock = vi.hoisted(() => vi.fn(async () => compConfig))
 vi.mock('@/data/loader', () => ({ load: loadMock, loadConfig: loadConfigMock }))
 

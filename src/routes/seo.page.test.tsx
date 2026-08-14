@@ -12,7 +12,15 @@ const CONFIG_DIR = join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'pu
 const gscFixture = JSON.parse(readFileSync(join(FIXTURES_DIR, 'gsc.json'), 'utf8'))
 const brandTermsConfig = JSON.parse(readFileSync(join(CONFIG_DIR, 'brand-terms.json'), 'utf8'))
 
-const loadMock = vi.hoisted(() => vi.fn(async () => gscFixture))
+const narrativesFixture = JSON.parse(readFileSync(join(FIXTURES_DIR, 'narratives.json'), 'utf8'))
+
+const loadMock = vi.hoisted(() =>
+  vi.fn(async (ch: string) => {
+    if (ch === 'gsc') return gscFixture
+    if (ch === 'narratives') return narrativesFixture
+    return null
+  }),
+)
 const loadConfigMock = vi.hoisted(() => vi.fn(async () => brandTermsConfig))
 vi.mock('@/data/loader', () => ({ load: loadMock, loadConfig: loadConfigMock }))
 

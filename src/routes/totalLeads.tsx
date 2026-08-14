@@ -2,6 +2,8 @@ import { load } from '@/data/loader'
 import { CardSkeleton } from '@/components/data/CardSkeleton'
 import { DataTable, type DataTableColumn } from '@/components/data/DataTable'
 import { KpiCard } from '@/components/data/KpiCard'
+import { NarrativeBlock } from '@/components/narrative/NarrativeBlock'
+import { ActionList } from '@/components/narrative/ActionList'
 import { CoverageState } from '@/components/states/CoverageState'
 import {
   buildTotalLeadsViewModel,
@@ -110,8 +112,11 @@ export default function TotalLeadsPage() {
   const { range, comparisonRange } = useRangeState()
 
   const { data: vm, isLoading } = useMetricsQuery('total-leads', range, comparisonRange, async () => {
-    const file = await load('meta-ads')
-    return buildTotalLeadsViewModel(file, range, comparisonRange)
+    const [file, narratives] = await Promise.all([
+      load('meta-ads'),
+      load('narratives').catch(() => null),
+    ])
+    return buildTotalLeadsViewModel(file, range, comparisonRange, narratives)
   })
 
   return (
@@ -234,6 +239,9 @@ export default function TotalLeadsPage() {
               </div>
             </div>
           )}
+
+          <NarrativeBlock flags={vm.narrativeFlags} />
+          <ActionList flags={vm.narrativeFlags} />
         </>
       )}
     </div>

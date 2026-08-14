@@ -1,3 +1,5 @@
+import { composeTabNarrative, type NarrativesMap } from '@/lib/narrative/compose'
+import type { NarrativeRenderResult } from '@/lib/narrative/renderer'
 import { queryZoho, type ZohoCrmFileShape, type ZohoLead, type ZohoLeadSource, type ZohoLeadStatus } from '@/lib/channels/zoho'
 import type { ChannelResult } from '@/lib/coverage/coverage'
 import { formatMetricValue } from '@/lib/metrics/format'
@@ -97,6 +99,7 @@ export interface RepRow {
 export interface LeadsViewModel {
   readonly coverage: ChannelResult<unknown>['coverage']
   readonly hasData: boolean
+  readonly narrativeFlags: readonly NarrativeRenderResult[]
   readonly overviewCards: readonly OverviewCard[] | null
   readonly sourceBreakdown: readonly SourceBreakdownRow[] | null
   /** Status split of Meta Ads leads only (item 3.11's donut) — zero-count statuses included. */
@@ -143,6 +146,7 @@ export function buildLeadsViewModel(
   file: ZohoCrmFileShape,
   range: DateRange,
   roster: readonly string[],
+  narratives?: NarrativesMap | null,
 ): LeadsViewModel {
   const result = queryZoho(file, range)
 
@@ -150,6 +154,7 @@ export function buildLeadsViewModel(
     return {
       coverage: result.coverage,
       hasData: false,
+      narrativeFlags: [],
       overviewCards: null,
       sourceBreakdown: null,
       metaStatusBreakdown: null,
@@ -304,9 +309,12 @@ export function buildLeadsViewModel(
     }
   })
 
+  const narrativeFlags = composeTabNarrative('zoho-crm', { zoho: result.data }, narratives)
+
   return {
     coverage: result.coverage,
     hasData: true,
+    narrativeFlags,
     overviewCards,
     sourceBreakdown,
     metaStatusBreakdown,

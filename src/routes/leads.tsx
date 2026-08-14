@@ -3,6 +3,8 @@ import { BarRow } from '@/components/data/BarRow'
 import { CardSkeleton } from '@/components/data/CardSkeleton'
 import { DonutChart } from '@/components/data/DonutChart'
 import { KpiCard } from '@/components/data/KpiCard'
+import { NarrativeBlock } from '@/components/narrative/NarrativeBlock'
+import { ActionList } from '@/components/narrative/ActionList'
 import { SeriesBarChart } from '@/components/data/SeriesBarChart'
 import { CoverageState } from '@/components/states/CoverageState'
 import { buildLeadsViewModel } from '@/viewmodels/leads'
@@ -50,9 +52,13 @@ export default function LeadsPage() {
   const { range, comparisonRange } = useRangeState()
 
   const { data: vm, isLoading } = useMetricsQuery('leads', range, comparisonRange, async () => {
-    const [file, repsConfig] = await Promise.all([load('zoho-crm'), loadConfig('sales-reps')])
+    const [file, repsConfig, narratives] = await Promise.all([
+      load('zoho-crm'),
+      loadConfig('sales-reps'),
+      load('narratives').catch(() => null),
+    ])
     const roster = repsConfig.reps.filter((r) => r.active).map((r) => r.name)
-    return buildLeadsViewModel(file, range, roster)
+    return buildLeadsViewModel(file, range, roster, narratives)
   })
 
   return (
@@ -199,6 +205,9 @@ export default function LeadsPage() {
               { key: 'Lost', label: 'Lost', color: 'var(--hue-red)' },
             ]}
           />
+
+          <NarrativeBlock flags={vm.narrativeFlags} />
+          <ActionList flags={vm.narrativeFlags} />
         </>
       )}
     </div>

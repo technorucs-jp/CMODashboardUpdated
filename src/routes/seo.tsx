@@ -3,6 +3,8 @@ import { AreaTrendChart } from '@/components/data/AreaTrendChart'
 import { CardSkeleton } from '@/components/data/CardSkeleton'
 import { DataTable, type DataTableColumn } from '@/components/data/DataTable'
 import { KpiCard } from '@/components/data/KpiCard'
+import { NarrativeBlock } from '@/components/narrative/NarrativeBlock'
+import { ActionList } from '@/components/narrative/ActionList'
 import { CoverageState } from '@/components/states/CoverageState'
 import { NotConnectedPanel } from '@/components/states/NotConnectedPanel'
 import {
@@ -124,8 +126,12 @@ export default function SeoPage() {
   const { range, comparisonRange } = useRangeState()
 
   const { data: vm, isLoading } = useMetricsQuery('seo', range, comparisonRange, async () => {
-    const [file, brandTermsConfig] = await Promise.all([load('gsc'), loadConfig('brand-terms')])
-    return buildSeoViewModel(file, range, brandTermsConfig.terms)
+    const [file, brandTermsConfig, narratives] = await Promise.all([
+      load('gsc'),
+      loadConfig('brand-terms'),
+      load('narratives').catch(() => null),
+    ])
+    return buildSeoViewModel(file, range, brandTermsConfig.terms, narratives)
   })
 
   return (
@@ -230,6 +236,9 @@ export default function SeoPage() {
 
           <h2>Backlink profile</h2>
           <NotConnectedPanel message="Ubersuggest backlinks integration is not connected. Track backlinks in Ubersuggest directly (BRD §9.3)." />
+
+          <NarrativeBlock flags={vm.narrativeFlags} />
+          <ActionList flags={vm.narrativeFlags} />
         </>
       )}
     </div>

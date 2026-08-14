@@ -4,6 +4,8 @@ import { BarRow } from '@/components/data/BarRow'
 import { CardSkeleton } from '@/components/data/CardSkeleton'
 import { DataTable, type DataTableColumn } from '@/components/data/DataTable'
 import { KpiCard } from '@/components/data/KpiCard'
+import { NarrativeBlock } from '@/components/narrative/NarrativeBlock'
+import { ActionList } from '@/components/narrative/ActionList'
 import { CoverageState } from '@/components/states/CoverageState'
 import {
   buildWebsiteViewModel,
@@ -93,8 +95,13 @@ export default function WebsitePage() {
   const { range, comparisonRange } = useRangeState()
 
   const { data: vm, isLoading } = useMetricsQuery('website', range, comparisonRange, async () => {
-    const [file, pageTypesConfig] = await Promise.all([load('ga4'), loadConfig('page-types')])
-    return buildWebsiteViewModel(file, range, pageTypesConfig)
+    const [file, pageTypesConfig, metaFile, narratives] = await Promise.all([
+      load('ga4'),
+      loadConfig('page-types'),
+      load('meta-ads').catch(() => null),
+      load('narratives').catch(() => null),
+    ])
+    return buildWebsiteViewModel(file, range, pageTypesConfig, metaFile, narratives)
   })
 
   return (
@@ -294,6 +301,9 @@ export default function WebsitePage() {
               <p>No multi-step journey paths recorded for this date range.</p>
             </div>
           )}
+
+          <NarrativeBlock flags={vm.narrativeFlags} />
+          <ActionList flags={vm.narrativeFlags} />
         </>
       )}
     </div>

@@ -1,3 +1,5 @@
+import { composeTabNarrative, type NarrativesMap } from '@/lib/narrative/compose'
+import type { NarrativeRenderResult } from '@/lib/narrative/renderer'
 import { queryGa4, type Ga4FileShape } from '@/lib/channels/ga4'
 import { queryGsc, type GscFileShape } from '@/lib/channels/gsc'
 import { queryLinkedIn, type LinkedInFileShape } from '@/lib/channels/linkedin'
@@ -77,6 +79,7 @@ export interface OverviewViewModel {
   /** e.g. "vs. previous 30 days" when comparison is off, or "vs. 1–31 May 2026" when set explicitly (item 3.4). */
   readonly comparisonLabel: string
   readonly periodComparisonBlocks: readonly PeriodComparisonBlock[]
+  readonly narrativeFlags: readonly NarrativeRenderResult[]
 }
 
 /** "1–30 Jun 2026" style label for an explicit comparison range (item 3.4). */
@@ -129,6 +132,7 @@ export function buildOverviewViewModel(
   comparisonRange: DateRange | null,
   thresholds: ThresholdsConfig,
   brandTerms: readonly string[],
+  narratives?: NarrativesMap | null,
 ): OverviewViewModel {
   const isComparisonExplicit = comparisonRange !== null
   const effectiveComparisonRange = comparisonRange ?? previousPeriodOfEqualLength(range)
@@ -348,10 +352,30 @@ export function buildOverviewViewModel(
     },
   ]
 
+  const narrativeFlags = composeTabNarrative(
+    'overview',
+    {
+      metaAds: metaCurrent.data,
+      ga4: ga4Current.data,
+      gsc: gscCurrent.data,
+      linkedin: linkedinCurrent.data,
+      zoho: zohoCurrent.data,
+      channelStatuses: channelHealth
+        .filter((h): h is typeof h & { status: NonNullable<typeof h.status> } => h.status !== null)
+        .map((h) => ({
+          channel: h.channel,
+          status: h.status,
+          reason: `${h.keyMetric} ${h.changeDisplay}`,
+        })),
+    },
+    narratives,
+  )
+
   return {
     kpiCards,
     channelHealth,
     comparisonLabel,
     periodComparisonBlocks,
+    narrativeFlags,
   }
 }

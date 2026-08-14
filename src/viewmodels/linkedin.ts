@@ -1,3 +1,5 @@
+import { composeTabNarrative, type NarrativesMap } from '@/lib/narrative/compose'
+import type { NarrativeRenderResult } from '@/lib/narrative/renderer'
 import {
   competitorReactionsPerPost,
   queryLinkedIn,
@@ -84,6 +86,7 @@ export interface LinkedInCompetitorsConfig {
 export interface LinkedInViewModel {
   readonly coverage: ChannelResult<unknown>['coverage']
   readonly hasData: boolean
+  readonly narrativeFlags: readonly NarrativeRenderResult[]
   readonly overviewCards: readonly LinkedInCard[] | null
   readonly dailyTrends: readonly LinkedInDailyPoint[] | null
   readonly posts: readonly PostPerformanceRow[] | null
@@ -116,6 +119,7 @@ export function buildLinkedInViewModel(
   file: LinkedInFileShape,
   range: DateRange,
   _competitorsConfig?: LinkedInCompetitorsConfig,
+  narratives?: NarrativesMap | null,
 ): LinkedInViewModel {
   const result = queryLinkedIn(file, range)
 
@@ -123,6 +127,7 @@ export function buildLinkedInViewModel(
     return {
       coverage: result.coverage,
       hasData: false,
+      narrativeFlags: [],
       overviewCards: null,
       dailyTrends: null,
       posts: null,
@@ -227,9 +232,12 @@ export function buildLinkedInViewModel(
       }
     : null
 
+  const narrativeFlags = composeTabNarrative('linkedin', { linkedin: result.data }, narratives)
+
   return {
     coverage: result.coverage,
     hasData: true,
+    narrativeFlags,
     overviewCards,
     dailyTrends,
     posts: postRows,

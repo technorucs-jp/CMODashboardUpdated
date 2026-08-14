@@ -6,6 +6,8 @@ import { DataTable, type DataTableColumn } from '@/components/data/DataTable'
 import { DonutChart } from '@/components/data/DonutChart'
 import { HorizontalBarChart } from '@/components/data/HorizontalBarChart'
 import { KpiCard } from '@/components/data/KpiCard'
+import { NarrativeBlock } from '@/components/narrative/NarrativeBlock'
+import { ActionList } from '@/components/narrative/ActionList'
 import { CoverageState } from '@/components/states/CoverageState'
 import { useMetricsQuery } from './useMetricsQuery'
 import { useRangeState } from './useRangeState'
@@ -32,8 +34,11 @@ export default function AdCampaignsPage() {
   const { range, comparisonRange } = useRangeState()
 
   const { data: vm, isLoading } = useMetricsQuery('ad-campaigns', range, comparisonRange, async () => {
-    const file = await load('meta-ads')
-    return buildAdCampaignsViewModel(file, range)
+    const [file, narratives] = await Promise.all([
+      load('meta-ads'),
+      load('narratives').catch(() => null),
+    ])
+    return buildAdCampaignsViewModel(file, range, narratives)
   })
 
   return (
@@ -116,8 +121,11 @@ export default function AdCampaignsPage() {
           <h2>Account opportunity score</h2>
           <div className="card" style={{ padding: 16 }}>
             <strong>{vm.opportunityScore ?? '—'}/100</strong>
-            <p>Rule-based suggestions land in Phase 4 — this is a placeholder panel (item 2.22).</p>
+            <p>Rule-based performance suggestions and optimization flags.</p>
           </div>
+
+          <NarrativeBlock flags={vm.narrativeFlags} />
+          <ActionList flags={vm.narrativeFlags} />
         </>
       )}
     </div>

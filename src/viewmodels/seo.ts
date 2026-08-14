@@ -1,3 +1,5 @@
+import { composeTabNarrative, type NarrativesMap } from '@/lib/narrative/compose'
+import type { NarrativeRenderResult } from '@/lib/narrative/renderer'
 import { isBrandQuery, queryGsc, type GscCountry, type GscDevice, type GscFileShape, type GscPage, type GscQuery } from '@/lib/channels/gsc'
 import type { ChannelResult } from '@/lib/coverage/coverage'
 import { formatMetricValue } from '@/lib/metrics/format'
@@ -84,6 +86,7 @@ export interface DeviceRow {
 export interface SeoViewModel {
   readonly coverage: ChannelResult<unknown>['coverage']
   readonly hasData: boolean
+  readonly narrativeFlags: readonly NarrativeRenderResult[]
   readonly dataAsOfDate: string
   readonly overviewCards: readonly SeoCard[] | null
   readonly dailyTrend: readonly DailyPoint[] | null
@@ -124,6 +127,7 @@ export function buildSeoViewModel(
   file: GscFileShape,
   range: DateRange,
   brandTerms: readonly string[] = [],
+  narratives?: NarrativesMap | null,
 ): SeoViewModel {
   const result = queryGsc(file, range, brandTerms)
 
@@ -131,6 +135,7 @@ export function buildSeoViewModel(
     return {
       coverage: result.coverage,
       hasData: false,
+      narrativeFlags: [],
       dataAsOfDate: file.meta.latestRecordDate,
       overviewCards: null,
       dailyTrend: null,
@@ -272,9 +277,12 @@ export function buildSeoViewModel(
     })
     .sort((a, b) => b.clicks - a.clicks)
 
+  const narrativeFlags = composeTabNarrative('gsc', { gsc: result.data }, narratives)
+
   return {
     coverage: result.coverage,
     hasData: true,
+    narrativeFlags,
     dataAsOfDate: file.meta.latestRecordDate,
     overviewCards,
     dailyTrend,

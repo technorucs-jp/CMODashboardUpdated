@@ -12,7 +12,17 @@ const CONFIG_DIR = join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'pu
 const ga4Fixture = JSON.parse(readFileSync(join(FIXTURES_DIR, 'ga4.json'), 'utf8'))
 const pageTypesConfig = JSON.parse(readFileSync(join(CONFIG_DIR, 'page-types.json'), 'utf8'))
 
-const loadMock = vi.hoisted(() => vi.fn(async () => ga4Fixture))
+const metaAdsFixture = JSON.parse(readFileSync(join(FIXTURES_DIR, 'meta-ads.json'), 'utf8'))
+const narrativesFixture = JSON.parse(readFileSync(join(FIXTURES_DIR, 'narratives.json'), 'utf8'))
+
+const loadMock = vi.hoisted(() =>
+  vi.fn(async (ch: string) => {
+    if (ch === 'ga4') return ga4Fixture
+    if (ch === 'meta-ads') return metaAdsFixture
+    if (ch === 'narratives') return narrativesFixture
+    return null
+  }),
+)
 const loadConfigMock = vi.hoisted(() => vi.fn(async () => pageTypesConfig))
 vi.mock('@/data/loader', () => ({ load: loadMock, loadConfig: loadConfigMock }))
 

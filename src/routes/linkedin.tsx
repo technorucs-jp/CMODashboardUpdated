@@ -4,6 +4,8 @@ import { BarRow } from '@/components/data/BarRow'
 import { CardSkeleton } from '@/components/data/CardSkeleton'
 import { DataTable, type DataTableColumn } from '@/components/data/DataTable'
 import { KpiCard } from '@/components/data/KpiCard'
+import { NarrativeBlock } from '@/components/narrative/NarrativeBlock'
+import { ActionList } from '@/components/narrative/ActionList'
 import { CoverageState } from '@/components/states/CoverageState'
 import {
   buildLinkedInViewModel,
@@ -95,11 +97,12 @@ export default function LinkedInPage() {
   const { range, comparisonRange } = useRangeState()
 
   const { data: vm, isLoading } = useMetricsQuery('linkedin', range, comparisonRange, async () => {
-    const [file, competitorsConfig] = await Promise.all([
+    const [file, competitorsConfig, narratives] = await Promise.all([
       load('linkedin'),
       loadConfig('linkedin-competitors'),
+      load('narratives').catch(() => null),
     ])
-    return buildLinkedInViewModel(file, range, competitorsConfig)
+    return buildLinkedInViewModel(file, range, competitorsConfig, narratives)
   })
 
   return (
@@ -221,6 +224,9 @@ export default function LinkedInPage() {
               </div>
             </>
           )}
+
+          <NarrativeBlock flags={vm.narrativeFlags} />
+          <ActionList flags={vm.narrativeFlags} />
         </>
       )}
     </div>

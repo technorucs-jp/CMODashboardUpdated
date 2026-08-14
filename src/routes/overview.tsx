@@ -2,6 +2,8 @@ import { load, loadConfig } from '@/data/loader'
 import { CardSkeleton } from '@/components/data/CardSkeleton'
 import { KpiCard } from '@/components/data/KpiCard'
 import { StatusTag } from '@/components/data/StatusTag'
+import { NarrativeBlock } from '@/components/narrative/NarrativeBlock'
+import { ActionList } from '@/components/narrative/ActionList'
 import { buildOverviewViewModel } from '@/viewmodels/overview'
 import { useMetricsQuery } from './useMetricsQuery'
 import { useRangeState } from './useRangeState'
@@ -19,7 +21,7 @@ export default function OverviewPage() {
   const { range, comparisonRange } = useRangeState()
 
   const { data: vm, isLoading } = useMetricsQuery('overview', range, comparisonRange, async () => {
-    const [metaAds, ga4, gsc, linkedin, zoho, thresholds, brandTermsConfig] = await Promise.all([
+    const [metaAds, ga4, gsc, linkedin, zoho, thresholds, brandTermsConfig, narratives] = await Promise.all([
       load('meta-ads'),
       load('ga4'),
       load('gsc'),
@@ -27,6 +29,7 @@ export default function OverviewPage() {
       load('zoho-crm'),
       loadConfig('thresholds'),
       loadConfig('brand-terms'),
+      load('narratives').catch(() => null),
     ])
     return buildOverviewViewModel(
       { metaAds, ga4, gsc, linkedin, zoho },
@@ -34,6 +37,7 @@ export default function OverviewPage() {
       comparisonRange,
       thresholds,
       brandTermsConfig.terms,
+      narratives,
     )
   })
 
@@ -113,6 +117,9 @@ export default function OverviewPage() {
               </div>
             ))}
           </div>
+
+          <NarrativeBlock flags={vm.narrativeFlags} />
+          <ActionList flags={vm.narrativeFlags} />
         </>
       )}
     </div>

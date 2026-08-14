@@ -10,7 +10,15 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..')
 const zohoFixture = JSON.parse(readFileSync(join(ROOT, 'tests', 'fixtures', 'zoho-crm.json'), 'utf8'))
 const salesReps = JSON.parse(readFileSync(join(ROOT, 'public', 'data', 'config', 'sales-reps.json'), 'utf8'))
 
-const loadMock = vi.hoisted(() => vi.fn(async () => zohoFixture))
+const narrativesFixture = JSON.parse(readFileSync(join(ROOT, 'tests', 'fixtures', 'narratives.json'), 'utf8'))
+
+const loadMock = vi.hoisted(() =>
+  vi.fn(async (ch: string) => {
+    if (ch === 'zoho-crm') return zohoFixture
+    if (ch === 'narratives') return narrativesFixture
+    return null
+  }),
+)
 const loadConfigMock = vi.hoisted(() => vi.fn(async () => salesReps))
 vi.mock('@/data/loader', () => ({ load: loadMock, loadConfig: loadConfigMock }))
 
