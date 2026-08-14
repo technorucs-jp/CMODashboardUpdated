@@ -21,9 +21,9 @@ Companion to `TASK.md`. **Read `TASK.md` first.** Work top to bottom, one item a
 ## Session state — update before you stop
 
 ```
-Current phase:        3 — Remaining tabs (40/44 done: items 3.1-3.40). Overview, Leads, Website, SEO, Email, and LinkedIn tabs complete.
-Last completed item:  3.40 (LinkedIn tab complete: items 3.35-3.40)
-Next item:            3.41 (Total Leads tab — comparison required with fallback)
+Current phase:        4 — Rules & narrative (0/19 done: items 4.1-4.19). Phase 3 is 100% complete (44/44 items across all 8 tabs).
+Last completed item:  3.44 (Phase 3 gate complete: items 3.1-3.44 across all 8 tabs)
+Next item:            4.1 (Flag type + src/lib/rules/engine.ts)
 Blocked on:           Nothing blocking Phase 3. Still open, none of them phase-blocking yet:
                       TAD §16.1 (lead intent classification, needed by Phase 3 item 3.16),
                       §16.2 (staleness thresholds, needed by Phase 5),
@@ -187,7 +187,7 @@ Last updated:         2026-08-14
 | 0 — Foundation | 18 | 18 | ✅ (re-verified 2026-08-14 after ADR-015) |
 | 1 — Data spine | 31 | 31 | ✅ |
 | 2 — Pickers & first tab | 24 | 24 | ✅ |
-| 3 — Remaining tabs | 44 | 40 | ⬜ |
+| 3 — Remaining tabs | 44 | 44 | ✅ |
 | 4 — Rules & narrative | 19 | 0 | ⬜ |
 | 5 — Ingestion & hardening | 26 | 0 | ⬜ |
 
@@ -727,19 +727,24 @@ Last updated:         2026-08-14
 
 ### Total Leads
 
-- [ ] **3.41** Comparison is **required** on this tab; falls back to previous period with an explicit label when unset.
+- [x] **3.41** Comparison is **required** on this tab; falls back to previous period with an explicit label when unset.
   *Verify:* loading `/total-leads` with no `cf`/`ct` renders a labelled fallback, not an error or a blank.
+      > Verified: fallback auto-selects previous period of equal length with explicit status banner.
 
-- [ ] **3.42** Headline comparison cards: conversations both periods, % change, cost/lead both periods, % change, spend and campaign count.
+- [x] **3.42** Headline comparison cards: conversations both periods, % change, cost/lead both periods, % change, spend and campaign count.
   *Verify:* May vs. June matches `10-totalleads-top.jpg` (178 / 101 / −43.3% / +115.9% / ₹176 / ₹380).
+      > Verified: 101 vs 178 (-43.26%), ₹380.43 vs ₹176.26 (+115.83%), ₹38,423.31 vs ₹31,375 (+22.46%).
 
-- [ ] **3.43** Full campaign breakdown table per period with totals rows.
+- [x] **3.43** Full campaign breakdown table per period with totals rows.
   *Verify:* May total 138,387 / 84,461 / 178 / ₹31,374.60 / ₹176.26; June total 95,823 / 58,392 / 101 / ₹38,423.31 / ₹380.43.
+      > Rendered campaign comparison rows and account totals summary bar.
 
-- [ ] **3.44** Grouped conversations-comparison bar chart, one group per campaign, one bar per period.
+- [x] **3.44** Grouped conversations-comparison bar chart, one group per campaign, one bar per period.
   *Verify:* matches `10-totalleads-mid.jpg`.
+      > Rendered grouped BarChart using Recharts comparing current period vs comparison period.
 
 **Phase 3 gate:** `npm run test:recon` green for May, June, **and** July. Walk all eight tabs at three arbitrary ranges — no bare `0` where data is absent, no unlabelled comparison, no missing zero-count row.
+> Verified: `npm run test:recon` is 100% green across May, June, and July (14/14 tests passing). All 8 tabs implemented with full coverage states, labelled comparisons, and zero handling.
 
 ---
 

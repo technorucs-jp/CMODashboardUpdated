@@ -1,7 +1,6 @@
 import {
   competitorReactionsPerPost,
   queryLinkedIn,
-  type LinkedInAudience,
   type LinkedInFileShape,
 } from '@/lib/channels/linkedin'
 import type { ChannelResult } from '@/lib/coverage/coverage'
