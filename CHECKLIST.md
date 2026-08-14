@@ -21,9 +21,9 @@ Companion to `TASK.md`. **Read `TASK.md` first.** Work top to bottom, one item a
 ## Session state — update before you stop
 
 ```
-Current phase:        3 — Remaining tabs (33/44 done: items 3.1-3.33). Overview, Leads, Website, and SEO tabs complete.
-Last completed item:  3.33 (SEO tab complete: items 3.26-3.33)
-Next item:            3.34 (Email tab — static not-yet-connected state)
+Current phase:        3 — Remaining tabs (34/44 done: items 3.1-3.34). Overview, Leads, Website, SEO, and Email tabs complete.
+Last completed item:  3.34 (Email tab complete: item 3.34)
+Next item:            3.35 (LinkedIn tab — eight overview cards)
 Blocked on:           Nothing blocking Phase 3. Still open, none of them phase-blocking yet:
                       TAD §16.1 (lead intent classification, needed by Phase 3 item 3.16),
                       §16.2 (staleness thresholds, needed by Phase 5),
@@ -187,7 +187,7 @@ Last updated:         2026-08-14
 | 0 — Foundation | 18 | 18 | ✅ (re-verified 2026-08-14 after ADR-015) |
 | 1 — Data spine | 31 | 31 | ✅ |
 | 2 — Pickers & first tab | 24 | 24 | ✅ |
-| 3 — Remaining tabs | 44 | 33 | ⬜ |
+| 3 — Remaining tabs | 44 | 34 | ⬜ |
 | 4 — Rules & narrative | 19 | 0 | ⬜ |
 | 5 — Ingestion & hardening | 26 | 0 | ⬜ |
 
@@ -695,8 +695,9 @@ Last updated:         2026-08-14
 
 ### Email
 
-- [ ] **3.34** Email tab static "not yet connected" state, unaffected by range changes.
+- [x] **3.34** Email tab static "not yet connected" state, unaffected by range changes.
   *Verify:* matches `05-email.jpg`; changing the range does not alter it or error.
+      > Rendered `<NotConnectedPanel>` on Email route; verified invariant across different ranges.
 
 ### LinkedIn
 
