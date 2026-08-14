@@ -4,6 +4,8 @@ Companion to `TASK.md`. **Read `TASK.md` first.** Work top to bottom, one item a
 
 *Rewritten 2026-08-10 against TAD v1.1 §0 (ADR-011–014) — Vite + React SPA, no application backend. Item numbering is preserved from the pre-pivot checklist for continuity; wording is updated wherever Next.js/server/API concepts no longer apply. Wireframe-derived figures and business logic are unchanged — this was a hosting/runtime pivot, not a requirements change.*
 
+*Updated 2026-08-14 for TAD v1.2 §0A (ADR-015) — **authentication removed; a role-selection dialog at launch replaces it.** Affected items (0.2, 0.10–0.13, 0.15, 0.18, 2.5, 5.22, 5.24) are rewritten in place with their original numbers and a note recording what they used to say. Items already `[x]` under the old auth design stay `[x]` where the rewritten item is genuinely satisfied by the new code and its tests; where the old item simply no longer exists, it is marked **`[—]` (retired)** rather than deleted, so the numbering and the phase counts stay stable. No phase gate was reopened: the full suite is green after the change.*
+
 **Rules for using this file**
 
 - Mark `[x]` **only after** the item's `Verify:` command passes. A checkbox is a claim about reality, not about intent.
@@ -12,21 +14,24 @@ Companion to `TASK.md`. **Read `TASK.md` first.** Work top to bottom, one item a
 - On resume: re-run the last `[x]` item's Verify before trusting it. See `TASK.md` §0.
 - Do not start a phase while the previous phase's gate is red.
 - `[!]` marks an item blocked on a decision — see `TASK.md` §8. Leave it `[!]`, note the blocker, and continue past it if the rest of the phase can proceed.
+- `[—]` marks an item **retired** by a later architecture decision — the thing it asked for no longer exists. It counts as neither done nor outstanding; the note under it says which ADR retired it and what replaced it.
 
 ---
 
 ## Session state — update before you stop
 
 ```
-Current phase:        2 — Pickers & first tab — COMPLETE (24/24). Starting Phase 3.
-Last completed item:  2.24
-Next item:            3.1 (EmptyState/NoDataBeforeDate/PartialDataWarning/LaggingDataNotice/NotConnectedPanel)
-Blocked on:           Nothing blocking Phase 2. Still open, none of them phase-blocking yet:
-                      real Entra credentials (VITE_MSAL_CLIENT_ID/TENANT_ID — needs CMO/IT admin
-                      to complete an app registration; sign-in can't be end-to-end tested until
-                      then), TAD §16.1 (lead intent classification, needed by Phase 3),
-                      §16.2 (staleness thresholds, needed by Phase 5), §16.4 (residual /data
-                      exposure sign-off, needed by Phase 5).
+Current phase:        3 — Remaining tabs (1/44 done: item 3.1).
+Last completed item:  3.1, plus an out-of-band access-model change (TAD ADR-015, see Notes).
+Next item:            3.2 (Overview — six KPI cards)
+Blocked on:           Nothing blocking Phase 3. Still open, none of them phase-blocking yet:
+                      TAD §16.1 (lead intent classification, needed by Phase 3 item 3.16),
+                      §16.2 (staleness thresholds, needed by Phase 5),
+                      §16.4 + §16.5 (deployment exposure AND BRD §15.2's now-unmet
+                      authenticated-access requirement — one CMO decision answers both,
+                      needed by Phase 5 item 5.24).
+                      RESOLVED BY REMOVAL: the "real Entra credentials" blocker listed here
+                      until 2026-08-14 is gone — ADR-015 deleted the auth that needed them.
 Notes:                Phase 0: Vite 8 (rolldown-based) scaffolded via `create-vite@latest --template
                       react-ts --eslint` (react-swc-ts template no longer exists); vitest needed
                       `pool: 'threads'` (default `forks` hangs in this sandbox); `npx vitest run <file>`
@@ -76,7 +81,41 @@ Notes:                Phase 0: Vite 8 (rolldown-based) scaffolded via `create-vi
                       (234/234 tests still pass, same assertions, after the change). `vite build`'s `MODE`
                       is `'production'`, so the deployed site is unaffected — still gated on real sign-in.
                       234 tests across 46 files, all green.
-Last updated:         2026-08-11
+                      [SUPERSEDED 2026-08-14 — that whole bypass is moot; the auth it bypassed is gone.]
+
+                      Phase 3 item 3.1 done (shared Coverage-state components + CoverageState dispatcher;
+                      AdCampaignsPage refactored onto it). Commit e9af399.
+
+                      2026-08-14 — ACCESS MODEL CHANGED (TAD v1.2 §0A / ADR-015), CMO-directed,
+                      out of checklist order because it touches Phase 0 work:
+                      "No sign-in page; show a role popup at app launch, user picks a role and enters."
+                      Confirmed in the same exchange: ONE role (CMO), sees everything, no per-role gating.
+                      Removed: src/auth/** (AuthGuard, isAllowedAccount, msalConfig, msalInstance + tests),
+                      src/routes/login.tsx, both @azure/msal-* packages, all four VITE_MSAL_*/
+                      VITE_ALLOWED_EMAILS vars (the app now has NO env vars of its own).
+                      Added: src/roles/** — roles.ts (definitions), roleStorage.ts (sessionStorage,
+                      tolerates blocked storage), roleContext.ts (context + useRole), RoleProvider.tsx,
+                      RoleSelectDialog.tsx (the popup), RoleGate.tsx (replaces AuthGuard).
+                      Two non-obvious things found while doing it:
+                      (1) roleContext.ts had to be split from RoleProvider.tsx — eslint's
+                          react-refresh/only-export-components forbids one module exporting both a
+                          component and a hook. First attempt named it RoleContext.ts, which collides
+                          with RoleContext.tsx on Windows' case-insensitive filesystem and produced a
+                          confusing TS "no exported member" error rather than a name clash error.
+                      (2) sessionStorage over localStorage is deliberate — "popup at launch" requires the
+                          dialog to return on a fresh launch. localStorage would answer it once forever.
+                      RoleGate renders in place instead of redirecting, so item 2.5's bookmark/share
+                      case got simpler: a deep link survives the dialog with no router-state round-trip.
+                      SECURITY, STATED PLAINLY: there is now NO access control in the app at all.
+                      Anyone with the URL gets the dashboard; /data/*.json was already directly
+                      fetchable. The only remaining protection for lead data is ADR-012/P3′ — notes
+                      are never written into the shipped file. BRD §15.2 is formally UNMET and is
+                      flagged in the BRD rather than deleted; TAD §16.5 tracks the decision.
+                      Recommended fix: host-level deployment password protection (one Vercel setting),
+                      which closes §16.4 and §16.5 together. NOT enabled as of this writing.
+                      Verified after the change: typecheck ✓, lint ✓, scan:secrets ✓, build ✓,
+                      test:recon ✓ (5/5), full suite 258 tests across 48 files, all green.
+Last updated:         2026-08-14
 ```
 
 ---
@@ -85,10 +124,10 @@ Last updated:         2026-08-11
 
 | Phase | Items | Done | Gate |
 |---|---|---|---|
-| 0 — Foundation | 18 | 18 | ✅ |
+| 0 — Foundation | 18 | 18 | ✅ (re-verified 2026-08-14 after ADR-015) |
 | 1 — Data spine | 31 | 31 | ✅ |
 | 2 — Pickers & first tab | 24 | 24 | ✅ |
-| 3 — Remaining tabs | 44 | 0 | ⬜ |
+| 3 — Remaining tabs | 44 | 1 | ⬜ |
 | 4 — Rules & narrative | 19 | 0 | ⬜ |
 | 5 — Ingestion & hardening | 26 | 0 | ⬜ |
 
@@ -96,16 +135,18 @@ Last updated:         2026-08-11
 
 # Phase 0 — Foundation
 
-*Goal: only an authenticated `@technorucs.com` user can reach any route (client-side gate — TAD §0.4/ADR-013), and all eight tabs navigate.*
-*Read first: TAD §0 (all of it), §3, ADR-001 (for the auth rationale, now implemented client-only per ADR-013).*
+*Goal (as rewritten by ADR-015): the app launches into a role-selection dialog, choosing a role enters the dashboard, and all eight tabs navigate.*
+*Originally: "only an authenticated `@technorucs.com` user can reach any route (client-side gate — TAD §0.4/ADR-013)" — that goal was met and then removed; see §0A.*
+*Read first: TAD §0 (all of it), §0A (all of it), §3.*
 
 - [x] **0.1** Scaffold a Vite + React 19 project, TypeScript `strict: true`, path alias `@/*` → `src/*`, `react-router-dom` installed.
   *Verify:* `npm run dev` serves a page; `npx tsc --noEmit` exits 0.
       > `react-router-dom` lands in 0.2 with the other runtime deps, not here — this item scaffolded the base project only. Used `create-vite@latest --template react-ts --eslint` (Vite 8/rolldown); `react-swc-ts` template is gone from current create-vite. Path alias via `paths` only (no `baseUrl` — deprecated in TS 6.0).
 
-- [x] **0.2** Install runtime deps: `react-router-dom`, `@azure/msal-browser`, `@azure/msal-react`, `zod`, `@tanstack/react-query`, `recharts`, `react-day-picker`, `date-fns`.
-  *Verify:* `npm ls react-router-dom @azure/msal-browser @azure/msal-react zod @tanstack/react-query recharts react-day-picker date-fns` resolves all eight with no `UNMET`.
+- [x] **0.2** Install runtime deps: `react-router-dom`, `zod`, `@tanstack/react-query`, `recharts`, `react-day-picker`, `date-fns`.
+  *Verify:* `npm ls react-router-dom zod @tanstack/react-query recharts react-day-picker date-fns` resolves all six with no `UNMET`; `npm ls @azure/msal-browser @azure/msal-react` resolves **nothing** (they were uninstalled by ADR-015 and must not come back).
       > Resolved versions: zod@4.4.3 (v4 API — `.strict()` semantics differ slightly from v3, will confirm when schemas land in Phase 1), react-day-picker@10.0.1, react-router-dom@7.18.2. All current-major, no substitutions.
+      > **Amended 2026-08-14 (ADR-015):** originally installed eight deps including `@azure/msal-browser` and `@azure/msal-react`. Both were uninstalled when authentication was removed. The role dialog that replaced them has no dependency at all — it is plain React in `src/roles/**`. (Post-change bundle measured at 800.93 kB / 235.79 kB gzip; no clean pre-change measurement was taken, so no reduction is claimed here. The >500 kB warning from item 2.24's note still stands and is still a Phase 5 code-splitting task.)
 
 - [x] **0.3** Install dev deps: `vitest`, `@testing-library/react`, `jsdom`, `ajv`, `zod-to-json-schema`, `xlsx`, ESLint + TS plugin.
   *Verify:* `npm ls vitest ajv zod-to-json-schema xlsx` resolves all four.
@@ -134,28 +175,34 @@ Last updated:         2026-08-11
   *Verify:* `grep -c '^\s*--' src/styles/tokens.css` ≥ 15; no literal hex values in any component file (`grep -rn '#[0-9a-fA-F]\{6\}' src/components/` returns nothing).
       > 47 custom properties. Of the 8 channel accent hues, 5 are confirmed against `01-overview-june-a.jpg` (Ad Spend, Total Leads, Sessions, Organic Clicks, New Followers); the remaining 3 keep their reference-file values but are unassigned to a specific tab until that tab is built (Phase 2/3) — see the file's header comment. Also replaced `src/index.css`'s scaffold boilerplate (a light/dark-themeable demo-page stylesheet from `create-vite`'s default template) entirely — it conflicted with P8's single frozen dark theme; it now just imports `tokens.css` and sets `body` from it.
 
-- [x] **0.10** `src/auth/msalConfig.ts` — `PublicClientApplication` config built from `VITE_MSAL_CLIENT_ID` / `VITE_MSAL_TENANT_ID` / `VITE_MSAL_REDIRECT_URI`. Browser-only PKCE flow. No client secret anywhere (public clients don't have one — if you find yourself adding one, you've misread ADR-013).
-  *Verify:* `src/auth/msalConfig.ts` exports a config object with no `clientSecret`/`client_secret` key; `grep -rn "clientSecret" src/` returns nothing.
-      > `CacheOptions.storeAuthStateInCookie` doesn't exist in `@azure/msal-browser@5.18.0` (removed — it was an IE11 workaround); dropped, `cacheLocation: 'sessionStorage'` alone is sufficient for the "don't outlive the tab" goal. Real Entra `clientId`/`tenantId` values come from an app registration — an external, non-repo step (`.env.example` documents this); local/CI runs without them just log a warning and can't sign in.
+- [x] **0.10** `src/roles/roles.ts` + `src/roles/roleStorage.ts` — the role definitions (one: `cmo`, label "CMO", full access) and the `sessionStorage` read/write that makes the dialog appear once per browser session. Storage access must tolerate being blocked (Safari private mode throws rather than returning null).
+  *Verify:* unit tests — `isRoleId('cmo')` is `true` and `isRoleId('viewer')` is `false`; a stored value that is not a known role id reads back as `null`; `readStoredRole`/`writeStoredRole`/`clearStoredRole` do not throw when `sessionStorage` throws; nothing is written to `localStorage`.
+      > **Replaced 2026-08-14 (ADR-015).** Originally: *"`src/auth/msalConfig.ts` — `PublicClientApplication` config built from `VITE_MSAL_CLIENT_ID` / `VITE_MSAL_TENANT_ID` / `VITE_MSAL_REDIRECT_URI`."* That file is deleted along with all four env vars. Its old note recorded that `CacheOptions.storeAuthStateInCookie` no longer exists in `@azure/msal-browser@5.18.0`, and that real Entra values needed an app registration that was never completed — which is part of why ADR-015 happened at all.
+      > `sessionStorage` over `localStorage` is the deliberate half of this item: the requirement is a dialog *at launch*, so the choice must not outlive the browser session. A refresh keeps you in; a new tab asks again.
 
-- [x] **0.11** `src/auth/isAllowedAccount.ts` — pure predicate: reject any account whose token tenant/verified domain ≠ `technorucs.com`, and (if `VITE_ALLOWED_EMAILS` is non-empty) not on the allowlist.
-  *Verify:* unit test — predicate returns `false` for a mock claims object with domain `gmail.com`, `true` for `technorucs.com`.
-      > `npm test` required switching Vitest's pool from the default `forks` to `threads` in `vite.config.ts` — `forks` hangs waiting for a worker in this sandboxed dev environment (looks like restricted `child_process.fork`). Not a project-specific decision, just an environment accommodation; flagged in case it needs revisiting on a different machine/CI runner.
+- [x] **0.11** `src/roles/roleContext.ts` + `src/roles/RoleProvider.tsx` — context holding the selected role for the page's lifetime, seeded from storage on mount, with `selectRole` / `clearRole`. `useRole` throws outside a provider.
+  *Verify:* unit test — `useRole` outside `RoleProvider` throws; selecting a role updates the context and writes through to storage.
+      > **Replaced 2026-08-14 (ADR-015).** Originally: *"`src/auth/isAllowedAccount.ts` — pure predicate: reject any account whose token tenant/verified domain ≠ `technorucs.com`."* Deleted; there is no account, no tenant, and no allowlist to check. There is deliberately **no equivalent predicate** — the role is not validated against anything because it is not a credential (TAD §0A.2).
+      > Split across two files because `react-refresh/only-export-components` forbids a module exporting both a component and a hook. Note also (carried forward from the old 0.11, still true and still load-bearing): `npm test` requires Vitest's pool set to `threads` in `vite.config.ts` — the default `forks` hangs in this sandbox.
 
-- [x] **0.12** `src/auth/AuthGuard.tsx` — wraps the protected route tree; no MSAL account or a rejected account (via 0.11) renders/redirects to `/login` instead of children. This is the client-side replacement for the old `middleware.ts` — there is no server-side matcher, so this must wrap **every** protected route, not rely on a single file catching all paths.
-  *Verify:* render test — `AuthGuard` with no active MSAL account renders the login route content, not its children; with a mock `technorucs.com` account, children render.
-      > Tested with `@azure/msal-react`'s `useIsAuthenticated`/`useMsal` mocked via `vi.mock` + `vi.hoisted` — also covers the case an authenticated-but-wrong-tenant account is rejected (item 0.11's predicate wired in), not just "no account at all".
+- [x] **0.12** `src/roles/RoleGate.tsx` — wraps the whole route tree; renders `RoleSelectDialog` until a role is chosen, then its children. Renders **in place** rather than redirecting, so the requested URL is preserved.
+  *Verify:* render test — `RoleGate` with no stored role renders the dialog and not its children; after Continue, children render and the dialog is gone; a remount within the session skips the dialog; a cleared session shows it again.
+      > **Replaced 2026-08-14 (ADR-015).** Originally: *"`src/auth/AuthGuard.tsx` — wraps the protected route tree; no MSAL account or a rejected account renders/redirects to `/login`."* Deleted.
+      > The render-in-place behaviour is a genuine improvement over the redirect it replaces, not just a difference — see item 2.5.
+      > **This component is not an access control and the code says so.** It stops nobody; it only asks a question before showing the dashboard.
 
-- [x] **0.13** `/login` route with a single "Sign in with Microsoft" action (`msalInstance.loginRedirect()`). No anonymous data surface.
-  *Verify:* render the `/login` route in isolation — contains no metric values anywhere in the output.
+- [x] **0.13** `src/roles/RoleSelectDialog.tsx` — the launch popup: a labelled modal (`role="dialog"`, `aria-modal`), a radiogroup of the defined roles with the default pre-selected, and a Continue action. No anonymous data surface.
+  *Verify:* render test — the dialog contains no metric values anywhere in its output (the same guarantee the old `/login` route carried), and no sign-in/password/account wording; focus lands inside the dialog on open; the default role is pre-checked.
+      > **Replaced 2026-08-14 (ADR-015).** Originally: *"`/login` route with a single 'Sign in with Microsoft' action (`msalInstance.loginRedirect()`)."* Both the route and the file are deleted — the dialog is a component in front of the router, not a route, so there is no ninth URL.
+      > Accessibility handled here rather than deferred to item 5.20, since it is a modal that blocks the entire app: real radiogroup semantics, focus placed on Continue at open, and no colour-only meaning.
 
 - [x] **0.14** Root layout route (`Sidebar` (8 items + source sublabels: Meta, Zoho, GA4, GSC, Instantly, Page, Meta) + `TopBar`) via `react-router` nested routes/`Outlet`. Mounted once so state survives navigation.
   *Verify:* navigating between two child routes does not remount the sidebar (React DevTools, or a `console.count` in a `useEffect` with `[]` deps fires once).
       > Verified by DOM node identity instead of a render counter — same `TopBar`/`Sidebar` DOM nodes before and after a simulated nav click, which can only hold if the layout route (and therefore its children) was never unmounted/remounted, only the `<Outlet/>` content swapped.
 
-- [x] **0.15** All eight routes exist and render a placeholder, each wrapped in `AuthGuard`: `/overview`, `/ad-campaigns`, `/leads`, `/website`, `/seo`, `/email`, `/linkedin`, `/total-leads`. `/` redirects to `/overview`.
-  *Verify:* a router test navigates to each of the eight with a mocked authenticated `technorucs.com` MSAL account and finds a distinct placeholder heading per route; the same test with no account renders the login route for all eight instead.
-      > 18 cases (`it.each`) covering all eight routes × authenticated/unauthenticated, plus `/` → `/overview` redirect in both auth states. Manually confirmed via `npm run dev` too.
+- [x] **0.15** All eight routes exist and render a placeholder, with the tree wrapped in `RoleGate`: `/overview`, `/ad-campaigns`, `/leads`, `/website`, `/seo`, `/email`, `/linkedin`, `/total-leads`. `/` redirects to `/overview`. There is no ninth route.
+  *Verify:* a router test navigates to each of the eight with a role already selected and finds a distinct placeholder heading per route; the same test with no role selected renders the dialog for all eight instead, and exposes no metric values.
+      > **Amended 2026-08-14 (ADR-015).** Originally verified against "a mocked authenticated `technorucs.com` MSAL account" vs. "no account → login route". Rewritten to role-selected vs. not; same 18-case `it.each` shape, plus a new case asserting that choosing a role in the dialog lands on the *requested* deep link (`/seo?from=…&to=…`) with its range intact — which the redirect-based `AuthGuard` could not have demonstrated as simply.
 
 - [x] **0.16** `scripts/scan-secrets.mjs` — scans `public/data/` and `src/` for bearer tokens, `AKIA`, PEM headers, `client_secret`, long base64 blobs. Exits non-zero on match.
   *Verify:* `npm run scan:secrets` exits 0; add `client_secret=abc123def456` to a scratch file → exits 1. Remove it.
@@ -164,11 +211,12 @@ Last updated:         2026-08-11
   *Verify:* `.github/workflows/ci.yml` exists and lists all four steps.
       > Checked out with `fetch-depth: 0` from the start (Phase 5 item 5.7 needs it for `check-sync-timestamps.mjs` — no reason to shallow-clone now and edit this file again later).
 
-- [x] **0.18** Commit and push. Confirm the static deploy (Vercel or equivalent) serves the login screen to an anonymous visitor at `/overview`, and record in *Session state* whether host-level deployment password protection (TAD §16.4) is enabled yet — it is not required to pass this gate, but its absence must be a visible, tracked fact, not a silent gap.
-  *Verify:* preview URL, visited anonymously, renders the client-side login screen — not dashboard content. (This does **not** mean `public/data/*.json` is unreachable by direct URL — see TAD §16.4; that is a documented trade-off, not a bug in this item.)
+- [x] **0.18** Commit and push. Confirm the static deploy (Vercel or equivalent) serves the role dialog to a visitor at `/overview`, and record in *Session state* whether host-level deployment password protection (TAD §16.4/§16.5) is enabled yet — it is not required to pass this gate, but its absence must be a visible, tracked fact, not a silent gap.
+  *Verify:* preview URL, visited fresh, renders the role dialog — not dashboard content — and choosing CMO enters the dashboard. (This does **not** mean the deployment is protected. Since ADR-015 **anyone with the URL can pass the dialog**, and `public/data/*.json` remains directly fetchable — see TAD §16.4/§16.5. That is now a documented and unresolved exposure, not a bug in this item.)
+      > **Amended 2026-08-14 (ADR-015).** The original item asserted an anonymous visitor saw a *login screen*. There is no login screen; the dialog it now checks for is not a gate. The old note's blocker — "`VITE_MSAL_CLIENT_ID`/`VITE_MSAL_TENANT_ID` are not set as Vercel env vars, because no real Entra app registration exists yet" — is **resolved by removal**: there are no env vars to set and nothing left to block on. Host-level password protection is still **not** enabled, and now matters more, not less.
       > Pushed to `https://github.com/technorucs-jp/CMODashboardUpdated.git` (`main`); Vercel project `jp14/technorucs-cmo-dashboard` linked, GitHub-connected (auto-deploys on push to `main` from now on), and manually deployed once to confirm: **https://technorucs-cmo-dashboard.vercel.app**. Confirmed: `curl .../overview` → 200 (the `vercel.json` SPA rewrite works on the real host, not just locally); `curl .../data/README.md` → 200, serving the actual file (expected per ADR-012/014 — a live demonstration of the documented trade-off, not a bug). The actual auth-*redirect* can't be observed via `curl` against a client-rendered SPA (proven instead by `AppRoutes.test.tsx`'s 18 cases) and sign-in itself can't be end-to-end tested yet — **`VITE_MSAL_CLIENT_ID`/`VITE_MSAL_TENANT_ID` are not set as Vercel env vars**, because no real Entra app registration exists yet (still needs the CMO/IT admin, TASK.md §8 "you need a credential" territory — narrower gap now than "no deployment at all"). Host-level deployment password protection (TAD §16.4) is **not** enabled — recorded here, not silently skipped; revisit before Phase 5's production sign-off (item 5.24).
 
-**Phase 0 gate: ✅ PASSED (2026-08-10).** `npm run typecheck && npm run lint && npm run scan:secrets && npm run build` all green; live deployment at https://technorucs-cmo-dashboard.vercel.app confirms the SPA rewrite and public `/data` behave in production exactly as they do locally. Outstanding, non-blocking for Phase 1: real Entra credentials (so sign-in actually works end-to-end) and the TAD §16.4 host-protection decision — both tracked in Session state, neither gates further phases.
+**Phase 0 gate: ✅ PASSED (2026-08-10; re-verified 2026-08-14 after ADR-015).** `npm run typecheck && npm run lint && npm run scan:secrets && npm run build` all green; live deployment at https://technorucs-cmo-dashboard.vercel.app confirms the SPA rewrite and public `/data` behave in production exactly as they do locally. Outstanding, non-blocking for later phases: the TAD §16.4/§16.5 host-protection decision, tracked in Session state. *(The "real Entra credentials" blocker listed here until 2026-08-14 no longer exists — ADR-015 removed the thing that needed them.)*
 
 ---
 
@@ -343,9 +391,10 @@ Last updated:         2026-08-11
   *Verify:* set a range on `/leads`, navigate to `/seo` — the range persists and the URL carries it.
       > **Gap found and fixed**: `react-router`'s `<NavLink to="/other-tab">` drops the current query string by default — without a fix, clicking any sidebar item would have silently reset the CMO's selected range on every tab switch, which is exactly the bug item 2.4 exists to prevent. Fixed in `Sidebar.tsx` by carrying `useLocation().search` forward into each nav link's `to` prop. Verified end-to-end (not just unit-tested in isolation): render `/leads?from=2026-06-01&to=2026-06-30`, click through to SEO, assert the TopBar's rendered range is still June.
 
-- [x] **2.5** Bookmark/share works: pasting a full URL into a new tab reproduces the exact view (after MSAL sign-in, since every route is behind `AuthGuard` — this is expected, not a regression; the URL itself is what round-trips, not anonymous access to it).
-  *Verify:* manual — copy URL, open in a fresh session, sign in, same figures render.
+- [x] **2.5** Bookmark/share works: pasting a full URL into a new tab reproduces the exact view (after the role dialog, which appears once per session and leaves the URL untouched).
+  *Verify:* manual — copy URL, open in a fresh session, choose CMO, same figures render.
       > Automated equivalent of the "manual" verify: render `/overview?from=...&to=...&cf=...&ct=...` fresh (no prior navigation) and assert both the primary and comparison ranges appear correctly — this is the same code path a pasted URL would hit.
+      > **Amended 2026-08-14 (ADR-015).** This got *simpler*, not harder. `AuthGuard` redirected to `/login` and had to carry the intended destination through router state; `RoleGate` renders the dialog in place, so the URL is never touched and nothing has to be restored. `AppRoutes.test.tsx` now covers it directly: land on `/seo?from=2026-06-01&to=2026-06-30` with no role, click Continue, and assert both the SEO heading and the June range.
 
 - [x] **2.6** TanStack Query provider, key `['metrics', tab, rangeSig, compareSig]`, `staleTime: Infinity`.
   *Verify:* switching away and back to a tab issues no second `fetch` call.
@@ -719,14 +768,20 @@ Last updated:         2026-08-11
 - [ ] **5.21** Vercel Analytics + Speed Insights enabled (SPA-mode client packages — no server integration needed). No PII in logs.
   *Verify:* browser console/network logs on an aggregation error carry channel + range only — no lead content.
 
-- [ ] **5.22** `Docs/RUNBOOK.md` for the CMO, plain language: trigger an out-of-schedule sync; hand over a LinkedIn XLS; read the sync badges; edit brand terms / page types / competitors / thresholds; sign in via Microsoft; who to contact when a channel goes stale.
+- [ ] **5.22** `Docs/RUNBOOK.md` for the CMO, plain language: trigger an out-of-schedule sync; hand over a LinkedIn XLS; read the sync badges; edit brand terms / page types / competitors / thresholds; who to contact when a channel goes stale. **Opening the dashboard** — the role popup at launch, and (if §16.5 is resolved that way) the host-level deployment password. *No "sign in via Microsoft" section — ADR-015 removed it.*
   *Verify:* a non-technical reader can follow it without reading any other document.
 
 - [ ] **5.23** Full acceptance-criteria pass against BRD §16 items 1–8 **and** TASK.md §11's items 9–10 (`notes` exclusion; CMO sign-off on the §16.4 residual exposure).
   *Verify:* each of the ten demonstrated and recorded.
 
-- [ ] **[!] 5.24** Production auth and data-exposure verified: a non-`technorucs.com` account is rejected by `AuthGuard`; a direct request to `https://<prod>/data/zoho-crm.json` **is expected to return the file** (there is no server to 404 it, per TAD §16.4) — the check that matters is that the returned JSON contains **no `notes` key and no other lead free-text**, verified by `curl … | grep` for a known note string with no match. This item cannot be marked `[x]` until the CMO has explicitly recorded a decision on TAD §16.4 (accept the exposure as-is, or require host-level password protection first) — leave it `[!]` with that blocker noted until then.
-  *Verify:* `curl https://<prod>/data/zoho-crm.json | grep -i "how does the software work"` (or another known pre-pivot note fragment) returns no match; CMO's §16.4 decision is recorded in this file's Session state notes.
+- [ ] **[!] 5.24** Production access and data-exposure verified. Since ADR-015 there is **no application-level auth to test** — the checks are:
+  1. A direct request to `https://<prod>/data/zoho-crm.json` **is expected to return the file** (there is no server to 404 it, TAD §16.4). What matters is that the returned JSON contains **no `notes` key and no other lead free-text** — this is now the *only* protection for lead data, so it is the load-bearing check in this item.
+  2. The dashboard itself is reachable by anyone with the URL. Confirm that this is *true as expected*, and that the CMO knows it.
+  3. The CMO has explicitly recorded a decision on TAD §16.4 **and** §16.5 — enable host-level deployment password protection, or accept public access in writing and amend BRD §15.2 accordingly.
+
+  Leave `[!]` with that blocker noted until the decision exists. **BRD §15.2 is formally unmet until then**, which is why this item gates the phase.
+  *Verify:* `curl https://<prod>/data/zoho-crm.json | grep -i "how does the software work"` (or another known pre-pivot note fragment) returns no match; CMO's §16.4/§16.5 decision is recorded in this file's Session state notes.
+      > **Amended 2026-08-14 (ADR-015).** The original first check — *"a non-`technorucs.com` account is rejected by `AuthGuard`"* — is untestable and meaningless now: there are no accounts and no guard. It is replaced by check 2, which verifies the opposite condition and forces it to be acknowledged rather than discovered later.
 
 - [ ] **5.25** `npm run scan:secrets` green against the real `public/data` (BRD §16 criterion 6).
   *Verify:* exits 0.
@@ -744,7 +799,9 @@ Last updated:         2026-08-11
 |---|---|---|
 | Lead intent classification (Zoho picklist vs. Cowork classifier) | CMO | TAD §16.1, item 3.16 |
 | Staleness thresholds sign-off | CMO — defaults implemented, confirmation pending | TAD §16.2, item 5.13 |
-| Host-level deployment password protection as a required (not optional) mitigation for the residual `public/data` exposure | CMO | TAD §16.4, item 5.24 |
+| Host-level deployment password protection as a required (not optional) mitigation — now for the **whole deployment**, not just `public/data` | CMO | TAD §16.4, item 5.24 |
+| **BRD §15.2's authenticated-access requirement, unmet since ADR-015** — enable host protection, or amend the requirement and accept public access in writing | CMO | TAD §16.5, BRD §15.2, item 5.24 |
+| Per-role behaviour (different tabs or metrics per role) | Not requested — one role, sees everything. Would need a new ADR | TAD §0A.2 |
 | Wireframe refresh for the new picker | Not a blocker; update the wireframe from the Phase 2 build | TAD §16.3 |
 | Instantly.ai email integration | Out of scope this phase | BRD §10 |
 | Ubersuggest / backlinks | Connector unreliable; out of scope | BRD §9.3 |

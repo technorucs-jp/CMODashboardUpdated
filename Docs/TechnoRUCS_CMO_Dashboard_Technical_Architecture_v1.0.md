@@ -4,11 +4,16 @@
 
 Technical Architecture Document (TAD)
 
-Version 1.1 | August 10, 2026 (v1.1 addendum same day as v1.0 baseline)
+Version 1.2 | August 14, 2026 (v1.1 addendum August 10, 2026; v1.0 baseline same day)
 
 Source documents: `TechnoRUCS_CMO_Dashboard_RealTime_Requirements_v2.1.md` (BRD), `TechnoRUCS_CMO_Dashboard_TRD_v1.0.md` (TRD), `/Wireframe` (25 screens, 8 tabs)
 
-Status: **Read §0 first.** §0 is a same-day architecture pivot, confirmed directly by the CMO, that supersedes ADR-002 and ADR-005 and everything downstream of them (§5, §6, §11 in particular). The rest of the v1.0 body below is kept intact as the historical record §17-style traceability depends on, but wherever it conflicts with §0, **§0 wins.** Two decisions from the original baseline remain open and are isolated in §16.
+Status: **Read §0 and §0A first, in that order.**
+
+- **§0** is the v1.1 architecture pivot (2026-08-10), confirmed directly by the CMO, that supersedes ADR-002 and ADR-005 and everything downstream of them (§5, §6, §11 in particular).
+- **§0A** is the v1.2 access-model change (2026-08-14), also CMO-directed: **the application no longer authenticates anyone.** ADR-015 supersedes ADR-013 (and retires ADR-001's mechanism), replacing Entra ID sign-in with a role-selection dialog at launch. This is a *reduction* in access control, not a substitution of an equivalent one, and §0A says so plainly rather than reframing it as a swap.
+
+The rest of the v1.0 body below is kept intact as the historical record §17-style traceability depends on, but wherever it conflicts with §0 or §0A, **the addenda win** (§0A over §0 where those two differ). Open decisions from the baseline, plus the new one §0A creates, are isolated in §16.
 
 ---
 
@@ -40,7 +45,9 @@ v1.0 (§2, §4 ADR-002/ADR-005) chose a Next.js app with Node route handlers doi
 
 *Everything else in §7 (schemas, envelope, per-channel shapes) is unchanged except this one field removal and the path change in §0.5.*
 
-### 0.4 ADR-013 — Auth: MSAL.js browser SPA flow against Entra ID, no server session · [Confirmed, with a flagged residual risk]
+### 0.4 ADR-013 — Auth: MSAL.js browser SPA flow against Entra ID, no server session · [SUPERSEDED by ADR-015, §0A]
+
+> **Superseded 2026-08-14.** The app no longer authenticates. MSAL, the Entra tenant check, the allowlist, and the `/login` route were all removed by **ADR-015 (§0A)**; the section below is retained as the historical record of what was built and why, not as an instruction. Its "flagged residual risk" paragraph is still worth reading — ADR-015 makes that risk strictly larger, and §0A quantifies how.
 
 *Decision:* `@azure/msal-browser` + `@azure/msal-react`, Authorization Code + PKCE flow, entirely in the browser. Restricted to the `technorucs.com` Entra tenant via the ID token's tenant claim, checked client-side by a pure predicate function (unit-testable exactly like the old `signIn` callback was). No server, no session cookie, no JWT minted by this app — Entra's own ID token, held in memory (not `localStorage`), is the credential.
 
@@ -82,13 +89,19 @@ technorucs-cmo-dashboard/                 (private)
 │                                            request-serving server, not "no Node anywhere"
 ├─ src/
 │  ├─ main.tsx                            ← Vite entry
-│  ├─ App.tsx                             ← router root: MsalProvider → QueryClientProvider → routes
-│  ├─ auth/                               ← msalConfig.ts, AuthGuard.tsx, tenant/allowlist predicate
+│  ├─ App.tsx                             ← router root: RoleProvider → QueryClientProvider → routes
+│  ├─ roles/                              ← ADR-015 (§0A). Was auth/ (msalConfig, AuthGuard,
+│  │                                         tenant/allowlist predicate) — all deleted.
+│  │  ├─ roles.ts                         ← role definitions (one: cmo). Pure, no React
+│  │  ├─ roleStorage.ts                   ← sessionStorage read/write, tolerates blocked storage
+│  │  ├─ roleContext.ts                   ← context object + useRole hook
+│  │  ├─ RoleProvider.tsx                 ← holds the selection for the page's lifetime
+│  │  ├─ RoleSelectDialog.tsx             ← the launch popup (replaces routes/login.tsx)
+│  │  └─ RoleGate.tsx                     ← renders the dialog until a role is chosen (replaces AuthGuard)
 │  ├─ routes/                             ← one route module per tab, react-router
 │  │  ├─ layout.tsx                       ← Sidebar + TopBar shell, mounted once (was (dashboard)/layout.tsx)
 │  │  ├─ overview.tsx  adCampaigns.tsx  leads.tsx  website.tsx
-│  │  ├─ seo.tsx  email.tsx  linkedin.tsx  totalLeads.tsx
-│  │  └─ login.tsx
+│  │  └─ seo.tsx  email.tsx  linkedin.tsx  totalLeads.tsx
 │  ├─ data/                               ← client fetch+cache layer (was src/server/data/)
 │  │  ├─ loader.ts                        ← fetch → Zod parse → in-memory cache, replaces fs.readFile
 │  │  └─ schemas.ts
@@ -106,20 +119,92 @@ technorucs-cmo-dashboard/                 (private)
 
 ### 0.8 Environment variables (supersedes Appendix B)
 
-No server secrets exist in this design — there is no server. MSAL client config is a **public client identifier, not a credential**, and is fine to compile into the bundle:
+> **Updated by ADR-015 (§0A):** the four MSAL variables below no longer exist. **The application has no environment variables of its own.** The table is kept struck-through so a reader who finds a stale `VITE_MSAL_*` reference elsewhere knows it is dead, not missing.
+
+No server secrets exist in this design — there is no server. Nor is there any auth configuration, since there is no authentication:
 
 | Variable | Where | Purpose |
 |---|---|---|
-| `VITE_MSAL_CLIENT_ID` | build-time (`.env`, committed-safe) | Entra app registration's public client ID |
-| `VITE_MSAL_TENANT_ID` | build-time | restricts login to the `technorucs.com` tenant |
-| `VITE_MSAL_REDIRECT_URI` | build-time | post-login redirect target |
-| `VITE_ALLOWED_EMAILS` | build-time, optional | optional extra allowlist on top of the tenant check; empty = tenant-only |
+| ~~`VITE_MSAL_CLIENT_ID`~~ | — | **Removed (ADR-015).** Was the Entra app registration's public client ID |
+| ~~`VITE_MSAL_TENANT_ID`~~ | — | **Removed (ADR-015).** Was the `technorucs.com` tenant restriction |
+| ~~`VITE_MSAL_REDIRECT_URI`~~ | — | **Removed (ADR-015).** Was the post-login redirect target |
+| ~~`VITE_ALLOWED_EMAILS`~~ | — | **Removed (ADR-015).** Was an optional allowlist on top of the tenant check |
 
-Third-party channel credentials (Meta/Zoho/GA4/GSC/LinkedIn) still never appear anywhere in this repository, in any form — that part of P2 is untouched by this pivot; those live only in Claude Cowork, exactly as in v1.0.
+`npm run dev` and `npm run build` both run with no `.env.local` present at all. If deployment access needs restricting, that is host configuration (§0A.3, §16.5), not a variable here.
+
+Third-party channel credentials (Meta/Zoho/GA4/GSC/LinkedIn) still never appear anywhere in this repository, in any form — that part of P2 is untouched by either the pivot or ADR-015; those live only in Claude Cowork, exactly as in v1.0.
 
 ### 0.9 Sections of the v1.0 body below that are now historical, not instructional
 
 §2 (diagram — presentation plane is now "static host", not "Vercel + middleware + API"), §4 ADR-002 and ADR-005 (superseded above), §5–§6 (Node runtime, middleware, route handlers — none of this exists now), §11.2–11.5 (API contract, route handlers — replaced by the fetch layer and hooks in §0.7), Appendix A and B (replaced by §0.7/§0.8). Read them only for the *reasoning* that still applies (e.g. why P3/P4/P1 matter at all) — not for the *mechanism* (which changed). `TASK.md` and `CHECKLIST.md` are the literal, up-to-date build instructions; they have been rewritten in full against this addendum and are authoritative over the v1.0 body wherever the two differ.
+
+*Added by §0A:* §6.1/§6.2 (authentication and authorization) are now historical in full — there is no authentication of any kind. ADR-001 and ADR-013 are both superseded.
+
+---
+
+## 0A. Addendum — v1.2: role selection replaces authentication
+
+**Directed by the CMO, 2026-08-14, during Phase 3.** Supersedes ADR-013 (§0.4) and retires ADR-001's mechanism (§4). Everything in §0 (ADR-011, ADR-012, ADR-014) is unaffected and still current.
+
+### 0A.1 What changed
+
+The requested change, in the CMO's framing: *"I don't want a sign-in page, just show the role popup during the app launch, then the user would choose the role and get into the app."* Confirmed in the same exchange: **there is exactly one role — CMO — and it sees everything.**
+
+So:
+
+- The `/login` route, the "Sign in with Microsoft" action, `AuthGuard`, the Entra tenant predicate, the optional email allowlist, and both MSAL packages are **removed**, not disabled.
+- In their place, a **role-selection dialog** renders at launch. The viewer picks a role and continues.
+- The role is a **label, not a credential**. It gates no route, filters no data, and hides no tab.
+
+### 0A.2 ADR-015 — No authentication; a role-selection dialog at launch · [Confirmed]
+
+*Decision:* The application performs **no authentication and no authorization**. On launch it renders a modal dialog listing the defined roles; the viewer selects one and proceeds to the dashboard. The selection is held in React state and mirrored to `sessionStorage`, so it survives a refresh but returns on a fresh launch (a new tab, or after the browser closes) — which is what "show the role popup during app launch" requires.
+
+*Supersedes:* ADR-013 in full. Retires ADR-001's *mechanism* (per-user Entra SSO); ADR-001's *rationale* — "don't invent a new shared credential" — survives in an unexpected way, since there is now no credential at all.
+
+*Role model:* one role, `cmo`, with access to all eight tabs and every metric. The implementation is list-driven (`src/roles/roles.ts`) so a second role is a data entry plus its id, but **no per-role gating logic exists and none should be added speculatively** — if roles ever need to differ, that is a new decision with its own ADR, touching the sidebar, the router, and the prefetch strategy.
+
+*What this is not:* it is not a login, not an identity, not a session, and not an access control. No token is issued or checked. A viewer can select any role, and clearing `sessionStorage` (or opening a new tab) resets the choice. Nothing downstream may treat the role as a trust boundary.
+
+*Rationale given:* simplicity, and the removal of an external dependency that had become a blocker — the Entra app registration required an IT-admin step that was never completed, so sign-in had never actually worked end-to-end in any environment (see the item 0.18 note in `CHECKLIST.md`). A local-dev bypass had already been added for that reason (commit `a28ca17`); ADR-015 makes the bypass the whole design rather than an exception to it.
+
+### 0A.3 The security consequence, stated plainly
+
+This is the part that must not be softened. ADR-013 already carried a documented residual risk: the login screen gated the *UI*, not the *static JSON files*, so anyone with a direct `/data/*.json` URL could fetch it (§16.4). **ADR-015 widens that from the data files to the entire dashboard.**
+
+| | Under ADR-013 (before) | Under ADR-015 (now) |
+|---|---|---|
+| Dashboard UI | Entra sign-in required; non-`technorucs.com` accounts rejected | **Anyone with the URL** |
+| `public/data/*.json` | Fetchable by direct URL (documented gap) | Fetchable by direct URL (unchanged) |
+| Lead free-text (`notes`) | Never written to the shipped file (ADR-012) | Never written to the shipped file (ADR-012) — **unchanged, and now the only remaining control** |
+
+Two things follow:
+
+1. **ADR-012 is load-bearing now in a way it was not before.** It was previously the second of two mitigations; it is now the first and only one. The `.strict()` schema with `notes` absent is what stands between a public URL and customer free-text. Weakening it — even "just for debugging" — is no longer a code-hygiene issue but the whole privacy posture. P3′ is unchanged in wording and considerably more important in effect.
+2. **BRD §15.2 is no longer satisfied by the application.** It requires "dashboard access restricted to authenticated internal users." Nothing in the app does that any more. This is recorded as a new open item (§16.5) rather than quietly deleted from the BRD, because it is a stated business requirement that this change contradicts — the CMO can drop it, but that has to be a decision, not a side effect.
+
+*Recommended resolution, for the CMO:* enable the static host's deployment-level password protection (e.g. Vercel Deployment Protection) in front of the **whole** deployment, asset paths included. That restores a real access control in one configuration step, requires no application backend, resolves §16.4 and §16.5 together, and is the only remaining place such a control can live. Until then the deployment should be treated as public.
+
+### 0A.4 What this touches in the codebase
+
+| Area | Change |
+|---|---|
+| `src/auth/**` | **Deleted** — `AuthGuard`, `isAllowedAccount`, `msalConfig`, `msalInstance` and their tests |
+| `src/routes/login.tsx` | **Deleted** — there is no ninth route |
+| `src/roles/**` | **New** — `roles.ts` (definitions), `roleStorage.ts` (sessionStorage, failure-tolerant), `roleContext.ts` (context + `useRole`), `RoleProvider.tsx`, `RoleSelectDialog.tsx`, `RoleGate.tsx` |
+| `src/App.tsx` | `MsalProvider` → `RoleProvider` |
+| `src/routes/AppRoutes.tsx` | `AuthGuard` wrapper + `/login` route → `RoleGate` wrapping the route tree |
+| `package.json` | `@azure/msal-browser`, `@azure/msal-react` removed |
+| `.env.example`, `src/vite-env.d.ts` | All four `VITE_MSAL_*` / `VITE_ALLOWED_EMAILS` variables removed; the app now has **no environment variables of its own** |
+| `eslint.config.js` | P6 import-boundary group `@/auth` → `@/roles` |
+
+### 0A.5 Why the gate renders instead of redirecting
+
+`AuthGuard` redirected to `/login` and relied on router state to return. `RoleGate` renders the dialog **in place**, leaving the URL untouched. This is a small improvement worth noting because it makes BRD §4.1's bookmark/share requirement (item 2.5) strictly simpler: a deep link like `/leads?from=…&to=…&cf=…&ct=…` survives the dialog with no round-trip, so the exact view is restored on Continue.
+
+### 0A.6 What is unaffected
+
+Every data-plane invariant and all computation: P1 (day-granular in, derived at read), P2 (no third-party credentials — the app never had any), P3′ (no free-text written to `public/data`), P4 (absence is a first-class value), P5 (one clock), P6 (pure core), P7 (computed numbers, authored phrasing), P8 (frozen visual system). The six schemas, all five channel modules, the metric registry, coverage, the reconciliation harness, both pickers, and the entire Ad Campaigns tab are untouched. ADR-011, ADR-012, and ADR-014 all stand.
 
 ---
 
@@ -211,7 +296,9 @@ Decisions confirmed with the CMO on 2026-08-10 are marked **[Confirmed]**. Decis
 
 ---
 
-**ADR-001 — Per-user SSO, not a shared password** · [Confirmed]
+**ADR-001 — Per-user SSO, not a shared password** · [SUPERSEDED — mechanism by ADR-013, then removed entirely by ADR-015 (§0A)]
+
+> **Superseded 2026-08-14.** ADR-013 moved this from a server session to a browser-only MSAL flow; ADR-015 removed authentication altogether. There is no SSO, no shared password, and no identity of any kind — a role-selection dialog stands where the login screen was. BRD §15.2, quoted below as this ADR's context, is consequently **unmet** and tracked as an open item at §16.5.
 
 *Context:* BRD §15.2 asks for "at minimum a shared login, ideally per-user accounts."
 
@@ -384,6 +471,10 @@ Preview deployments earn their place here: a Cowork run that produces subtly wro
 ---
 
 ## 6. Security architecture
+
+> **§6.1–§6.3 are historical, not instructional.** They describe the v1.0 server-side design, which ADR-011 (no server) and then ADR-015 (no authentication) both dismantled. **None of it exists in the build:** no Auth.js, no session cookie, no `signIn` callback, no tenant or allowlist gate, no `middleware.ts` matcher. The current access model is §0A in full, and the honest one-line summary of it is in §0A.3: *there is no access control in the application.* §6.4 (data minimisation) is the section that still matters, restated by ADR-012 as P3′ — and it matters more now, not less, since it is the only control left.
+>
+> Read on for the reasoning behind why access control was wanted in the first place; that reasoning is what §16.5 asks the CMO to resolve.
 
 ### 6.1 Authentication
 
@@ -1019,7 +1110,7 @@ For the CMO runbook (BRD §15.4), the product exposes:
 
 ## 16. Open items
 
-Two decisions remain open. Neither blocks Phases 0–3.
+Five decisions remain open. None blocks Phases 0–4; §16.4 and §16.5 both block the Phase 5 production sign-off, and should be answered together since they have the same resolution.
 
 ### 16.1 Lead intent classification (BRD §7.4, TRD §12.1) — blocks the intent-bucket panel only
 
@@ -1034,9 +1125,25 @@ Either path populates the same field, so the decision changes the Cowork job and
 
 Proposed: neutral within cadence, amber past 2×, red past 4×, per-tab placement. Implemented as config, so confirming or changing it is a value edit. *Owner: CMO. Needed by: Phase 5.*
 
-### 16.4 Residual exposure of static `/data` files under the no-backend design (§0.4, ADR-013) — not a blocker for Phases 0–4
+### 16.4 Exposure of the deployment and its static `/data` files (§0A.3, ADR-015) — not a blocker for Phases 0–4
 
-Under ADR-013, the login screen gates the application UI, not the static JSON files themselves — a direct request to a file URL bypasses MSAL entirely since no server is left to check a session. Mitigated by ADR-012 (no `notes`/free-text PII in the shipped files) and, optionally, host-level deployment password protection as defense in depth. Proceed on the design in §0.4 through Phase 4; **resolve explicitly before the Phase 5 production sign-off (item 5.24)** — either accept the residual exposure as-is, or add host-level password protection as a required step, not an optional one. *Owner: CMO. Needed by: Phase 5.*
+> **Widened by ADR-015, 2026-08-14.** This item used to cover the JSON files only, because the login screen still gated the UI. With no authentication at all, it now covers **the whole deployment**.
+
+There is no access control anywhere in the application. Anyone with the URL reaches the dashboard; anyone with a `/data/*.json` URL fetches that file. The only remaining protection for lead data is ADR-012 — `notes` and other free-text are never written into the shipped files — which limits the worst case to marketing/CRM aggregates, not customer content.
+
+Proceed on the design in §0A through Phase 4; **resolve explicitly before the Phase 5 production sign-off (item 5.24)**: either accept public access as-is, or enable host-level deployment password protection as a required step. *Owner: CMO. Needed by: Phase 5. Resolve together with §16.5 — one decision answers both.*
+
+### 16.5 BRD §15.2's authenticated-access requirement is no longer met (§0A.3, ADR-015) — not a blocker for Phases 0–4
+
+BRD §15.2 states: *"Dashboard access restricted to authenticated internal users (at minimum, a shared login; ideally per-user accounts if more than the CMO will use it)."* ADR-015 removed the only mechanism that satisfied it. The requirement has **not** been deleted from the BRD — a stated business requirement should not disappear as a side effect of an implementation change — it is flagged there and tracked here.
+
+Three ways to close it, in the order recommended:
+
+1. **Host-level password protection** (e.g. Vercel Deployment Protection) in front of the entire deployment. Satisfies §15.2's "at minimum, a shared login" literally, needs no application backend, and closes §16.4 at the same time. *Recommended.*
+2. **Amend §15.2** to drop the authentication requirement, recording public access as an accepted risk with the CMO's explicit sign-off.
+3. **Reinstate application-level auth**, which would mean reversing ADR-015.
+
+Until one is chosen, treat the deployment as public and do not put anything in `public/data/**` that could not be. *Owner: CMO. Needed by: Phase 5 (item 5.24).*
 
 ### 16.3 Wireframe refresh (TRD §12.4) — not a blocker
 

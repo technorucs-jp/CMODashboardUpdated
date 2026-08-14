@@ -2,7 +2,7 @@
 
 **Read this file completely before writing any code. Then read `CHECKLIST.md`.**
 
-*Rewritten 2026-08-10 against TAD v1.1 §0 (ADR-011–014) — Vite + React SPA, no application backend. If you have an older mental model of this project from the TAD's v1.0 body, TRD, or BRD's original text, this file and `CHECKLIST.md` override it wherever they differ.*
+*Rewritten 2026-08-10 against TAD v1.1 §0 (ADR-011–014) — Vite + React SPA, no application backend. Updated 2026-08-14 for TAD v1.2 §0A (ADR-015) — **no authentication; a role-selection dialog at launch.** If you have an older mental model of this project from the TAD's v1.0 body, TRD, or BRD's original text, this file and `CHECKLIST.md` override it wherever they differ.*
 
 ---
 
@@ -29,9 +29,11 @@ The system has two planes, not three — there is no application server:
 
 ```
 Claude Cowork (scheduled)  →  public/data/*.json in Git  →  Vite static build  →  CMO's browser
-   holds ALL credentials       day-granular truth,           no server, no API,      does the
-                                minus notes/PII                just static files      filtering & auth
+   holds ALL credentials       day-granular truth,           no server, no API,      does ALL the
+                                minus notes/PII                just static files      filtering
 ```
+
+There is no authentication anywhere in that picture (TAD ADR-015). The browser shows a role-selection dialog at launch — a label, not a gate — and then renders the dashboard. If you are looking for where access is checked, the answer is **nowhere in this repo**; it can only be host configuration. See §9's trap on this.
 
 You are building **only the static React app** — plus the repo-side contracts the first plane must satisfy (JSON Schemas, validation scripts, the LinkedIn conversion module). You are not building the Cowork job itself; you are building what it commits against.
 
@@ -45,14 +47,14 @@ When these disagree, the higher one wins.
 
 | # | Document | Role |
 |---|---|---|
-| 1 | `Docs/TechnoRUCS_CMO_Dashboard_Technical_Architecture_v1.0.md` **§0** | **The current architecture. Build from §0's ADR-011–014, not the v1.0 body below it.** The v1.0 body (§1–18, Appendices) is kept for its *reasoning* (why P1/P3/P4 etc. matter) but its *mechanism* (Next.js, route handlers, server aggregation) is superseded. §0.9 lists exactly which sections are historical only. |
+| 1 | `Docs/TechnoRUCS_CMO_Dashboard_Technical_Architecture_v1.0.md` **§0 and §0A** | **The current architecture. Build from §0's ADR-011–014 and §0A's ADR-015, not the v1.0 body below them.** §0A (2026-08-14) removes authentication entirely — no MSAL, no Entra, no `/login`; a role-selection dialog at launch instead. Where §0 and §0A differ, §0A wins. The v1.0 body (§1–18, Appendices) is kept for its *reasoning* (why P1/P3/P4 etc. matter) but its *mechanism* (Next.js, route handlers, server aggregation, Auth.js) is superseded. §0.9 lists exactly which sections are historical only. |
 | 2 | `Docs/TechnoRUCS_CMO_Dashboard_TRD_v1.0.md` | Technical spec. Its own §0 addendum points out where the TAD supersedes it (frontend framework, data path, auth, filtering location). Authoritative on everything else. |
-| 3 | `Docs/TechnoRUCS_CMO_Dashboard_RealTime_Requirements_v2.1.md` | Business requirements — the "why". Acceptance criteria live in §16. Its v2.2 note flags the one place the pivot touches a stated business requirement (access control). |
+| 3 | `Docs/TechnoRUCS_CMO_Dashboard_RealTime_Requirements_v2.1.md` | Business requirements — the "why". Acceptance criteria live in §16. Its v2.2 and v2.3 notes flag where the architecture changes touch stated business requirements — both are about access control, and §15.2 now carries an explicit **NOT MET** status block awaiting a CMO decision. |
 | 4 | `Wireframe/*.jpg` | 25 screens showing every tab's layout, components, and copy tone. The visual system is frozen — match it. Unaffected by the architecture pivot. |
 
 Shorthand used below: **TAD** = architecture doc, **TRD** = technical requirements, **BRD** = business requirements.
 
-Read the TAD's §0 (the pivot), §3 (principles — P3 is restated by §0.3), and §4/§16 (decision records + open items, including the new §16.4) before Phase 0. Read the relevant TAD section before each phase; they are cross-referenced from `CHECKLIST.md`.
+Read the TAD's §0 (the pivot), §0A (the access-model change), §3 (principles — P3 is restated by §0.3), and §4/§16 (decision records + open items, including §16.4 and §16.5) before Phase 0. Read the relevant TAD section before each phase; they are cross-referenced from `CHECKLIST.md`.
 
 ---
 
@@ -64,7 +66,7 @@ These are the eight principles from TAD §3, two of them restated by the v1.1 pi
 |---|---|---|
 | **P1** | **Day-granular in, derived at read.** | No ratio, rate, average, or total is ever stored in `public/data`. CTR, CPC, CPM, cost/conversation, engagement rate, bounce rate, contact rate, average position — all computed from summed numerators and denominators for the selected range, in the browser. |
 | **P2** | **The app holds no third-party credentials.** | No Meta/Zoho/GA4/GSC/LinkedIn tokens in code, env vars, or `public/data`. Unaffected by the pivot — this was always about the *app*, not about whether it has a server. |
-| **P3′** | **No field the browser has no legitimate reason to see is ever *written* into `public/data/**`.** (Restates the old "raw records never reach the browser" — TAD §0.3.) | `zoho-crm.json`'s `notes` field must never exist in the shipped file at all — enforced by a `.strict()` Zod schema with no `notes` property, not by redacting it somewhere downstream. There is no server left to redact anything at request time. |
+| **P3′** | **No field the browser has no legitimate reason to see is ever *written* into `public/data/**`.** (Restates the old "raw records never reach the browser" — TAD §0.3.) | `zoho-crm.json`'s `notes` field must never exist in the shipped file at all — enforced by a `.strict()` Zod schema with no `notes` property, not by redacting it somewhere downstream. There is no server left to redact anything at request time. **Since ADR-015 removed authentication, this is the *only* control protecting lead data — treat any weakening of it as a privacy incident, not a lint failure.** |
 | **P4** | **Absence is a first-class value, never zero.** | Every channel query returns a `Coverage` union. A range with no data renders an explicit state, not `0`. A ratio with a zero denominator resolves to `null`, rendered `—`, not `0`. |
 | **P5** | **One clock: Asia/Kolkata (+05:30).** | All date bucketing goes through `lib/time`. Raw `new Date(...)` / `Date.parse(...)` is lint-banned outside that module. |
 | **P6** | **The computation core is pure and framework-agnostic.** | `src/lib/**` has no I/O, no React import, no DOM global, no `fetch`. It is the only place metrics are defined. (Was "isomorphic" pre-pivot, meaning "runs on server or client" — now it only ever runs in the browser, but the purity rule is identical and just as mechanically enforced.) |
@@ -74,7 +76,7 @@ These are the eight principles from TAD §3, two of them restated by the v1.1 pi
 Two of these are enforced mechanically — set them up in Phase 0 and do not disable them:
 
 - **P5** — an ESLint `no-restricted-syntax` rule banning `new Date(` and `Date.parse(` outside `src/lib/time/**`.
-- **P6** — an import-boundary rule: `src/lib/**` may not import from `src/routes/**`, `src/components/**`, `src/data/**`, `src/auth/**`, or `react`.
+- **P6** — an import-boundary rule: `src/lib/**` may not import from `src/routes/**`, `src/components/**`, `src/data/**`, `src/roles/**`, or `react`. (`src/roles/**` replaced `src/auth/**` in this rule with ADR-015.)
 
 ---
 
@@ -88,7 +90,7 @@ Exactly this. Do not substitute without asking (§8).
 | Framework | `react@19` | No Next.js — TAD ADR-011 |
 | Routing | `react-router@6+` (`react-router-dom`) | Client-side routes; URL is still the single source of truth for range state |
 | Language | TypeScript, `strict: true` | No `any` in `src/lib/**` |
-| Auth | `@azure/msal-browser`, `@azure/msal-react` | Microsoft Entra ID, browser-only PKCE flow, **no server session** — TAD ADR-013 |
+| Auth | **none** | Removed by TAD ADR-015. `@azure/msal-browser` / `@azure/msal-react` are uninstalled — do not reintroduce them, or any other auth library, without a new ADR. The launch role dialog is plain React in `src/roles/**` with no dependency. |
 | Validation | `zod` (v4) | Runtime parse in the client fetch layer; also the source for JSON Schemas |
 | Schema gen | `zod`'s native `z.toJSONSchema()` | Generates `/schemas/*.json` from the Zod schemas. **Not** the third-party `zod-to-json-schema` package originally pinned here — that package predates Zod v4's internal representation and silently produces an empty `{}` schema against it (verified while building item 1.9). Zod v4 ships this as a first-party API now, so this is a same-capability substitution, not an architecture change. |
 | Client cache | `@tanstack/react-query` | `staleTime: Infinity` — data is immutable per deployment |
@@ -118,9 +120,10 @@ public/
 schemas/                 ← generated from Zod, committed
 scripts/                 ← validation, secret scan, LinkedIn conversion (Node, build/CI-time only)
 src/
-  main.tsx / App.tsx     ← Vite entry, router root, MsalProvider, QueryClientProvider
-  auth/                  ← MSAL config, AuthGuard, tenant/allowlist predicate
-  routes/                ← one module per tab + layout + login. Thin.
+  main.tsx / App.tsx     ← Vite entry, router root, RoleProvider, QueryClientProvider
+  roles/                 ← role definitions, sessionStorage, launch dialog, RoleGate (ADR-015).
+                            Replaced auth/ (MSAL config, AuthGuard, tenant/allowlist predicate).
+  routes/                ← one module per tab + layout. Thin. No login route.
   data/                  ← fetch + Zod parse + in-memory cache. I/O lives here (was src/server/).
   viewmodels/            ← view-model composition, called from hooks
   lib/                   ← PURE. Metrics, rules, narrative, time. No I/O, no React.
@@ -209,7 +212,9 @@ Stop work and ask the user when you hit any of these. Do not pick a plausible de
 | Real `public/data` files do not exist yet and you need to see actual data shape | Build against `tests/fixtures/**` and say so. Do not invent production data. |
 | A package in §4 is unavailable or its API has changed materially | Substitutions change the architecture's assumptions. |
 | Staleness thresholds / badge treatment (TAD §16.2) | Cosmetic and config-driven — implement the proposed defaults, but flag for confirmation rather than treating it as settled. |
-| The residual `public/data` exposure (TAD §16.4) is about to matter — e.g. you are about to ship to production in Phase 5 | Not a blocker before Phase 5, but item 5.24 cannot be marked done without the CMO's explicit answer: accept the exposure as-is, or require host-level password protection first. |
+| The deployment's exposure (TAD §16.4) or BRD §15.2's unmet access requirement (TAD §16.5) is about to matter — e.g. you are about to ship to production in Phase 5 | Not a blocker before Phase 5, but item 5.24 cannot be marked done without the CMO's explicit answer: enable host-level password protection, or accept public access in writing. Since ADR-015 this covers the **whole dashboard**, not only the JSON files. |
+| You are about to add per-role behaviour — different tabs, hidden metrics, or any check on the selected role | There is one role and it sees everything (ADR-015). Role-based gating is a new decision needing its own ADR; it would touch the sidebar, the router, and the prefetch strategy. Do not infer it from the presence of a role list. |
+| You are about to add an auth library, a login screen, a password prompt, or a token check | ADR-015 removed authentication deliberately. Reintroducing it reverses a CMO decision. If a requirement seems to need it, that is §16.5 asking to be resolved — raise it, don't implement it. |
 
 When you stop: state what you hit, what the options are, what you recommend and why, and what you have done in the meantime. Then wait.
 
@@ -237,7 +242,9 @@ These are the mistakes this codebase invites. Each one produces a number that lo
 
 **Writing `notes` (or any other lead free-text) into `public/data/zoho-crm.json`.** This is the pivot-era replacement for the old "putting `/data` in `/public`" trap — that placement is now *correct* (ADR-014), so the risk moved to *content*, not *location*. The `.strict()` schema is what catches this mechanically; do not weaken it "just for debugging."
 
-**Treating the MSAL login screen as if it gates the data.** It gates the UI only (TAD §16.4). Do not reason about `public/data/*.json` confidentiality as if a session check happens before it's served — none does. That is exactly why P3′ (§3) exists.
+**Treating the role dialog as if it gates anything.** It gates nothing — not the data, and since ADR-015, not the UI either. The old version of this trap said the MSAL login screen protected the UI but not `public/data/*.json`; there is no login screen now, so **neither** is protected. Do not reason about confidentiality anywhere in this app as if a check happens first — none does, at any layer. That is exactly why P3′ (§3) exists, and why it is now the only thing standing between a public URL and customer free-text.
+
+**Assuming the role means something.** It is a string in `sessionStorage` that the viewer chose from a dropdown. It is not an identity, not a claim, and not verifiable. Never branch on it for anything that matters, never log it as if it identifies a person, and never write it into `public/data/**`.
 
 ---
 
@@ -255,7 +262,8 @@ These are the mistakes this codebase invites. Each one produces a number that lo
 | `/email` | none | n/a — static "not yet connected" |
 | `/linkedin` | `linkedin` | optional |
 | `/total-leads` | `meta-ads` | **required** |
-| `/login` | none | MSAL sign-in entry point |
+
+There is no `/login` route (removed with ADR-015). The role dialog renders in front of the router and leaves the URL alone, so a deep link survives it.
 
 **URL contract** — the single source of truth for range state (via `react-router`'s `useSearchParams`, not a server):
 
@@ -296,14 +304,9 @@ npm run schemas:build     # regenerate /schemas from Zod
 npm run scan:secrets      # credential patterns in public/data and src
 ```
 
-**Environment variables** (TAD §0.8) — note what is *absent*: no third-party API keys, and no server secrets, in any environment, because there is no server.
+**Environment variables** (TAD §0.8) — **there are none.** No third-party API keys (P2), no server secrets (there is no server), and since ADR-015 no auth configuration either. `npm run dev` and `npm run build` both work with no `.env.local` at all. The four `VITE_MSAL_*` / `VITE_ALLOWED_EMAILS` variables that used to be listed here are gone; if you find one referenced somewhere, it is stale, not missing.
 
-```
-VITE_MSAL_CLIENT_ID
-VITE_MSAL_TENANT_ID
-VITE_MSAL_REDIRECT_URI
-VITE_ALLOWED_EMAILS         # optional allowlist on top of the tenant check; empty = tenant-only
-```
+**Roles** (TAD ADR-015) — one role, `cmo`, defined in `src/roles/roles.ts`, with access to everything. The launch dialog is shown once per browser session (`sessionStorage`).
 
 ---
 
@@ -320,4 +323,5 @@ The build is complete when all of these are demonstrably true. They are the phas
 7. Each source's "last synced" timestamp matches the most recent commit touching its JSON file.
 8. The CMO can complete a LinkedIn XLS handoff and request an out-of-schedule sync without developer help, using the runbook.
 9. **(New, pivot-specific)** `public/data/zoho-crm.json` contains no `notes` field and no other lead free-text, in any commit, ever — verified by schema (`.strict()`, field absent) and by `scan:secrets`/a dedicated PII check in CI.
-10. **(New, pivot-specific)** The CMO has explicitly signed off on the TAD §16.4 residual-exposure trade-off (or host-level password protection has been added) before production launch.
+10. **(New, pivot-specific; widened by ADR-015)** The CMO has explicitly recorded a decision on TAD §16.4 **and** §16.5 before production launch — either host-level password protection is enabled, or public access to the whole dashboard (not just the JSON files) is accepted in writing. BRD §15.2 stays formally unmet until then.
+11. **(New, ADR-015)** Opening the dashboard shows the role dialog; choosing CMO enters the requested view, with a bookmarked URL's tab, range, and comparison range all intact.

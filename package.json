@@ -16,8 +16,6 @@
     "scan:secrets": "node scripts/scan-secrets.mjs"
   },
   "dependencies": {
-    "@azure/msal-browser": "^5.18.0",
-    "@azure/msal-react": "^5.5.5",
     "@date-fns/tz": "^1.5.0",
     "@tanstack/react-query": "^5.101.4",
     "date-fns": "^4.4.0",

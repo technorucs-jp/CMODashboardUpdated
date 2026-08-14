@@ -4,7 +4,7 @@
 
 Business & Functional Requirements Document
 
-Version 2.1 | August 10, 2026
+Version 2.3 | August 14, 2026 (v2.1 baseline August 10, 2026)
 
 Prepared for: Development Team
 
@@ -16,6 +16,10 @@ Prepared by: Jayaprakash S, CMO & Founder, TechnoRUCS
 
 > **Change note (v2.1):** Corrects two internal inconsistencies surfaced by a cross-check against the current static-preview.html wireframe: (1) Section 3.1's tab count/list did not match the tab lists in Section 10 and Section 14 — corrected below. (2) Section 7.1 now explicitly states that all lead-status metrics, including ones at zero, must render as cards rather than being omitted — the current wireframe drops "Contact in Future" and "Junk" cards when their count is zero, which conflicts with the empty-state principle already stated in Section 14. No other requirements changed; open judgment calls identified during the wireframe cross-check (lead intent bucket classification method, narrative-generation approach, date-range-picker build status) are intentionally left as-is pending a decision from the CMO and are not addressed in this revision.
 >
+> **Change note (v2.3, 2026-08-14) — access model: the dashboard no longer asks anyone to sign in.** The CMO directed that the Microsoft sign-in screen be removed and replaced with a **role popup shown at app launch**: the viewer picks a role and enters the dashboard. There is exactly **one role, CMO**, and it sees every tab and every figure — no per-role filtering exists or is planned. Full detail in TAD v1.2 §0A (ADR-015).
+>
+> One business requirement in this document is directly contradicted by that change, and is flagged rather than quietly rewritten: **§15.2's "dashboard access restricted to authenticated internal users."** The application no longer authenticates anyone, so anybody with the URL can open the dashboard, and anybody with a `/data/*.json` URL can fetch that file. The role popup is a label, not a gate. §15.2 has been annotated below with the current status and the recommended way to satisfy it (host-level deployment password protection, e.g. Vercel Deployment Protection, which needs no application backend); **it needs a decision from the CMO before production release** and is tracked at TAD §16.5 and CHECKLIST item 5.24. Everything protecting lead data now rests on the rule that lead free-text is never written into the published files at all (v2.2 note below; TAD ADR-012) — that rule is unchanged and now carries the entire load. No other requirement in this document changed: all eight tabs, every metric, the date-range filter, and the acceptance criteria in §16 are unaffected except §16's access-related bullet, likewise annotated.
+
 > **Change note (v2.2 pointer, same day):** After this BRD and the TRD/TAD were drafted, the CMO directed a build-time architecture change — a Vite + React single-page app with **no application backend**, instead of the Next.js server-rendered design the TAD's v1.0 baseline had specified. None of the business requirements below changed. Two things worth the CMO's attention because they touch requirements stated in this document: (1) **Section 15.2's access-control requirement** is now met by a client-only Microsoft Entra ID login (no server session) rather than a server-checked one — a party with a direct URL to a `/data/*.json` file can fetch it without passing the login screen, since no server is left to gate it; mitigated by never writing lead notes into that file at all (was previously mitigated by server-side redaction). (2) Section 3.1's `/data` folder now lives under the app's public asset path by design, not outside it. Full detail: TAD v1.1 §0 (ADR-011–014) and the open item at TAD §16.4, flagged for sign-off before Phase 5 production release.
 
 **1. Purpose & Background**
@@ -300,6 +304,7 @@ Every tab in the current build ends with a "What's working / what's not" narrati
 
 **14. UI / UX & Design Requirements**
 
+- **Role popup at launch (added v2.3).** Opening the dashboard shows a single modal dialog naming the available roles — currently just **CMO** — with the role pre-selected and a Continue action. Choosing it enters the dashboard. The dialog carries no metric values, no sign-in, and no password. It appears once per browser session: an accidental refresh does not re-ask, but opening the dashboard fresh (a new tab, or after closing the browser) does, since it is a launch prompt. The chosen role does not change what is shown — every role sees all eight tabs and every figure.
 - Retain the dark theme (#0d1117 base background) and existing color system for status tags (Leading / Good / Monitor / Action needed).
 - Retain the fixed left sidebar for channel navigation: Overview, Ad Campaigns, Leads, Website, SEO, Email, LinkedIn, Total Leads.
 - Retain the existing card, table, and horizontal bar-row components — this is a data-refresh and filtering upgrade, not a visual redesign.
@@ -327,6 +332,18 @@ This section replaces the live-API sync-job design from v1.0 of this document.
 - The `/data` JSON files themselves must not contain any secrets, tokens, or credentials — only the metric data pulled from each platform.
 - Dashboard access restricted to authenticated internal users (at minimum, a shared login; ideally per-user accounts if more than the CMO will use it).
 
+> **Status of the requirement above (v2.3, 2026-08-14): NOT MET — open, needs a CMO decision before production release.**
+>
+> This requirement is left in place deliberately. It was met by Microsoft Entra sign-in until the CMO directed that the sign-in screen be replaced by a role popup at launch (TAD ADR-015). The popup asks *who* the viewer is; it does not check *whether* they may be there. As things stand:
+>
+> - Anyone with the dashboard URL can open it and see every tab.
+> - Anyone with a `/data/*.json` URL can fetch that file directly (this part predates v2.3 — there is no server to gate it, see the v2.2 note).
+> - The only remaining protection for lead data is that lead free-text (`notes`) is never written into the published files in the first place, so the worst case is marketing and CRM *aggregates*, never customer wording.
+>
+> **Recommended way to close it:** turn on the hosting platform's own deployment password protection (e.g. Vercel Deployment Protection) in front of the whole site, asset files included. That is a settings change on the host — no developer work, no backend, no new login for anyone to manage — and it satisfies this requirement's "at minimum, a shared login" as written.
+>
+> **The alternative is to amend this requirement**, recording public access as an accepted risk. Either answer is workable; what is not workable is shipping to production without choosing one. Tracked at TAD §16.5 and CHECKLIST item 5.24.
+
 **15.3 Performance**
 
 - Any date-range change should return updated results in under 3 seconds, for ranges up to 12 months, since filtering runs against local JSON data already present in the deployed build rather than a live external API call.
@@ -347,6 +364,8 @@ This section replaces the live-API sync-job design from v1.0 of this document.
 - No API credentials appear anywhere in the web application's code, client-side network calls, or the `/data` JSON files in the public Git repository.
 - Every data source's "last synced" timestamp on the dashboard matches the most recent commit that touched its JSON file.
 - The CMO (non-technical) can complete a LinkedIn XLS upload and request an out-of-schedule Cowork sync without developer assistance, using the runbook in Section 15.4.
+- **(Added v2.3)** Opening the dashboard shows the role popup with CMO selectable; choosing it enters the dashboard on the requested view — a bookmarked or shared URL still lands on that exact tab, date range, and comparison range after Continue, not on a default page.
+- **(Added v2.3)** The Section 15.2 access-control decision has been recorded by the CMO — either host-level deployment password protection is enabled, or public access is explicitly accepted in writing. This criterion is about the decision existing, not about which way it went.
 
 **Appendix A — Status Thresholds (starting point, tune with CMO)**
 

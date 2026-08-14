@@ -10,7 +10,12 @@ Source BRD: TechnoRUCS_CMO_Dashboard_RealTime_Requirements_v2.1.md
 
 Prepared for: Development Team
 
-Status: Draft — items in Section 12 are open decisions, not yet resolved by the CMO. **Superseded in part, same day, by the Technical Architecture Document v1.1 §0** — the TAD's ADR-011 through ADR-014 replace this document's Next.js-flavoured framing (Section 3's tech stack row for the frontend framework, Section 6.2's "or a lightweight edge/serverless function" escape hatch, and Section 8.1's server-side credential note) with a Vite + React, fully client-side, no-backend build. See the summary in Section 0 below before reading the rest of this document; where they conflict, the TAD's §0 wins per this document's own role as "authoritative except where the TAD supersedes it" (TASK.md §2).
+Status: Draft — items in Section 12 are open decisions, not yet resolved by the CMO. **Superseded in part by the Technical Architecture Document, in two rounds:**
+
+- **TAD v1.1 §0 (2026-08-10, same day as this document).** ADR-011 through ADR-014 replace this document's Next.js-flavoured framing (Section 3's tech stack row for the frontend framework, Section 6.2's "or a lightweight edge/serverless function" escape hatch, and Section 8.1's server-side credential note) with a Vite + React, fully client-side, no-backend build.
+- **TAD v1.2 §0A (2026-08-14).** ADR-015 removes authentication entirely, replacing it with a role-selection dialog at launch. This overrides Section 8.1's "minimum viable is a shared login" line and the auth half of Section 0's own summary below.
+
+See the summary in Section 0 below before reading the rest of this document; where they conflict, the TAD wins per this document's own role as "authoritative except where the TAD supersedes it" (TASK.md §2), with §0A taking precedence over §0.
 
 ---
 
@@ -22,7 +27,8 @@ Full reasoning lives in TAD v1.1 §0 (ADR-011–014); this is the pointer so a r
 - **Section 4 (data architecture):** file layout in Section 4.1 moves from repo-root `/data` to `public/data/` — deliberately public now, not a mistake. `zoho-crm.json`'s record shape in Section 4.4 drops the `notes` field entirely; it is never written to the shipped file (TAD ADR-012). Everything else in Section 4 (envelope, per-channel shapes, the derived-ratio discipline) is unchanged.
 - **Section 6.2 ("where filtering runs"):** the "move to a serverless/edge function later" escape hatch no longer applies — there is no server to move it to. Filtering is client-side, permanently, per TAD ADR-011/014.
 - **Section 7 (frontend structure):** "Route / page inventory" (7.1) becomes `react-router` routes instead of Next.js file routes, same eight destinations. "State management" (7.3) is unchanged in spirit — URL is still the source of truth for range state — via `react-router`'s `useSearchParams` instead of Next's router.
-- **Section 8.1 (security):** "minimum viable is a shared login… or a simple auth middleware" is replaced by TAD ADR-013 — MSAL.js browser-only Entra ID SSO, no server, with the residual-exposure trade-off documented there and in TAD §16.4.
+- **Section 8.1 (security):** "minimum viable is a shared login… or a simple auth middleware" was first replaced by TAD ADR-013 (MSAL.js browser-only Entra ID SSO) and is now replaced again by **TAD ADR-015: there is no authentication at all.** A role-selection dialog at launch asks who the viewer is; it is a label, not a credential, and gates nothing. See Section 8.1 below for the current text, and TAD §0A.3 / §16.4 / §16.5 for the exposure this creates and the CMO decision it needs.
+- **Section 7.1 (route inventory):** unchanged — the same eight tabs. The `/login` route added by ADR-013 is gone again (ADR-015); the launch dialog is a component in front of the router, not a route.
 - **Section 12.4 (date-range-picker rollout):** resolved in practice — proceed directly from the updated TASK.md/CHECKLIST.md; no interim wireframe revision is on the critical path (TAD §16.3, unchanged by this pivot).
 
 ---
@@ -323,8 +329,11 @@ Given the data volumes implied by BRD 15.3 (≤24 months, day-granular, per chan
 | `/linkedin` | LinkedIn | `linkedin.json` |
 | `/total-leads` | Total Leads | `meta-ads.json` (current + comparison range) |
 
+Eight routes, no ninth. The role-selection dialog (TAD ADR-015) is **not** a route — it renders in front of the whole route tree and leaves the URL untouched, so a deep link such as `/leads?from=2026-06-01&to=2026-06-30` resolves to exactly that view once the viewer continues. (The `/login` route briefly introduced by ADR-013 was removed with it.)
+
 **7.2 Shared components**
 
+- `RoleSelectDialog` / `RoleGate`: the launch dialog (TAD ADR-015) and the component that renders it until a role is chosen. Replaces the ADR-013 `/login` page and `AuthGuard`.
 - `TopBar`: logo/title, `DateRangePicker`, `ComparisonRangePicker` (BRD 4.1) — rendered once in the app shell, not per page, so state persists across tab navigation.
 - `Sidebar`: fixed left nav, 8 items, active-tab highlight (BRD 14).
 - `KpiCard`: primary value + supporting detail line(s), used across all tabs.
@@ -342,7 +351,17 @@ Selected range + comparison range live in the URL (`?from=&to=&cf=&ct=`) as the 
 
 **8.1 Security**
 
-*(BRD ref: 15.2)* No third-party API credentials exist anywhere in the web app's codebase, environment variables, or client bundle — all connector credentials live only inside the Claude Cowork environment, which is outside this repo. Add a CI check (e.g., a pre-commit or PR-check script scanning `/data` and application code for common credential patterns) as a backstop for the BRD 16 acceptance criterion "no API credentials appear anywhere... in the public Git repository." Authentication: minimum viable is a shared login (e.g., Vercel password protection or a simple auth middleware); revisit per-user accounts only if more than the CMO uses the dashboard.
+*(BRD ref: 15.2)* No third-party API credentials exist anywhere in the web app's codebase, environment variables, or client bundle — all connector credentials live only inside the Claude Cowork environment, which is outside this repo. Add a CI check (e.g., a pre-commit or PR-check script scanning `/data` and application code for common credential patterns) as a backstop for the BRD 16 acceptance criterion "no API credentials appear anywhere... in the public Git repository."
+
+**Authentication — none (TAD ADR-015, supersedes this section's original text and ADR-013).** The application authenticates nobody. On launch it shows a role-selection dialog; the viewer picks a role and continues. That role is a label, not a credential — it gates no route, filters no data, and is never a trust boundary. The app has no environment variables of its own as a result (TAD §0.8).
+
+Consequences, stated rather than implied:
+
+- **Anyone with the URL reaches the dashboard**, and anyone with a `public/data/*.json` URL fetches that file. There is no server and no client gate to stop either.
+- **The only remaining protection for lead data is TAD ADR-012 / P3′** — `notes` and other lead free-text are never *written* into the shipped JSON, enforced by a `.strict()` Zod schema with the field absent. This was one of two mitigations; it is now the only one.
+- **BRD §15.2's "restricted to authenticated internal users" is therefore unmet.** It is deliberately left standing in the BRD and tracked as an open item (TAD §16.5), not deleted.
+
+*Recommended resolution:* host-level deployment password protection (e.g. Vercel Deployment Protection) covering the entire deployment including asset paths. That satisfies BRD §15.2's "at minimum, a shared login" literally, needs no application backend, and closes TAD §16.4 and §16.5 together. Until it is enabled, treat the deployment as public.
 
 **8.2 Performance**
 

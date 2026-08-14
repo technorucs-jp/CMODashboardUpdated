@@ -23,6 +23,7 @@
   --color-surface-1: #1a1a1a; /* card background */
   --color-surface-2: #141414; /* topbar / sidebar background */
   --color-border: #2a2a2a;
+  --color-overlay: rgb(0 0 0 / 72%); /* modal scrim — role launch dialog (TAD ADR-015) */
   --radius-base: 8px;
   --radius-card: 12px;
 

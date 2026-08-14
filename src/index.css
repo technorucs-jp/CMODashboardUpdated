@@ -52,3 +52,59 @@ body {
     animation: none;
   }
 }
+
+/* Role launch dialog (TAD ADR-015) — replaces the /login screen. Shown once per
+   browser session before the dashboard renders. Colours are tokens only (P8). */
+.role-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: var(--color-overlay);
+}
+
+.role-dialog {
+  width: 100%;
+  max-width: 420px;
+  padding: 28px;
+}
+
+.role-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-base);
+  background: var(--color-surface-2);
+  cursor: pointer;
+}
+
+.role-option:hover {
+  border-color: var(--color-text-muted);
+}
+
+.role-option:focus-within {
+  outline: 2px solid var(--accent-1);
+  outline-offset: 2px;
+}
+
+.role-continue {
+  width: 100%;
+  margin-top: 20px;
+  padding: 10px 16px;
+  border: 1px solid var(--accent-1);
+  border-radius: var(--radius-base);
+  background: var(--accent-1);
+  color: var(--color-text-primary);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.role-continue:focus-visible {
+  outline: 2px solid var(--color-text-primary);
+  outline-offset: 2px;
+}

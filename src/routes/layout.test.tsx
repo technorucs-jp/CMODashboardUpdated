@@ -1,27 +1,29 @@
-import { describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
+import { RoleProvider } from '@/roles/RoleProvider'
+import { writeStoredRole } from '@/roles/roleStorage'
 import { AppRoutes } from './AppRoutes'
 
-const { useIsAuthenticatedMock, useMsalMock } = vi.hoisted(() => ({
-  useIsAuthenticatedMock: vi.fn(),
-  useMsalMock: vi.fn(),
-}))
+// A role is already chosen for these tests — the launch dialog (TAD ADR-015)
+// is not what's under test here, the layout's mount behaviour is. This replaces
+// the pre-ADR-015 `@azure/msal-react` mock that used to serve the same purpose.
+beforeEach(() => {
+  writeStoredRole('cmo')
+})
 
-vi.mock('@azure/msal-react', () => ({
-  useIsAuthenticated: useIsAuthenticatedMock,
-  useMsal: useMsalMock,
-}))
+afterEach(() => {
+  window.sessionStorage.clear()
+})
 
 describe('DashboardLayout — mounted once (item 0.14)', () => {
   it('does not remount the sidebar/topbar when navigating between tabs', () => {
-    useIsAuthenticatedMock.mockReturnValue(true)
-    useMsalMock.mockReturnValue({ accounts: [{ username: 'jayaprakash@technorucs.com' }] })
-
     render(
-      <MemoryRouter initialEntries={['/overview']}>
-        <AppRoutes />
-      </MemoryRouter>,
+      <RoleProvider>
+        <MemoryRouter initialEntries={['/overview']}>
+          <AppRoutes />
+        </MemoryRouter>
+      </RoleProvider>,
     )
 
     expect(screen.getByRole('heading', { name: 'Overview' })).toBeInTheDocument()

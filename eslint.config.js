@@ -28,7 +28,8 @@ const forbiddenAppLayerGroups = [
   '@/routes', '@/routes/*', '**/routes/*',
   '@/components', '@/components/*', '**/components/*',
   '@/data', '@/data/*', '**/data/*',
-  '@/auth', '@/auth/*', '**/auth/*',
+  // Was `@/auth` until TAD ADR-015 replaced Entra sign-in with the role dialog.
+  '@/roles', '@/roles/*', '**/roles/*',
 ]
 
 export default defineConfig([
@@ -60,7 +61,7 @@ export default defineConfig([
     },
   },
 
-  // P6 — src/lib/** may not import react or the app layers (routes/components/data/auth).
+  // P6 — src/lib/** may not import react or the app layers (routes/components/data/roles).
   // Test files are exempt: the invariant protects what ships in the production
   // bundle, which test files never do — they legitimately need real schemas/
   // fixtures for realistic test data.
@@ -81,7 +82,7 @@ export default defineConfig([
             {
               group: forbiddenAppLayerGroups,
               message:
-                'src/lib/** may not import src/routes/**, src/components/**, src/data/**, or src/auth/** (P6 — the computation core has no I/O, no React, no app-layer dependency).',
+                'src/lib/** may not import src/routes/**, src/components/**, src/data/**, or src/roles/** (P6 — the computation core has no I/O, no React, no app-layer dependency).',
             },
           ],
         },
