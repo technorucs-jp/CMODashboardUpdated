@@ -3,6 +3,7 @@ import { BarRow } from '@/components/data/BarRow'
 import { CardSkeleton } from '@/components/data/CardSkeleton'
 import { DonutChart } from '@/components/data/DonutChart'
 import { KpiCard } from '@/components/data/KpiCard'
+import { LastSyncedBadge } from '@/components/data/LastSyncedBadge'
 import { NarrativeBlock } from '@/components/narrative/NarrativeBlock'
 import { ActionList } from '@/components/narrative/ActionList'
 import { SeriesBarChart } from '@/components/data/SeriesBarChart'
@@ -64,7 +65,10 @@ export default function LeadsPage() {
   return (
     <div>
       <h1>Leads</h1>
-      <p>Zoho CRM · Inbound only (Meta Ads + SEO sources) · Partner, Referral, ZoomInfo excluded</p>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+        <p style={{ margin: 0 }}>Zoho CRM · Inbound only (Meta Ads + SEO sources) · Partner, Referral, ZoomInfo excluded</p>
+        <LastSyncedBadge channel="zoho-crm" />
+      </div>
 
       {isLoading && (
         <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>

@@ -12,6 +12,8 @@
     "test": "vitest run",
     "test:recon": "vitest run tests/reconciliation",
     "validate:data": "node scripts/validate-data.mjs",
+    "check:sync": "node scripts/check-sync-timestamps.mjs",
+    "convert:linkedin": "node scripts/linkedin/cli.mjs",
     "schemas:build": "node scripts/build-schemas.mjs",
     "scan:secrets": "node scripts/scan-secrets.mjs"
   },

@@ -2,6 +2,7 @@ import { load, loadConfig } from '@/data/loader'
 import { CardSkeleton } from '@/components/data/CardSkeleton'
 import { KpiCard } from '@/components/data/KpiCard'
 import { StatusTag } from '@/components/data/StatusTag'
+import { LastSyncedBadge } from '@/components/data/LastSyncedBadge'
 import { NarrativeBlock } from '@/components/narrative/NarrativeBlock'
 import { ActionList } from '@/components/narrative/ActionList'
 import { buildOverviewViewModel } from '@/viewmodels/overview'
@@ -44,9 +45,12 @@ export default function OverviewPage() {
   return (
     <div>
       <h1>Overview</h1>
-      <p>
-        All channels · {range.from} to {range.to}
-      </p>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+        <p style={{ margin: 0 }}>
+          All channels · {range.from} to {range.to}
+        </p>
+        <LastSyncedBadge channel="meta-ads" />
+      </div>
 
       {isLoading && (
         <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>

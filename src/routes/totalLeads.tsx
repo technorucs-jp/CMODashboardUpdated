@@ -2,6 +2,7 @@ import { load } from '@/data/loader'
 import { CardSkeleton } from '@/components/data/CardSkeleton'
 import { DataTable, type DataTableColumn } from '@/components/data/DataTable'
 import { KpiCard } from '@/components/data/KpiCard'
+import { LastSyncedBadge } from '@/components/data/LastSyncedBadge'
 import { NarrativeBlock } from '@/components/narrative/NarrativeBlock'
 import { ActionList } from '@/components/narrative/ActionList'
 import { CoverageState } from '@/components/states/CoverageState'
@@ -122,7 +123,10 @@ export default function TotalLeadsPage() {
   return (
     <div>
       <h1>Total Leads</h1>
-      <p>Meta Ads · Paid Campaign Performance & Cross-Period Comparison</p>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+        <p style={{ margin: 0 }}>Meta Ads · Paid Campaign Performance & Cross-Period Comparison</p>
+        <LastSyncedBadge channel="meta-ads" />
+      </div>
 
       {/* Item 3.41 — Comparison required notice & fallback label */}
       {vm && (

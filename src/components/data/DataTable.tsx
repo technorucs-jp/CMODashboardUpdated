@@ -56,6 +56,13 @@ export function DataTable<T>({ columns, rows, getRowKey, totals, totalsLabel = '
               <th
                 key={col.key}
                 onClick={() => toggleSort(col.key)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    toggleSort(col.key)
+                  }
+                }}
+                tabIndex={0}
                 role="columnheader"
                 aria-sort={sort?.key === col.key ? (sort.direction === 'asc' ? 'ascending' : 'descending') : 'none'}
                 style={{ textAlign: col.align ?? 'left', cursor: 'pointer', userSelect: 'none' }}

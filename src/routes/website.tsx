@@ -4,6 +4,7 @@ import { BarRow } from '@/components/data/BarRow'
 import { CardSkeleton } from '@/components/data/CardSkeleton'
 import { DataTable, type DataTableColumn } from '@/components/data/DataTable'
 import { KpiCard } from '@/components/data/KpiCard'
+import { LastSyncedBadge } from '@/components/data/LastSyncedBadge'
 import { NarrativeBlock } from '@/components/narrative/NarrativeBlock'
 import { ActionList } from '@/components/narrative/ActionList'
 import { CoverageState } from '@/components/states/CoverageState'
@@ -107,7 +108,10 @@ export default function WebsitePage() {
   return (
     <div>
       <h1>Website</h1>
-      <p>Google Analytics 4 · technorucs.com</p>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+        <p style={{ margin: 0 }}>Google Analytics 4 · technorucs.com</p>
+        <LastSyncedBadge channel="ga4" />
+      </div>
 
       {isLoading && (
         <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>

@@ -108,3 +108,44 @@ body {
   outline: 2px solid var(--color-text-primary);
   outline-offset: 2px;
 }
+
+/* Accessibility & Keyboard Navigation (item 5.20) */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--accent-1, #00d2ff);
+  outline-offset: 2px;
+}
+
+/* Data Table container responsive scrolling (item 5.19) */
+.data-table-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 16px 0;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--color-border);
+}
+
+/* Responsive layout adjustments (item 5.19) */
+@media (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  main {
+    padding: 12px !important;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .card {
+    flex: 1 1 100% !important;
+  }
+
+  .data-table-container table {
+    min-width: 580px;
+  }
+}

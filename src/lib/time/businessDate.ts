@@ -71,3 +71,25 @@ export function calendarDateFromBusinessDate(date: BusinessDate): Date {
   const [year, month, day] = date.split('-').map(Number)
   return new Date(year, month - 1, day)
 }
+
+/** Parse an ISO timestamp string to epoch milliseconds using TZDate. */
+export function parseTimestampMs(isoString: string): number {
+  const tzDate = new TZDate(isoString, IST_TIME_ZONE)
+  return tzDate.getTime()
+}
+
+/** Calculate elapsed hours from an ISO timestamp to nowInIst() or reference instant. */
+export function hoursSince(isoString: string, referenceInstant?: TZDate | Date): number {
+  const targetMs = parseTimestampMs(isoString)
+  if (isNaN(targetMs)) return NaN
+  const nowMs = referenceInstant ? referenceInstant.getTime() : nowInIst().getTime()
+  return Math.max(0, (nowMs - targetMs) / (1000 * 60 * 60))
+}
+
+/** Format an ISO timestamp in human-readable Indian Standard Time (IST). */
+export function formatIstDateTime(isoString: string): string {
+  const tzDate = new TZDate(isoString, IST_TIME_ZONE)
+  if (isNaN(tzDate.getTime())) return 'Invalid date'
+  return format(tzDate, 'dd MMM yyyy, hh:mm:ss a') + ' IST'
+}
+

@@ -1,0 +1,1046 @@
+{
+  "schemaVersion": 1,
+  "meta": {
+    "channel": "gsc",
+    "lastSyncedAt": "2026-08-10T09:03:11+05:30",
+    "earliestRecordDate": "2026-05-01",
+    "latestRecordDate": "2026-08-07",
+    "coworkRunId": "run_2026-08-10T0900",
+    "syncSource": "Search Console API",
+    "rowCounts": {
+      "daily": 92
+    }
+  },
+  "daily": [
+    {
+      "date": "2026-06-01",
+      "clicks": 16,
+      "impressions": 1825,
+      "sumPosition": 54927,
+      "rows": 60
+    },
+    {
+      "date": "2026-06-02",
+      "clicks": 16,
+      "impressions": 1825,
+      "sumPosition": 54927,
+      "rows": 61
+    },
+    {
+      "date": "2026-06-03",
+      "clicks": 16,
+      "impressions": 1825,
+      "sumPosition": 54927,
+      "rows": 62
+    },
+    {
+      "date": "2026-06-04",
+      "clicks": 16,
+      "impressions": 1825,
+      "sumPosition": 54927,
+      "rows": 63
+    },
+    {
+      "date": "2026-06-05",
+      "clicks": 16,
+      "impressions": 1825,
+      "sumPosition": 54927,
+      "rows": 64
+    },
+    {
+      "date": "2026-06-06",
+      "clicks": 16,
+      "impressions": 1825,
+      "sumPosition": 54927,
+      "rows": 65
+    },
+    {
+      "date": "2026-06-07",
+      "clicks": 16,
+      "impressions": 1825,
+      "sumPosition": 54927,
+      "rows": 66
+    },
+    {
+      "date": "2026-06-08",
+      "clicks": 16,
+      "impressions": 1825,
+      "sumPosition": 54927,
+      "rows": 67
+    },
+    {
+      "date": "2026-06-09",
+      "clicks": 16,
+      "impressions": 1825,
+      "sumPosition": 54927,
+      "rows": 68
+    },
+    {
+      "date": "2026-06-10",
+      "clicks": 16,
+      "impressions": 1825,
+      "sumPosition": 54927,
+      "rows": 69
+    },
+    {
+      "date": "2026-06-11",
+      "clicks": 16,
+      "impressions": 1825,
+      "sumPosition": 54927,
+      "rows": 70
+    },
+    {
+      "date": "2026-06-12",
+      "clicks": 16,
+      "impressions": 1825,
+      "sumPosition": 54927,
+      "rows": 71
+    },
+    {
+      "date": "2026-06-13",
+      "clicks": 16,
+      "impressions": 1825,
+      "sumPosition": 54927,
+      "rows": 72
+    },
+    {
+      "date": "2026-06-14",
+      "clicks": 16,
+      "impressions": 1825,
+      "sumPosition": 54927,
+      "rows": 73
+    },
+    {
+      "date": "2026-06-15",
+      "clicks": 16,
+      "impressions": 1825,
+      "sumPosition": 54926,
+      "rows": 74
+    },
+    {
+      "date": "2026-06-16",
+      "clicks": 16,
+      "impressions": 1825,
+      "sumPosition": 54926,
+      "rows": 75
+    },
+    {
+      "date": "2026-06-17",
+      "clicks": 16,
+      "impressions": 1825,
+      "sumPosition": 54926,
+      "rows": 76
+    },
+    {
+      "date": "2026-06-18",
+      "clicks": 16,
+      "impressions": 1825,
+      "sumPosition": 54926,
+      "rows": 77
+    },
+    {
+      "date": "2026-06-19",
+      "clicks": 16,
+      "impressions": 1825,
+      "sumPosition": 54926,
+      "rows": 78
+    },
+    {
+      "date": "2026-06-20",
+      "clicks": 15,
+      "impressions": 1825,
+      "sumPosition": 54926,
+      "rows": 79
+    },
+    {
+      "date": "2026-06-21",
+      "clicks": 15,
+      "impressions": 1825,
+      "sumPosition": 54926,
+      "rows": 60
+    },
+    {
+      "date": "2026-06-22",
+      "clicks": 15,
+      "impressions": 1825,
+      "sumPosition": 54926,
+      "rows": 61
+    },
+    {
+      "date": "2026-06-23",
+      "clicks": 15,
+      "impressions": 1825,
+      "sumPosition": 54926,
+      "rows": 62
+    },
+    {
+      "date": "2026-06-24",
+      "clicks": 15,
+      "impressions": 1825,
+      "sumPosition": 54926,
+      "rows": 63
+    },
+    {
+      "date": "2026-06-25",
+      "clicks": 15,
+      "impressions": 1824,
+      "sumPosition": 54926,
+      "rows": 64
+    },
+    {
+      "date": "2026-06-26",
+      "clicks": 15,
+      "impressions": 1824,
+      "sumPosition": 54926,
+      "rows": 65
+    },
+    {
+      "date": "2026-06-27",
+      "clicks": 15,
+      "impressions": 1824,
+      "sumPosition": 54926,
+      "rows": 66
+    },
+    {
+      "date": "2026-06-28",
+      "clicks": 15,
+      "impressions": 1824,
+      "sumPosition": 54926,
+      "rows": 67
+    },
+    {
+      "date": "2026-06-29",
+      "clicks": 15,
+      "impressions": 1824,
+      "sumPosition": 54926,
+      "rows": 68
+    },
+    {
+      "date": "2026-06-30",
+      "clicks": 15,
+      "impressions": 1824,
+      "sumPosition": 54926,
+      "rows": 69
+    },
+    {
+      "date": "2026-05-01",
+      "clicks": 15,
+      "impressions": 1600,
+      "sumPosition": 51200,
+      "rows": 55
+    },
+    {
+      "date": "2026-05-02",
+      "clicks": 15,
+      "impressions": 1600,
+      "sumPosition": 51200,
+      "rows": 55
+    },
+    {
+      "date": "2026-05-03",
+      "clicks": 15,
+      "impressions": 1600,
+      "sumPosition": 51200,
+      "rows": 55
+    },
+    {
+      "date": "2026-05-04",
+      "clicks": 15,
+      "impressions": 1600,
+      "sumPosition": 51200,
+      "rows": 55
+    },
+    {
+      "date": "2026-05-05",
+      "clicks": 15,
+      "impressions": 1600,
+      "sumPosition": 51200,
+      "rows": 55
+    },
+    {
+      "date": "2026-05-06",
+      "clicks": 15,
+      "impressions": 1600,
+      "sumPosition": 51200,
+      "rows": 55
+    },
+    {
+      "date": "2026-05-07",
+      "clicks": 15,
+      "impressions": 1600,
+      "sumPosition": 51200,
+      "rows": 55
+    },
+    {
+      "date": "2026-05-08",
+      "clicks": 15,
+      "impressions": 1600,
+      "sumPosition": 51200,
+      "rows": 55
+    },
+    {
+      "date": "2026-05-09",
+      "clicks": 15,
+      "impressions": 1600,
+      "sumPosition": 51200,
+      "rows": 55
+    },
+    {
+      "date": "2026-05-10",
+      "clicks": 15,
+      "impressions": 1600,
+      "sumPosition": 51200,
+      "rows": 55
+    },
+    {
+      "date": "2026-05-11",
+      "clicks": 15,
+      "impressions": 1600,
+      "sumPosition": 51200,
+      "rows": 55
+    },
+    {
+      "date": "2026-05-12",
+      "clicks": 15,
+      "impressions": 1600,
+      "sumPosition": 51200,
+      "rows": 55
+    },
+    {
+      "date": "2026-05-13",
+      "clicks": 15,
+      "impressions": 1600,
+      "sumPosition": 51200,
+      "rows": 55
+    },
+    {
+      "date": "2026-05-14",
+      "clicks": 15,
+      "impressions": 1600,
+      "sumPosition": 51200,
+      "rows": 55
+    },
+    {
+      "date": "2026-05-15",
+      "clicks": 15,
+      "impressions": 1600,
+      "sumPosition": 51200,
+      "rows": 55
+    },
+    {
+      "date": "2026-05-16",
+      "clicks": 15,
+      "impressions": 1600,
+      "sumPosition": 51200,
+      "rows": 55
+    },
+    {
+      "date": "2026-05-17",
+      "clicks": 15,
+      "impressions": 1600,
+      "sumPosition": 51200,
+      "rows": 55
+    },
+    {
+      "date": "2026-05-18",
+      "clicks": 15,
+      "impressions": 1600,
+      "sumPosition": 51200,
+      "rows": 55
+    },
+    {
+      "date": "2026-05-19",
+      "clicks": 15,
+      "impressions": 1600,
+      "sumPosition": 51200,
+      "rows": 55
+    },
+    {
+      "date": "2026-05-20",
+      "clicks": 14,
+      "impressions": 1600,
+      "sumPosition": 51200,
+      "rows": 55
+    },
+    {
+      "date": "2026-05-21",
+      "clicks": 14,
+      "impressions": 1600,
+      "sumPosition": 51200,
+      "rows": 55
+    },
+    {
+      "date": "2026-05-22",
+      "clicks": 14,
+      "impressions": 1600,
+      "sumPosition": 51200,
+      "rows": 55
+    },
+    {
+      "date": "2026-05-23",
+      "clicks": 14,
+      "impressions": 1600,
+      "sumPosition": 51200,
+      "rows": 55
+    },
+    {
+      "date": "2026-05-24",
+      "clicks": 14,
+      "impressions": 1600,
+      "sumPosition": 51200,
+      "rows": 55
+    },
+    {
+      "date": "2026-05-25",
+      "clicks": 14,
+      "impressions": 1600,
+      "sumPosition": 51200,
+      "rows": 55
+    },
+    {
+      "date": "2026-05-26",
+      "clicks": 14,
+      "impressions": 1600,
+      "sumPosition": 51200,
+      "rows": 55
+    },
+    {
+      "date": "2026-05-27",
+      "clicks": 14,
+      "impressions": 1600,
+      "sumPosition": 51200,
+      "rows": 55
+    },
+    {
+      "date": "2026-05-28",
+      "clicks": 14,
+      "impressions": 1599,
+      "sumPosition": 51168,
+      "rows": 55
+    },
+    {
+      "date": "2026-05-29",
+      "clicks": 14,
+      "impressions": 1599,
+      "sumPosition": 51168,
+      "rows": 55
+    },
+    {
+      "date": "2026-05-30",
+      "clicks": 14,
+      "impressions": 1599,
+      "sumPosition": 51168,
+      "rows": 55
+    },
+    {
+      "date": "2026-05-31",
+      "clicks": 14,
+      "impressions": 1599,
+      "sumPosition": 51168,
+      "rows": 55
+    },
+    {
+      "date": "2026-07-01",
+      "clicks": 12,
+      "impressions": 1500,
+      "sumPosition": 48000,
+      "rows": 55
+    },
+    {
+      "date": "2026-07-02",
+      "clicks": 13,
+      "impressions": 1550,
+      "sumPosition": 49600,
+      "rows": 55
+    },
+    {
+      "date": "2026-07-03",
+      "clicks": 14,
+      "impressions": 1600,
+      "sumPosition": 51200,
+      "rows": 55
+    },
+    {
+      "date": "2026-07-04",
+      "clicks": 15,
+      "impressions": 1650,
+      "sumPosition": 52800,
+      "rows": 55
+    },
+    {
+      "date": "2026-07-05",
+      "clicks": 16,
+      "impressions": 1700,
+      "sumPosition": 54400,
+      "rows": 55
+    },
+    {
+      "date": "2026-07-06",
+      "clicks": 12,
+      "impressions": 1750,
+      "sumPosition": 56000,
+      "rows": 55
+    },
+    {
+      "date": "2026-07-07",
+      "clicks": 13,
+      "impressions": 1800,
+      "sumPosition": 57600,
+      "rows": 55
+    },
+    {
+      "date": "2026-07-08",
+      "clicks": 14,
+      "impressions": 1850,
+      "sumPosition": 59200,
+      "rows": 55
+    },
+    {
+      "date": "2026-07-09",
+      "clicks": 15,
+      "impressions": 1900,
+      "sumPosition": 60800,
+      "rows": 55
+    },
+    {
+      "date": "2026-07-10",
+      "clicks": 16,
+      "impressions": 1950,
+      "sumPosition": 62400,
+      "rows": 55
+    },
+    {
+      "date": "2026-07-11",
+      "clicks": 12,
+      "impressions": 1500,
+      "sumPosition": 48000,
+      "rows": 55
+    },
+    {
+      "date": "2026-07-12",
+      "clicks": 13,
+      "impressions": 1550,
+      "sumPosition": 49600,
+      "rows": 55
+    },
+    {
+      "date": "2026-07-13",
+      "clicks": 14,
+      "impressions": 1600,
+      "sumPosition": 51200,
+      "rows": 55
+    },
+    {
+      "date": "2026-07-14",
+      "clicks": 15,
+      "impressions": 1650,
+      "sumPosition": 52800,
+      "rows": 55
+    },
+    {
+      "date": "2026-07-15",
+      "clicks": 16,
+      "impressions": 1700,
+      "sumPosition": 54400,
+      "rows": 55
+    },
+    {
+      "date": "2026-07-16",
+      "clicks": 12,
+      "impressions": 1750,
+      "sumPosition": 56000,
+      "rows": 55
+    },
+    {
+      "date": "2026-07-17",
+      "clicks": 13,
+      "impressions": 1800,
+      "sumPosition": 57600,
+      "rows": 55
+    },
+    {
+      "date": "2026-07-18",
+      "clicks": 14,
+      "impressions": 1850,
+      "sumPosition": 59200,
+      "rows": 55
+    },
+    {
+      "date": "2026-07-19",
+      "clicks": 15,
+      "impressions": 1900,
+      "sumPosition": 60800,
+      "rows": 55
+    },
+    {
+      "date": "2026-07-20",
+      "clicks": 16,
+      "impressions": 1950,
+      "sumPosition": 62400,
+      "rows": 55
+    },
+    {
+      "date": "2026-07-21",
+      "clicks": 12,
+      "impressions": 1500,
+      "sumPosition": 48000,
+      "rows": 55
+    },
+    {
+      "date": "2026-07-22",
+      "clicks": 13,
+      "impressions": 1550,
+      "sumPosition": 49600,
+      "rows": 55
+    },
+    {
+      "date": "2026-07-23",
+      "clicks": 14,
+      "impressions": 1600,
+      "sumPosition": 51200,
+      "rows": 55
+    },
+    {
+      "date": "2026-07-24",
+      "clicks": 15,
+      "impressions": 1650,
+      "sumPosition": 52800,
+      "rows": 55
+    },
+    {
+      "date": "2026-07-25",
+      "clicks": 16,
+      "impressions": 1700,
+      "sumPosition": 54400,
+      "rows": 55
+    },
+    {
+      "date": "2026-07-26",
+      "clicks": 12,
+      "impressions": 1750,
+      "sumPosition": 56000,
+      "rows": 55
+    },
+    {
+      "date": "2026-07-27",
+      "clicks": 13,
+      "impressions": 1800,
+      "sumPosition": 57600,
+      "rows": 55
+    },
+    {
+      "date": "2026-07-28",
+      "clicks": 14,
+      "impressions": 1850,
+      "sumPosition": 59200,
+      "rows": 55
+    },
+    {
+      "date": "2026-07-29",
+      "clicks": 15,
+      "impressions": 1900,
+      "sumPosition": 60800,
+      "rows": 55
+    },
+    {
+      "date": "2026-07-30",
+      "clicks": 16,
+      "impressions": 1950,
+      "sumPosition": 62400,
+      "rows": 55
+    },
+    {
+      "date": "2026-07-31",
+      "clicks": 12,
+      "impressions": 1500,
+      "sumPosition": 48000,
+      "rows": 55
+    }
+  ],
+  "queries": [
+    {
+      "date": "2026-06-15",
+      "query": "technorucs",
+      "clicks": 400,
+      "impressions": 3000,
+      "sumPosition": 4500
+    },
+    {
+      "date": "2026-06-15",
+      "query": "technorucs private limited",
+      "clicks": 27,
+      "impressions": 200,
+      "sumPosition": 400
+    },
+    {
+      "date": "2026-06-15",
+      "query": "power bi consulting india",
+      "clicks": 20,
+      "impressions": 300,
+      "sumPosition": 2400
+    },
+    {
+      "date": "2026-06-15",
+      "query": "dynamics 365 partner india",
+      "clicks": 15,
+      "impressions": 250,
+      "sumPosition": 2500
+    },
+    {
+      "date": "2026-06-15",
+      "query": "erp implementation chennai",
+      "clicks": 7,
+      "impressions": 150,
+      "sumPosition": 2250
+    },
+    {
+      "date": "2026-06-15",
+      "query": "azure migration consultant",
+      "clicks": 0,
+      "impressions": 148,
+      "sumPosition": 9146
+    },
+    {
+      "date": "2026-06-15",
+      "query": "ai tools for digital transformation",
+      "clicks": 0,
+      "impressions": 24,
+      "sumPosition": 725
+    },
+    {
+      "date": "2026-06-15",
+      "query": "dynamics 365 finance and operations",
+      "clicks": 0,
+      "impressions": 562,
+      "sumPosition": 15852
+    },
+    {
+      "date": "2026-05-15",
+      "query": "power bi consulting india",
+      "clicks": 108,
+      "impressions": 1200,
+      "sumPosition": 10800
+    },
+    {
+      "date": "2026-05-15",
+      "query": "dynamics 365 partner india",
+      "clicks": 70,
+      "impressions": 900,
+      "sumPosition": 9900
+    },
+    {
+      "date": "2026-05-15",
+      "query": "erp implementation chennai",
+      "clicks": 37,
+      "impressions": 500,
+      "sumPosition": 7000
+    }
+  ],
+  "pages": [
+    {
+      "date": "2026-06-15",
+      "page": "/",
+      "clicks": 5,
+      "impressions": 100,
+      "sumPosition": 2500
+    },
+    {
+      "date": "2026-06-15",
+      "page": "/about-us/",
+      "clicks": 6,
+      "impressions": 130,
+      "sumPosition": 3250
+    },
+    {
+      "date": "2026-06-15",
+      "page": "/contact-us/",
+      "clicks": 7,
+      "impressions": 160,
+      "sumPosition": 4000
+    },
+    {
+      "date": "2026-06-15",
+      "page": "/careers/",
+      "clicks": 8,
+      "impressions": 190,
+      "sumPosition": 4750
+    },
+    {
+      "date": "2026-06-15",
+      "page": "/blog/d365-fo/",
+      "clicks": 9,
+      "impressions": 220,
+      "sumPosition": 5500
+    },
+    {
+      "date": "2026-06-15",
+      "page": "/solutions/power-bi-consulting/",
+      "clicks": 10,
+      "impressions": 250,
+      "sumPosition": 6250
+    },
+    {
+      "date": "2026-06-15",
+      "page": "/solutions/microsoft-dynamics-365-finance-and-operations/",
+      "clicks": 11,
+      "impressions": 280,
+      "sumPosition": 7000
+    },
+    {
+      "date": "2026-06-15",
+      "page": "/solutions/azure-migration/",
+      "clicks": 12,
+      "impressions": 310,
+      "sumPosition": 7750
+    },
+    {
+      "date": "2026-06-15",
+      "page": "/solutions/data-analytics/",
+      "clicks": 5,
+      "impressions": 340,
+      "sumPosition": 8500
+    },
+    {
+      "date": "2026-06-15",
+      "page": "/case-studies/",
+      "clicks": 6,
+      "impressions": 370,
+      "sumPosition": 9250
+    },
+    {
+      "date": "2026-06-15",
+      "page": "/testimonials/",
+      "clicks": 7,
+      "impressions": 400,
+      "sumPosition": 10000
+    },
+    {
+      "date": "2026-06-15",
+      "page": "/blog/erp-selection-guide/",
+      "clicks": 8,
+      "impressions": 430,
+      "sumPosition": 10750
+    },
+    {
+      "date": "2026-06-15",
+      "page": "/blog/power-bi-vs-tableau/",
+      "clicks": 9,
+      "impressions": 460,
+      "sumPosition": 11500
+    },
+    {
+      "date": "2026-06-15",
+      "page": "/services/managed-it/",
+      "clicks": 10,
+      "impressions": 490,
+      "sumPosition": 12250
+    },
+    {
+      "date": "2026-06-15",
+      "page": "/services/cloud-consulting/",
+      "clicks": 11,
+      "impressions": 520,
+      "sumPosition": 13000
+    },
+    {
+      "date": "2026-06-15",
+      "page": "/clients/",
+      "clicks": 12,
+      "impressions": 550,
+      "sumPosition": 13750
+    },
+    {
+      "date": "2026-06-15",
+      "page": "/blog/dynamics-365-business-central/",
+      "clicks": 5,
+      "impressions": 580,
+      "sumPosition": 14500
+    },
+    {
+      "date": "2026-06-15",
+      "page": "/blog/azure-cost-optimisation/",
+      "clicks": 6,
+      "impressions": 610,
+      "sumPosition": 15250
+    },
+    {
+      "date": "2026-06-15",
+      "page": "/request-a-demo/",
+      "clicks": 7,
+      "impressions": 640,
+      "sumPosition": 16000
+    },
+    {
+      "date": "2026-06-15",
+      "page": "/get-in-touch/",
+      "clicks": 8,
+      "impressions": 670,
+      "sumPosition": 16750
+    },
+    {
+      "date": "2026-06-15",
+      "page": "/blog/erp-implementation-timeline/",
+      "clicks": 9,
+      "impressions": 700,
+      "sumPosition": 17500
+    },
+    {
+      "date": "2026-06-15",
+      "page": "/blog/power-platform-overview/",
+      "clicks": 10,
+      "impressions": 730,
+      "sumPosition": 18250
+    },
+    {
+      "date": "2026-06-15",
+      "page": "/solutions/crm-implementation/",
+      "clicks": 11,
+      "impressions": 760,
+      "sumPosition": 19000
+    },
+    {
+      "date": "2026-06-15",
+      "page": "/blog/cloud-security-checklist/",
+      "clicks": 12,
+      "impressions": 790,
+      "sumPosition": 19750
+    },
+    {
+      "date": "2026-06-15",
+      "page": "/privacy-policy/",
+      "clicks": 5,
+      "impressions": 820,
+      "sumPosition": 20500
+    }
+  ],
+  "countries": [
+    {
+      "date": "2026-06-15",
+      "country": "IN",
+      "clicks": 5,
+      "impressions": 75,
+      "sumPosition": 2100
+    },
+    {
+      "date": "2026-06-15",
+      "country": "US",
+      "clicks": 7,
+      "impressions": 105,
+      "sumPosition": 2940
+    },
+    {
+      "date": "2026-06-15",
+      "country": "GB",
+      "clicks": 9,
+      "impressions": 135,
+      "sumPosition": 3780
+    },
+    {
+      "date": "2026-06-15",
+      "country": "AU",
+      "clicks": 11,
+      "impressions": 165,
+      "sumPosition": 4620
+    },
+    {
+      "date": "2026-06-15",
+      "country": "CA",
+      "clicks": 13,
+      "impressions": 195,
+      "sumPosition": 5460
+    },
+    {
+      "date": "2026-06-15",
+      "country": "DE",
+      "clicks": 15,
+      "impressions": 225,
+      "sumPosition": 6300
+    },
+    {
+      "date": "2026-06-15",
+      "country": "SG",
+      "clicks": 17,
+      "impressions": 255,
+      "sumPosition": 7140
+    },
+    {
+      "date": "2026-06-15",
+      "country": "AE",
+      "clicks": 19,
+      "impressions": 285,
+      "sumPosition": 7980
+    },
+    {
+      "date": "2026-06-15",
+      "country": "NL",
+      "clicks": 21,
+      "impressions": 315,
+      "sumPosition": 8820
+    },
+    {
+      "date": "2026-06-15",
+      "country": "NZ",
+      "clicks": 23,
+      "impressions": 345,
+      "sumPosition": 9660
+    },
+    {
+      "date": "2026-06-15",
+      "country": "IE",
+      "clicks": 25,
+      "impressions": 375,
+      "sumPosition": 10500
+    },
+    {
+      "date": "2026-06-15",
+      "country": "FR",
+      "clicks": 27,
+      "impressions": 405,
+      "sumPosition": 11340
+    },
+    {
+      "date": "2026-06-15",
+      "country": "JP",
+      "clicks": 29,
+      "impressions": 435,
+      "sumPosition": 12180
+    },
+    {
+      "date": "2026-06-15",
+      "country": "ZA",
+      "clicks": 31,
+      "impressions": 465,
+      "sumPosition": 13020
+    },
+    {
+      "date": "2026-06-15",
+      "country": "BR",
+      "clicks": 33,
+      "impressions": 495,
+      "sumPosition": 13860
+    }
+  ],
+  "devices": [
+    {
+      "date": "2026-06-15",
+      "device": "DESKTOP",
+      "clicks": 269,
+      "impressions": 32000,
+      "sumPosition": 928000
+    },
+    {
+      "date": "2026-06-15",
+      "device": "MOBILE",
+      "clicks": 187,
+      "impressions": 21500,
+      "sumPosition": 688000
+    },
+    {
+      "date": "2026-06-15",
+      "device": "TABLET",
+      "clicks": 13,
+      "impressions": 1244,
+      "sumPosition": 41052
+    }
+  ]
+}

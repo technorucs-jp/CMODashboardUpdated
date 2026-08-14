@@ -6,6 +6,7 @@ import { DataTable, type DataTableColumn } from '@/components/data/DataTable'
 import { DonutChart } from '@/components/data/DonutChart'
 import { HorizontalBarChart } from '@/components/data/HorizontalBarChart'
 import { KpiCard } from '@/components/data/KpiCard'
+import { LastSyncedBadge } from '@/components/data/LastSyncedBadge'
 import { NarrativeBlock } from '@/components/narrative/NarrativeBlock'
 import { ActionList } from '@/components/narrative/ActionList'
 import { CoverageState } from '@/components/states/CoverageState'
@@ -44,7 +45,10 @@ export default function AdCampaignsPage() {
   return (
     <div>
       <h1>Ad Campaigns</h1>
-      <p>Meta Ads · TechnoRUCS Marketing</p>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+        <p style={{ margin: 0 }}>Meta Ads · TechnoRUCS Marketing</p>
+        <LastSyncedBadge channel="meta-ads" />
+      </div>
 
       {isLoading && (
         <div style={{ display: 'flex', gap: 12 }}>

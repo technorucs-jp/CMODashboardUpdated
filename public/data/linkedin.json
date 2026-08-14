@@ -1,0 +1,481 @@
+{
+  "schemaVersion": 1,
+  "meta": {
+    "channel": "linkedin",
+    "lastSyncedAt": "2026-07-02T10:00:00+05:30",
+    "earliestRecordDate": "2026-06-01",
+    "latestRecordDate": "2026-06-30",
+    "syncSource": "Manual XLS upload",
+    "coworkRunId": "run_2026-07-02T1000",
+    "rowCounts": {
+      "posts": 9
+    },
+    "uploads": [
+      {
+        "coversFrom": "2026-06-01",
+        "coversTo": "2026-06-30",
+        "uploadedAt": "2026-07-02T09:40:00+05:30",
+        "fileType": "followers+visitors+content"
+      }
+    ]
+  },
+  "dailyTrend": [
+    {
+      "date": "2026-06-01",
+      "newFollowers": 5,
+      "pageViews": 79,
+      "uniqueVisitors": 15,
+      "impressions": 546,
+      "clicks": 70,
+      "reactions": 18
+    },
+    {
+      "date": "2026-06-02",
+      "newFollowers": 5,
+      "pageViews": 79,
+      "uniqueVisitors": 18,
+      "impressions": 546,
+      "clicks": 70,
+      "reactions": 18
+    },
+    {
+      "date": "2026-06-03",
+      "newFollowers": 5,
+      "pageViews": 79,
+      "uniqueVisitors": 21,
+      "impressions": 546,
+      "clicks": 70,
+      "reactions": 18
+    },
+    {
+      "date": "2026-06-04",
+      "newFollowers": 5,
+      "pageViews": 79,
+      "uniqueVisitors": 24,
+      "impressions": 546,
+      "clicks": 70,
+      "reactions": 18
+    },
+    {
+      "date": "2026-06-05",
+      "newFollowers": 5,
+      "pageViews": 79,
+      "uniqueVisitors": 27,
+      "impressions": 546,
+      "clicks": 70,
+      "reactions": 18
+    },
+    {
+      "date": "2026-06-06",
+      "newFollowers": 5,
+      "pageViews": 79,
+      "uniqueVisitors": 30,
+      "impressions": 546,
+      "clicks": 70,
+      "reactions": 18
+    },
+    {
+      "date": "2026-06-07",
+      "newFollowers": 5,
+      "pageViews": 79,
+      "uniqueVisitors": 33,
+      "impressions": 546,
+      "clicks": 70,
+      "reactions": 18
+    },
+    {
+      "date": "2026-06-08",
+      "newFollowers": 5,
+      "pageViews": 79,
+      "uniqueVisitors": 36,
+      "impressions": 546,
+      "clicks": 70,
+      "reactions": 18
+    },
+    {
+      "date": "2026-06-09",
+      "newFollowers": 5,
+      "pageViews": 79,
+      "uniqueVisitors": 39,
+      "impressions": 546,
+      "clicks": 70,
+      "reactions": 18
+    },
+    {
+      "date": "2026-06-10",
+      "newFollowers": 5,
+      "pageViews": 78,
+      "uniqueVisitors": 15,
+      "impressions": 546,
+      "clicks": 70,
+      "reactions": 18
+    },
+    {
+      "date": "2026-06-11",
+      "newFollowers": 5,
+      "pageViews": 78,
+      "uniqueVisitors": 18,
+      "impressions": 546,
+      "clicks": 70,
+      "reactions": 18
+    },
+    {
+      "date": "2026-06-12",
+      "newFollowers": 5,
+      "pageViews": 78,
+      "uniqueVisitors": 21,
+      "impressions": 546,
+      "clicks": 70,
+      "reactions": 18
+    },
+    {
+      "date": "2026-06-13",
+      "newFollowers": 4,
+      "pageViews": 78,
+      "uniqueVisitors": 24,
+      "impressions": 546,
+      "clicks": 70,
+      "reactions": 17
+    },
+    {
+      "date": "2026-06-14",
+      "newFollowers": 4,
+      "pageViews": 78,
+      "uniqueVisitors": 27,
+      "impressions": 546,
+      "clicks": 70,
+      "reactions": 17
+    },
+    {
+      "date": "2026-06-15",
+      "newFollowers": 4,
+      "pageViews": 78,
+      "uniqueVisitors": 30,
+      "impressions": 546,
+      "clicks": 70,
+      "reactions": 17
+    },
+    {
+      "date": "2026-06-16",
+      "newFollowers": 4,
+      "pageViews": 78,
+      "uniqueVisitors": 33,
+      "impressions": 546,
+      "clicks": 70,
+      "reactions": 17
+    },
+    {
+      "date": "2026-06-17",
+      "newFollowers": 4,
+      "pageViews": 78,
+      "uniqueVisitors": 36,
+      "impressions": 546,
+      "clicks": 70,
+      "reactions": 17
+    },
+    {
+      "date": "2026-06-18",
+      "newFollowers": 4,
+      "pageViews": 78,
+      "uniqueVisitors": 39,
+      "impressions": 546,
+      "clicks": 70,
+      "reactions": 17
+    },
+    {
+      "date": "2026-06-19",
+      "newFollowers": 4,
+      "pageViews": 78,
+      "uniqueVisitors": 15,
+      "impressions": 546,
+      "clicks": 70,
+      "reactions": 17
+    },
+    {
+      "date": "2026-06-20",
+      "newFollowers": 4,
+      "pageViews": 78,
+      "uniqueVisitors": 18,
+      "impressions": 546,
+      "clicks": 70,
+      "reactions": 17
+    },
+    {
+      "date": "2026-06-21",
+      "newFollowers": 4,
+      "pageViews": 78,
+      "uniqueVisitors": 21,
+      "impressions": 546,
+      "clicks": 70,
+      "reactions": 17
+    },
+    {
+      "date": "2026-06-22",
+      "newFollowers": 4,
+      "pageViews": 78,
+      "uniqueVisitors": 24,
+      "impressions": 546,
+      "clicks": 70,
+      "reactions": 17
+    },
+    {
+      "date": "2026-06-23",
+      "newFollowers": 4,
+      "pageViews": 78,
+      "uniqueVisitors": 27,
+      "impressions": 546,
+      "clicks": 70,
+      "reactions": 17
+    },
+    {
+      "date": "2026-06-24",
+      "newFollowers": 4,
+      "pageViews": 78,
+      "uniqueVisitors": 30,
+      "impressions": 546,
+      "clicks": 70,
+      "reactions": 17
+    },
+    {
+      "date": "2026-06-25",
+      "newFollowers": 4,
+      "pageViews": 78,
+      "uniqueVisitors": 33,
+      "impressions": 545,
+      "clicks": 70,
+      "reactions": 17
+    },
+    {
+      "date": "2026-06-26",
+      "newFollowers": 4,
+      "pageViews": 78,
+      "uniqueVisitors": 36,
+      "impressions": 545,
+      "clicks": 70,
+      "reactions": 17
+    },
+    {
+      "date": "2026-06-27",
+      "newFollowers": 4,
+      "pageViews": 78,
+      "uniqueVisitors": 39,
+      "impressions": 545,
+      "clicks": 70,
+      "reactions": 17
+    },
+    {
+      "date": "2026-06-28",
+      "newFollowers": 4,
+      "pageViews": 78,
+      "uniqueVisitors": 15,
+      "impressions": 545,
+      "clicks": 70,
+      "reactions": 17
+    },
+    {
+      "date": "2026-06-29",
+      "newFollowers": 4,
+      "pageViews": 78,
+      "uniqueVisitors": 18,
+      "impressions": 545,
+      "clicks": 70,
+      "reactions": 17
+    },
+    {
+      "date": "2026-06-30",
+      "newFollowers": 4,
+      "pageViews": 78,
+      "uniqueVisitors": 21,
+      "impressions": 545,
+      "clicks": 69,
+      "reactions": 17
+    }
+  ],
+  "posts": [
+    {
+      "postId": "urn:li:activity:1",
+      "date": "2026-06-01",
+      "title": "Chennai Salesforce Trailblazer Community Meetup",
+      "impressions": 3353,
+      "clicks": 1385,
+      "reactions": 129,
+      "comments": 2,
+      "videoViews": null
+    },
+    {
+      "postId": "urn:li:activity:2",
+      "date": "2026-06-05",
+      "title": "Dynamics 365 Business Central release highlights",
+      "impressions": 2100,
+      "clicks": 310,
+      "reactions": 88,
+      "comments": 1,
+      "videoViews": null
+    },
+    {
+      "postId": "urn:li:activity:3",
+      "date": "2026-06-08",
+      "title": "Case study: Azure migration for a Chennai manufacturer",
+      "impressions": 1800,
+      "clicks": 140,
+      "reactions": 64,
+      "comments": 1,
+      "videoViews": null
+    },
+    {
+      "postId": "urn:li:activity:4",
+      "date": "2026-06-12",
+      "title": "Power BI dashboard walkthrough (video)",
+      "impressions": 2600,
+      "clicks": 95,
+      "reactions": 71,
+      "comments": 0,
+      "videoViews": 940
+    },
+    {
+      "postId": "urn:li:activity:5",
+      "date": "2026-06-15",
+      "title": "TechnoRUCS at Microsoft Partner Summit",
+      "impressions": 1500,
+      "clicks": 60,
+      "reactions": 42,
+      "comments": 1,
+      "videoViews": null
+    },
+    {
+      "postId": "urn:li:activity:6",
+      "date": "2026-06-18",
+      "title": "Hiring: Dynamics 365 Functional Consultant",
+      "impressions": 2200,
+      "clicks": 8,
+      "reactions": 55,
+      "comments": 2,
+      "videoViews": null
+    },
+    {
+      "postId": "urn:li:activity:7",
+      "date": "2026-06-21",
+      "title": "Team spotlight: our support desk",
+      "impressions": 900,
+      "clicks": 4,
+      "reactions": 28,
+      "comments": 0,
+      "videoViews": null
+    },
+    {
+      "postId": "urn:li:activity:8",
+      "date": "2026-06-24",
+      "title": "ERP selection checklist for SMEs",
+      "impressions": 1200,
+      "clicks": 90,
+      "reactions": 33,
+      "comments": 0,
+      "videoViews": null
+    },
+    {
+      "postId": "urn:li:activity:9",
+      "date": "2026-06-27",
+      "title": "Client testimonial: multi-site construction rollout",
+      "impressions": 721,
+      "clicks": 7,
+      "reactions": 12,
+      "comments": 0,
+      "videoViews": null
+    }
+  ],
+  "audience": {
+    "bySeniority": [
+      {
+        "level": "Senior",
+        "count": 1789
+      },
+      {
+        "level": "Manager",
+        "count": 1120
+      },
+      {
+        "level": "Entry",
+        "count": 640
+      },
+      {
+        "level": "Director",
+        "count": 210
+      },
+      {
+        "level": "Owner",
+        "count": 95
+      }
+    ],
+    "byJobFunction": [
+      {
+        "function": "Engineering",
+        "count": 1389
+      },
+      {
+        "function": "Information Technology",
+        "count": 980
+      },
+      {
+        "function": "Operations",
+        "count": 540
+      },
+      {
+        "function": "Sales",
+        "count": 410
+      },
+      {
+        "function": "Finance",
+        "count": 200
+      }
+    ],
+    "byVisitorIndustry": [
+      {
+        "industry": "IT Services",
+        "count": 512
+      },
+      {
+        "industry": "Construction",
+        "count": 260
+      },
+      {
+        "industry": "Manufacturing",
+        "count": 180
+      },
+      {
+        "industry": "Financial Services",
+        "count": 95
+      }
+    ],
+    "byCompanySize": [
+      {
+        "companySize": "1-10",
+        "count": 120
+      },
+      {
+        "companySize": "11-50",
+        "count": 210
+      },
+      {
+        "companySize": "51-200",
+        "count": 300
+      },
+      {
+        "companySize": "201-1000",
+        "count": 140
+      },
+      {
+        "companySize": "1000+",
+        "count": 60
+      }
+    ]
+  },
+  "competitors": [
+    {
+      "page": "BytesTechnolab — HR",
+      "newFollowers": 15,
+      "posts": 1,
+      "comments": 0,
+      "reactions": 15
+    }
+  ]
+}
