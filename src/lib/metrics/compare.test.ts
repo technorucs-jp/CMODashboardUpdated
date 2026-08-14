@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { compare } from './compare'
+import { compare, percentagePointDelta } from './compare'
 
 describe('compare.ts (item 1.17)', () => {
   it('100 -> 101 is flat (within the ±2% band)', () => {
@@ -45,5 +45,23 @@ describe('compare.ts (item 1.17)', () => {
   it('exactly at the ±2% boundary is still flat', () => {
     expect(compare(102, 100, 'higher-better').direction).toBe('flat')
     expect(compare(98, 100, 'higher-better').direction).toBe('flat')
+  })
+})
+
+describe('percentagePointDelta (item 3.6)', () => {
+  it('contact rate 14.1%→30.6% is +16.5pp, not the relative +117% compare() would give', () => {
+    const currentPct = (15 / 49) * 100 // 30.6122...
+    const comparisonPct = (9 / 64) * 100 // 14.0625
+    expect(percentagePointDelta(currentPct, comparisonPct)).toBeCloseTo(16.5, 1)
+    // Contrast with the relative interpretation, which would be misleading for a rate metric.
+    expect(compare(currentPct, comparisonPct, 'higher-better').pct).toBeCloseTo(117.7, 0)
+  })
+
+  it('is simple subtraction — negative when the rate fell', () => {
+    expect(percentagePointDelta(65.3, 65.4)).toBeCloseTo(-0.1, 5)
+  })
+
+  it('zero when both values are equal', () => {
+    expect(percentagePointDelta(50, 50)).toBe(0)
   })
 })

@@ -1,15 +1,19 @@
 import {
+  brandTermsConfigSchema,
   ga4FileSchema,
   gscFileSchema,
   linkedInFileSchema,
   metaAdsFileSchema,
   narrativesFileSchema,
+  thresholdsConfigSchema,
   zohoCrmFileSchema,
+  type BrandTermsConfigFile,
   type Ga4File,
   type GscFile,
   type LinkedInFile,
   type MetaAdsFile,
   type NarrativesFile,
+  type ThresholdsConfigFile,
   type ZohoCrmFile,
 } from './schemas'
 
@@ -111,4 +115,93 @@ export async function load<C extends ChannelName>(channel: C): Promise<ChannelFi
 export function clearLoaderCacheForTests(): void {
   cache.clear()
   inflight.clear()
+}
+
+/**
+ * `loadConfig(name)` — the equivalent of `load()` for `public/data/config/*.json`
+ * (thresholds, brand terms, page types, etc.), item 3.28/1.18's "tune at render
+ * time, no re-sync" requirement. Kept as a sibling function rather than folded
+ * into `load()`/`CHANNEL_SCHEMAS` — config files are hand-edited, loosely
+ * schema'd, and live under a different URL segment (`config/`), not a fourth
+ * shape that would otherwise need shoehorning into the channel-file cache.
+ */
+const CONFIG_SCHEMAS = {
+  thresholds: thresholdsConfigSchema,
+  'brand-terms': brandTermsConfigSchema,
+} as const
+
+export type ConfigName = keyof typeof CONFIG_SCHEMAS
+
+export interface ConfigFileMap {
+  thresholds: ThresholdsConfigFile
+  'brand-terms': BrandTermsConfigFile
+}
+
+export class ConfigLoadError extends Error {
+  readonly config: ConfigName
+
+  constructor(config: ConfigName, message: string, cause?: unknown) {
+    super(`[config/${config}] ${message}`, cause !== undefined ? { cause } : undefined)
+    this.name = 'ConfigLoadError'
+    this.config = config
+  }
+}
+
+const configCache = new Map<ConfigName, unknown>()
+const configInflight = new Map<ConfigName, Promise<unknown>>()
+
+function configUrl(name: ConfigName): string {
+  const base = typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env.BASE_URL : '/'
+  return `${base}data/config/${name}.json`
+}
+
+export async function loadConfig<C extends ConfigName>(name: C): Promise<ConfigFileMap[C]> {
+  if (configCache.has(name)) {
+    return configCache.get(name) as ConfigFileMap[C]
+  }
+  if (configInflight.has(name)) {
+    return configInflight.get(name) as Promise<ConfigFileMap[C]>
+  }
+
+  const promise = (async () => {
+    let response: Response
+    try {
+      response = await fetch(configUrl(name))
+    } catch (err) {
+      throw new ConfigLoadError(name, `network error fetching config/${name}.json`, err)
+    }
+
+    if (!response.ok) {
+      throw new ConfigLoadError(name, `fetching config/${name}.json returned HTTP ${response.status}`)
+    }
+
+    let json: unknown
+    try {
+      json = await response.json()
+    } catch (err) {
+      throw new ConfigLoadError(name, `config/${name}.json is not valid JSON`, err)
+    }
+
+    const schema = CONFIG_SCHEMAS[name]
+    const result = schema.safeParse(json)
+    if (!result.success) {
+      throw new ConfigLoadError(name, `failed schema validation: ${result.error.message}`, result.error)
+    }
+
+    configCache.set(name, result.data)
+    return result.data
+  })()
+
+  configInflight.set(name, promise)
+  try {
+    return (await promise) as ConfigFileMap[C]
+  } finally {
+    configInflight.delete(name)
+  }
+}
+
+/** Test-only escape hatch — clears the config cache between test cases. */
+export function clearConfigCacheForTests(): void {
+  configCache.clear()
+  configInflight.clear()
 }

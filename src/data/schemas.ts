@@ -403,3 +403,30 @@ export const narrativesFileSchema = z
   .strict()
 
 export type NarrativesFile = z.infer<typeof narrativesFileSchema>
+
+// ---------------------------------------------------------------------------
+// public/data/config/*.json — tunable lists read at render time, not baked
+// into a channel file (TASK.md §5). Loose rather than `.strict()`: these are
+// hand-edited by the CMO/developer (item 1.1's own note), not machine-written
+// by Cowork, so an extra field here is a shrug, not a P1/P3′ violation.
+// ---------------------------------------------------------------------------
+
+export const thresholdsConfigSchema = z.object({
+  schemaVersion: z.number().int().positive(),
+  leading: z.object({ favourablePct: z.number() }),
+  good: z.object({ withinPct: z.number() }),
+  monitor: z.object({ unfavourablePctMin: z.number(), unfavourablePctMax: z.number() }),
+  actionNeeded: z.object({ unfavourablePctMin: z.number() }),
+  flatBand: z.object({ pct: z.number() }),
+  targetBands: z.record(z.string(), z.object({ min: z.number().optional(), max: z.number().optional(), statusIfMet: z.enum(['leading', 'good', 'monitor', 'action-needed']) })),
+  floors: z.record(z.string(), z.number().nullable()),
+})
+
+export type ThresholdsConfigFile = z.infer<typeof thresholdsConfigSchema>
+
+export const brandTermsConfigSchema = z.object({
+  schemaVersion: z.number().int().positive(),
+  terms: z.array(z.string()),
+})
+
+export type BrandTermsConfigFile = z.infer<typeof brandTermsConfigSchema>

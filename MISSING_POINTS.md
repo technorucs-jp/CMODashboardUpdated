@@ -1,9 +1,9 @@
 # Missing Points — TechnoRUCS CMO Dashboard
 
-*Full-codebase audit against `TASK.md` / `CHECKLIST.md`, run 2026-08-14; re-verified the same day after the out-of-band **TAD v1.2 §0A / ADR-015** access-model change (authentication removed, role-selection dialog added).*
-*Baseline verified green at re-audit: `npm run typecheck` ✓, `npm run lint` ✓, `npm run scan:secrets` ✓, `npm test` 258/258 across 48 files ✓.*
+*Full-codebase audit against `TASK.md` / `CHECKLIST.md`, run 2026-08-14; re-verified the same day after the out-of-band **TAD v1.2 §0A / ADR-015** access-model change (authentication removed, role-selection dialog added), then again after the Overview tab (items 3.2-3.6) was built.*
+*Baseline verified green at latest re-audit: `npm run typecheck` ✓, `npm run lint` ✓, `npm run scan:secrets` ✓, `npm test` 303/303 across 50 files ✓.*
 
-**Status snapshot:** Phase 0 (18/18, re-verified post-ADR-015) ✅ · Phase 1 (31/31) ✅ · Phase 2 (24/24) ✅ · Item 3.1 ✅ · **Everything else is missing.**
+**Status snapshot:** Phase 0 (18/18, re-verified post-ADR-015) ✅ · Phase 1 (31/31) ✅ · Phase 2 (24/24) ✅ · Items 3.1-3.6 ✅ (Overview tab complete) · **The other six tabs (Leads/Website/SEO/Email/LinkedIn/Total Leads) plus all of Phase 4/5 are still missing.**
 
 ---
 
@@ -11,15 +11,17 @@
 
 The stale session-state/progress-table entries found in the original audit were fixed by the ADR-015 session: session state now reads Phase 3 1/44, last completed 3.1 (+ ADR-015), next item 3.2; progress table matches; the former "real Entra credentials" blocker is recorded as **resolved by removal**. One housekeeping point remains: **the ADR-015 changes are still uncommitted** (staged deletions + unstaged modifications across TASK/CHECKLIST/Docs/src) — per protocol §6.3 they should be committed as one tight group.
 
-## 2. Phase 3 — Remaining tabs (43 items open: 3.2–3.44)
+## 2. Phase 3 — Remaining tabs (38 items open: 3.7–3.44)
 
-All seven tabs besides Ad Campaigns are still **placeholder pages** (`src/routes/{overview,leads,website,seo,email,linkedin,totalLeads}.tsx`).
+~~All seven tabs besides Ad Campaigns are still placeholder pages~~ **Overview is now real** (`src/routes/overview.tsx` + `src/viewmodels/overview.ts`, items 3.2-3.6, built 2026-08-14). Six tabs remain placeholder pages: `src/routes/{leads,website,seo,email,linkedin,totalLeads}.tsx`.
 
-**Missing view models** — only `src/viewmodels/adCampaigns.ts` exists:
-- `overview.ts`, `leads.ts`, `website.ts`, `seo.ts`, `linkedin.ts`, `totalLeads.ts`
+**Missing view models** — `src/viewmodels/adCampaigns.ts` and `overview.ts` exist:
+- `leads.ts`, `website.ts`, `seo.ts`, `linkedin.ts`, `totalLeads.ts`
+
+**Overview's build also added two pieces the other tabs can reuse:** `src/data/loadConfig()` (fetch+Zod-parse for `public/data/config/*.json` — nothing read config files before this) and `src/lib/channels/gsc.ts`'s brand/non-brand classification (`nonBrandClicks`/`brandClickShare` on `GscSummary`, config-driven at render time) — item 3.28 (SEO tab) needs the same computation and should call the same function rather than re-implementing it.
 
 **Per tab:**
-- **Overview (3.2–3.6):** six KPI cards; channel-health table (channel/source/key metric/value/% vs comparison/status); labelled previous-period fallback when comparison is off ("vs. previous 30 days"); three period-comparison blocks (Meta Ads / Leads+Website / LinkedIn+SEO); percentage-point rendering (`pp`, not `%`).
+- ~~**Overview (3.2–3.6)**~~ **Done.** Three documented, deliberate deviations from the wireframe (none are bugs — full reasoning in `overview.ts`'s header comment and the CHECKLIST item notes): Meta Conversations' campaign count is the real computed **9**, not the wireframe's "8"; two of five channel-health status tags read "Action needed" where the wireframe hand-labelled "Monitor" (the already-tested threshold engine, item 1.18, mechanically disagrees with the wireframe's manual judgement call); Meta Ads' Impressions/CPM MoM percentages land ~0.2-0.3pp off the wireframe (May's impressions was only ever stated as "~138K"). LinkedIn's May comparison is a genuine coverage gap (no real May upload exists in the fixture, by item 1.27's own deliberate design), not a missing feature.
 - **Leads (3.7–3.16):** view model with no-notes guarantee (P3′ contract test); all status cards **including zero-count** Contact in Future & Junk (the BRD v2.1 §7.1 bug); contact rate; source breakdown bars; Meta-Ads-only status donut; daily inbound stacked bars incl. zero days; **sales-rep table with zero-assignment rows from `config/sales-reps.json`**; contacted-vs-attempted per-rep chart; intent-bucket "not yet classified" panel (3.16 is `[!]` blocked on TAD §16.1 — build the state, not a classifier).
 - **Website (3.17–3.25):** eight overview cards; `totalUsers` non-additive handling; daily sessions area chart; channel breakdown + quality chart; top sources table; **AI-referral panel** (chatgpt/copilot/perplexity); top pages with `config/page-types.json` tags; landing-entry/country/device panels; user-journey panel with top-N fallback.
 - **SEO (3.26–3.33):** eight overview cards; impression-weighted avg position end-to-end; **brand vs non-brand from `config/brand-terms.json` at render time**; `DataAsOfBanner` reading `latestRecordDate` (not `lastSyncedAt`); click-generating queries table; zero-click table with Critical/High priority + gap-to-page-1; pages/countries/devices tables; backlinks placeholder panel.
@@ -28,7 +30,7 @@ All seven tabs besides Ad Campaigns are still **placeholder pages** (`src/routes
 - **Total Leads (3.41–3.44):** comparison **required** with labelled fallback; headline comparison cards; per-period campaign breakdown with totals rows; grouped period-comparison bar chart.
 
 **Phase 3 gate blockers:**
-- Reconciliation golden files exist only for **June** (`tests/reconciliation/june-2026.golden.json`) — gate requires May, June, **and** July.
+- Reconciliation golden files exist only for **June** (`tests/reconciliation/june-2026.golden.json`) — gate requires May, June, **and** July. **Partial progress:** May's Meta Ads/GA4/GSC/Zoho headline totals are now real (reconciled for Overview's items 3.2-3.6, verified in `src/viewmodels/overview.test.ts`), but there is no dedicated `may-2026.golden.json`/`test:recon` coverage for May the way June has — that formal golden file is still a real gap. July is entirely untouched, still placeholder-only.
 - Walk all eight tabs at three arbitrary ranges (no bare `0`, no unlabelled comparison, no missing zero-count row).
 
 ## 3. Phase 4 — Rules & narrative (19 items, all open)

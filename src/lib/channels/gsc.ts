@@ -30,12 +30,22 @@ export interface GscCountry {
   readonly country: string
 }
 
+export interface GscQuery {
+  readonly date: string
+  readonly query: string
+  readonly clicks: number
+  readonly impressions: number
+  readonly sumPosition: number
+}
+
 export interface GscFileShape {
   readonly meta: { readonly earliestRecordDate: string; readonly latestRecordDate: string }
   readonly daily: readonly GscDaily[]
   readonly devices: readonly GscDevice[]
   readonly pages: readonly GscPage[]
   readonly countries: readonly GscCountry[]
+  /** Optional so existing hand-built test fixtures without a queries[] slice still satisfy this shape. */
+  readonly queries?: readonly GscQuery[]
 }
 
 export interface GscSummary {
@@ -47,6 +57,24 @@ export interface GscSummary {
   readonly mobileClickShare: Ratio
   readonly indexedPages: number
   readonly countriesReached: number
+  /**
+   * Brand vs. non-brand (BRD §9.1/§9.2, item 3.28) — computed from `queries[]`
+   * filtered to the range, classified against a caller-supplied brand-term list
+   * from `config/brand-terms.json` (P6: config passed in, this module stays
+   * I/O-free — same pattern as `status.ts`'s `thresholds` parameter). Editing
+   * that file changes the split with no re-sync and no code change, since
+   * classification happens here at render time, not at ingestion.
+   *
+   * `queries[]` is an independent, possibly-partial breakdown (GSC's top-N-per-day
+   * cap, TAD §7.3) — it is not expected to sum to `clicks` above, so
+   * `brandClickShare` is deliberately computed against the authoritative `clicks`
+   * total (from `daily[]`), while `nonBrandClicks` is the absolute count actually
+   * observed in the (partial) query breakdown, not a `clicks − brandClicks`
+   * subtraction that would silently attribute every un-surfaced long-tail query
+   * to "non-brand".
+   */
+  readonly brandClickShare: Ratio
+  readonly nonBrandClicks: number
 }
 
 export interface GscQueryResult {
@@ -65,7 +93,19 @@ function gscCoverage(range: DateRange, earliestRecordDate: string, latestRecordD
   return base.kind === 'full' ? { kind: 'lagging', dataAsOf: latestRecordDate } : base
 }
 
-export function queryGsc(file: GscFileShape, range: DateRange): ChannelResult<GscQueryResult> {
+/** Substring match against a lowercased brand-term list (BRD §9.1's "technorucs" +
+ *  misspellings config) — catches "technorucs private limited" via the "technorucs"
+ *  term without needing every real-world phrasing enumerated in the config. */
+function isBrandQuery(query: string, brandTerms: readonly string[]): boolean {
+  const lower = query.toLowerCase()
+  return brandTerms.some((term) => lower.includes(term.toLowerCase()))
+}
+
+export function queryGsc(
+  file: GscFileShape,
+  range: DateRange,
+  brandTerms: readonly string[] = [],
+): ChannelResult<GscQueryResult> {
   const coverage = gscCoverage(range, file.meta.earliestRecordDate, file.meta.latestRecordDate)
 
   return toChannelResult(coverage, () => {
@@ -87,6 +127,14 @@ export function queryGsc(file: GscFileShape, range: DateRange): ChannelResult<Gs
     const indexedPages = new Set(file.pages.filter((p) => containsDate(range, p.date)).map((p) => p.page)).size
     const countriesReached = new Set(file.countries.filter((c) => containsDate(range, c.date)).map((c) => c.country)).size
 
+    const queriesInRange = (file.queries ?? []).filter((q) => containsDate(range, q.date))
+    const brandClicks = queriesInRange
+      .filter((q) => isBrandQuery(q.query, brandTerms))
+      .reduce((total, q) => total + q.clicks, 0)
+    const nonBrandClicks = queriesInRange
+      .filter((q) => !isBrandQuery(q.query, brandTerms))
+      .reduce((total, q) => total + q.clicks, 0)
+
     return {
       daily,
       summary: {
@@ -97,6 +145,8 @@ export function queryGsc(file: GscFileShape, range: DateRange): ChannelResult<Gs
         mobileClickShare: ratio(mobileClicks, clicks),
         indexedPages,
         countriesReached,
+        brandClickShare: ratio(brandClicks, clicks),
+        nonBrandClicks,
       },
     }
   })

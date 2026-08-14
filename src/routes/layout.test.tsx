@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { RoleProvider } from '@/roles/RoleProvider'
 import { writeStoredRole } from '@/roles/roleStorage'
 import { AppRoutes } from './AppRoutes'
@@ -18,11 +19,16 @@ afterEach(() => {
 
 describe('DashboardLayout — mounted once (item 0.14)', () => {
   it('does not remount the sidebar/topbar when navigating between tabs', () => {
+    // QueryClientProvider is needed now that /overview itself calls useMetricsQuery
+    // (items 3.2-3.6) — it was a placeholder page with no data fetching before.
+    const client = new QueryClient({ defaultOptions: { queries: { staleTime: Infinity, retry: false } } })
     render(
       <RoleProvider>
-        <MemoryRouter initialEntries={['/overview']}>
-          <AppRoutes />
-        </MemoryRouter>
+        <QueryClientProvider client={client}>
+          <MemoryRouter initialEntries={['/overview']}>
+            <AppRoutes />
+          </MemoryRouter>
+        </QueryClientProvider>
       </RoleProvider>,
     )
 

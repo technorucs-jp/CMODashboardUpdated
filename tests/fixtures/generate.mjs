@@ -18,9 +18,19 @@
  * row, most GSC query rows beyond the ones named in Phase 3/4 items, most
  * LinkedIn audience percentages) are plausible placeholder data — schema-valid
  * and internally consistent, not verified against a wireframe image pixel by
- * pixel. May and July are lighter/plausible throughout; only June is fully
- * reconciled here (May/July reconciliation golden files are a Phase 3 task
- * per the original checklist's own phasing).
+ * pixel. July is lighter/plausible throughout; a July reconciliation golden
+ * file is a later Phase 3 task per the original checklist's own phasing.
+ *
+ * **Update (Overview tab, items 3.2-3.6, 2026-08-14):** May's Meta Ads/GA4/GSC/Zoho
+ * headline figures are now ALSO reconciled — to Wireframe/08-overview-may2026.jpg and
+ * 09-overview-comparemom.jpg — because Overview's channel-health table and
+ * period-comparison blocks are the first things in this build that actually display a
+ * May-to-June delta, and an unreconciled May made every one of those deltas fabricated
+ * rather than real. LinkedIn's fixture deliberately stays June-only (item 1.27's own
+ * reasoning, unchanged) — Overview's LinkedIn period-comparison row therefore shows a
+ * genuine coverage gap for a May comparison rather than the wireframe's real numbers;
+ * see src/viewmodels/overview.ts's header comment for why that is correct behaviour,
+ * not a shortfall.
  */
 import { writeFileSync, mkdirSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
@@ -100,6 +110,27 @@ function buildMetaAds() {
     { adSetId: 'as-bc-au-10jun', adSetName: 'Business Central — Australia', campaignId: 'camp-bc-au', campaignName: 'Business Central AU', launchDate: '2026-06-10', region: 'AU' },
   ]
 
+  // May — reconciled to Wireframe/08-overview-may2026.jpg and 09-overview-comparemom.jpg
+  // (item 3.2-3.6's Overview tab, built 2026-08-14): spend ₹31,375, conversations 178,
+  // cost/conv ₹176 (derived), impressions 138,000 (CPM derives to ₹227, matching the
+  // wireframe's "138K"/"₹227" figures), across exactly 10 distinct campaigns — one ad
+  // set per campaign, entirely separate from June's reconciled camp-* namespace so
+  // touching this doesn't disturb any already-reconciled June figure or rule fixture
+  // (item 4.2-4.4's rules fire on specific June ad sets/campaigns by ID).
+  const MAY_AD_SETS = [
+    { adSetId: 'as-may-bc-uae', adSetName: 'Business Central — UAE', campaignId: 'camp-may-bc-uae', campaignName: 'Business Central UAE', launchDate: '2026-05-01', region: 'AE', conversations: 35 },
+    { adSetId: 'as-may-construction-au', adSetName: 'Construction Co. Australia', campaignId: 'camp-may-construction-au', campaignName: 'Construction AU', launchDate: '2026-05-01', region: 'AU', conversations: 28 },
+    { adSetId: 'as-may-azure-tn', adSetName: 'Azure — Tamil Nadu', campaignId: 'camp-may-azure-tn', campaignName: 'Azure Migration TN', launchDate: '2026-05-01', region: 'IN/TN', conversations: 22 },
+    { adSetId: 'as-may-bc-3-emirates', adSetName: 'Business Central — 3 Emirates', campaignId: 'camp-may-bc-3-emirates', campaignName: 'Business Central Emirates', launchDate: '2026-05-01', region: 'AE/ME', conversations: 19 },
+    { adSetId: 'as-may-azure-india', adSetName: 'Azure — India', campaignId: 'camp-may-azure-india', campaignName: 'Azure Migration India', launchDate: '2026-05-01', region: 'IN', conversations: 17 },
+    { adSetId: 'as-may-bc-au', adSetName: 'Business Central — Australia', campaignId: 'camp-may-bc-au', campaignName: 'Business Central AU', launchDate: '2026-05-01', region: 'AU', conversations: 15 },
+    { adSetId: 'as-may-bc-me', adSetName: 'Business Central — Middle East', campaignId: 'camp-may-bc-me', campaignName: 'Business Central Middle East', launchDate: '2026-05-01', region: 'ME', conversations: 13 },
+    { adSetId: 'as-may-azure-srilanka', adSetName: 'Azure — Sri Lanka', campaignId: 'camp-may-azure-srilanka', campaignName: 'Azure Migration Sri Lanka', launchDate: '2026-05-01', region: 'LK', conversations: 11 },
+    { adSetId: 'as-may-azure-managed-india', adSetName: 'Azure Managed — India', campaignId: 'camp-may-azure-managed-india', campaignName: 'Azure Managed India', launchDate: '2026-05-01', region: 'IN', conversations: 10 },
+    { adSetId: 'as-may-d365-fo', adSetName: 'D365 Finance & Operations — India', campaignId: 'camp-may-d365-fo', campaignName: 'D365 F&O India', launchDate: '2026-05-01', region: 'IN', conversations: 8 },
+  ]
+  adSets.push(...MAY_AD_SETS.map(({ conversations: _conversations, ...dims }) => dims))
+
   const facts = []
 
   // June — the 13 real ad sets, exact figures from the wireframe. { days, startOffset }
@@ -145,8 +176,36 @@ function buildMetaAds() {
     }
   }
 
-  // May and July — lighter, plausible, not individually reconciled (see header comment).
-  for (const [monthStart, days] of [['2026-05-01', 31], ['2026-07-01', 31]]) {
+  // May facts — 10 ad sets/campaigns above, spend/impressions split evenly across all
+  // 31 days per ad set (splitFloat/splitInt guarantee the exact monthly totals below
+  // regardless of daily distribution): spend Σ=31,375.00, impressions Σ=138,000,
+  // conversations Σ=178 (from each ad set's `conversations` above, split across days).
+  const maySpendSplit = splitFloat(31375, MAY_AD_SETS.length)
+  const mayImpressionsSplit = splitInt(138000, MAY_AD_SETS.length)
+  const mayReachSplit = splitInt(92000, MAY_AD_SETS.length) // plausible; not reconciled to any headline figure (Overview shows no May reach)
+  MAY_AD_SETS.forEach((adSet, i) => {
+    const days = 31
+    const spends = splitFloat(maySpendSplit[i], days)
+    const impressions = splitInt(mayImpressionsSplit[i], days)
+    const reach = splitInt(mayReachSplit[i], days)
+    const conversations = splitInt(adSet.conversations, days)
+    const clicks = splitInt(Math.round(mayImpressionsSplit[i] * 0.007), days) // plausible ~0.7% CTR, not individually reconciled
+    for (let d = 0; d < days; d++) {
+      facts.push({
+        date: iso('2026-05-01', d),
+        adSetId: adSet.adSetId,
+        country: adSet.region.split('/')[0],
+        spend: spends[d],
+        impressions: impressions[d],
+        reach: reach[d],
+        clicks: clicks[d],
+        conversations: conversations[d],
+      })
+    }
+  })
+
+  // July — lighter, plausible, not individually reconciled (see header comment).
+  for (const [monthStart, days] of [['2026-07-01', 31]]) {
     for (const adSet of ['as-azure-tn', 'as-d365-fo-in', 'as-powerbi-in']) {
       for (let d = 0; d < days; d += 3) {
         facts.push({
@@ -303,10 +362,33 @@ function buildGa4() {
     { date: '2026-06-15', step1: '/about-us/', step2: '/clients/', sessions: 22 },
   )
 
-  // May and July — lighter, plausible (see header comment).
-  for (const monthStart of ['2026-05-01', '2026-07-01']) {
-    const days = monthStart === '2026-05-01' ? 31 : 31
-    for (let d = 0; d < days; d++) {
+  // May — reconciled to Wireframe/08-overview-may2026.jpg and 09-overview-comparemom.jpg
+  // (Overview tab, 2026-08-14): sessions Σ=1,619, engagedSessions Σ=1,059 (→ 65.41%
+  // engagement, displays "65.4%"), totalSessionDurationSec Σ=184,566 (→ 114.0s avg).
+  // bouncedSessions is a plausible complement (sessions − engaged), not itself pinned
+  // to a wireframe figure — no May bounce-rate value is named anywhere in Phase 3's items.
+  const maySessions = splitInt(1619, 31)
+  const mayEngaged = splitInt(1059, 31)
+  const mayDuration = splitInt(184566, 31)
+  for (let d = 0; d < 31; d++) {
+    daily.push({
+      date: iso('2026-05-01', d),
+      totalUsers: 25 + (d % 9) * 3,
+      sessions: maySessions[d],
+      screenPageViews: 60 + (d % 10) * 6,
+      engagedSessions: mayEngaged[d],
+      bouncedSessions: Math.max(0, maySessions[d] - mayEngaged[d]),
+      totalSessionDurationSec: mayDuration[d],
+    })
+    if (d % 5 === 0) {
+      channels.push({ date: iso('2026-05-01', d), channelGroup: 'Organic Search', sessions: 20, engagedSessions: 13, bouncedSessions: 7 })
+      channels.push({ date: iso('2026-05-01', d), channelGroup: 'Direct', sessions: 15, engagedSessions: 10, bouncedSessions: 5 })
+    }
+  }
+
+  // July — lighter, plausible (see header comment).
+  for (const monthStart of ['2026-07-01']) {
+    for (let d = 0; d < 31; d++) {
       daily.push({
         date: iso(monthStart, d),
         totalUsers: 25 + (d % 9) * 3,
@@ -411,17 +493,31 @@ function buildGsc() {
     { date: '2026-06-15', device: 'TABLET', clicks: 13, impressions: 1244, sumPosition: 1244 * 33 },
   )
 
-  // May and July — lighter, plausible (see header comment). May's non-brand clicks
-  // are set so the channel-health "-80.5%" reconciliation (item 3.3/4.13) holds:
-  // May non-brand ≈ 215, June non-brand = 42 → (42-215)/215 ≈ -80.5%.
-  for (const monthStart of ['2026-05-01', '2026-07-01']) {
-    for (let d = 0; d < 31; d++) {
-      daily.push({ date: iso(monthStart, d), clicks: 12 + (d % 5), impressions: 1500 + (d % 10) * 50, sumPosition: (1500 + (d % 10) * 50) * 32, rows: 55 })
-    }
+  // May — reconciled to Wireframe/08-overview-may2026.jpg and 09-overview-comparemom.jpg
+  // (Overview tab, 2026-08-14): daily[] clicks Σ=453, impressions Σ=49,596 (the
+  // authoritative headline totals — TAD §7.3, same as June). sumPosition kept
+  // proportional to a plausible ~32 average position; May's avgPosition isn't pinned
+  // to a wireframe figure by any Phase 3 item built so far.
+  //
+  // queries[] below (pre-existing, unchanged) already independently reconciles:
+  // non-brand clicks = Σ(non-brand query clicks) = 108+70+37 = 215, giving
+  // (42−215)/215 ≈ −80.5% vs June's 42 — the channel-health/period-comparison
+  // "Non-brand clicks" reconciliation (item 3.3/3.5) — without needing daily[] and
+  // queries[] to sum to the same total (deliberately independent breakdowns, as the
+  // June section's own comment above already establishes for this file).
+  const mayClicks = splitInt(453, 31)
+  const mayImpressions = splitInt(49596, 31)
+  for (let d = 0; d < 31; d++) {
+    daily.push({ date: iso('2026-05-01', d), clicks: mayClicks[d], impressions: mayImpressions[d], sumPosition: mayImpressions[d] * 32, rows: 55 })
   }
   queries.push({ date: '2026-05-15', query: 'power bi consulting india', clicks: 108, impressions: 1200, sumPosition: 1200 * 9 })
   queries.push({ date: '2026-05-15', query: 'dynamics 365 partner india', clicks: 70, impressions: 900, sumPosition: 900 * 11 })
   queries.push({ date: '2026-05-15', query: 'erp implementation chennai', clicks: 37, impressions: 500, sumPosition: 500 * 14 }) // May non-brand total: 108+70+37=215
+
+  // July — lighter, plausible (see header comment).
+  for (let d = 0; d < 31; d++) {
+    daily.push({ date: iso('2026-07-01', d), clicks: 12 + (d % 5), impressions: 1500 + (d % 10) * 50, sumPosition: (1500 + (d % 10) * 50) * 32, rows: 55 })
+  }
 
   return {
     schemaVersion: 1,
@@ -477,18 +573,34 @@ function buildZohoCrm() {
     }
   }
 
-  // May and July — lighter, plausible (see header comment).
-  for (const [monthStart, days] of [['2026-05-01', 31], ['2026-07-01', 31]]) {
-    for (let d = 1; d <= days; d += 2) {
-      leads.push({
-        leadId: String(leadIdCounter++),
-        createdTime: `${monthStart.slice(0, 7)}-${String(d).padStart(2, '0')}T11:30:00+05:30`,
-        leadSource: 'Meta Ads',
-        leadStatus: d % 6 === 0 ? 'Contacted' : 'Attempted to Contact',
-        owner: d % 5 === 0 ? 'Priya' : 'Gopinath',
-        inquiryType: null,
-      })
-    }
+  // May — reconciled to Wireframe/08-overview-may2026.jpg and 09-overview-comparemom.jpg
+  // (Overview tab, 2026-08-14): 64 total leads, 9 Contacted → 9/64 = 14.0625%, which
+  // displays as "14.1%" (BRD's 1-decimal rounding) matching both the May channel
+  // snapshot and the May→June contact-rate delta (14.1%→30.6%, "+16.5pp" per item 3.6).
+  const MAY_TOTAL_LEADS = 64
+  const MAY_CONTACTED = 9
+  for (let i = 0; i < MAY_TOTAL_LEADS; i++) {
+    const day = 1 + (i % 31)
+    leads.push({
+      leadId: String(leadIdCounter++),
+      createdTime: `2026-05-${String(day).padStart(2, '0')}T11:30:00+05:30`,
+      leadSource: 'Meta Ads',
+      leadStatus: i < MAY_CONTACTED ? 'Contacted' : 'Attempted to Contact',
+      owner: i % 5 === 0 ? 'Priya' : 'Gopinath',
+      inquiryType: null,
+    })
+  }
+
+  // July — lighter, plausible (see header comment).
+  for (let d = 1; d <= 31; d += 2) {
+    leads.push({
+      leadId: String(leadIdCounter++),
+      createdTime: `2026-07-${String(d).padStart(2, '0')}T11:30:00+05:30`,
+      leadSource: 'Meta Ads',
+      leadStatus: d % 6 === 0 ? 'Contacted' : 'Attempted to Contact',
+      owner: d % 5 === 0 ? 'Priya' : 'Gopinath',
+      inquiryType: null,
+    })
   }
 
   return {

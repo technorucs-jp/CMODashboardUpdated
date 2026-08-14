@@ -21,9 +21,9 @@ Companion to `TASK.md`. **Read `TASK.md` first.** Work top to bottom, one item a
 ## Session state — update before you stop
 
 ```
-Current phase:        3 — Remaining tabs (1/44 done: item 3.1).
-Last completed item:  3.1, plus an out-of-band access-model change (TAD ADR-015, see Notes).
-Next item:            3.2 (Overview — six KPI cards)
+Current phase:        3 — Remaining tabs (6/44 done: items 3.1-3.6). Overview tab complete.
+Last completed item:  3.6
+Next item:            3.7 (Leads viewmodel — no-notes guarantee, P3′ contract test)
 Blocked on:           Nothing blocking Phase 3. Still open, none of them phase-blocking yet:
                       TAD §16.1 (lead intent classification, needed by Phase 3 item 3.16),
                       §16.2 (staleness thresholds, needed by Phase 5),
@@ -115,6 +115,39 @@ Notes:                Phase 0: Vite 8 (rolldown-based) scaffolded via `create-vi
                       which closes §16.4 and §16.5 together. NOT enabled as of this writing.
                       Verified after the change: typecheck ✓, lint ✓, scan:secrets ✓, build ✓,
                       test:recon ✓ (5/5), full suite 258 tests across 48 files, all green.
+
+                      Overview tab built (items 3.2-3.6) — the first tab to read all five channels
+                      at once and the first that needed a real May-vs-June comparison. New
+                      `src/viewmodels/overview.ts` + `src/routes/overview.tsx`; extended
+                      `src/lib/channels/gsc.ts` with brand/non-brand classification (config-driven,
+                      P6); added `src/data/loadConfig()` (thresholds.json/brand-terms.json — nothing
+                      read config files before this); added `percentagePointDelta()` to
+                      `src/lib/metrics/compare.ts` for the pp-vs-% rendering rule (item 3.6).
+                      Reconciled May 2026's `tests/fixtures/generate.mjs` output for Meta Ads/GA4/
+                      GSC/Zoho (previously placeholder-only) against Wireframe/08-overview-may2026.jpg
+                      and 09-overview-comparemom.jpg — this is the first item that ever needed a real
+                      May→June delta, so an unreconciled May would have made every comparison in this
+                      tab fabricated. July stays untouched/placeholder (not needed here). LinkedIn's
+                      fixture deliberately stays June-only (item 1.27's own reasoning) — its May
+                      comparison renders a genuine coverage gap, not a number.
+                      Three documented, deliberate divergences from the wireframe, none of them bugs:
+                      (1) Meta Conversations' campaign count is 9 (real, computed), not the
+                      wireframe's "8" — first item to ever need this figure; changing the ad-set/
+                      campaign grouping now would disturb already-reconciled June data and Phase 4's
+                      rule fixtures. (2) Two of five channel-health status tags (cost/conversation,
+                      conversations) read "Action needed", not the wireframe's hand-labelled
+                      "Monitor" — item 1.18's own already-tested threshold engine (its literal verify
+                      example, "+116% → action-needed") mechanically produces this; the wireframe was
+                      a manually-curated static build, not threshold-driven, and re-deriving a special
+                      case to match it would mean weakening or duplicating an already-tested
+                      invariant. (3) Meta Ads' Impressions/CPM MoM percentages land ~0.2-0.3pp off the
+                      wireframe (May's impressions is only ever stated as "~138K" in the source
+                      material) — same category as the already-accepted GSC CTR inconsistency
+                      (item 1.20/1.31). Full reasoning for all three lives in overview.ts's header
+                      comment and the individual checklist item notes above.
+                      Verified: typecheck ✓, lint ✓, scan:secrets ✓, validate:data ✓, test:recon ✓
+                      (5/5, May's reconciliation didn't touch June), build ✓. 303 tests across 50
+                      files, all green (was 258/48 before this item).
 Last updated:         2026-08-14
 ```
 
@@ -127,7 +160,7 @@ Last updated:         2026-08-14
 | 0 — Foundation | 18 | 18 | ✅ (re-verified 2026-08-14 after ADR-015) |
 | 1 — Data spine | 31 | 31 | ✅ |
 | 2 — Pickers & first tab | 24 | 24 | ✅ |
-| 3 — Remaining tabs | 44 | 1 | ⬜ |
+| 3 — Remaining tabs | 44 | 6 | ⬜ |
 | 4 — Rules & narrative | 19 | 0 | ⬜ |
 | 5 — Ingestion & hardening | 26 | 0 | ⬜ |
 
@@ -489,20 +522,30 @@ Last updated:         2026-08-14
 
 ### Overview
 
-- [ ] **3.2** Six KPI cards: Ad Spend, Total Leads, Sessions, Organic Clicks, New Followers, Meta Conversations — each with its supporting detail line.
+- [x] **3.2** Six KPI cards: Ad Spend, Total Leads, Sessions, Organic Clicks, New Followers, Meta Conversations — each with its supporting detail line.
   *Verify:* June matches `01-overview-june-b.jpg` within ±1%.
+      > All six cards reconcile to the wireframe within ±1% except two documented, deliberate deviations: (1) Meta Conversations' campaign count reads **9**, not the wireframe's "8" — the item 1.20/2.17 fixture's 13 real June ad sets naturally group into 9 distinct campaigns by `campaignId`, and this is the first item that ever needed a campaign-count figure (Ad Campaigns tab never displayed one); changing the campaign grouping now would disturb already-reconciled June figures and Phase 4's rule fixtures (item 4.4 fires on the 4-ad-set `camp-bc-au` group specifically), so the real computed 9 is used and the 1-count gap is recorded here rather than silently forced to 8. (2) Organic Clicks' CTR reads the honestly-computed ~0.86%, not the wireframe's "0.81%" — the same clicks/impressions rounding inconsistency item 1.20/1.31 already found and chose not to paper over.
+      > Each card degrades independently to `—` if its own channel has no data for the range (P4) — verified with a 2099 range where every card shows `—` without blanking the others.
+      > `src/lib/channels/gsc.ts` extended with `queries[]` (optional, for backward compatibility with hand-built test fixtures) and `brandClickShare`/`nonBrandClicks` on `GscSummary`, computed from a caller-supplied `brandTerms` list (P6 — config passed in, same pattern as `status.ts`'s `thresholds` parameter) — needed by this item's SEO card detail and items 3.3/3.5's non-brand-clicks rows, and reused unchanged by item 3.28 when the SEO tab is built.
+      > New `src/data/loadConfig()` (alongside the existing `load()`) fetches and Zod-parses `public/data/config/*.json` — nothing in the app had a way to read config files before this item; `thresholds.json` and `brand-terms.json` now have schemas in `src/data/schemas.ts` (loose, not `.strict()` — these are hand-edited, not Cowork-written, so P1/P3′ don't apply the same way).
 
-- [ ] **3.3** Channel health table: channel, source, key metric, value, % vs. comparison, status tag. Fixed channel list.
+- [x] **3.3** Channel health table: channel, source, key metric, value, % vs. comparison, status tag. Fixed channel list.
   *Verify:* June vs. May reproduces `01-overview-june-b.jpg`: cost/conv +115.9% Monitor, conversations −43.3% Monitor, engagement ≈flat Good, non-brand clicks −80.5% Action needed, reactions/post +216% Leading.
+      > **May's fixture had to be reconciled first** — it was schema-valid placeholder data only (item 1.20's original scope), and this is the first item in the whole build that actually computes a May→June delta. Reconciled `tests/fixtures/generate.mjs`'s May section for Meta Ads (10 new campaigns, spend ₹31,375.00/conversations 178/impressions 138,000 — CPM and cost/conv both derive within a few tenths of a percent of the wireframe), GA4 (sessions 1,619/engaged 1,059/duration 184,566s), GSC (`daily[]` clicks 453/impressions 49,596 — `queries[]` already reconciled non-brand clicks to 215, exactly matching the wireframe's -80.5% MoM once verified), and Zoho (64 leads, 9 contacted → 14.06%, rounds to the wireframe's "14.1%"). July is untouched (still placeholder-only; not needed by this item). Every one of these now-real May figures is independently verified in `src/viewmodels/overview.test.ts` and `src/lib/channels/gsc.test.ts`.
+      > **Two of five status tags mechanically diverge from the wireframe, and this is a deliberate, principled choice, not an oversight.** The wireframe hand-labels cost/conversation (+115.9% unfavourable) and conversations (−43.3% unfavourable) both "Monitor" — but item 1.18's own already-tested threshold engine (its literal verify example: *"cost/conversation +116% → action-needed"*) puts both moves well past the 30%-unfavourable action-needed floor, and this tab computes status through that same mechanical engine every other status tag in the app uses. Re-deriving a special case to force "Monitor" here would mean either weakening an already-tested invariant or maintaining a second, inconsistent threshold path — both worse than a documented one-screenshot divergence. Full reasoning in `src/viewmodels/overview.ts`'s header comment. Engagement rate (≈flat, Good) and non-brand clicks (−80.5%, Action needed) match the wireframe exactly.
+      > **LinkedIn's row has no May comparison at all — a genuine coverage gap, not a bug.** `linkedin.json`'s fixture is deliberately June-only (item 1.27's own reasoning — proving `requires-full-coverage` needs a real gap). The wireframe's "+216% Leading" assumed the pre-pivot build's live API access at assembly time; this architecture (TAD ADR-011, BRD §4.2's upload-gating) cannot fabricate a May LinkedIn figure that was never uploaded. The row renders June's real value (58.00 reactions/post) with an explicit "no data for one period" state instead of a percentage — P4, and the only honest option given the fixture's own deliberate design.
 
-- [ ] **3.4** When comparison is off, the health table falls back to the previous period of equal length and **labels it explicitly**.
+- [x] **3.4** When comparison is off, the health table falls back to the previous period of equal length and **labels it explicitly**.
   *Verify:* the header reads "vs. previous 30 days" (or equivalent), never an unlabelled comparison.
+      > Label appears in three places by design — the Channel health heading, that table's comparison-column header, and the Period comparison heading — all driven by the same `comparisonLabel` string, so there is no path that renders a comparison without a visible label next to it.
 
-- [ ] **3.5** Three period-comparison blocks: Meta Ads; Leads + Website; LinkedIn + SEO — each current → comparison with % change.
+- [x] **3.5** Three period-comparison blocks: Meta Ads; Leads + Website; LinkedIn + SEO — each current → comparison with % change.
   *Verify:* matches `09-overview-comparemom.jpg` for May→June.
+      > 13 of 15 rows match the wireframe exactly (Spend +22.5%, Conversations −43.3%, Sessions +6.2%, Engagement ≈flat, Avg. duration −6.1%, GSC clicks +3.5%, GSC impressions +10.4%, Non-brand clicks −80.5%, Contact rate +16.5pp, etc.). Meta Ads' Impressions (−30.6% computed vs. the wireframe's −30.8%) and CPM (+76.4% vs. +76.7%) land within ~0.2-0.3pp of the wireframe — both trace to May's impressions figure, which the wireframe only ever states as the approximation "138K"; the fixture's exact 138,000 was chosen to hit the wireframe's stated ₹227 CPM and 10-campaign count precisely, and the small residual gap on the two impressions-derived percentages is the direct, documented consequence of not having the wireframe's un-rounded original figure — same category as the already-accepted GSC CTR inconsistency (item 1.20/1.31's note). LinkedIn's New followers/Reactions rows show June's real values with an explicit no-comparison state for the same coverage-gap reason as item 3.3's LinkedIn row.
 
-- [ ] **3.6** Percentage-point changes (e.g. contact rate 14.1%→30.6%) render as `pp`, not `%`.
+- [x] **3.6** Percentage-point changes (e.g. contact rate 14.1%→30.6%) render as `pp`, not `%`.
   *Verify:* the contact-rate row reads `+16.5pp`.
+      > New `percentagePointDelta()` in `src/lib/metrics/compare.ts` — simple subtraction of two already-in-percent values, kept separate from `compare()`'s relative-pct `Delta` (which would report contact rate's move as a nonsensical "+117%", not a percentage-point difference). `overview.ts`'s `formatDelta()` decides pp-vs-% purely from `registry[metricId].format === 'percent'`; whether a delta counts as "flat" is still decided by the one shared `compare()` flat-band check on the same two values, so there is a single flat definition across every metric, and only the *non-flat* unit (pp or %) differs by metric type. Verified exactly: 15/49 = 30.6122...% vs 9/64 = 14.0625% → +16.5497pp → displays "+16.5pp".
 
 ### Leads
 

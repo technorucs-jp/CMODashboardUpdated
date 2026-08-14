@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { RoleProvider } from '@/roles/RoleProvider'
 import { writeStoredRole } from '@/roles/roleStorage'
 import { AppRoutes } from './AppRoutes'
@@ -22,11 +23,16 @@ afterEach(() => {
 })
 
 function renderAt(path: string) {
+  // QueryClientProvider is needed now that /overview itself calls useMetricsQuery
+  // (items 3.2-3.6) — it was a placeholder page with no data fetching before.
+  const client = new QueryClient({ defaultOptions: { queries: { staleTime: Infinity, retry: false } } })
   return render(
     <RoleProvider>
-      <MemoryRouter initialEntries={[path]}>
-        <AppRoutes />
-      </MemoryRouter>
+      <QueryClientProvider client={client}>
+        <MemoryRouter initialEntries={[path]}>
+          <AppRoutes />
+        </MemoryRouter>
+      </QueryClientProvider>
     </RoleProvider>,
   )
 }

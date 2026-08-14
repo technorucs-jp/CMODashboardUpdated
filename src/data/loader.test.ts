@@ -2,12 +2,17 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { ChannelLoadError, clearLoaderCacheForTests, load } from './loader'
+import { ChannelLoadError, ConfigLoadError, clearConfigCacheForTests, clearLoaderCacheForTests, load, loadConfig } from './loader'
 
 const FIXTURES_DIR = join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'tests', 'fixtures')
+const CONFIG_DIR = join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'public', 'data', 'config')
 
 function fixtureJson(name: string): unknown {
   return JSON.parse(readFileSync(join(FIXTURES_DIR, `${name}.json`), 'utf8'))
+}
+
+function configJson(name: string): unknown {
+  return JSON.parse(readFileSync(join(CONFIG_DIR, `${name}.json`), 'utf8'))
 }
 
 function mockFetchResponses(bodies: Partial<Record<string, unknown>>) {
@@ -76,5 +81,54 @@ describe('loader.ts (item 1.21)', () => {
       vi.fn(async () => ({ ok: false, status: 404 }) as Response),
     )
     await expect(load('zoho-crm')).rejects.toThrow(/HTTP 404/)
+  })
+})
+
+describe('loadConfig (Overview items 3.2-3.6 — thresholds/brand-terms read at render time)', () => {
+  beforeEach(() => {
+    clearConfigCacheForTests()
+  })
+
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
+
+  it('loads and Zod-parses the real committed thresholds.json', async () => {
+    vi.stubGlobal('fetch', mockFetchResponses({ thresholds: configJson('thresholds') }))
+    const data = await loadConfig('thresholds')
+    expect(data.leading.favourablePct).toBe(15)
+    expect(data.good.withinPct).toBe(5)
+  })
+
+  it('loads and Zod-parses the real committed brand-terms.json', async () => {
+    vi.stubGlobal('fetch', mockFetchResponses({ 'brand-terms': configJson('brand-terms') }))
+    const data = await loadConfig('brand-terms')
+    expect(data.terms).toContain('technorucs')
+  })
+
+  it('a malformed config file throws a typed ConfigLoadError', async () => {
+    vi.stubGlobal('fetch', mockFetchResponses({ thresholds: { schemaVersion: 1 } }))
+    await expect(loadConfig('thresholds')).rejects.toBeInstanceOf(ConfigLoadError)
+    await expect(loadConfig('thresholds')).rejects.toMatchObject({ config: 'thresholds' })
+  })
+
+  it('caches per config name — a second loadConfig() does not issue a second fetch', async () => {
+    const fetchMock = mockFetchResponses({ thresholds: configJson('thresholds') })
+    vi.stubGlobal('fetch', fetchMock)
+
+    await loadConfig('thresholds')
+    await loadConfig('thresholds')
+
+    expect(fetchMock).toHaveBeenCalledTimes(1)
+  })
+
+  it('caches thresholds and brand-terms independently', async () => {
+    const fetchMock = mockFetchResponses({ thresholds: configJson('thresholds'), 'brand-terms': configJson('brand-terms') })
+    vi.stubGlobal('fetch', fetchMock)
+
+    await loadConfig('thresholds')
+    await loadConfig('brand-terms')
+
+    expect(fetchMock).toHaveBeenCalledTimes(2)
   })
 })

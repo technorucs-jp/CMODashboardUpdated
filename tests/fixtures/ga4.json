@@ -285,281 +285,281 @@
     {
       "date": "2026-05-01",
       "totalUsers": 25,
-      "sessions": 40,
+      "sessions": 53,
       "screenPageViews": 60,
-      "engagedSessions": 22,
-      "bouncedSessions": 12,
-      "totalSessionDurationSec": 3800
+      "engagedSessions": 35,
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 5954
     },
     {
       "date": "2026-05-02",
       "totalUsers": 28,
-      "sessions": 44,
+      "sessions": 53,
       "screenPageViews": 66,
-      "engagedSessions": 25,
-      "bouncedSessions": 14,
-      "totalSessionDurationSec": 4180
+      "engagedSessions": 35,
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 5954
     },
     {
       "date": "2026-05-03",
       "totalUsers": 31,
-      "sessions": 48,
+      "sessions": 53,
       "screenPageViews": 72,
-      "engagedSessions": 28,
-      "bouncedSessions": 16,
-      "totalSessionDurationSec": 4560
+      "engagedSessions": 35,
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 5954
     },
     {
       "date": "2026-05-04",
       "totalUsers": 34,
-      "sessions": 52,
+      "sessions": 53,
       "screenPageViews": 78,
-      "engagedSessions": 31,
+      "engagedSessions": 35,
       "bouncedSessions": 18,
-      "totalSessionDurationSec": 4940
+      "totalSessionDurationSec": 5954
     },
     {
       "date": "2026-05-05",
       "totalUsers": 37,
-      "sessions": 56,
+      "sessions": 53,
       "screenPageViews": 84,
-      "engagedSessions": 34,
-      "bouncedSessions": 20,
-      "totalSessionDurationSec": 5320
+      "engagedSessions": 35,
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 5954
     },
     {
       "date": "2026-05-06",
       "totalUsers": 40,
-      "sessions": 60,
+      "sessions": 53,
       "screenPageViews": 90,
-      "engagedSessions": 37,
-      "bouncedSessions": 22,
-      "totalSessionDurationSec": 5700
+      "engagedSessions": 34,
+      "bouncedSessions": 19,
+      "totalSessionDurationSec": 5954
     },
     {
       "date": "2026-05-07",
       "totalUsers": 43,
-      "sessions": 64,
+      "sessions": 53,
       "screenPageViews": 96,
-      "engagedSessions": 40,
-      "bouncedSessions": 12,
-      "totalSessionDurationSec": 6080
+      "engagedSessions": 34,
+      "bouncedSessions": 19,
+      "totalSessionDurationSec": 5954
     },
     {
       "date": "2026-05-08",
       "totalUsers": 46,
-      "sessions": 68,
+      "sessions": 52,
       "screenPageViews": 102,
-      "engagedSessions": 43,
-      "bouncedSessions": 14,
-      "totalSessionDurationSec": 6460
+      "engagedSessions": 34,
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 5954
     },
     {
       "date": "2026-05-09",
       "totalUsers": 49,
-      "sessions": 72,
+      "sessions": 52,
       "screenPageViews": 108,
-      "engagedSessions": 22,
-      "bouncedSessions": 16,
-      "totalSessionDurationSec": 6840
+      "engagedSessions": 34,
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 5954
     },
     {
       "date": "2026-05-10",
       "totalUsers": 25,
-      "sessions": 76,
+      "sessions": 52,
       "screenPageViews": 114,
-      "engagedSessions": 25,
+      "engagedSessions": 34,
       "bouncedSessions": 18,
-      "totalSessionDurationSec": 7220
+      "totalSessionDurationSec": 5954
     },
     {
       "date": "2026-05-11",
       "totalUsers": 28,
-      "sessions": 40,
+      "sessions": 52,
       "screenPageViews": 60,
-      "engagedSessions": 28,
-      "bouncedSessions": 20,
-      "totalSessionDurationSec": 3800
+      "engagedSessions": 34,
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 5954
     },
     {
       "date": "2026-05-12",
       "totalUsers": 31,
-      "sessions": 44,
+      "sessions": 52,
       "screenPageViews": 66,
-      "engagedSessions": 31,
-      "bouncedSessions": 22,
-      "totalSessionDurationSec": 4180
+      "engagedSessions": 34,
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 5954
     },
     {
       "date": "2026-05-13",
       "totalUsers": 34,
-      "sessions": 48,
+      "sessions": 52,
       "screenPageViews": 72,
       "engagedSessions": 34,
-      "bouncedSessions": 12,
-      "totalSessionDurationSec": 4560
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 5954
     },
     {
       "date": "2026-05-14",
       "totalUsers": 37,
       "sessions": 52,
       "screenPageViews": 78,
-      "engagedSessions": 37,
-      "bouncedSessions": 14,
-      "totalSessionDurationSec": 4940
+      "engagedSessions": 34,
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 5954
     },
     {
       "date": "2026-05-15",
       "totalUsers": 40,
-      "sessions": 56,
+      "sessions": 52,
       "screenPageViews": 84,
-      "engagedSessions": 40,
-      "bouncedSessions": 16,
-      "totalSessionDurationSec": 5320
+      "engagedSessions": 34,
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 5954
     },
     {
       "date": "2026-05-16",
       "totalUsers": 43,
-      "sessions": 60,
+      "sessions": 52,
       "screenPageViews": 90,
-      "engagedSessions": 43,
+      "engagedSessions": 34,
       "bouncedSessions": 18,
-      "totalSessionDurationSec": 5700
+      "totalSessionDurationSec": 5954
     },
     {
       "date": "2026-05-17",
       "totalUsers": 46,
-      "sessions": 64,
+      "sessions": 52,
       "screenPageViews": 96,
-      "engagedSessions": 22,
-      "bouncedSessions": 20,
-      "totalSessionDurationSec": 6080
+      "engagedSessions": 34,
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 5954
     },
     {
       "date": "2026-05-18",
       "totalUsers": 49,
-      "sessions": 68,
+      "sessions": 52,
       "screenPageViews": 102,
-      "engagedSessions": 25,
-      "bouncedSessions": 22,
-      "totalSessionDurationSec": 6460
+      "engagedSessions": 34,
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 5954
     },
     {
       "date": "2026-05-19",
       "totalUsers": 25,
-      "sessions": 72,
+      "sessions": 52,
       "screenPageViews": 108,
-      "engagedSessions": 28,
-      "bouncedSessions": 12,
-      "totalSessionDurationSec": 6840
+      "engagedSessions": 34,
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 5954
     },
     {
       "date": "2026-05-20",
       "totalUsers": 28,
-      "sessions": 76,
+      "sessions": 52,
       "screenPageViews": 114,
-      "engagedSessions": 31,
-      "bouncedSessions": 14,
-      "totalSessionDurationSec": 7220
+      "engagedSessions": 34,
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 5954
     },
     {
       "date": "2026-05-21",
       "totalUsers": 31,
-      "sessions": 40,
+      "sessions": 52,
       "screenPageViews": 60,
       "engagedSessions": 34,
-      "bouncedSessions": 16,
-      "totalSessionDurationSec": 3800
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 5954
     },
     {
       "date": "2026-05-22",
       "totalUsers": 34,
-      "sessions": 44,
+      "sessions": 52,
       "screenPageViews": 66,
-      "engagedSessions": 37,
+      "engagedSessions": 34,
       "bouncedSessions": 18,
-      "totalSessionDurationSec": 4180
+      "totalSessionDurationSec": 5954
     },
     {
       "date": "2026-05-23",
       "totalUsers": 37,
-      "sessions": 48,
+      "sessions": 52,
       "screenPageViews": 72,
-      "engagedSessions": 40,
-      "bouncedSessions": 20,
-      "totalSessionDurationSec": 4560
+      "engagedSessions": 34,
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 5954
     },
     {
       "date": "2026-05-24",
       "totalUsers": 40,
       "sessions": 52,
       "screenPageViews": 78,
-      "engagedSessions": 43,
-      "bouncedSessions": 22,
-      "totalSessionDurationSec": 4940
+      "engagedSessions": 34,
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 5953
     },
     {
       "date": "2026-05-25",
       "totalUsers": 43,
-      "sessions": 56,
+      "sessions": 52,
       "screenPageViews": 84,
-      "engagedSessions": 22,
-      "bouncedSessions": 12,
-      "totalSessionDurationSec": 5320
+      "engagedSessions": 34,
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 5953
     },
     {
       "date": "2026-05-26",
       "totalUsers": 46,
-      "sessions": 60,
+      "sessions": 52,
       "screenPageViews": 90,
-      "engagedSessions": 25,
-      "bouncedSessions": 14,
-      "totalSessionDurationSec": 5700
+      "engagedSessions": 34,
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 5953
     },
     {
       "date": "2026-05-27",
       "totalUsers": 49,
-      "sessions": 64,
+      "sessions": 52,
       "screenPageViews": 96,
-      "engagedSessions": 28,
-      "bouncedSessions": 16,
-      "totalSessionDurationSec": 6080
+      "engagedSessions": 34,
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 5953
     },
     {
       "date": "2026-05-28",
       "totalUsers": 25,
-      "sessions": 68,
+      "sessions": 52,
       "screenPageViews": 102,
-      "engagedSessions": 31,
+      "engagedSessions": 34,
       "bouncedSessions": 18,
-      "totalSessionDurationSec": 6460
+      "totalSessionDurationSec": 5953
     },
     {
       "date": "2026-05-29",
       "totalUsers": 28,
-      "sessions": 72,
+      "sessions": 52,
       "screenPageViews": 108,
       "engagedSessions": 34,
-      "bouncedSessions": 20,
-      "totalSessionDurationSec": 6840
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 5953
     },
     {
       "date": "2026-05-30",
       "totalUsers": 31,
-      "sessions": 76,
+      "sessions": 52,
       "screenPageViews": 114,
-      "engagedSessions": 37,
-      "bouncedSessions": 22,
-      "totalSessionDurationSec": 7220
+      "engagedSessions": 34,
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 5953
     },
     {
       "date": "2026-05-31",
       "totalUsers": 34,
-      "sessions": 40,
+      "sessions": 52,
       "screenPageViews": 60,
-      "engagedSessions": 40,
-      "bouncedSessions": 12,
-      "totalSessionDurationSec": 3800
+      "engagedSessions": 34,
+      "bouncedSessions": 18,
+      "totalSessionDurationSec": 5953
     },
     {
       "date": "2026-07-01",
