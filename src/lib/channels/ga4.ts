@@ -26,8 +26,50 @@ export interface Ga4Country {
   readonly date: string
   readonly country: string
   readonly totalUsers: number
+  readonly engagedSessions: number
   readonly bouncedSessions: number
   readonly totalSessionDurationSec: number
+}
+
+export interface Ga4Source {
+  readonly date: string
+  readonly source: string
+  readonly channelGroup: string
+  readonly sessions: number
+  readonly engagedSessions: number
+  readonly bouncedSessions: number
+}
+
+export interface Ga4Page {
+  readonly date: string
+  readonly pagePath: string
+  readonly screenPageViews: number
+  readonly totalUsers: number
+  readonly engagedSessions: number
+  readonly bouncedSessions: number
+  readonly totalSessionDurationSec: number
+}
+
+export interface Ga4LandingPage {
+  readonly date: string
+  readonly landingPage: string
+  readonly sessions: number
+  readonly engagedSessions: number
+  readonly bouncedSessions: number
+}
+
+export interface Ga4Device {
+  readonly date: string
+  readonly device: string
+  readonly sessions: number
+  readonly engagedSessions: number
+}
+
+export interface Ga4Path {
+  readonly date: string
+  readonly step1: string
+  readonly step2: string
+  readonly sessions: number
 }
 
 export interface Ga4FileShape {
@@ -35,6 +77,12 @@ export interface Ga4FileShape {
   readonly daily: readonly Ga4Daily[]
   readonly channels: readonly Ga4Channel[]
   readonly countries: readonly Ga4Country[]
+  /** Optional so the small hand-built fixtures in existing tests still satisfy this shape. */
+  readonly sources?: readonly Ga4Source[]
+  readonly pages?: readonly Ga4Page[]
+  readonly landingPages?: readonly Ga4LandingPage[]
+  readonly devices?: readonly Ga4Device[]
+  readonly paths?: readonly Ga4Path[]
 }
 
 export interface Ga4Summary {
@@ -55,6 +103,15 @@ export interface Ga4Summary {
 export interface Ga4QueryResult {
   readonly daily: readonly Ga4Daily[]
   readonly summary: Ga4Summary
+  /** Every dimension slice, already filtered to the range — the view model does the
+   *  grouping, same division of labour as `queryMetaAds` returning raw `facts`. */
+  readonly channels: readonly Ga4Channel[]
+  readonly sources: readonly Ga4Source[]
+  readonly pages: readonly Ga4Page[]
+  readonly landingPages: readonly Ga4LandingPage[]
+  readonly countries: readonly Ga4Country[]
+  readonly devices: readonly Ga4Device[]
+  readonly paths: readonly Ga4Path[]
 }
 
 export function queryGa4(file: Ga4FileShape, range: DateRange): ChannelResult<Ga4QueryResult> {
@@ -90,8 +147,18 @@ export function queryGa4(file: Ga4FileShape, range: DateRange): ChannelResult<Ga
 
     const countriesReached = new Set(file.countries.filter((c) => containsDate(range, c.date)).map((c) => c.country)).size
 
+    const inRange = <T extends { date: string }>(rows: readonly T[] | undefined): readonly T[] =>
+      (rows ?? []).filter((r) => containsDate(range, r.date))
+
     return {
       daily,
+      channels: inRange(file.channels),
+      sources: inRange(file.sources),
+      pages: inRange(file.pages),
+      landingPages: inRange(file.landingPages),
+      countries: inRange(file.countries),
+      devices: inRange(file.devices),
+      paths: inRange(file.paths),
       summary: {
         totalUsers,
         sessions,

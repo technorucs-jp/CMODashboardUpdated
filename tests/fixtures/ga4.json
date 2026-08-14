@@ -1931,6 +1931,30 @@
   "sources": [
     {
       "date": "2026-06-15",
+      "source": "google",
+      "channelGroup": "Organic Search",
+      "sessions": 880,
+      "engagedSessions": 609,
+      "bouncedSessions": 271
+    },
+    {
+      "date": "2026-06-15",
+      "source": "(direct)",
+      "channelGroup": "Direct",
+      "sessions": 692,
+      "engagedSessions": 419,
+      "bouncedSessions": 273
+    },
+    {
+      "date": "2026-06-15",
+      "source": "bing",
+      "channelGroup": "Organic Search",
+      "sessions": 47,
+      "engagedSessions": 34,
+      "bouncedSessions": 13
+    },
+    {
+      "date": "2026-06-15",
       "source": "chatgpt.com",
       "channelGroup": "AI Assistant",
       "sessions": 3,
@@ -1952,18 +1976,63 @@
       "pagePath": "/",
       "screenPageViews": 620,
       "totalUsers": 480,
-      "engagedSessions": 410,
-      "bouncedSessions": 180,
-      "totalSessionDurationSec": 55000
+      "engagedSessions": 400,
+      "bouncedSessions": 300,
+      "totalSessionDurationSec": 42000
+    },
+    {
+      "date": "2026-06-15",
+      "pagePath": "/careers/",
+      "screenPageViews": 303,
+      "totalUsers": 250,
+      "engagedSessions": 193,
+      "bouncedSessions": 52,
+      "totalSessionDurationSec": 11025
+    },
+    {
+      "date": "2026-06-15",
+      "pagePath": "/global-clients/",
+      "screenPageViews": 78,
+      "totalUsers": 62,
+      "engagedSessions": 64,
+      "bouncedSessions": 10,
+      "totalSessionDurationSec": 5550
+    },
+    {
+      "date": "2026-06-15",
+      "pagePath": "/blog/",
+      "screenPageViews": 63,
+      "totalUsers": 22,
+      "engagedSessions": 49,
+      "bouncedSessions": 5,
+      "totalSessionDurationSec": 2916
     },
     {
       "date": "2026-06-15",
       "pagePath": "/solutions/power-bi-consulting/",
-      "screenPageViews": 210,
-      "totalUsers": 160,
-      "engagedSessions": 140,
-      "bouncedSessions": 55,
-      "totalSessionDurationSec": 22000
+      "screenPageViews": 37,
+      "totalUsers": 13,
+      "engagedSessions": 17,
+      "bouncedSessions": 2,
+      "totalSessionDurationSec": 7942
+    },
+    {
+      "date": "2026-06-15",
+      "pagePath": "/services/full-stack-development/",
+      "screenPageViews": 28,
+      "totalUsers": 26,
+      "engagedSessions": 24,
+      "bouncedSessions": 4,
+      "totalSessionDurationSec": 952
+    },
+    {
+      "date": "2026-06-15",
+      "pagePath": "/solutions/microsoft-dynamics-365-finance-and-operations/",
+      "screenPageViews": 17,
+      "totalUsers": 11,
+      "engagedSessions": 13,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 3248
     },
     {
       "date": "2026-06-15",
@@ -1976,543 +2045,647 @@
     },
     {
       "date": "2026-06-15",
-      "pagePath": "/careers/",
-      "screenPageViews": 130,
-      "totalUsers": 110,
-      "engagedSessions": 90,
-      "bouncedSessions": 40,
-      "totalSessionDurationSec": 11000
-    },
-    {
-      "date": "2026-06-15",
       "pagePath": "/about-us/",
       "screenPageViews": 140,
       "totalUsers": 120,
       "engagedSessions": 95,
       "bouncedSessions": 45,
       "totalSessionDurationSec": 12500
+    }
+  ],
+  "landingPages": [
+    {
+      "date": "2026-06-15",
+      "landingPage": "/",
+      "sessions": 760,
+      "engagedSessions": 434,
+      "bouncedSessions": 326
     },
     {
       "date": "2026-06-15",
-      "pagePath": "/blog/d365-fo/",
-      "screenPageViews": 180,
-      "totalUsers": 150,
-      "engagedSessions": 120,
-      "bouncedSessions": 60,
-      "totalSessionDurationSec": 17000
+      "landingPage": "/blog/outsystems-vs-power-apps/",
+      "sessions": 230,
+      "engagedSessions": 205,
+      "bouncedSessions": 25
+    },
+    {
+      "date": "2026-06-15",
+      "landingPage": "/blog/top-power-apps-examples/",
+      "sessions": 215,
+      "engagedSessions": 190,
+      "bouncedSessions": 25
+    },
+    {
+      "date": "2026-06-15",
+      "landingPage": "/careers/",
+      "sessions": 210,
+      "engagedSessions": 165,
+      "bouncedSessions": 45
+    },
+    {
+      "date": "2026-06-15",
+      "landingPage": "/about-us/",
+      "sessions": 40,
+      "engagedSessions": 28,
+      "bouncedSessions": 12
+    },
+    {
+      "date": "2026-06-15",
+      "landingPage": "/contact-us/",
+      "sessions": 35,
+      "engagedSessions": 30,
+      "bouncedSessions": 5
+    },
+    {
+      "date": "2026-06-15",
+      "landingPage": "/global-clients/",
+      "sessions": 30,
+      "engagedSessions": 26,
+      "bouncedSessions": 4
     }
   ],
   "countries": [
     {
       "date": "2026-06-15",
       "country": "IN",
-      "totalUsers": 20,
-      "bouncedSessions": 9,
-      "totalSessionDurationSec": 2593
+      "totalUsers": 629,
+      "engagedSessions": 458,
+      "bouncedSessions": 242,
+      "totalSessionDurationSec": 116200
     },
     {
       "date": "2026-06-15",
       "country": "US",
-      "totalUsers": 20,
+      "totalUsers": 368,
+      "engagedSessions": 269,
+      "bouncedSessions": 131,
+      "totalSessionDurationSec": 9600
+    },
+    {
+      "date": "2026-06-15",
+      "country": "CN",
+      "totalUsers": 57,
+      "engagedSessions": 21,
+      "bouncedSessions": 43,
+      "totalSessionDurationSec": 128
+    },
+    {
+      "date": "2026-06-15",
+      "country": "SG",
+      "totalUsers": 23,
+      "engagedSessions": 16,
       "bouncedSessions": 9,
-      "totalSessionDurationSec": 2593
+      "totalSessionDurationSec": 2225
+    },
+    {
+      "date": "2026-06-15",
+      "country": "AE",
+      "totalUsers": 22,
+      "engagedSessions": 21,
+      "bouncedSessions": 5,
+      "totalSessionDurationSec": 2002
     },
     {
       "date": "2026-06-15",
       "country": "GB",
       "totalUsers": 20,
+      "engagedSessions": 20,
       "bouncedSessions": 9,
-      "totalSessionDurationSec": 2593
-    },
-    {
-      "date": "2026-06-15",
-      "country": "AU",
-      "totalUsers": 20,
-      "bouncedSessions": 9,
-      "totalSessionDurationSec": 2593
+      "totalSessionDurationSec": 8526
     },
     {
       "date": "2026-06-15",
       "country": "CA",
-      "totalUsers": 20,
-      "bouncedSessions": 9,
-      "totalSessionDurationSec": 2593
+      "totalUsers": 19,
+      "engagedSessions": 15,
+      "bouncedSessions": 6,
+      "totalSessionDurationSec": 2352
+    },
+    {
+      "date": "2026-06-15",
+      "country": "AU",
+      "totalUsers": 9,
+      "engagedSessions": 9,
+      "bouncedSessions": 2,
+      "totalSessionDurationSec": 1683
     },
     {
       "date": "2026-06-15",
       "country": "DE",
-      "totalUsers": 20,
-      "bouncedSessions": 9,
-      "totalSessionDurationSec": 2593
+      "totalUsers": 1,
+      "engagedSessions": 1,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 30
     },
     {
       "date": "2026-06-15",
       "country": "FR",
-      "totalUsers": 20,
-      "bouncedSessions": 9,
-      "totalSessionDurationSec": 2593
-    },
-    {
-      "date": "2026-06-15",
-      "country": "SG",
-      "totalUsers": 20,
-      "bouncedSessions": 9,
-      "totalSessionDurationSec": 2593
-    },
-    {
-      "date": "2026-06-15",
-      "country": "AE",
-      "totalUsers": 20,
-      "bouncedSessions": 9,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 2,
+      "engagedSessions": 2,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 42
     },
     {
       "date": "2026-06-15",
       "country": "NL",
-      "totalUsers": 20,
-      "bouncedSessions": 9,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 3,
+      "engagedSessions": 3,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 54
     },
     {
       "date": "2026-06-15",
       "country": "SE",
-      "totalUsers": 20,
-      "bouncedSessions": 9,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 4,
+      "engagedSessions": 1,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 66
     },
     {
       "date": "2026-06-15",
       "country": "CH",
-      "totalUsers": 20,
-      "bouncedSessions": 9,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 1,
+      "engagedSessions": 2,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 78
     },
     {
       "date": "2026-06-15",
       "country": "JP",
-      "totalUsers": 20,
-      "bouncedSessions": 9,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 2,
+      "engagedSessions": 3,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 30
     },
     {
       "date": "2026-06-15",
       "country": "BR",
-      "totalUsers": 20,
-      "bouncedSessions": 9,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 3,
+      "engagedSessions": 1,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 42
     },
     {
       "date": "2026-06-15",
       "country": "ZA",
-      "totalUsers": 20,
-      "bouncedSessions": 9,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 4,
+      "engagedSessions": 2,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 54
     },
     {
       "date": "2026-06-15",
       "country": "NZ",
-      "totalUsers": 20,
-      "bouncedSessions": 9,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 1,
+      "engagedSessions": 3,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 66
     },
     {
       "date": "2026-06-15",
       "country": "IE",
-      "totalUsers": 19,
-      "bouncedSessions": 9,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 2,
+      "engagedSessions": 1,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 78
     },
     {
       "date": "2026-06-15",
       "country": "ES",
-      "totalUsers": 19,
-      "bouncedSessions": 9,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 3,
+      "engagedSessions": 2,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 30
     },
     {
       "date": "2026-06-15",
       "country": "IT",
-      "totalUsers": 19,
-      "bouncedSessions": 9,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 4,
+      "engagedSessions": 3,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 42
     },
     {
       "date": "2026-06-15",
       "country": "PL",
-      "totalUsers": 19,
-      "bouncedSessions": 9,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 1,
+      "engagedSessions": 1,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 54
     },
     {
       "date": "2026-06-15",
       "country": "BE",
-      "totalUsers": 19,
-      "bouncedSessions": 9,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 2,
+      "engagedSessions": 2,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 66
     },
     {
       "date": "2026-06-15",
       "country": "DK",
-      "totalUsers": 19,
-      "bouncedSessions": 9,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 3,
+      "engagedSessions": 3,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 78
     },
     {
       "date": "2026-06-15",
       "country": "NO",
-      "totalUsers": 19,
-      "bouncedSessions": 9,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 4,
+      "engagedSessions": 1,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 30
     },
     {
       "date": "2026-06-15",
       "country": "FI",
-      "totalUsers": 19,
-      "bouncedSessions": 9,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 1,
+      "engagedSessions": 2,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 42
     },
     {
       "date": "2026-06-15",
       "country": "PT",
-      "totalUsers": 19,
-      "bouncedSessions": 9,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 2,
+      "engagedSessions": 3,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 54
     },
     {
       "date": "2026-06-15",
       "country": "AT",
-      "totalUsers": 19,
-      "bouncedSessions": 9,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 3,
+      "engagedSessions": 1,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 66
     },
     {
       "date": "2026-06-15",
       "country": "CZ",
-      "totalUsers": 19,
-      "bouncedSessions": 9,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 4,
+      "engagedSessions": 2,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 78
     },
     {
       "date": "2026-06-15",
       "country": "HU",
-      "totalUsers": 19,
-      "bouncedSessions": 9,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 1,
+      "engagedSessions": 3,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 30
     },
     {
       "date": "2026-06-15",
       "country": "GR",
-      "totalUsers": 19,
-      "bouncedSessions": 9,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 2,
+      "engagedSessions": 1,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 42
     },
     {
       "date": "2026-06-15",
       "country": "TR",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 3,
+      "engagedSessions": 2,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 54
     },
     {
       "date": "2026-06-15",
       "country": "MX",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 4,
+      "engagedSessions": 3,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 66
     },
     {
       "date": "2026-06-15",
       "country": "AR",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 1,
+      "engagedSessions": 1,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 78
     },
     {
       "date": "2026-06-15",
       "country": "CL",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 2,
+      "engagedSessions": 2,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 30
     },
     {
       "date": "2026-06-15",
       "country": "CO",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 3,
+      "engagedSessions": 3,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 42
     },
     {
       "date": "2026-06-15",
       "country": "PE",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
-    },
-    {
-      "date": "2026-06-15",
-      "country": "CN",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 4,
+      "engagedSessions": 1,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 54
     },
     {
       "date": "2026-06-15",
       "country": "HK",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 1,
+      "engagedSessions": 2,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 66
     },
     {
       "date": "2026-06-15",
       "country": "TW",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 2,
+      "engagedSessions": 3,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 78
     },
     {
       "date": "2026-06-15",
       "country": "KR",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 3,
+      "engagedSessions": 1,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 30
     },
     {
       "date": "2026-06-15",
       "country": "TH",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 4,
+      "engagedSessions": 2,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 42
     },
     {
       "date": "2026-06-15",
       "country": "VN",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 1,
+      "engagedSessions": 3,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 54
     },
     {
       "date": "2026-06-15",
       "country": "PH",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 2,
+      "engagedSessions": 1,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 66
     },
     {
       "date": "2026-06-15",
       "country": "ID",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 3,
+      "engagedSessions": 2,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 78
     },
     {
       "date": "2026-06-15",
       "country": "MY",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 4,
+      "engagedSessions": 3,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 30
     },
     {
       "date": "2026-06-15",
       "country": "PK",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 1,
+      "engagedSessions": 1,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 42
     },
     {
       "date": "2026-06-15",
       "country": "BD",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 2,
+      "engagedSessions": 2,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 54
     },
     {
       "date": "2026-06-15",
       "country": "LK",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 3,
+      "engagedSessions": 3,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 66
     },
     {
       "date": "2026-06-15",
       "country": "NP",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 4,
+      "engagedSessions": 1,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 78
     },
     {
       "date": "2026-06-15",
       "country": "SA",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 1,
+      "engagedSessions": 2,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 30
     },
     {
       "date": "2026-06-15",
       "country": "QA",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 2,
+      "engagedSessions": 3,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 42
     },
     {
       "date": "2026-06-15",
       "country": "KW",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 3,
+      "engagedSessions": 1,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 54
     },
     {
       "date": "2026-06-15",
       "country": "EG",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 4,
+      "engagedSessions": 2,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 66
     },
     {
       "date": "2026-06-15",
       "country": "NG",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 1,
+      "engagedSessions": 3,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 78
     },
     {
       "date": "2026-06-15",
       "country": "KE",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 2,
+      "engagedSessions": 1,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 30
     },
     {
       "date": "2026-06-15",
       "country": "GH",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 3,
+      "engagedSessions": 2,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 42
     },
     {
       "date": "2026-06-15",
       "country": "MA",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 4,
+      "engagedSessions": 3,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 54
     },
     {
       "date": "2026-06-15",
       "country": "IL",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 1,
+      "engagedSessions": 1,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 66
     },
     {
       "date": "2026-06-15",
       "country": "RU",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 2,
+      "engagedSessions": 2,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 78
     },
     {
       "date": "2026-06-15",
       "country": "UA",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 3,
+      "engagedSessions": 3,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 30
     },
     {
       "date": "2026-06-15",
       "country": "RO",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 4,
+      "engagedSessions": 1,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 42
     },
     {
       "date": "2026-06-15",
       "country": "BG",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 1,
+      "engagedSessions": 2,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 54
     },
     {
       "date": "2026-06-15",
       "country": "HR",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 2,
+      "engagedSessions": 3,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 66
     },
     {
       "date": "2026-06-15",
       "country": "SI",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 3,
+      "engagedSessions": 1,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 78
     },
     {
       "date": "2026-06-15",
       "country": "SK",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 4,
+      "engagedSessions": 2,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 30
     },
     {
       "date": "2026-06-15",
       "country": "LT",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 1,
+      "engagedSessions": 3,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 42
     },
     {
       "date": "2026-06-15",
       "country": "LV",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 2,
+      "engagedSessions": 1,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 54
     },
     {
       "date": "2026-06-15",
       "country": "EE",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 3,
+      "engagedSessions": 2,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 66
     },
     {
       "date": "2026-06-15",
       "country": "IS",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 4,
+      "engagedSessions": 3,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 78
     },
     {
       "date": "2026-06-15",
       "country": "LU",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 1,
+      "engagedSessions": 1,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 30
     },
     {
       "date": "2026-06-15",
       "country": "CY",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 2,
+      "engagedSessions": 2,
+      "bouncedSessions": 1,
+      "totalSessionDurationSec": 42
     },
     {
       "date": "2026-06-15",
       "country": "MT",
-      "totalUsers": 19,
-      "bouncedSessions": 8,
-      "totalSessionDurationSec": 2592
+      "totalUsers": 3,
+      "engagedSessions": 3,
+      "bouncedSessions": 0,
+      "totalSessionDurationSec": 54
     }
   ],
   "devices": [
     {
       "date": "2026-06-15",
       "device": "desktop",
-      "sessions": 1180,
-      "engagedSessions": 780
+      "sessions": 1349,
+      "engagedSessions": 892
     },
     {
       "date": "2026-06-15",
       "device": "mobile",
-      "sessions": 540,
-      "engagedSessions": 343
+      "sessions": 378,
+      "engagedSessions": 231
     }
   ],
   "paths": [
@@ -2520,13 +2693,31 @@
       "date": "2026-06-15",
       "step1": "/",
       "step2": "/contact-us/",
-      "sessions": 45
+      "sessions": 123
     },
     {
       "date": "2026-06-15",
       "step1": "/about-us/",
-      "step2": "/clients/",
-      "sessions": 22
+      "step2": "/global-clients/",
+      "sessions": 64
+    },
+    {
+      "date": "2026-06-15",
+      "step1": "/",
+      "step2": "/solutions/power-bi-consulting/",
+      "sessions": 58
+    },
+    {
+      "date": "2026-06-15",
+      "step1": "/careers/",
+      "step2": "(exit)",
+      "sessions": 303
+    },
+    {
+      "date": "2026-06-15",
+      "step1": "/",
+      "step2": "(exit)",
+      "sessions": 277
     }
   ]
 }

@@ -2,18 +2,22 @@ import {
   brandTermsConfigSchema,
   ga4FileSchema,
   gscFileSchema,
+  linkedInCompetitorsConfigSchema,
   linkedInFileSchema,
   metaAdsFileSchema,
   narrativesFileSchema,
+  pageTypesConfigSchema,
   salesRepsConfigSchema,
   thresholdsConfigSchema,
   zohoCrmFileSchema,
   type BrandTermsConfigFile,
   type Ga4File,
   type GscFile,
+  type LinkedInCompetitorsConfigFile,
   type LinkedInFile,
   type MetaAdsFile,
   type NarrativesFile,
+  type PageTypesConfigFile,
   type SalesRepsConfigFile,
   type ThresholdsConfigFile,
   type ZohoCrmFile,
@@ -131,6 +135,8 @@ const CONFIG_SCHEMAS = {
   thresholds: thresholdsConfigSchema,
   'brand-terms': brandTermsConfigSchema,
   'sales-reps': salesRepsConfigSchema,
+  'page-types': pageTypesConfigSchema,
+  'linkedin-competitors': linkedInCompetitorsConfigSchema,
 } as const
 
 export type ConfigName = keyof typeof CONFIG_SCHEMAS
@@ -139,6 +145,8 @@ export interface ConfigFileMap {
   thresholds: ThresholdsConfigFile
   'brand-terms': BrandTermsConfigFile
   'sales-reps': SalesRepsConfigFile
+  'page-types': PageTypesConfigFile
+  'linkedin-competitors': LinkedInCompetitorsConfigFile
 }
 
 export class ConfigLoadError extends Error {

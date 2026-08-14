@@ -227,6 +227,43 @@
         "additionalProperties": false
       }
     },
+    "landingPages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "landingPage": {
+            "type": "string"
+          },
+          "sessions": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "engagedSessions": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "bouncedSessions": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "date",
+          "landingPage",
+          "sessions",
+          "engagedSessions",
+          "bouncedSessions"
+        ],
+        "additionalProperties": false
+      }
+    },
     "countries": {
       "type": "array",
       "items": {
@@ -239,6 +276,11 @@
             "type": "string"
           },
           "totalUsers": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "engagedSessions": {
             "type": "integer",
             "minimum": 0,
             "maximum": 9007199254740991
@@ -257,6 +299,7 @@
           "date",
           "country",
           "totalUsers",
+          "engagedSessions",
           "bouncedSessions",
           "totalSessionDurationSec"
         ],
@@ -331,6 +374,7 @@
     "channels",
     "sources",
     "pages",
+    "landingPages",
     "countries",
     "devices",
     "paths"

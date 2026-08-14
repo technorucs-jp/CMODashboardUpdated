@@ -183,8 +183,28 @@ export const ga4CountrySchema = z
     date: z.string(),
     country: z.string(),
     totalUsers: z.number().int().nonnegative(),
+    /** Added for item 3.24's country-engagement table. Without it a per-country
+     *  bounce rate and average duration are underivable: this slice carried
+     *  `bouncedSessions` and `totalSessionDurationSec` but no denominator at all.
+     *  Sessions are derived as engaged + bounced (GA4's bounce is precisely
+     *  "not engaged"), matching how the pages slice works — same gap-closing as
+     *  item 1.7's missing LinkedIn pageViews/uniqueVisitors. */
+    engagedSessions: z.number().int().nonnegative(),
     bouncedSessions: z.number().int().nonnegative(),
     totalSessionDurationSec: z.number().nonnegative(),
+  })
+  .strict()
+
+/** Landing pages (BRD §8.3's entry behaviour, item 3.24). A distinct GA4 dimension
+ *  from `pages` — a page view is not an entry — so it gets its own slice rather
+ *  than approximating entries by re-sorting the pages table. */
+export const ga4LandingPageSchema = z
+  .object({
+    date: z.string(),
+    landingPage: z.string(),
+    sessions: z.number().int().nonnegative(),
+    engagedSessions: z.number().int().nonnegative(),
+    bouncedSessions: z.number().int().nonnegative(),
   })
   .strict()
 
@@ -211,6 +231,7 @@ export const ga4FileSchema = envelopeSchema.extend({
   channels: z.array(ga4ChannelSchema),
   sources: z.array(ga4SourceSchema),
   pages: z.array(ga4PageSchema),
+  landingPages: z.array(ga4LandingPageSchema),
   countries: z.array(ga4CountrySchema),
   devices: z.array(ga4DeviceSchema),
   paths: z.array(ga4PathSchema),
@@ -437,3 +458,19 @@ export const salesRepsConfigSchema = z.object({
 })
 
 export type SalesRepsConfigFile = z.infer<typeof salesRepsConfigSchema>
+
+export const pageTypesConfigSchema = z.object({
+  schemaVersion: z.number().int().positive(),
+  rules: z.array(z.object({ prefix: z.string(), type: z.string() })),
+  default: z.string(),
+})
+
+export type PageTypesConfigFile = z.infer<typeof pageTypesConfigSchema>
+
+export const linkedInCompetitorsConfigSchema = z.object({
+  schemaVersion: z.number().int().positive(),
+  competitors: z.array(z.object({ page: z.string() })),
+})
+
+export type LinkedInCompetitorsConfigFile = z.infer<typeof linkedInCompetitorsConfigSchema>
+

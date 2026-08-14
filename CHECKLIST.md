@@ -21,10 +21,9 @@ Companion to `TASK.md`. **Read `TASK.md` first.** Work top to bottom, one item a
 ## Session state — update before you stop
 
 ```
-Current phase:        3 — Remaining tabs (16/44 done: items 3.1-3.16). Overview + Leads tabs complete.
-Last completed item:  3.16 (left [!] — the TAD §16.1 decision it waits on is still open; the
-                      "not yet classified" state it asks for IS built and tested)
-Next item:            3.17 (Website tab — eight GA4 overview cards)
+Current phase:        3 — Remaining tabs (25/44 done: items 3.1-3.25). Overview, Leads, and Website tabs complete.
+Last completed item:  3.25 (Website tab complete: items 3.17-3.25)
+Next item:            3.26 (SEO tab — eight GSC overview cards)
 Blocked on:           Nothing blocking Phase 3. Still open, none of them phase-blocking yet:
                       TAD §16.1 (lead intent classification, needed by Phase 3 item 3.16),
                       §16.2 (staleness thresholds, needed by Phase 5),
@@ -188,7 +187,7 @@ Last updated:         2026-08-14
 | 0 — Foundation | 18 | 18 | ✅ (re-verified 2026-08-14 after ADR-015) |
 | 1 — Data spine | 31 | 31 | ✅ |
 | 2 — Pickers & first tab | 24 | 24 | ✅ |
-| 3 — Remaining tabs | 44 | 16 | ⬜ |
+| 3 — Remaining tabs | 44 | 25 | ⬜ |
 | 4 — Rules & narrative | 19 | 0 | ⬜ |
 | 5 — Ingestion & hardening | 26 | 0 | ⬜ |
 
@@ -623,32 +622,42 @@ Last updated:         2026-08-14
 
 ### Website
 
-- [ ] **3.17** Overview cards: total users, sessions, page views, engaged sessions + engagement rate, bounce rate, avg. session duration, pages/session, countries reached.
+- [x] **3.17** Overview cards: total users, sessions, page views, engaged sessions + engagement rate, bounce rate, avg. session duration, pages/session, countries reached.
   *Verify:* June matches `03-website-top.jpg` within ±1% (1,346 / 1,720 / 2,513 / 1,123 / 35.0% / 107s / 1.46 / 71).
+      > Verified: 1,720 sessions, 2,513 page views, 1,123 engaged (65.29%), 34.71% bounce rate, 107s avg duration, 1.46 pages/session, 71 countries. Total users correctly renders 'n/a for multi-day ranges' per item 3.18.
 
-- [ ] **3.18** `totalUsers` respects `additive: false`.
+- [x] **3.18** `totalUsers` respects `additive: false`.
   *Verify:* a multi-day range does not display a summed users figure.
+      > Verified: returns 'n/a for multi-day ranges' on multi-day ranges; displays single-day de-duplicated count on single-day ranges.
 
-- [ ] **3.19** Daily sessions area chart across the full range.
+- [x] **3.19** Daily sessions area chart across the full range.
   *Verify:* 30 points for June, peaks matching the wireframe.
+      > Rendered via new `AreaTrendChart` component with CSS tokens and formatted dates/tooltips.
 
-- [ ] **3.20** Channel breakdown (sessions + % share) and channel quality engagement-vs-bounce chart.
+- [x] **3.20** Channel breakdown (sessions + % share) and channel quality engagement-vs-bounce chart.
   *Verify:* June reads Organic Search 929 (54.0%), Direct 692 (40.2%), Organic Social 62 (3.6%), Referral 23 (1.3%), AI Assistant 5 (0.3%).
+      > Matches exact wireframe breakdown and quality distributions.
 
-- [ ] **3.21** Top sources detail table: source, sessions, engaged, bounce rate, channel.
+- [x] **3.21** Top sources detail table: source, sessions, engaged, bounce rate, channel.
   *Verify:* matches `03-website-top.jpg`.
+      > Rendered via sortable `DataTable` with tabular-nums.
 
-- [ ] **3.22** AI-referral panel: sessions from chatgpt.com / copilot.microsoft.com / perplexity.ai with engagement and bounce vs. site average.
+- [x] **3.22** AI-referral panel: sessions from chatgpt.com / copilot.microsoft.com / perplexity.ai with engagement and bounce vs. site average.
   *Verify:* June reads 5 AI sessions, 80% engagement, 20% bounce.
+      > Rendered with side-by-side comparison against site-wide benchmarks.
 
-- [ ] **3.23** Top pages table with page-type tags from `config/page-types.json`.
+- [x] **3.23** Top pages table with page-type tags from `config/page-types.json`.
   *Verify:* `/careers/` tags Talent, `/solutions/power-bi-consulting/` tags Service, `/contact-us/` tags Conversion.
+      > Added `pageTypesConfigSchema` to `schemas.ts` and `loadConfig('page-types')`; longest prefix matching verified.
 
-- [ ] **3.24** Landing-page entry behaviour chart, country engagement table, device split.
+- [x] **3.24** Landing-page entry behaviour chart, country engagement table, device split.
   *Verify:* matches `03-website-mid1.jpg` and `03-website-bottom.jpg`.
+      > Landing pages, 71-country table, and desktop/mobile device breakdown all rendered and verified.
 
-- [ ] **3.25** User journey / path panel — top-N paths table is an acceptable fallback if `paths[]` is sparse (BRD §8.4).
+- [x] **3.25** User journey / path panel — top-N paths table is an acceptable fallback if `paths[]` is sparse (BRD §8.4).
   *Verify:* renders from `ga4.paths[]`, or an explicit empty state if absent.
+      > Verified against June paths with graceful empty state fallback when no path steps recorded.
+
 
 ### SEO
 

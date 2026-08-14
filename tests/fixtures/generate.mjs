@@ -258,6 +258,7 @@ function buildGa4() {
   const channels = []
   const sources = []
   const pages = []
+  const landingPages = []
   const countries = []
   const devices = []
   const paths = []
@@ -308,20 +309,46 @@ function buildGa4() {
     }
   }
 
+  // Top sources detail (item 3.21) — exact figures from 03-website-top.jpg's
+  // "Traffic sources — top sources detail" table. Bounce rates are derived at
+  // render time as bounced/(engaged+bounced), so each row's bounced count is set
+  // to produce the wireframe's stated rate: google 271/880 = 30.8%,
+  // (direct) 273/692 = 39.5%, bing 13/47 = 27.7%.
+  sources.push(
+    { date: '2026-06-15', source: 'google', channelGroup: 'Organic Search', sessions: 880, engagedSessions: 609, bouncedSessions: 271 },
+    { date: '2026-06-15', source: '(direct)', channelGroup: 'Direct', sessions: 692, engagedSessions: 419, bouncedSessions: 273 },
+    { date: '2026-06-15', source: 'bing', channelGroup: 'Organic Search', sessions: 47, engagedSessions: 34, bouncedSessions: 13 },
+  )
+
   // AI-referral sources (item 3.22): 5 sessions total, 80% engaged, 20% bounced.
+  // (03-website-bottom.jpg's narrative says "7 AI sessions" while its own channel
+  // breakdown says 5 — item 3.22's verify says 5, which is also what the channel
+  // table sums to, so 5 is used.)
   sources.push(
     { date: '2026-06-15', source: 'chatgpt.com', channelGroup: 'AI Assistant', sessions: 3, engagedSessions: 3, bouncedSessions: 0 },
     { date: '2026-06-20', source: 'perplexity.ai', channelGroup: 'AI Assistant', sessions: 2, engagedSessions: 1, bouncedSessions: 1 },
   )
 
-  // Top pages (item 3.23) — page-type tagging examples, not reconciled to daily totals.
+  // Top pages (item 3.23) — the five rows visible in 03-website-mid1.jpg with their
+  // exact views/users/engaged/bounce-rate/avg-duration, plus the homepage and
+  // /careers/ (both named in 03-website-bottom.jpg's narrative: homepage 42.9%
+  // bounce, Careers 303 views at 21.2% bounce) and /contact-us/, which item 3.23's
+  // verify needs present to check its Conversion page-type tag.
+  //
+  // A page's sessions are derived at render as engaged + bounced (GA4's bounce is
+  // exactly "not engaged"), so `bounced` here is set to reproduce the wireframe's
+  // stated bounce rate against its stated engaged count — e.g. /global-clients/
+  // 10/(64+10) = 13.5%. `duration` is avgDuration x sessions.
   const PAGE_EXAMPLES = [
-    { pagePath: '/', views: 620, users: 480, engaged: 410, bounced: 180, duration: 55000 },
-    { pagePath: '/solutions/power-bi-consulting/', views: 210, users: 160, engaged: 140, bounced: 55, duration: 22000 },
+    { pagePath: '/', views: 620, users: 480, engaged: 400, bounced: 300, duration: 42000 }, // 42.9% bounce
+    { pagePath: '/careers/', views: 303, users: 250, engaged: 193, bounced: 52, duration: 11025 }, // 21.2% bounce
+    { pagePath: '/global-clients/', views: 78, users: 62, engaged: 64, bounced: 10, duration: 5550 }, // 13.5%, 1m 15s
+    { pagePath: '/blog/', views: 63, users: 22, engaged: 49, bounced: 5, duration: 2916 }, // 9.3%, 54s
+    { pagePath: '/solutions/power-bi-consulting/', views: 37, users: 13, engaged: 17, bounced: 2, duration: 7942 }, // 10.5%, 6m 58s
+    { pagePath: '/services/full-stack-development/', views: 28, users: 26, engaged: 24, bounced: 4, duration: 952 }, // 14.3%, 34s
+    { pagePath: '/solutions/microsoft-dynamics-365-finance-and-operations/', views: 17, users: 11, engaged: 13, bounced: 1, duration: 3248 }, // 7.1%, 3m 52s
     { pagePath: '/contact-us/', views: 95, users: 88, engaged: 80, bounced: 12, duration: 9000 },
-    { pagePath: '/careers/', views: 130, users: 110, engaged: 90, bounced: 40, duration: 11000 },
     { pagePath: '/about-us/', views: 140, users: 120, engaged: 95, bounced: 45, duration: 12500 },
-    { pagePath: '/blog/d365-fo/', views: 180, users: 150, engaged: 120, bounced: 60, duration: 17000 },
   ]
   for (const p of PAGE_EXAMPLES) {
     pages.push({
@@ -335,31 +362,72 @@ function buildGa4() {
     })
   }
 
-  // Countries reached (item 3.26): exactly 71 distinct for June.
-  const juneCountries = ALL_COUNTRY_CODES.slice(0, 71)
-  const countrySessionSplit = splitInt(1720, juneCountries.length)
-  const countryBouncedSplit = splitInt(597, juneCountries.length)
-  const countryDurationSplit = splitInt(184040, juneCountries.length)
-  juneCountries.forEach((country, i) => {
+  // Countries reached (item 3.17): exactly 71 distinct for June. The top 8 carry
+  // 03-website-mid1.jpg's exact "Country engagement quality" figures — users,
+  // bounce rate and avg. duration. Per-country sessions are derived at render as
+  // engaged + bounced, so each row's counts are set to reproduce the wireframe's
+  // stated rate (e.g. India 242/(458+242) = 34.6%) and duration
+  // (116,200s / 700 sessions = 166s = 2m 46s). The remaining 63 are small filler
+  // to reach the 71-country total — this slice is an independent breakdown that
+  // needn't sum to `daily[]`'s totals (same ADR-008 reasoning as GSC's).
+  const COUNTRY_DETAIL = [
+    { country: 'IN', totalUsers: 629, engagedSessions: 458, bouncedSessions: 242, totalSessionDurationSec: 116200 }, // 34.6%, 2m 46s
+    { country: 'US', totalUsers: 368, engagedSessions: 269, bouncedSessions: 131, totalSessionDurationSec: 9600 }, // 32.8%, 24s
+    { country: 'CN', totalUsers: 57, engagedSessions: 21, bouncedSessions: 43, totalSessionDurationSec: 128 }, // 67.2%, 2s
+    { country: 'SG', totalUsers: 23, engagedSessions: 16, bouncedSessions: 9, totalSessionDurationSec: 2225 }, // 36.0%, 1m 29s
+    { country: 'AE', totalUsers: 22, engagedSessions: 21, bouncedSessions: 5, totalSessionDurationSec: 2002 }, // 19.2%, 1m 17s
+    { country: 'GB', totalUsers: 20, engagedSessions: 20, bouncedSessions: 9, totalSessionDurationSec: 8526 }, // 31.0%, 4m 54s
+    { country: 'CA', totalUsers: 19, engagedSessions: 15, bouncedSessions: 6, totalSessionDurationSec: 2352 }, // 28.6%, 1m 52s
+    { country: 'AU', totalUsers: 9, engagedSessions: 9, bouncedSessions: 2, totalSessionDurationSec: 1683 }, // 18.2%, 2m 33s
+  ]
+  for (const c of COUNTRY_DETAIL) {
+    countries.push({ date: '2026-06-15', ...c })
+  }
+  const detailCodes = new Set(COUNTRY_DETAIL.map((c) => c.country))
+  const fillerCountries = ALL_COUNTRY_CODES.filter((c) => !detailCodes.has(c)).slice(0, 71 - COUNTRY_DETAIL.length)
+  fillerCountries.forEach((country, i) => {
     countries.push({
       date: '2026-06-15',
       country,
-      totalUsers: Math.max(1, Math.round(countrySessionSplit[i] * 0.8)),
-      bouncedSessions: countryBouncedSplit[i],
-      totalSessionDurationSec: countryDurationSplit[i],
+      totalUsers: 1 + (i % 4),
+      engagedSessions: 1 + (i % 3),
+      bouncedSessions: i % 2,
+      totalSessionDurationSec: 30 + (i % 5) * 12,
     })
   })
 
-  // Device split — plausible, not separately reconciled beyond schema validity.
-  devices.push(
-    { date: '2026-06-15', device: 'desktop', sessions: 1180, engagedSessions: 780 },
-    { date: '2026-06-15', device: 'mobile', sessions: 540, engagedSessions: 343 },
+  // Landing pages — entry behaviour (item 3.24), read off 03-website-mid1.jpg's
+  // bar lengths. A landing page is a distinct GA4 dimension from a page view
+  // (an entry, not a hit), which is why this is its own slice rather than a
+  // re-sort of `pages` above.
+  landingPages.push(
+    { date: '2026-06-15', landingPage: '/', sessions: 760, engagedSessions: 434, bouncedSessions: 326 },
+    { date: '2026-06-15', landingPage: '/blog/outsystems-vs-power-apps/', sessions: 230, engagedSessions: 205, bouncedSessions: 25 },
+    { date: '2026-06-15', landingPage: '/blog/top-power-apps-examples/', sessions: 215, engagedSessions: 190, bouncedSessions: 25 },
+    { date: '2026-06-15', landingPage: '/careers/', sessions: 210, engagedSessions: 165, bouncedSessions: 45 },
+    { date: '2026-06-15', landingPage: '/about-us/', sessions: 40, engagedSessions: 28, bouncedSessions: 12 },
+    { date: '2026-06-15', landingPage: '/contact-us/', sessions: 35, engagedSessions: 30, bouncedSessions: 5 },
+    { date: '2026-06-15', landingPage: '/global-clients/', sessions: 30, engagedSessions: 26, bouncedSessions: 4 },
   )
 
-  // User journey example paths (BRD §8.4).
+  // Device split (item 3.24) — 03-website-bottom.jpg: desktop 892 of 1,349 engaged
+  // (66.1%), mobile 231 of 378 (61.1%). These sum to 1,727 rather than `daily[]`'s
+  // 1,720 sessions; that is the wireframe's own figure and is left as-is, since
+  // device slices are independent breakdowns (ADR-008) that GA4 itself does not
+  // guarantee will reconcile exactly to the session total.
+  devices.push(
+    { date: '2026-06-15', device: 'desktop', sessions: 1349, engagedSessions: 892 },
+    { date: '2026-06-15', device: 'mobile', sessions: 378, engagedSessions: 231 },
+  )
+
+  // User journey example paths (BRD §8.4, item 3.25) — the five paths named in
+  // 03-website-bottom.jpg's "User journey — path behaviour" panel.
   paths.push(
-    { date: '2026-06-15', step1: '/', step2: '/contact-us/', sessions: 45 },
-    { date: '2026-06-15', step1: '/about-us/', step2: '/clients/', sessions: 22 },
+    { date: '2026-06-15', step1: '/', step2: '/contact-us/', sessions: 123 },
+    { date: '2026-06-15', step1: '/about-us/', step2: '/global-clients/', sessions: 64 },
+    { date: '2026-06-15', step1: '/', step2: '/solutions/power-bi-consulting/', sessions: 58 },
+    { date: '2026-06-15', step1: '/careers/', step2: '(exit)', sessions: 303 },
+    { date: '2026-06-15', step1: '/', step2: '(exit)', sessions: 277 },
   )
 
   // May — reconciled to Wireframe/08-overview-may2026.jpg and 09-overview-comparemom.jpg
@@ -412,6 +480,7 @@ function buildGa4() {
     channels,
     sources,
     pages,
+    landingPages,
     countries,
     devices,
     paths,
