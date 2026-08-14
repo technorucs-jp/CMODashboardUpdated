@@ -23,11 +23,17 @@ export interface GscDevice {
 export interface GscPage {
   readonly date: string
   readonly page: string
+  readonly clicks?: number
+  readonly impressions?: number
+  readonly sumPosition?: number
 }
 
 export interface GscCountry {
   readonly date: string
   readonly country: string
+  readonly clicks?: number
+  readonly impressions?: number
+  readonly sumPosition?: number
 }
 
 export interface GscQuery {
@@ -80,6 +86,10 @@ export interface GscSummary {
 export interface GscQueryResult {
   readonly daily: readonly GscDaily[]
   readonly summary: GscSummary
+  readonly queries: readonly GscQuery[]
+  readonly pages: readonly GscPage[]
+  readonly countries: readonly GscCountry[]
+  readonly devices: readonly GscDevice[]
 }
 
 /**
@@ -96,7 +106,7 @@ function gscCoverage(range: DateRange, earliestRecordDate: string, latestRecordD
 /** Substring match against a lowercased brand-term list (BRD §9.1's "technorucs" +
  *  misspellings config) — catches "technorucs private limited" via the "technorucs"
  *  term without needing every real-world phrasing enumerated in the config. */
-function isBrandQuery(query: string, brandTerms: readonly string[]): boolean {
+export function isBrandQuery(query: string, brandTerms: readonly string[]): boolean {
   const lower = query.toLowerCase()
   return brandTerms.some((term) => lower.includes(term.toLowerCase()))
 }
@@ -124,10 +134,15 @@ export function queryGsc(
     const devicesInRange = file.devices.filter((d) => containsDate(range, d.date))
     const mobileClicks = devicesInRange.filter((d) => d.device === 'MOBILE').reduce((total, d) => total + d.clicks, 0)
 
-    const indexedPages = new Set(file.pages.filter((p) => containsDate(range, p.date)).map((p) => p.page)).size
-    const countriesReached = new Set(file.countries.filter((c) => containsDate(range, c.date)).map((c) => c.country)).size
+    const inRange = <T extends { date: string }>(rows: readonly T[] | undefined): readonly T[] =>
+      (rows ?? []).filter((r) => containsDate(range, r.date))
 
-    const queriesInRange = (file.queries ?? []).filter((q) => containsDate(range, q.date))
+    const pagesInRange = inRange(file.pages)
+    const countriesInRange = inRange(file.countries)
+    const indexedPages = new Set(pagesInRange.map((p) => p.page)).size
+    const countriesReached = new Set(countriesInRange.map((c) => c.country)).size
+
+    const queriesInRange = inRange(file.queries)
     const brandClicks = queriesInRange
       .filter((q) => isBrandQuery(q.query, brandTerms))
       .reduce((total, q) => total + q.clicks, 0)
@@ -148,6 +163,10 @@ export function queryGsc(
         brandClickShare: ratio(brandClicks, clicks),
         nonBrandClicks,
       },
+      queries: queriesInRange,
+      pages: pagesInRange,
+      countries: countriesInRange,
+      devices: devicesInRange,
     }
   })
 }

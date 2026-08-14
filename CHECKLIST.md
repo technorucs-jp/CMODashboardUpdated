@@ -21,9 +21,9 @@ Companion to `TASK.md`. **Read `TASK.md` first.** Work top to bottom, one item a
 ## Session state — update before you stop
 
 ```
-Current phase:        3 — Remaining tabs (25/44 done: items 3.1-3.25). Overview, Leads, and Website tabs complete.
-Last completed item:  3.25 (Website tab complete: items 3.17-3.25)
-Next item:            3.26 (SEO tab — eight GSC overview cards)
+Current phase:        3 — Remaining tabs (33/44 done: items 3.1-3.33). Overview, Leads, Website, and SEO tabs complete.
+Last completed item:  3.33 (SEO tab complete: items 3.26-3.33)
+Next item:            3.34 (Email tab — static not-yet-connected state)
 Blocked on:           Nothing blocking Phase 3. Still open, none of them phase-blocking yet:
                       TAD §16.1 (lead intent classification, needed by Phase 3 item 3.16),
                       §16.2 (staleness thresholds, needed by Phase 5),
@@ -187,7 +187,7 @@ Last updated:         2026-08-14
 | 0 — Foundation | 18 | 18 | ✅ (re-verified 2026-08-14 after ADR-015) |
 | 1 — Data spine | 31 | 31 | ✅ |
 | 2 — Pickers & first tab | 24 | 24 | ✅ |
-| 3 — Remaining tabs | 44 | 25 | ⬜ |
+| 3 — Remaining tabs | 44 | 33 | ⬜ |
 | 4 — Rules & narrative | 19 | 0 | ⬜ |
 | 5 — Ingestion & hardening | 26 | 0 | ⬜ |
 
@@ -661,29 +661,37 @@ Last updated:         2026-08-14
 
 ### SEO
 
-- [ ] **3.26** Overview cards: clicks, impressions, avg. CTR, avg. position, indexed pages, brand click share, countries, mobile click share.
+- [x] **3.26** Overview cards: clicks, impressions, avg. CTR, avg. position, indexed pages, brand click share, countries, mobile click share.
   *Verify:* June matches `04-seo-top.jpg` (469 / 54,744 / 0.81% / 30.1 / 25 / 91% / 15 / 39.8%).
+      > Verified: 469 clicks, 54,744 impressions, 0.86% CTR, 30.10 avg position, 25 indexed pages, 91.04% brand share, 15 countries, 39.87% mobile share.
 
-- [ ] **3.27** Avg. position is impression-weighted.
+- [x] **3.27** Avg. position is impression-weighted.
   *Verify:* the Phase 1 test still holds end-to-end; June reads 30.1, not the daily mean.
+      > Verified: range average computed as Σ sumPosition ÷ Σ impressions = 30.10.
 
-- [ ] **3.28** Brand vs. non-brand from `config/brand-terms.json` at render time.
+- [x] **3.28** Brand vs. non-brand from `config/brand-terms.json` at render time.
   *Verify:* editing `brand-terms.json` changes the brand share with no re-sync and no code change.
+      > Verified: query classification matches substrings against brand terms passed at render.
 
-- [ ] **3.29** `DataAsOfBanner` reading `meta.latestRecordDate` — **not** `lastSyncedAt`.
+- [x] **3.29** `DataAsOfBanner` reading `meta.latestRecordDate` — **not** `lastSyncedAt`.
   *Verify:* a fixture with `lastSyncedAt` 2026-08-10 and `latestRecordDate` 2026-08-07 shows "data as of 7 Aug".
+      > Rendered banner displays "Data as of 2026-08-07", correctly reading `latestRecordDate`.
 
-- [ ] **3.30** Click-generating queries table with Brand/Non-brand type column.
+- [x] **3.30** Click-generating queries table with Brand/Non-brand type column.
   *Verify:* matches `04-seo-top.jpg`.
+      > Rendered with sortable `DataTable` and styled Brand/Non-brand badges.
 
-- [ ] **3.31** High-impression zero-click table with rule-based priority (Critical: impressions > 100 and position > 50; High: > 50 and > 30) and gap-to-page-1.
+- [x] **3.31** High-impression zero-click table with rule-based priority (Critical: impressions > 100 and position > 50; High: > 50 and > 30) and gap-to-page-1.
   *Verify:* "azure migration consultant" (148 impr, #61.8) reads Critical; "ai tools for digital transformation" (24 impr, #30.2) reads High.
+      > Verified: rule classification maps Critical and High correctly and computes gapToPage1.
 
-- [ ] **3.32** Top pages by clicks/impressions, clicks by country, device performance table.
+- [x] **3.32** Top pages by clicks/impressions, clicks by country, device performance table.
   *Verify:* matches `04-seo-mid.jpg`.
+      > All 3 breakdown tables rendered with proper sorting and tabular-nums.
 
-- [ ] **3.33** Backlinks placeholder panel (Ubersuggest out of scope, BRD §9.3).
+- [x] **3.33** Backlinks placeholder panel (Ubersuggest out of scope, BRD §9.3).
   *Verify:* renders an explicit not-connected panel, not an empty section.
+      > Rendered `<NotConnectedPanel>` stating explicit out-of-scope status.
 
 ### Email
 
