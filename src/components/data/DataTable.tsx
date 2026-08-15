@@ -48,8 +48,8 @@ export function DataTable<T>({ columns, rows, getRowKey, totals, totalsLabel = '
   }
 
   return (
-    <div style={{ overflowX: 'auto' }}>
-      <table style={{ width: '100%', borderCollapse: 'collapse', fontVariantNumeric: 'tabular-nums' }}>
+    <div className="data-table-container">
+      <table className="data-table">
         <thead>
           <tr>
             {columns.map((col) => (
@@ -65,7 +65,8 @@ export function DataTable<T>({ columns, rows, getRowKey, totals, totalsLabel = '
                 tabIndex={0}
                 role="columnheader"
                 aria-sort={sort?.key === col.key ? (sort.direction === 'asc' ? 'ascending' : 'descending') : 'none'}
-                style={{ textAlign: col.align ?? 'left', cursor: 'pointer', userSelect: 'none' }}
+                className={col.align === 'right' ? 'num' : undefined}
+                style={{ cursor: 'pointer', userSelect: 'none' }}
               >
                 {col.label}
                 {sort?.key === col.key ? (sort.direction === 'asc' ? ' ▲' : ' ▼') : ''}
@@ -77,7 +78,7 @@ export function DataTable<T>({ columns, rows, getRowKey, totals, totalsLabel = '
           {sortedRows.map((row) => (
             <tr key={getRowKey(row)}>
               {columns.map((col) => (
-                <td key={col.key} style={{ textAlign: col.align ?? 'left' }}>
+                <td key={col.key} className={col.align === 'right' ? 'num' : undefined}>
                   {col.render ? col.render(row) : col.accessor(row)}
                 </td>
               ))}
@@ -88,7 +89,7 @@ export function DataTable<T>({ columns, rows, getRowKey, totals, totalsLabel = '
           <tfoot>
             <tr>
               {columns.map((col, i) => (
-                <td key={col.key} style={{ textAlign: col.align ?? 'left', fontWeight: 600 }}>
+                <td key={col.key} className={col.align === 'right' ? 'num' : undefined}>
                   {i === 0 ? totalsLabel : (totals[col.key] ?? '')}
                 </td>
               ))}

@@ -63,30 +63,32 @@ export function ComparisonRangePicker({ primaryRange, comparisonRange, onChange 
   }
 
   return (
-    <div>
-      <span>Compare to</span>
-      <div role="group" aria-label="Comparison range options">
+    <div className="picker">
+      <span className="picker-label">Compare to</span>
+      <div className="picker-group" role="group" aria-label="Comparison range options">
         {OPTION_LABELS.map((o) => (
-          <button key={o.id} type="button" onClick={() => handleOptionClick(o.id)}>
+          <button key={o.id} className="picker-btn" type="button" onClick={() => handleOptionClick(o.id)}>
             {o.label}
           </button>
         ))}
       </div>
       {comparisonRange && (
-        <span aria-label="Selected comparison range">
+        <span className="picker-value" aria-label="Selected comparison range">
           {comparisonRange.from} – {comparisonRange.to}
         </span>
       )}
       {calendarOpen && (
-        <DayPicker
-          mode="range"
-          selected={
-            comparisonRange
-              ? { from: calendarDateFromBusinessDate(comparisonRange.from), to: calendarDateFromBusinessDate(comparisonRange.to) }
-              : undefined
-          }
-          onSelect={handleCalendarSelect}
-        />
+        <div className="picker-calendar">
+          <DayPicker
+            mode="range"
+            selected={
+              comparisonRange
+                ? { from: calendarDateFromBusinessDate(comparisonRange.from), to: calendarDateFromBusinessDate(comparisonRange.to) }
+                : undefined
+            }
+            onSelect={handleCalendarSelect}
+          />
+        </div>
       )}
     </div>
   )

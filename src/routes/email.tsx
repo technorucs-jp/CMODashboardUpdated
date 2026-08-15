@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import { NotConnectedPanel } from '@/components/states/NotConnectedPanel'
 
 /**
@@ -7,8 +8,8 @@ import { NotConnectedPanel } from '@/components/states/NotConnectedPanel'
  */
 export default function EmailPage() {
   return (
-    <div>
-      <h1>Email</h1>
+    <div className="page" style={{ '--page-accent': 'var(--accent-6)' } as CSSProperties}>
+      <h1 className="page-title">Email</h1>
       <p>Instantly.ai · Cold Outreach & Campaign Analytics</p>
 
       <div style={{ marginTop: 24, maxWidth: 640 }}>

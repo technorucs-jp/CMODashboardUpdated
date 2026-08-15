@@ -49,18 +49,18 @@ export class SectionErrorBoundary extends Component<SectionErrorBoundaryProps, S
           style={{
             padding: 16,
             borderRadius: 8,
-            backgroundColor: 'var(--surface-2)',
-            border: '1px solid var(--hue-red, #ef4444)',
-            color: 'var(--text-primary)',
+            backgroundColor: 'var(--color-surface-2)',
+            border: '1px solid var(--hue-red)',
+            color: 'var(--color-text-primary)',
             margin: '12px 0',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div>
-              <strong style={{ color: 'var(--hue-red, #ef4444)' }}>
+              <strong style={{ color: 'var(--hue-red)' }}>
                 {this.props.title ? `Error in ${this.props.title}` : 'Unable to display this section'}
               </strong>
-              <p style={{ margin: '4px 0 0', fontSize: 13, color: 'var(--text-secondary)' }}>
+              <p style={{ margin: '4px 0 0', fontSize: 13, color: 'var(--color-text-secondary)' }}>
                 A visual component encountered an issue. Other metrics remain fully functional.
               </p>
             </div>
@@ -71,8 +71,8 @@ export class SectionErrorBoundary extends Component<SectionErrorBoundaryProps, S
                 padding: '6px 12px',
                 borderRadius: 4,
                 border: '1px solid var(--color-border)',
-                background: 'var(--surface-1)',
-                color: 'var(--text-primary)',
+                background: 'var(--color-surface-1)',
+                color: 'var(--color-text-primary)',
                 cursor: 'pointer',
                 fontSize: 12,
               }}

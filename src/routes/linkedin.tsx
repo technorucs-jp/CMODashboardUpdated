@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import { load, loadConfig } from '@/data/loader'
 import { AreaTrendChart } from '@/components/data/AreaTrendChart'
 import { BarRow } from '@/components/data/BarRow'
@@ -15,6 +16,7 @@ import {
 } from '@/viewmodels/linkedin'
 import { useMetricsQuery } from './useMetricsQuery'
 import { useRangeState } from './useRangeState'
+import { useChannelMeta } from './useChannelMeta'
 
 const CARD_ACCENTS = [
   'var(--accent-1)',
@@ -33,7 +35,7 @@ const COMPETITOR_COLUMNS: DataTableColumn<CompetitorRow>[] = [
     label: 'Company page',
     accessor: (r) => r.page,
     render: (r) => (
-      <span style={{ fontWeight: r.isSelf ? 700 : 400, color: r.isSelf ? 'var(--text-primary)' : 'var(--text-secondary)' }}>
+      <span style={{ fontWeight: r.isSelf ? 700 : 400, color: r.isSelf ? 'var(--color-text-primary)' : 'var(--color-text-secondary)' }}>
         {r.page} {r.isSelf ? ' (TechnoRUCS)' : ''}
       </span>
     ),
@@ -58,7 +60,7 @@ const COMPETITOR_COLUMNS: DataTableColumn<CompetitorRow>[] = [
             borderRadius: 4,
             fontSize: 12,
             fontWeight: 600,
-            background: 'var(--surface-2)',
+            background: 'var(--color-surface-2)',
             color,
             border: `1px solid ${color}`,
           }}
@@ -96,6 +98,7 @@ const POST_COLUMNS: DataTableColumn<PostPerformanceRow>[] = [
  */
 export default function LinkedInPage() {
   const { range, comparisonRange } = useRangeState()
+  const syncMeta = useChannelMeta('linkedin')
 
   const { data: vm, isLoading } = useMetricsQuery('linkedin', range, comparisonRange, async () => {
     const [file, competitorsConfig, narratives] = await Promise.all([
@@ -107,15 +110,15 @@ export default function LinkedInPage() {
   })
 
   return (
-    <div>
-      <h1>LinkedIn</h1>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+    <div className="page" style={{ '--page-accent': 'var(--accent-7)' } as CSSProperties}>
+      <h1 className="page-title">LinkedIn</h1>
+      <div className="page-subtitle">
         <p style={{ margin: 0 }}>Organic Social Analytics · TechnoRUCS Company Page</p>
-        <LastSyncedBadge channel="linkedin" />
+        <LastSyncedBadge channel="linkedin" metaEnvelope={syncMeta} />
       </div>
 
       {isLoading && (
-        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+        <div className="kpi-grid">
           {Array.from({ length: 8 }).map((_, i) => (
             <CardSkeleton key={i} height={80} />
           ))}
@@ -126,8 +129,8 @@ export default function LinkedInPage() {
 
       {!isLoading && vm && vm.hasData && (
         <>
-          <h2>Page performance overview — {range.from} to {range.to}</h2>
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+          <h2 className="section-title">Page performance overview — {range.from} to {range.to}</h2>
+          <div className="kpi-grid">
             {vm.overviewCards!.map((c, i) => (
               <KpiCard
                 key={c.label}
@@ -139,17 +142,17 @@ export default function LinkedInPage() {
             ))}
           </div>
 
-          <h2>Competitor engagement benchmark</h2>
+          <h2 className="section-title">Competitor engagement benchmark</h2>
           <DataTable
             columns={COMPETITOR_COLUMNS}
             rows={vm.competitorTable ?? []}
             getRowKey={(r) => r.page}
           />
 
-          <h2>Daily engagement trends</h2>
-          <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
+          <h2 className="section-title">Daily engagement trends</h2>
+          <div className="split-grid">
             <div style={{ flex: '1 1 340px' }}>
-              <h3>Daily impressions</h3>
+              <h3 className="subsection-title">Daily impressions</h3>
               <AreaTrendChart
                 data={(vm.dailyTrends ?? []).map((d) => ({ date: d.date, value: d.impressions }))}
                 ariaLabel="Daily impressions area chart"
@@ -157,7 +160,7 @@ export default function LinkedInPage() {
               />
             </div>
             <div style={{ flex: '1 1 340px' }}>
-              <h3>Daily new followers</h3>
+              <h3 className="subsection-title">Daily new followers</h3>
               <AreaTrendChart
                 data={(vm.dailyTrends ?? []).map((d) => ({ date: d.date, value: d.newFollowers }))}
                 ariaLabel="Daily new followers area chart"
@@ -166,7 +169,7 @@ export default function LinkedInPage() {
             </div>
           </div>
 
-          <h2>Published posts performance</h2>
+          <h2 className="section-title">Published posts performance</h2>
           <DataTable
             columns={POST_COLUMNS}
             rows={vm.posts ?? []}
@@ -175,10 +178,10 @@ export default function LinkedInPage() {
 
           {vm.audience && (
             <>
-              <h2>Audience & visitor demographics</h2>
-              <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
+              <h2 className="section-title">Audience & visitor demographics</h2>
+              <div className="split-grid">
                 <div style={{ flex: '1 1 280px' }}>
-                  <h3>Followers by seniority</h3>
+                  <h3 className="subsection-title">Followers by seniority</h3>
                   {vm.audience.seniority.map((s) => (
                     <BarRow
                       key={s.label}
@@ -190,7 +193,7 @@ export default function LinkedInPage() {
                   ))}
                 </div>
                 <div style={{ flex: '1 1 280px' }}>
-                  <h3>Followers by job function</h3>
+                  <h3 className="subsection-title">Followers by job function</h3>
                   {vm.audience.jobFunction.map((j) => (
                     <BarRow
                       key={j.label}
@@ -202,7 +205,7 @@ export default function LinkedInPage() {
                   ))}
                 </div>
                 <div style={{ flex: '1 1 280px' }}>
-                  <h3>Visitors by industry</h3>
+                  <h3 className="subsection-title">Visitors by industry</h3>
                   {vm.audience.visitorIndustry.map((v) => (
                     <BarRow
                       key={v.label}
@@ -214,7 +217,7 @@ export default function LinkedInPage() {
                   ))}
                 </div>
                 <div style={{ flex: '1 1 280px' }}>
-                  <h3>Visitors by company size</h3>
+                  <h3 className="subsection-title">Visitors by company size</h3>
                   {vm.audience.companySize.map((c) => (
                     <BarRow
                       key={c.label}

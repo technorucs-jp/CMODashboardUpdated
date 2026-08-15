@@ -1,58 +1,41 @@
+import type { CSSProperties } from 'react'
 import type { NarrativeRenderResult } from '@/lib/narrative/renderer'
 
 export interface FlagCalloutProps {
   readonly flag: NarrativeRenderResult
 }
 
-export function FlagCallout({ flag }: FlagCalloutProps) {
-  const borderHue =
-    flag.severity === 'critical'
-      ? 'var(--hue-red)'
-      : flag.severity === 'watch'
-        ? 'var(--hue-yellow)'
-        : 'var(--hue-green)'
+/** Severity drives the left rule; tier drives the chip. Both are stated in text
+ *  as well as colour (item 5.20 — never colour-only meaning). */
+const SEVERITY_HUE: Record<string, string> = {
+  critical: 'var(--hue-red)',
+  watch: 'var(--hue-yellow)',
+  positive: 'var(--hue-green)',
+}
 
-  const tierBadgeBg =
-    flag.tier === 'immediate'
-      ? 'var(--hue-red)'
-      : flag.tier === 'process'
-        ? 'var(--hue-yellow)'
-        : flag.tier === 'strategic'
-          ? 'var(--accent-1)'
-          : 'var(--surface-2)'
+const TIER_BG: Record<string, string> = {
+  immediate: 'var(--hue-red)',
+  process: 'var(--hue-yellow)',
+  strategic: 'var(--accent-1)',
+  observation: 'var(--color-surface-2)',
+}
+
+export function FlagCallout({ flag }: FlagCalloutProps) {
+  const style = {
+    '--flag-hue': SEVERITY_HUE[flag.severity] ?? 'var(--hue-green)',
+    '--tier-bg': TIER_BG[flag.tier] ?? 'var(--color-surface-2)',
+    // An observation chip sits on a neutral surface, so it keeps the normal
+    // secondary text colour instead of the on-accent one.
+    '--tier-fg': flag.tier === 'observation' ? 'var(--color-text-secondary)' : 'var(--color-on-accent)',
+  } as CSSProperties
 
   return (
-    <div
-      className="card"
-      style={{
-        borderLeft: `4px solid ${borderHue}`,
-        padding: '14px 16px',
-        marginBottom: 12,
-      }}
-    >
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12, marginBottom: 6 }}>
-        <div style={{ fontWeight: 600, fontSize: 14, color: 'var(--text-primary)' }}>
-          {flag.headline}
-        </div>
-        <span
-          style={{
-            display: 'inline-block',
-            padding: '2px 8px',
-            borderRadius: 4,
-            fontSize: 11,
-            fontWeight: 600,
-            textTransform: 'uppercase',
-            letterSpacing: '0.04em',
-            background: tierBadgeBg,
-            color: flag.tier === 'observation' ? 'var(--text-secondary)' : '#ffffff',
-          }}
-        >
-          {flag.tier}
-        </span>
+    <div className="card flag-callout" style={style}>
+      <div className="flag-callout-head">
+        <div className="flag-callout-headline">{flag.headline}</div>
+        <span className="tier-badge">{flag.tier}</span>
       </div>
-      <div style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-        {flag.body}
-      </div>
+      <div className="flag-callout-body">{flag.body}</div>
     </div>
   )
 }

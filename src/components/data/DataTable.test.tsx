@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { render, screen, fireEvent, within } from '@testing-library/react'
 import { DataTable, type DataTableColumn } from './DataTable'
+import { indexCssRuleFor } from './cssRule.testutil'
 
 interface AdSetRow {
   readonly name: string
@@ -67,6 +68,12 @@ describe('DataTable (item 2.11)', () => {
 
   it('lives inside its own overflow-x:auto container, not the page body', () => {
     const { container } = render(<DataTable columns={COLUMNS} rows={ROWS} getRowKey={(r) => r.name} />)
-    expect(container.firstChild).toHaveStyle({ overflowX: 'auto' })
+    // The rule moved from an inline style to `.data-table-container` in index.css
+    // during the design pass. jsdom does not apply stylesheet rules, so this
+    // asserts both halves of the contract: the element opts into the class, AND
+    // the stylesheet actually declares the property for it. Checking only the
+    // class name would silently pass if the rule were deleted.
+    expect(container.firstChild).toHaveClass('data-table-container')
+    expect(indexCssRuleFor('.data-table-container')).toMatch(/overflow-x:\s*auto/)
   })
 })

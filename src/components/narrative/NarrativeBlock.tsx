@@ -14,28 +14,28 @@ export function NarrativeBlock({ flags }: NarrativeBlockProps) {
   }
 
   return (
-    <div style={{ marginTop: 32 }}>
-      <h2>Performance Narrative & Diagnostics</h2>
+    <section className="narrative">
+      <h2 className="section-title">Performance narrative &amp; diagnostics</h2>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: 24 }}>
+      <div className="split-grid">
         <div>
-          <h3>What's Working</h3>
+          <h3 className="subsection-title">What&apos;s working</h3>
           {working.length === 0 ? (
-            <p style={{ color: 'var(--text-muted)', fontSize: 13 }}>No positive trends flagged for this range.</p>
+            <p className="narrative-empty">No positive trends flagged for this range.</p>
           ) : (
             working.map((f) => <FlagCallout key={f.id} flag={f} />)
           )}
         </div>
 
         <div>
-          <h3>What Needs Attention</h3>
+          <h3 className="subsection-title">What needs attention</h3>
           {needsAttention.length === 0 ? (
-            <p style={{ color: 'var(--text-muted)', fontSize: 13 }}>No critical issues or anomalies flagged.</p>
+            <p className="narrative-empty">No critical issues or anomalies flagged.</p>
           ) : (
             needsAttention.map((f) => <FlagCallout key={f.id} flag={f} />)
           )}
         </div>
       </div>
-    </div>
+    </section>
   )
 }

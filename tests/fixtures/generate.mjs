@@ -117,17 +117,26 @@ function buildMetaAds() {
   // set per campaign, entirely separate from June's reconciled camp-* namespace so
   // touching this doesn't disturb any already-reconciled June figure or rule fixture
   // (item 4.2-4.4's rules fire on specific June ad sets/campaigns by ID).
+  // Three of these deliberately REUSE a June campaignId (camp-azure-tn,
+  // camp-azure-managed-india, camp-bc-uae-sa) so the Total Leads tab has real
+  // period-over-period pairs to compare. Without any overlap that tab's whole
+  // reason for existing collapses: every campaign reads "31 / 0" and every
+  // Lead Δ% reads "—". The wireframe (10-totalleads-mid.jpg) behaves exactly
+  // this way — mostly disjoint campaigns month to month, with Azure TN, Azure
+  // Managed India and BC UAE&SA appearing in both. May still has 10 distinct
+  // campaigns, so the "9 vs 10" active-campaign card is unchanged, and no
+  // per-ad-set figure moves, so May's reconciled totals are untouched.
   const MAY_AD_SETS = [
     { adSetId: 'as-may-bc-uae', adSetName: 'Business Central — UAE', campaignId: 'camp-may-bc-uae', campaignName: 'Business Central UAE', launchDate: '2026-05-01', region: 'AE', conversations: 35 },
     { adSetId: 'as-may-construction-au', adSetName: 'Construction Co. Australia', campaignId: 'camp-may-construction-au', campaignName: 'Construction AU', launchDate: '2026-05-01', region: 'AU', conversations: 28 },
-    { adSetId: 'as-may-azure-tn', adSetName: 'Azure — Tamil Nadu', campaignId: 'camp-may-azure-tn', campaignName: 'Azure Migration TN', launchDate: '2026-05-01', region: 'IN/TN', conversations: 22 },
+    { adSetId: 'as-may-azure-tn', adSetName: 'Azure — Tamil Nadu', campaignId: 'camp-azure-tn', campaignName: 'Azure Migration TN', launchDate: '2026-05-01', region: 'IN/TN', conversations: 22 },
     { adSetId: 'as-may-bc-3-emirates', adSetName: 'Business Central — 3 Emirates', campaignId: 'camp-may-bc-3-emirates', campaignName: 'Business Central Emirates', launchDate: '2026-05-01', region: 'AE/ME', conversations: 19 },
     { adSetId: 'as-may-azure-india', adSetName: 'Azure — India', campaignId: 'camp-may-azure-india', campaignName: 'Azure Migration India', launchDate: '2026-05-01', region: 'IN', conversations: 17 },
     { adSetId: 'as-may-bc-au', adSetName: 'Business Central — Australia', campaignId: 'camp-may-bc-au', campaignName: 'Business Central AU', launchDate: '2026-05-01', region: 'AU', conversations: 15 },
     { adSetId: 'as-may-bc-me', adSetName: 'Business Central — Middle East', campaignId: 'camp-may-bc-me', campaignName: 'Business Central Middle East', launchDate: '2026-05-01', region: 'ME', conversations: 13 },
     { adSetId: 'as-may-azure-srilanka', adSetName: 'Azure — Sri Lanka', campaignId: 'camp-may-azure-srilanka', campaignName: 'Azure Migration Sri Lanka', launchDate: '2026-05-01', region: 'LK', conversations: 11 },
-    { adSetId: 'as-may-azure-managed-india', adSetName: 'Azure Managed — India', campaignId: 'camp-may-azure-managed-india', campaignName: 'Azure Managed India', launchDate: '2026-05-01', region: 'IN', conversations: 10 },
-    { adSetId: 'as-may-d365-fo', adSetName: 'D365 Finance & Operations — India', campaignId: 'camp-may-d365-fo', campaignName: 'D365 F&O India', launchDate: '2026-05-01', region: 'IN', conversations: 8 },
+    { adSetId: 'as-may-azure-managed-india', adSetName: 'Azure Managed — India', campaignId: 'camp-azure-managed-india', campaignName: 'Azure Managed India', launchDate: '2026-05-01', region: 'IN', conversations: 10 },
+    { adSetId: 'as-may-bc-uae-sa', adSetName: 'Business Central — UAE & SA', campaignId: 'camp-bc-uae-sa', campaignName: 'Business Central UAE & SA', launchDate: '2026-05-01', region: 'AE/SA', conversations: 8 },
   ]
   adSets.push(...MAY_AD_SETS.map(({ conversations: _conversations, ...dims }) => dims))
 

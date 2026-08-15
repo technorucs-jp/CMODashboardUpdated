@@ -50,13 +50,16 @@ describe('LeadsPage — end-to-end against the real June fixture (items 3.7-3.16
 
   it('**renders Contact in Future and Junk cards even at zero** — the BRD v2.1 §7.1 bug', async () => {
     renderAt(JUNE)
-    // Each zero-count status shows up twice by design — once as an overview card
-    // and once as a row in the all-inbound status distribution. Both surfaces are
-    // built from fixed lists, so neither can drop a status just because it is 0.
-    await waitFor(() => expect(screen.getAllByText('Contact in Future')).toHaveLength(2))
-    expect(screen.getAllByText('Junk')).toHaveLength(2)
+    // Each zero-count status shows up on three surfaces by design: an overview
+    // card, a row in the all-inbound status distribution, and a line in the Meta
+    // Ads donut's legend. All three are built from the same fixed status list, so
+    // none of them can drop a status just because its count is 0.
+    await waitFor(() => expect(screen.getAllByText('Contact in Future')).toHaveLength(3))
+    expect(screen.getAllByText('Junk')).toHaveLength(3)
     expect(screen.getByText('Meetings scheduled')).toBeInTheDocument() // card label
-    expect(screen.getByText('Meeting Scheduled')).toBeInTheDocument() // status-distribution row
+    // The status's own name ("Meeting Scheduled") appears on the two breakdown
+    // surfaces — the status distribution and the donut legend.
+    expect(screen.getAllByText('Meeting Scheduled')).toHaveLength(2)
   })
 
   it('**shows zero-assignment reps with "Not assigned"** — the single-point-of-failure finding', async () => {

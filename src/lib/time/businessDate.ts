@@ -86,6 +86,20 @@ export function hoursSince(isoString: string, referenceInstant?: TZDate | Date):
   return Math.max(0, (nowMs - targetMs) / (1000 * 60 * 60))
 }
 
+/**
+ * An ISO instant `hours` before now — the inverse of `hoursSince`.
+ *
+ * Exists so callers that need a relative timestamp (notably the sync-badge tests,
+ * which must assert fresh/delayed/stale against a moving "now") can express that
+ * without reaching for a raw `new Date(...)`, which P5 bans everywhere outside
+ * this module. Keeping the construction here is the point of that rule: one
+ * module owns instant arithmetic, so a future timezone fix has a single site.
+ */
+export function isoInstantHoursAgo(hours: number, referenceInstant?: TZDate | Date): string {
+  const nowMs = referenceInstant ? referenceInstant.getTime() : nowInIst().getTime()
+  return new Date(nowMs - hours * 60 * 60 * 1000).toISOString()
+}
+
 /** Format an ISO timestamp in human-readable Indian Standard Time (IST). */
 export function formatIstDateTime(isoString: string): string {
   const tzDate = new TZDate(isoString, IST_TIME_ZONE)

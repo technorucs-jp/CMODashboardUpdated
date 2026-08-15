@@ -2,7 +2,9 @@ import { NavLink, useLocation } from 'react-router-dom'
 
 /**
  * Fixed left nav, 8 items + source sublabels (TAD §11.6 / CHECKLIST.md 0.14).
- * Matches Wireframe/01-overview-june-a.jpg's channel list.
+ * Matches Wireframe/01-overview-june-a.jpg's channel list: label on the left,
+ * muted source on the right, and the active channel marked by an accent rule
+ * plus a lighter ground.
  */
 const NAV_ITEMS = [
   { to: '/overview', label: 'Overview', source: null },
@@ -23,19 +25,17 @@ export function Sidebar() {
   const location = useLocation()
 
   return (
-    <nav aria-label="Channels">
-      <p>Channels</p>
-      <ul>
+    <nav aria-label="Channels" className="sidebar">
+      <p className="sidebar-heading">Channels</p>
+      <ul className="sidebar-list">
         {NAV_ITEMS.map((item) => (
           <li key={item.to}>
-            <NavLink to={{ pathname: item.to, search: location.search }}>
+            <NavLink
+              to={{ pathname: item.to, search: location.search }}
+              className={({ isActive }) => (isActive ? 'sidebar-link active' : 'sidebar-link')}
+            >
               <span>{item.label}</span>
-              {item.source && (
-                <>
-                  {' '}
-                  <span>{item.source}</span>
-                </>
-              )}
+              {item.source && <span className="sidebar-source">{item.source}</span>}
             </NavLink>
           </li>
         ))}

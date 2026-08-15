@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import { load } from '@/data/loader'
 import { CardSkeleton } from '@/components/data/CardSkeleton'
 import { DataTable, type DataTableColumn } from '@/components/data/DataTable'
@@ -12,6 +13,7 @@ import {
 } from '@/viewmodels/totalLeads'
 import { useMetricsQuery } from './useMetricsQuery'
 import { useRangeState } from './useRangeState'
+import { useChannelMeta } from './useChannelMeta'
 import {
   BarChart,
   Bar,
@@ -39,7 +41,7 @@ const CAMPAIGN_COLUMNS: DataTableColumn<CampaignComparisonRow>[] = [
     render: (r) => (
       <span>
         <strong>{r.primary.conversationsDisplay}</strong>{' '}
-        <span style={{ color: 'var(--text-muted)' }}>/ {r.comparison.conversationsDisplay}</span>
+        <span style={{ color: 'var(--color-text-muted)' }}>/ {r.comparison.conversationsDisplay}</span>
       </span>
     ),
     align: 'right',
@@ -51,7 +53,7 @@ const CAMPAIGN_COLUMNS: DataTableColumn<CampaignComparisonRow>[] = [
     render: (r) => {
       const isPos = r.conversationDeltaDisplay.startsWith('+')
       const isNeg = r.conversationDeltaDisplay.startsWith('-')
-      const color = isPos ? 'var(--hue-green)' : isNeg ? 'var(--hue-red)' : 'var(--text-secondary)'
+      const color = isPos ? 'var(--hue-green)' : isNeg ? 'var(--hue-red)' : 'var(--color-text-secondary)'
       return <span style={{ color, fontWeight: 600 }}>{r.conversationDeltaDisplay}</span>
     },
     align: 'right',
@@ -63,7 +65,7 @@ const CAMPAIGN_COLUMNS: DataTableColumn<CampaignComparisonRow>[] = [
     render: (r) => (
       <span>
         <strong>{r.primary.costPerConvDisplay}</strong>{' '}
-        <span style={{ color: 'var(--text-muted)' }}>/ {r.comparison.costPerConvDisplay}</span>
+        <span style={{ color: 'var(--color-text-muted)' }}>/ {r.comparison.costPerConvDisplay}</span>
       </span>
     ),
     align: 'right',
@@ -75,7 +77,7 @@ const CAMPAIGN_COLUMNS: DataTableColumn<CampaignComparisonRow>[] = [
     render: (r) => (
       <span>
         <strong>{r.primary.spendDisplay}</strong>{' '}
-        <span style={{ color: 'var(--text-muted)' }}>/ {r.comparison.spendDisplay}</span>
+        <span style={{ color: 'var(--color-text-muted)' }}>/ {r.comparison.spendDisplay}</span>
       </span>
     ),
     align: 'right',
@@ -87,7 +89,7 @@ const CAMPAIGN_COLUMNS: DataTableColumn<CampaignComparisonRow>[] = [
     render: (r) => (
       <span>
         {r.primary.impressionsDisplay}{' '}
-        <span style={{ color: 'var(--text-muted)' }}>/ {r.comparison.impressionsDisplay}</span>
+        <span style={{ color: 'var(--color-text-muted)' }}>/ {r.comparison.impressionsDisplay}</span>
       </span>
     ),
     align: 'right',
@@ -99,7 +101,7 @@ const CAMPAIGN_COLUMNS: DataTableColumn<CampaignComparisonRow>[] = [
     render: (r) => (
       <span>
         {r.primary.reachDisplay}{' '}
-        <span style={{ color: 'var(--text-muted)' }}>/ {r.comparison.reachDisplay}</span>
+        <span style={{ color: 'var(--color-text-muted)' }}>/ {r.comparison.reachDisplay}</span>
       </span>
     ),
     align: 'right',
@@ -111,6 +113,7 @@ const CAMPAIGN_COLUMNS: DataTableColumn<CampaignComparisonRow>[] = [
  */
 export default function TotalLeadsPage() {
   const { range, comparisonRange } = useRangeState()
+  const syncMeta = useChannelMeta('meta-ads')
 
   const { data: vm, isLoading } = useMetricsQuery('total-leads', range, comparisonRange, async () => {
     const [file, narratives] = await Promise.all([
@@ -121,11 +124,11 @@ export default function TotalLeadsPage() {
   })
 
   return (
-    <div>
-      <h1>Total Leads</h1>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+    <div className="page" style={{ '--page-accent': 'var(--accent-3)' } as CSSProperties}>
+      <h1 className="page-title">Total Leads</h1>
+      <div className="page-subtitle">
         <p style={{ margin: 0 }}>Meta Ads · Paid Campaign Performance & Cross-Period Comparison</p>
-        <LastSyncedBadge channel="meta-ads" />
+        <LastSyncedBadge channel="meta-ads" metaEnvelope={syncMeta} />
       </div>
 
       {/* Item 3.41 — Comparison required notice & fallback label */}
@@ -136,9 +139,9 @@ export default function TotalLeadsPage() {
           style={{
             padding: '8px 14px',
             borderRadius: 6,
-            background: 'var(--surface-2)',
+            background: 'var(--color-surface-2)',
             border: '1px solid var(--color-border)',
-            color: 'var(--text-secondary)',
+            color: 'var(--color-text-secondary)',
             fontSize: 13,
             marginBottom: 16,
           }}
@@ -148,7 +151,7 @@ export default function TotalLeadsPage() {
       )}
 
       {isLoading && (
-        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+        <div className="kpi-grid">
           {Array.from({ length: 4 }).map((_, i) => (
             <CardSkeleton key={i} height={90} />
           ))}
@@ -159,8 +162,8 @@ export default function TotalLeadsPage() {
 
       {!isLoading && vm && vm.hasData && (
         <>
-          <h2>Headline comparison — {vm.primaryRange.from} to {vm.primaryRange.to}</h2>
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+          <h2 className="section-title">Headline comparison — {vm.primaryRange.from} to {vm.primaryRange.to}</h2>
+          <div className="kpi-grid">
             {vm.cards!.map((c, i) => (
               <KpiCard
                 key={c.label}
@@ -172,29 +175,35 @@ export default function TotalLeadsPage() {
             ))}
           </div>
 
-          <h2>Conversations by campaign (Period vs. Comparison)</h2>
-          <div style={{ width: '100%', height: 320, marginTop: 12, background: 'var(--surface-1)', padding: '16px 8px 8px 8px', borderRadius: 8, border: '1px solid var(--color-border)' }}>
+          <h2 className="section-title">Conversations by campaign (Period vs. Comparison)</h2>
+          {/* The category axis is the UNION of both periods' campaigns, so a campaign
+              that ran in only one month correctly shows a single bar (the wireframe
+              behaves the same way — "Custom ERP TN" is May-only). That union can run
+              to ~20 categories, so the labels need real room and a length cap or they
+              overlap into an unreadable smear. */}
+          <div className="panel chart-panel" style={{ height: 420 }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
                 data={vm.chartData ?? []}
-                margin={{ top: 10, right: 30, left: 10, bottom: 40 }}
+                margin={{ top: 10, right: 30, left: 10, bottom: 96 }}
               >
                 <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" vertical={false} />
                 <XAxis
                   dataKey="campaignName"
-                  stroke="var(--text-muted)"
+                  stroke="var(--color-text-muted)"
                   fontSize={11}
                   interval={0}
-                  angle={-25}
+                  angle={-35}
                   textAnchor="end"
+                  tickFormatter={(name: string) => (name.length > 18 ? `${name.slice(0, 17)}…` : name)}
                 />
-                <YAxis stroke="var(--text-muted)" fontSize={11} />
+                <YAxis stroke="var(--color-text-muted)" fontSize={11} />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: 'var(--surface-2)',
+                    backgroundColor: 'var(--color-surface-2)',
                     borderColor: 'var(--color-border)',
                     borderRadius: 6,
-                    color: 'var(--text-primary)',
+                    color: 'var(--color-text-primary)',
                     fontSize: 12,
                   }}
                 />
@@ -205,7 +214,7 @@ export default function TotalLeadsPage() {
             </ResponsiveContainer>
           </div>
 
-          <h2>Campaign breakdown & totals per period</h2>
+          <h2 className="section-title">Campaign breakdown & totals per period</h2>
           <DataTable
             columns={CAMPAIGN_COLUMNS}
             rows={vm.campaigns ?? []}
@@ -218,7 +227,7 @@ export default function TotalLeadsPage() {
                 marginTop: 12,
                 padding: '12px 16px',
                 borderRadius: 6,
-                background: 'var(--surface-2)',
+                background: 'var(--color-surface-2)',
                 border: '1px solid var(--color-border)',
                 display: 'flex',
                 justifyContent: 'space-between',

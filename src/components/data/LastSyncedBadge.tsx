@@ -11,41 +11,45 @@ export interface LastSyncedBadgeProps {
 /**
  * LastSyncedBadge (items 5.13, 5.14; TAD §8.1).
  *
- * Displays sync freshness next to the data source subtitle:
- * - Fresh (neutral): Within normal cadence
- * - Delayed (amber): Past 2x cadence
- * - Stale (red): Past 4x cadence
+ * Sync freshness next to the data-source subtitle:
+ * - fresh: within the channel's normal cadence
+ * - delayed: past 2x cadence
+ * - stale: past 4x cadence
  *
- * Hover shows the absolute timestamp in Indian Standard Time (IST).
+ * The state is always spelled out in the label ("Synced 3h ago", "Stale (5d
+ * ago)"), never carried by colour alone (item 5.20). Hover shows the absolute
+ * IST timestamp, the latest record date, and row counts.
+ *
+ * `metaEnvelope` must be supplied — with nothing passed, `computeSyncHealth`
+ * reports "Never synced" for every channel. Pages get it from
+ * `useChannelMeta(channel)`.
  */
-export function LastSyncedBadge({
-  channel,
-  metaEnvelope,
-  className,
-  style,
-}: LastSyncedBadgeProps) {
+const LEVEL_HUE: Record<string, string> = {
+  stale: 'var(--hue-red)',
+  delayed: 'var(--hue-yellow)',
+  fresh: 'var(--hue-green)',
+}
+
+/** Hours are unreadable past a couple of days — "Synced 1056h ago" is a number
+ *  the reader has to divide before it means anything. Switch to days at 48h. */
+function humaniseAge(ageHours: number): string {
+  if (ageHours < 1) return 'just now'
+  if (ageHours < 48) return `${Math.round(ageHours)}h ago`
+  return `${Math.round(ageHours / 24)}d ago`
+}
+
+export function LastSyncedBadge({ channel, metaEnvelope, className, style }: LastSyncedBadgeProps) {
   const health = computeSyncHealth(channel, metaEnvelope)
 
-  let badgeBg: string
-  let badgeColor: string
-  let borderColor: string
   let label: string
-
-  if (health.level === 'stale') {
-    badgeBg = 'rgba(239, 68, 68, 0.12)'
-    badgeColor = 'var(--hue-red, #ef4444)'
-    borderColor = 'var(--hue-red, #ef4444)'
-    label = health.ageHours !== null ? `Stale (${Math.round(health.ageHours / 24)}d ago)` : 'Never synced'
+  if (health.ageHours === null) {
+    label = 'Never synced'
+  } else if (health.level === 'stale') {
+    label = `Stale — synced ${humaniseAge(health.ageHours)}`
   } else if (health.level === 'delayed') {
-    badgeBg = 'rgba(245, 158, 11, 0.12)'
-    badgeColor = 'var(--hue-yellow, #f59e0b)'
-    borderColor = 'var(--hue-yellow, #f59e0b)'
-    label = `Sync delayed (${Math.round(health.ageHours ?? 0)}h ago)`
+    label = `Sync delayed — ${humaniseAge(health.ageHours)}`
   } else {
-    badgeBg = 'rgba(34, 197, 94, 0.10)'
-    badgeColor = 'var(--hue-green, #22c55e)'
-    borderColor = 'rgba(34, 197, 94, 0.3)'
-    label = health.ageHours !== null && health.ageHours < 1 ? 'Synced just now' : `Synced ${Math.round(health.ageHours ?? 0)}h ago`
+    label = health.ageHours < 1 ? 'Synced just now' : `Synced ${humaniseAge(health.ageHours)}`
   }
 
   const tooltip = `Channel: ${channel}\nLast Synced: ${health.formattedIst}\nLatest Record: ${health.latestRecordDate ?? 'N/A'}\nRecords: ${health.rowCountSummary}`
@@ -55,33 +59,9 @@ export function LastSyncedBadge({
       role="status"
       aria-label={`Sync freshness for ${channel}: ${label}`}
       title={tooltip}
-      className={className}
-      style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: 6,
-        padding: '3px 8px',
-        borderRadius: 12,
-        fontSize: 12,
-        fontWeight: 500,
-        backgroundColor: badgeBg,
-        color: badgeColor,
-        border: `1px solid ${borderColor}`,
-        cursor: 'help',
-        userSelect: 'none',
-        ...style,
-      }}
+      className={className ? `sync-badge ${className}` : 'sync-badge'}
+      style={{ '--sync-hue': LEVEL_HUE[health.level] ?? 'var(--color-border)', ...style } as CSSProperties}
     >
-      <span
-        aria-hidden="true"
-        style={{
-          width: 6,
-          height: 6,
-          borderRadius: '50%',
-          backgroundColor: badgeColor,
-          display: 'inline-block',
-        }}
-      />
       {label}
     </span>
   )

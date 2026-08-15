@@ -12,11 +12,19 @@ export function TopBar() {
   const { range, comparisonRange, today, setRange, setComparisonRange } = useRangeState()
 
   return (
-    <header>
-      <h1>TechnoRUCS</h1>
-      <span>CMO Dashboard</span>
-      <DateRangePicker value={range} today={today} onChange={setRange} />
-      <ComparisonRangePicker primaryRange={range} comparisonRange={comparisonRange} onChange={setComparisonRange} />
+    <header className="topbar">
+      {/* The subtitle sits outside the <h1> deliberately: it would otherwise be
+          folded into the heading's accessible name ("TechnoRUCS CMO Dashboard"),
+          which is both a worse label for a screen reader and a silent break of
+          the layout test's `getByRole('heading', { name: 'TechnoRUCS' })`. */}
+      <div className="topbar-brand">
+        <h1 className="topbar-brand-name">TechnoRUCS</h1>
+        <span className="topbar-brand-sub">CMO Dashboard</span>
+      </div>
+      <div className="topbar-controls">
+        <DateRangePicker value={range} today={today} onChange={setRange} />
+        <ComparisonRangePicker primaryRange={range} comparisonRange={comparisonRange} onChange={setComparisonRange} />
+      </div>
     </header>
   )
 }

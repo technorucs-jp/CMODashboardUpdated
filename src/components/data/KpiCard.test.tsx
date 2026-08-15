@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { KpiCard } from './KpiCard'
+import { indexCssRuleFor } from './cssRule.testutil'
 
 describe('KpiCard (item 2.9)', () => {
   it('renders the Ad Spend card matching 07-adcampaigns-top.jpg', () => {
@@ -19,7 +20,12 @@ describe('KpiCard (item 2.9)', () => {
 
   it('renders with tabular-nums so figures do not jitter as they update', () => {
     render(<KpiCard label="Sessions" value="1,720" accent="var(--accent-4)" />)
-    expect(screen.getByText('1,720')).toHaveStyle({ fontVariantNumeric: 'tabular-nums' })
+    // Moved from an inline style to `.kpi-value` in index.css during the design
+    // pass; jsdom does not apply stylesheets, so assert the class is applied AND
+    // that the stylesheet still declares the property (a class-name-only check
+    // would keep passing if the rule were removed).
+    expect(screen.getByText('1,720')).toHaveClass('kpi-value')
+    expect(indexCssRuleFor('.kpi-value')).toMatch(/font-variant-numeric:\s*tabular-nums/)
   })
 
   it('never hardcodes a hex colour — accent is passed in, not literal', () => {

@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import { load, loadConfig } from '@/data/loader'
 import { AreaTrendChart } from '@/components/data/AreaTrendChart'
 import { CardSkeleton } from '@/components/data/CardSkeleton'
@@ -18,6 +19,7 @@ import {
 } from '@/viewmodels/seo'
 import { useMetricsQuery } from './useMetricsQuery'
 import { useRangeState } from './useRangeState'
+import { useChannelMeta } from './useChannelMeta'
 
 const CARD_ACCENTS = [
   'var(--accent-1)',
@@ -44,8 +46,8 @@ const CLICK_QUERY_COLUMNS: DataTableColumn<QueryRow>[] = [
           borderRadius: 4,
           fontSize: 12,
           fontWeight: 600,
-          background: r.isBrand ? 'var(--surface-2)' : 'var(--surface-1)',
-          color: r.isBrand ? 'var(--hue-blue)' : 'var(--text-secondary)',
+          background: r.isBrand ? 'var(--color-surface-2)' : 'var(--color-surface-1)',
+          color: r.isBrand ? 'var(--hue-blue)' : 'var(--color-text-secondary)',
           border: '1px solid var(--color-border)',
         }}
       >
@@ -74,7 +76,7 @@ const ZERO_CLICK_COLUMNS: DataTableColumn<ZeroClickRow>[] = [
           ? 'var(--hue-red)'
           : r.priority === 'High'
             ? 'var(--hue-yellow)'
-            : 'var(--text-muted)'
+            : 'var(--color-text-muted)'
       return (
         <span
           style={{
@@ -83,7 +85,7 @@ const ZERO_CLICK_COLUMNS: DataTableColumn<ZeroClickRow>[] = [
             borderRadius: 4,
             fontSize: 12,
             fontWeight: 600,
-            background: 'var(--surface-2)',
+            background: 'var(--color-surface-2)',
             color,
             border: `1px solid ${color}`,
           }}
@@ -125,6 +127,7 @@ const DEVICE_COLUMNS: DataTableColumn<DeviceRow>[] = [
  */
 export default function SeoPage() {
   const { range, comparisonRange } = useRangeState()
+  const syncMeta = useChannelMeta('gsc')
 
   const { data: vm, isLoading } = useMetricsQuery('seo', range, comparisonRange, async () => {
     const [file, brandTermsConfig, narratives] = await Promise.all([
@@ -136,11 +139,11 @@ export default function SeoPage() {
   })
 
   return (
-    <div>
-      <h1>SEO</h1>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+    <div className="page" style={{ '--page-accent': 'var(--accent-5)' } as CSSProperties}>
+      <h1 className="page-title">SEO</h1>
+      <div className="page-subtitle">
         <p style={{ margin: 0 }}>Google Search Console · Organic Search Performance</p>
-        <LastSyncedBadge channel="gsc" />
+        <LastSyncedBadge channel="gsc" metaEnvelope={syncMeta} />
       </div>
 
       {/* Item 3.29 — DataAsOfBanner reading latestRecordDate */}
@@ -151,9 +154,9 @@ export default function SeoPage() {
           style={{
             padding: '8px 14px',
             borderRadius: 6,
-            background: 'var(--surface-2)',
+            background: 'var(--color-surface-2)',
             border: '1px solid var(--color-border)',
-            color: 'var(--text-secondary)',
+            color: 'var(--color-text-secondary)',
             fontSize: 13,
             marginBottom: 16,
           }}
@@ -163,7 +166,7 @@ export default function SeoPage() {
       )}
 
       {isLoading && (
-        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+        <div className="kpi-grid">
           {Array.from({ length: 8 }).map((_, i) => (
             <CardSkeleton key={i} height={80} />
           ))}
@@ -174,8 +177,8 @@ export default function SeoPage() {
 
       {!isLoading && vm && vm.hasData && (
         <>
-          <h2>Overview — {range.from} to {range.to}</h2>
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+          <h2 className="section-title">Overview — {range.from} to {range.to}</h2>
+          <div className="kpi-grid">
             {vm.overviewCards!.map((c, i) => (
               <KpiCard
                 key={c.label}
@@ -187,22 +190,22 @@ export default function SeoPage() {
             ))}
           </div>
 
-          <h2>Daily clicks trend</h2>
+          <h2 className="section-title">Daily clicks trend</h2>
           <AreaTrendChart
             data={(vm.dailyTrend ?? []).map((d) => ({ date: d.date, value: d.clicks }))}
             ariaLabel="Daily search clicks area chart"
             color="var(--accent-3)"
           />
 
-          <h2>Click-generating queries</h2>
+          <h2 className="section-title">Click-generating queries</h2>
           <DataTable
             columns={CLICK_QUERY_COLUMNS}
             rows={vm.clickQueries ?? []}
             getRowKey={(r) => r.query}
           />
 
-          <h2>High-impression zero-click keywords (Optimization opportunities)</h2>
-          <p style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
+          <h2 className="section-title">High-impression zero-click keywords (Optimization opportunities)</h2>
+          <p style={{ fontSize: 13, color: 'var(--color-text-secondary)' }}>
             Keywords generating impressions where TechnoRUCS currently earns 0 clicks. Prioritized by search volume and distance from Page 1.
           </p>
           <DataTable
@@ -211,17 +214,17 @@ export default function SeoPage() {
             getRowKey={(r) => r.query}
           />
 
-          <h2>Top indexed pages by organic traffic</h2>
+          <h2 className="section-title">Top indexed pages by organic traffic</h2>
           <DataTable
             columns={PAGE_COLUMNS}
             rows={(vm.topPages ?? []).slice(0, 10)}
             getRowKey={(r) => r.page}
           />
 
-          <h2>Geographic & device breakdown</h2>
-          <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
+          <h2 className="section-title">Geographic & device breakdown</h2>
+          <div className="split-grid">
             <div style={{ flex: '1 1 340px' }}>
-              <h3>Search clicks by country</h3>
+              <h3 className="subsection-title">Search clicks by country</h3>
               <DataTable
                 columns={COUNTRY_COLUMNS}
                 rows={(vm.countries ?? []).slice(0, 8)}
@@ -229,7 +232,7 @@ export default function SeoPage() {
               />
             </div>
             <div style={{ flex: '1 1 340px' }}>
-              <h3>Performance by device</h3>
+              <h3 className="subsection-title">Performance by device</h3>
               <DataTable
                 columns={DEVICE_COLUMNS}
                 rows={vm.devices ?? []}
@@ -238,7 +241,7 @@ export default function SeoPage() {
             </div>
           </div>
 
-          <h2>Backlink profile</h2>
+          <h2 className="section-title">Backlink profile</h2>
           <NotConnectedPanel message="Ubersuggest backlinks integration is not connected. Track backlinks in Ubersuggest directly (BRD §9.3)." />
 
           <NarrativeBlock flags={vm.narrativeFlags} />

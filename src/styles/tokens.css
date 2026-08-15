@@ -24,6 +24,9 @@
   --color-surface-2: #141414; /* topbar / sidebar background */
   --color-border: #2a2a2a;
   --color-overlay: rgb(0 0 0 / 72%); /* modal scrim — role launch dialog (TAD ADR-015) */
+  /* Text sitting on top of a saturated accent/hue fill (e.g. a tier badge), where
+     the normal --color-text-* neutrals would not have enough contrast. */
+  --color-on-accent: #ffffff;
   --radius-base: 8px;
   --radius-card: 12px;
 
@@ -82,4 +85,29 @@
 
   /* Type */
   --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Layout — the app shell's fixed dimensions (Wireframe/01-overview-june-b.jpg:
+     a fixed left rail with the channel list, a sticky top bar above the content). */
+  --sidebar-width: 176px;
+  --topbar-height: 52px;
+
+  /* Spacing scale — used instead of ad-hoc inline pixel values so gutters stay
+     consistent between tabs. */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  /* Type scale */
+  --font-size-page-title: 20px;
+  --font-size-section: 13px;
+  --font-size-body: 13px;
+  --font-size-small: 12px;
+  --font-size-micro: 11px;
+  --font-size-kpi: 24px;
+
+  /* Elevation */
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 40%);
 }

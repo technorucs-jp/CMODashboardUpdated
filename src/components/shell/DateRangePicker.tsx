@@ -56,23 +56,25 @@ export function DateRangePicker({ value, today, onChange }: DateRangePickerProps
   }
 
   return (
-    <div>
-      <div role="group" aria-label="Date range presets">
+    <div className="picker">
+      <div className="picker-group" role="group" aria-label="Date range presets">
         {PRESET_LABELS.map((p) => (
-          <button key={p.id} type="button" onClick={() => handlePresetClick(p.id)}>
+          <button key={p.id} className="picker-btn" type="button" onClick={() => handlePresetClick(p.id)}>
             {p.label}
           </button>
         ))}
       </div>
-      <span aria-label="Selected range">
+      <span className="picker-value" aria-label="Selected range">
         {value.from} – {value.to}
       </span>
       {calendarOpen && (
-        <DayPicker
-          mode="range"
-          selected={{ from: calendarDateFromBusinessDate(value.from), to: calendarDateFromBusinessDate(value.to) }}
-          onSelect={handleCalendarSelect}
-        />
+        <div className="picker-calendar">
+          <DayPicker
+            mode="range"
+            selected={{ from: calendarDateFromBusinessDate(value.from), to: calendarDateFromBusinessDate(value.to) }}
+            onSelect={handleCalendarSelect}
+          />
+        </div>
       )}
     </div>
   )

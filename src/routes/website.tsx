@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import { load, loadConfig } from '@/data/loader'
 import { AreaTrendChart } from '@/components/data/AreaTrendChart'
 import { BarRow } from '@/components/data/BarRow'
@@ -19,6 +20,7 @@ import {
 } from '@/viewmodels/website'
 import { useMetricsQuery } from './useMetricsQuery'
 import { useRangeState } from './useRangeState'
+import { useChannelMeta } from './useChannelMeta'
 
 const CARD_ACCENTS = [
   'var(--accent-1)',
@@ -53,8 +55,8 @@ const PAGE_COLUMNS: DataTableColumn<PageRow>[] = [
           borderRadius: 4,
           fontSize: 12,
           fontWeight: 500,
-          background: 'var(--surface-2)',
-          color: 'var(--text-primary)',
+          background: 'var(--color-surface-2)',
+          color: 'var(--color-text-primary)',
           border: '1px solid var(--color-border)',
         }}
       >
@@ -94,6 +96,7 @@ const PATH_COLUMNS: DataTableColumn<PathRow>[] = [
  */
 export default function WebsitePage() {
   const { range, comparisonRange } = useRangeState()
+  const syncMeta = useChannelMeta('ga4')
 
   const { data: vm, isLoading } = useMetricsQuery('website', range, comparisonRange, async () => {
     const [file, pageTypesConfig, metaFile, narratives] = await Promise.all([
@@ -106,15 +109,15 @@ export default function WebsitePage() {
   })
 
   return (
-    <div>
-      <h1>Website</h1>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+    <div className="page" style={{ '--page-accent': 'var(--accent-4)' } as CSSProperties}>
+      <h1 className="page-title">Website</h1>
+      <div className="page-subtitle">
         <p style={{ margin: 0 }}>Google Analytics 4 · technorucs.com</p>
-        <LastSyncedBadge channel="ga4" />
+        <LastSyncedBadge channel="ga4" metaEnvelope={syncMeta} />
       </div>
 
       {isLoading && (
-        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+        <div className="kpi-grid">
           {Array.from({ length: 8 }).map((_, i) => (
             <CardSkeleton key={i} height={80} />
           ))}
@@ -125,8 +128,8 @@ export default function WebsitePage() {
 
       {!isLoading && vm && vm.hasData && (
         <>
-          <h2>Overview — {range.from} to {range.to}</h2>
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+          <h2 className="section-title">Overview — {range.from} to {range.to}</h2>
+          <div className="kpi-grid">
             {vm.overviewCards!.map((c, i) => (
               <KpiCard
                 key={c.label}
@@ -138,17 +141,17 @@ export default function WebsitePage() {
             ))}
           </div>
 
-          <h2>Daily sessions trend</h2>
+          <h2 className="section-title">Daily sessions trend</h2>
           <AreaTrendChart
             data={(vm.dailySessions ?? []).map((d) => ({ date: d.date, value: d.sessions }))}
             ariaLabel="Daily sessions area chart"
             color="var(--accent-1)"
           />
 
-          <h2>Traffic channels breakdown & quality</h2>
-          <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
+          <h2 className="section-title">Traffic channels breakdown & quality</h2>
+          <div className="split-grid">
             <div style={{ flex: '1 1 340px' }}>
-              <h3>Sessions by channel group</h3>
+              <h3 className="subsection-title">Sessions by channel group</h3>
               {vm.channelBreakdown!.map((c: ChannelRow) => (
                 <BarRow
                   key={c.channelGroup}
@@ -160,16 +163,16 @@ export default function WebsitePage() {
               ))}
             </div>
             <div style={{ flex: '1 1 340px' }}>
-              <h3>Channel engagement & bounce quality</h3>
+              <h3 className="subsection-title">Channel engagement & bounce quality</h3>
               {vm.channelBreakdown!.map((c: ChannelRow) => (
                 <div key={c.channelGroup} style={{ marginBottom: 12 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, marginBottom: 4 }}>
                     <span style={{ fontWeight: 600 }}>{c.channelGroup}</span>
-                    <span style={{ color: 'var(--text-secondary)' }}>
+                    <span style={{ color: 'var(--color-text-secondary)' }}>
                       Eng: {c.engagementRateDisplay} · Bounce: {c.bounceRateDisplay}
                     </span>
                   </div>
-                  <div style={{ display: 'flex', height: 8, borderRadius: 4, overflow: 'hidden', background: 'var(--surface-2)' }}>
+                  <div style={{ display: 'flex', height: 8, borderRadius: 4, overflow: 'hidden', background: 'var(--color-surface-2)' }}>
                     <div
                       style={{
                         width: `${c.engagementRatePercent}%`,
@@ -188,45 +191,45 @@ export default function WebsitePage() {
             </div>
           </div>
 
-          <h2>Top traffic sources</h2>
+          <h2 className="section-title">Top traffic sources</h2>
           <DataTable
             columns={SOURCE_COLUMNS}
             rows={vm.topSources ?? []}
             getRowKey={(r) => `${r.channelGroup}-${r.source}`}
           />
 
-          <h2>AI Assistant Referral Insight</h2>
+          <h2 className="section-title">AI Assistant Referral Insight</h2>
           <div
             className="card"
             style={{
               padding: 16,
               borderRadius: 8,
               border: '1px solid var(--color-border)',
-              background: 'var(--surface-1)',
+              background: 'var(--color-surface-1)',
               marginBottom: 24,
             }}
           >
             <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center' }}>
               <div style={{ flex: '1 1 200px' }}>
-                <div style={{ fontSize: 12, color: 'var(--text-secondary)' }}>AI Referral Sessions</div>
+                <div style={{ fontSize: 12, color: 'var(--color-text-secondary)' }}>AI Referral Sessions</div>
                 <div style={{ fontSize: 24, fontWeight: 700, color: 'var(--accent-1)' }}>
                   {vm.aiReferral?.sessionsDisplay ?? '0'}
                 </div>
               </div>
               <div style={{ flex: '1 1 200px' }}>
-                <div style={{ fontSize: 12, color: 'var(--text-secondary)' }}>AI Engagement Rate</div>
+                <div style={{ fontSize: 12, color: 'var(--color-text-secondary)' }}>AI Engagement Rate</div>
                 <div style={{ fontSize: 20, fontWeight: 600 }}>
                   {vm.aiReferral?.engagementRateDisplay ?? '—'}{' '}
-                  <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>
+                  <span style={{ fontSize: 12, color: 'var(--color-text-muted)' }}>
                     (vs {vm.aiReferral?.siteEngagementRateDisplay ?? '—'} site avg)
                   </span>
                 </div>
               </div>
               <div style={{ flex: '1 1 200px' }}>
-                <div style={{ fontSize: 12, color: 'var(--text-secondary)' }}>AI Bounce Rate</div>
+                <div style={{ fontSize: 12, color: 'var(--color-text-secondary)' }}>AI Bounce Rate</div>
                 <div style={{ fontSize: 20, fontWeight: 600 }}>
                   {vm.aiReferral?.bounceRateDisplay ?? '—'}{' '}
-                  <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>
+                  <span style={{ fontSize: 12, color: 'var(--color-text-muted)' }}>
                     (vs {vm.aiReferral?.siteBounceRateDisplay ?? '—'} site avg)
                   </span>
                 </div>
@@ -234,7 +237,7 @@ export default function WebsitePage() {
             </div>
             {vm.aiReferral && vm.aiReferral.sources.length > 0 && (
               <div style={{ marginTop: 12, borderTop: '1px solid var(--color-border)', paddingTop: 12 }}>
-                <div style={{ fontSize: 12, color: 'var(--text-secondary)', marginBottom: 6 }}>Identified AI engines:</div>
+                <div style={{ fontSize: 12, color: 'var(--color-text-secondary)', marginBottom: 6 }}>Identified AI engines:</div>
                 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                   {vm.aiReferral.sources.map((s) => (
                     <span
@@ -243,7 +246,7 @@ export default function WebsitePage() {
                         fontSize: 12,
                         padding: '2px 8px',
                         borderRadius: 4,
-                        background: 'var(--surface-2)',
+                        background: 'var(--color-surface-2)',
                         border: '1px solid var(--color-border)',
                       }}
                     >
@@ -255,17 +258,17 @@ export default function WebsitePage() {
             )}
           </div>
 
-          <h2>Top pages & content classification</h2>
+          <h2 className="section-title">Top pages & content classification</h2>
           <DataTable
             columns={PAGE_COLUMNS}
             rows={vm.topPages ?? []}
             getRowKey={(r) => r.pagePath}
           />
 
-          <h2>Entry behaviour & country quality</h2>
-          <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
+          <h2 className="section-title">Entry behaviour & country quality</h2>
+          <div className="split-grid">
             <div style={{ flex: '1 1 340px' }}>
-              <h3>Top landing pages (entry points)</h3>
+              <h3 className="subsection-title">Top landing pages (entry points)</h3>
               {(vm.landingPages ?? []).slice(0, 7).map((lp) => (
                 <BarRow
                   key={lp.landingPage}
@@ -277,7 +280,7 @@ export default function WebsitePage() {
               ))}
             </div>
             <div style={{ flex: '1 1 340px' }}>
-              <h3>Device breakdown</h3>
+              <h3 className="subsection-title">Device breakdown</h3>
               <DataTable
                 columns={DEVICE_COLUMNS}
                 rows={vm.devices ?? []}
@@ -286,14 +289,14 @@ export default function WebsitePage() {
             </div>
           </div>
 
-          <h2>Top countries reached</h2>
+          <h2 className="section-title">Top countries reached</h2>
           <DataTable
             columns={COUNTRY_COLUMNS}
             rows={(vm.countries ?? []).slice(0, 10)}
             getRowKey={(r) => r.country}
           />
 
-          <h2>User journey — path exploration</h2>
+          <h2 className="section-title">User journey — path exploration</h2>
           {vm.paths && vm.paths.length > 0 ? (
             <DataTable
               columns={PATH_COLUMNS}
@@ -301,7 +304,7 @@ export default function WebsitePage() {
               getRowKey={(r) => `${r.step1}->${r.step2}`}
             />
           ) : (
-            <div className="card" style={{ padding: 16 }} role="status">
+            <div className="panel" role="status">
               <p>No multi-step journey paths recorded for this date range.</p>
             </div>
           )}

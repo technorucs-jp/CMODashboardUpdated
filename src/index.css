@@ -119,30 +119,655 @@ select:focus-visible,
   outline-offset: 2px;
 }
 
-/* Data Table container responsive scrolling (item 5.19) */
+/* ===========================================================================
+   App shell — the fixed left rail + sticky top bar in every wireframe screen.
+   The rail and bar are position:fixed rather than flex children so a long tab
+   never scrolls them away, which is what makes the range pickers "visible on
+   every tab" (item 2.4) true in practice and not just structurally.
+   =========================================================================== */
+.app-shell {
+  min-height: 100vh;
+}
+
+.topbar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 20;
+  height: var(--topbar-height);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 0 var(--space-4);
+  background: var(--color-surface-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* The brand must not compete with the controls for room — it shrinks first. */
+.topbar > .topbar-brand {
+  flex: 0 1 auto;
+  overflow: hidden;
+}
+
+.topbar-brand {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  white-space: nowrap;
+}
+
+.topbar-brand-name {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--color-text-primary);
+}
+
+.topbar-brand-sub {
+  font-size: var(--font-size-small);
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+/* Deliberately `nowrap` with horizontal overflow rather than `wrap`: the bar is
+   position:fixed at exactly --topbar-height, and the page's top padding is
+   derived from that same token. If the controls wrapped to a second row they
+   would grow past the bar and sit on top of the page title. Scrolling the
+   control strip keeps the shell's geometry exact at any width. */
+.topbar-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-left: auto;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.topbar-controls::-webkit-scrollbar {
+  display: none;
+}
+
+.sidebar {
+  position: fixed;
+  top: var(--topbar-height);
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  width: var(--sidebar-width);
+  padding: var(--space-4) 0;
+  overflow-y: auto;
+  background: var(--color-surface-2);
+  border-right: 1px solid var(--color-border);
+}
+
+.sidebar-heading {
+  margin: 0 0 var(--space-2);
+  padding: 0 var(--space-4);
+  font-size: var(--font-size-micro);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.sidebar-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-left: 2px solid transparent;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-body);
+  text-decoration: none;
+}
+
+.sidebar-link:hover {
+  background: var(--color-surface-1);
+  color: var(--color-text-primary);
+}
+
+/* react-router sets .active on the matching NavLink — the left accent bar plus a
+   lighter ground is how the wireframe marks the current channel. */
+.sidebar-link.active {
+  background: var(--color-surface-1);
+  border-left-color: var(--accent-1);
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+.sidebar-source {
+  font-size: var(--font-size-micro);
+  color: var(--color-text-muted);
+}
+
+.app-main {
+  padding: calc(var(--topbar-height) + var(--space-5)) var(--space-5) var(--space-6);
+  margin-left: var(--sidebar-width);
+  min-width: 0;
+}
+
+/* ===========================================================================
+   Range pickers (top bar) — a segmented button group plus the resolved range,
+   matching the May/June/Compare-MoM control cluster in the wireframes.
+   =========================================================================== */
+.picker {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 0 0 auto;
+}
+
+.picker-label {
+  font-size: var(--font-size-micro);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+}
+
+.picker-group {
+  display: flex;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-base);
+  overflow: hidden;
+}
+
+.picker-btn {
+  padding: 5px var(--space-2);
+  border: 0;
+  border-right: 1px solid var(--color-border);
+  background: var(--color-surface-1);
+  color: var(--color-text-secondary);
+  font-family: inherit;
+  font-size: var(--font-size-micro);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.picker-btn:last-child {
+  border-right: 0;
+}
+
+.picker-btn:hover {
+  background: var(--color-border);
+  color: var(--color-text-primary);
+}
+
+.picker-value {
+  font-size: var(--font-size-micro);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+}
+
+/* The calendar floats over the content rather than pushing the bar taller. */
+.picker-calendar {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  right: 0;
+  z-index: 30;
+  padding: var(--space-3);
+  background: var(--color-surface-1);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 55%);
+  --rdp-accent-color: var(--accent-1);
+  --rdp-background-color: var(--color-surface-2);
+}
+
+/* ===========================================================================
+   Page furniture
+   =========================================================================== */
+.page-title {
+  margin: 0;
+  font-size: var(--font-size-page-title);
+  font-weight: 700;
+  /* Each tab sets --page-accent; the wireframe colours the page title with its
+     channel's hue (Leads orange, Website blue, and so on). */
+  color: var(--page-accent, var(--color-text-primary));
+}
+
+.page-subtitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin: var(--space-1) 0 var(--space-5);
+  font-size: var(--font-size-small);
+  color: var(--color-text-muted);
+}
+
+.section-title {
+  margin: var(--space-6) 0 var(--space-3);
+  font-size: var(--font-size-micro);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.section-title:first-of-type {
+  margin-top: 0;
+}
+
+.subsection-title {
+  margin: 0 0 var(--space-3);
+  font-size: var(--font-size-section);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+/* ===========================================================================
+   Layout primitives
+   =========================================================================== */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: var(--space-3);
+}
+
+.split-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--space-4);
+  align-items: start;
+}
+
+.panel {
+  background: var(--color-surface-1);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: var(--space-4);
+  min-width: 0;
+}
+
+.panel > .data-table-container {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+}
+
+/* ===========================================================================
+   KPI card — coloured top rule, large accented figure, label, muted detail.
+   =========================================================================== */
+.kpi-card {
+  padding: var(--space-3) var(--space-4);
+  border-top: 3px solid var(--kpi-accent, var(--accent-1));
+  box-shadow: var(--shadow-card);
+}
+
+.kpi-value {
+  font-size: var(--font-size-kpi);
+  font-weight: 700;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+  color: var(--kpi-accent, var(--color-text-primary));
+}
+
+/* A state string rather than a figure (see KpiCard's isFigure) — same accent,
+   body size, so a caveat does not out-shout the numbers beside it. */
+.kpi-value-text {
+  font-size: var(--font-size-body);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.kpi-label {
+  margin-top: var(--space-1);
+  font-size: var(--font-size-body);
+  color: var(--color-text-primary);
+}
+
+.kpi-detail {
+  margin-top: 2px;
+  font-size: var(--font-size-micro);
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===========================================================================
+   Data tables
+   =========================================================================== */
 .data-table-container {
   width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  margin: 16px 0;
+  margin: var(--space-3) 0;
   border-radius: var(--radius-card);
   border: 1px solid var(--color-border);
+  background: var(--color-surface-1);
 }
 
-/* Responsive layout adjustments (item 5.19) */
-@media (max-width: 768px) {
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-body);
+  font-variant-numeric: tabular-nums;
+}
+
+.data-table th {
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--font-size-micro);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+  text-align: left;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface-2);
+}
+
+.data-table td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+}
+
+.data-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.data-table tbody tr:hover td {
+  background: var(--color-surface-2);
+}
+
+.data-table td:first-child {
+  color: var(--color-text-primary);
+}
+
+.data-table tfoot td {
+  padding: var(--space-3) var(--space-4);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface-2);
+}
+
+.data-table .num {
+  text-align: right;
+}
+
+/* ===========================================================================
+   Pills — a compact value chip (rates, verdicts, page types). Colour is never
+   the only carrier of meaning; the text inside always states the value (P8 /
+   item 5.20).
+   =========================================================================== */
+.pill {
+  display: inline-block;
+  padding: 2px var(--space-2);
+  border-radius: 999px;
+  font-size: var(--font-size-micro);
+  font-weight: 600;
+  white-space: nowrap;
+  background: var(--pill-muted-bg);
+  color: var(--pill-muted-text);
+}
+
+.pill-good {
+  background: var(--pill-green-bg);
+  color: var(--pill-green-text);
+}
+
+.pill-warn {
+  background: var(--pill-yellow-bg);
+  color: var(--pill-yellow-text);
+}
+
+.pill-bad {
+  background: var(--pill-red-bg);
+  color: var(--pill-red-text);
+}
+
+.pill-info {
+  background: var(--pill-blue-bg);
+  color: var(--pill-blue-text);
+}
+
+/* Delta text — up/down/flat colouring for a % or pp change. */
+.delta-up {
+  color: var(--pill-green-text);
+}
+
+.delta-down {
+  color: var(--pill-red-text);
+}
+
+.delta-flat {
+  color: var(--color-text-muted);
+}
+
+/* ===========================================================================
+   Callouts / notices
+   =========================================================================== */
+.callout {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--hue-yellow);
+  border-radius: var(--radius-base);
+  background: var(--color-surface-1);
+  font-size: var(--font-size-small);
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.callout p {
+  margin: var(--space-2) 0 0;
+}
+
+.callout strong {
+  color: var(--color-text-primary);
+}
+
+/* ===========================================================================
+   Narrative & action items (Phase 4) — the "what's working / what's not" and
+   three-tier action lists that close every tab.
+   =========================================================================== */
+.narrative {
+  margin-top: var(--space-6);
+}
+
+.flag-callout {
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-3);
+  border-left: 3px solid var(--flag-hue, var(--color-border));
+}
+
+.flag-callout-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-bottom: var(--space-1);
+}
+
+.flag-callout-headline {
+  font-size: var(--font-size-body);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.flag-callout-body {
+  font-size: var(--font-size-small);
+  line-height: 1.55;
+  color: var(--color-text-secondary);
+}
+
+/* Tier chip. `--tier-bg` is a saturated fill, so the label uses the
+   on-accent token rather than a neutral that would wash out against it. */
+.tier-badge {
+  flex-shrink: 0;
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-base);
+  font-size: var(--font-size-micro);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: var(--tier-bg, var(--color-surface-2));
+  color: var(--tier-fg, var(--color-on-accent));
+}
+
+.narrative-empty {
+  font-size: var(--font-size-small);
+  color: var(--color-text-muted);
+}
+
+/* A label/value legend that accompanies a chart (e.g. the Leads status donut).
+   Rendered as a list for semantics, but without the bullet-and-indent that
+   makes it read as prose next to a chart. */
+.metric-list {
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--font-size-small);
+}
+
+.metric-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-1) 0;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+}
+
+.metric-list li:last-child {
+  border-bottom: 0;
+}
+
+.metric-list .metric-value {
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-primary);
+}
+
+/* Sync badge (items 5.13/5.14) — freshness is stated in words, never colour alone. */
+.sync-badge {
+  display: inline-block;
+  padding: 2px var(--space-2);
+  border: 1px solid var(--sync-hue, var(--color-border));
+  border-radius: 999px;
+  font-size: var(--font-size-micro);
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--sync-hue, var(--color-text-secondary));
+}
+
+/* Per-section error boundary (item 5.15) */
+.section-error {
+  padding: var(--space-4);
+  border: 1px solid var(--hue-red);
+  border-radius: var(--radius-card);
+  background: var(--color-surface-1);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-small);
+}
+
+.section-error strong {
+  color: var(--hue-red);
+}
+
+/* ===========================================================================
+   Charts — give every chart a consistent surface and let Recharts' SVG text
+   inherit the muted palette instead of its own near-black defaults.
+   =========================================================================== */
+.chart-panel {
+  margin: var(--space-3) 0;
+}
+
+.recharts-cartesian-axis-tick text,
+.recharts-legend-item-text {
+  fill: var(--color-text-muted) !important;
+  color: var(--color-text-muted) !important;
+  font-size: var(--font-size-micro);
+}
+
+.recharts-default-tooltip {
+  background: var(--color-surface-2) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-base);
+  color: var(--color-text-primary) !important;
+  font-size: var(--font-size-small);
+}
+
+/* ===========================================================================
+   Scrollbars — the default light scrollbar is jarring on a near-black ground.
+   =========================================================================== */
+* {
+  scrollbar-color: var(--color-border) transparent;
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* ===========================================================================
+   Responsive (item 5.19) — the rail collapses to a horizontal strip so the
+   page body never scrolls sideways on a narrow viewport.
+   =========================================================================== */
+@media (max-width: 900px) {
   body {
     overflow-x: hidden;
   }
 
-  main {
-    padding: 12px !important;
+  .sidebar {
+    position: static;
     width: 100%;
-    min-width: 0;
+    padding: var(--space-2) 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--color-border);
   }
 
-  .card {
-    flex: 1 1 100% !important;
+  .sidebar-list {
+    display: flex;
+    overflow-x: auto;
+  }
+
+  .sidebar-link {
+    border-left: 0;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+  }
+
+  .sidebar-link.active {
+    border-left: 0;
+    border-bottom-color: var(--accent-1);
+  }
+
+  .app-main {
+    margin-left: 0;
+    padding: var(--space-4) var(--space-4) var(--space-6);
+  }
+
+  .app-shell-body {
+    padding-top: var(--topbar-height);
+  }
+
+  .topbar {
+    position: sticky;
   }
 
   .data-table-container table {

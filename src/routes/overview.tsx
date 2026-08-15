@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import { load, loadConfig } from '@/data/loader'
 import { CardSkeleton } from '@/components/data/CardSkeleton'
 import { KpiCard } from '@/components/data/KpiCard'
@@ -8,6 +9,7 @@ import { ActionList } from '@/components/narrative/ActionList'
 import { buildOverviewViewModel } from '@/viewmodels/overview'
 import { useMetricsQuery } from './useMetricsQuery'
 import { useRangeState } from './useRangeState'
+import { useChannelMeta } from './useChannelMeta'
 
 /**
  * The Overview tab (items 3.2-3.6) — the executive summary, reading all five
@@ -20,6 +22,7 @@ import { useRangeState } from './useRangeState'
  */
 export default function OverviewPage() {
   const { range, comparisonRange } = useRangeState()
+  const syncMeta = useChannelMeta('meta-ads')
 
   const { data: vm, isLoading } = useMetricsQuery('overview', range, comparisonRange, async () => {
     const [metaAds, ga4, gsc, linkedin, zoho, thresholds, brandTermsConfig, narratives] = await Promise.all([
@@ -43,17 +46,17 @@ export default function OverviewPage() {
   })
 
   return (
-    <div>
-      <h1>Overview</h1>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+    <div className="page" style={{ '--page-accent': 'var(--accent-1)' } as CSSProperties}>
+      <h1 className="page-title">Overview</h1>
+      <div className="page-subtitle">
         <p style={{ margin: 0 }}>
           All channels · {range.from} to {range.to}
         </p>
-        <LastSyncedBadge channel="meta-ads" />
+        <LastSyncedBadge channel="meta-ads" metaEnvelope={syncMeta} />
       </div>
 
       {isLoading && (
-        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+        <div className="kpi-grid">
           {Array.from({ length: 6 }).map((_, i) => (
             <CardSkeleton key={i} height={80} />
           ))}
@@ -62,23 +65,23 @@ export default function OverviewPage() {
 
       {!isLoading && vm && (
         <>
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+          <div className="kpi-grid">
             {vm.kpiCards.map((card) => (
               <KpiCard key={card.label} label={card.label} value={card.value} detail={card.detail} accent={card.accent} />
             ))}
           </div>
 
-          <h2>Channel health — {vm.comparisonLabel}</h2>
-          <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', fontVariantNumeric: 'tabular-nums' }}>
+          <h2 className="section-title">Channel health — {vm.comparisonLabel}</h2>
+          <div className="data-table-container">
+            <table className="data-table">
               <thead>
                 <tr>
-                  <th style={{ textAlign: 'left' }}>Channel</th>
-                  <th style={{ textAlign: 'left' }}>Source</th>
-                  <th style={{ textAlign: 'left' }}>Key metric</th>
-                  <th style={{ textAlign: 'right' }}>Value</th>
-                  <th style={{ textAlign: 'right' }}>{vm.comparisonLabel}</th>
-                  <th style={{ textAlign: 'right' }}>Status</th>
+                  <th>Channel</th>
+                  <th>Source</th>
+                  <th>Key metric</th>
+                  <th className="num">Value</th>
+                  <th className="num">{vm.comparisonLabel}</th>
+                  <th className="num">Status</th>
                 </tr>
               </thead>
               <tbody>
@@ -87,33 +90,33 @@ export default function OverviewPage() {
                     <td>{row.channel}</td>
                     <td>{row.source}</td>
                     <td>{row.keyMetric}</td>
-                    <td style={{ textAlign: 'right' }}>{row.value}</td>
-                    <td style={{ textAlign: 'right' }}>{row.changeDisplay}</td>
-                    <td style={{ textAlign: 'right' }}>{row.status ? <StatusTag status={row.status} /> : '—'}</td>
+                    <td className="num">{row.value}</td>
+                    <td className="num">{row.changeDisplay}</td>
+                    <td className="num">{row.status ? <StatusTag status={row.status} /> : '—'}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
 
-          <h2>Period comparison — {vm.comparisonLabel}</h2>
-          <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+          <h2 className="section-title">Period comparison — {vm.comparisonLabel}</h2>
+          <div className="split-grid">
             {vm.periodComparisonBlocks.map((b) => (
-              <div key={b.title} className="card" style={{ flex: '1 1 300px', padding: 16 }}>
+              <div key={b.title} className="panel">
                 <h3 style={{ marginTop: 0, textTransform: 'uppercase', fontSize: 12, color: 'var(--color-text-secondary)' }}>
                   {b.title}
                 </h3>
-                <table style={{ width: '100%', fontVariantNumeric: 'tabular-nums' }}>
+                <table className="data-table">
                   <tbody>
                     {b.rows.map((row) => (
                       <tr key={row.label}>
                         <td>{row.label}</td>
-                        <td style={{ textAlign: 'right' }}>
+                        <td className="num">
                           {row.comparisonDisplay}
                           {' → '}
                           {row.currentDisplay}
                         </td>
-                        <td style={{ textAlign: 'right' }}>{row.changeDisplay}</td>
+                        <td className="num">{row.changeDisplay}</td>
                       </tr>
                     ))}
                   </tbody>

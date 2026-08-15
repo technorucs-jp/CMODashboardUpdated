@@ -1,10 +1,11 @@
 import { describe, expect, it } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { LastSyncedBadge } from './LastSyncedBadge'
+import { isoInstantHoursAgo } from '@/lib/time/businessDate'
 
 describe('LastSyncedBadge (items 5.13, 5.14; TAD §8.1)', () => {
   it('renders neutral/fresh badge for recent sync', () => {
-    const recentIso = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()
+    const recentIso = isoInstantHoursAgo(2)
     render(
       <LastSyncedBadge
         channel="meta-ads"
@@ -24,7 +25,7 @@ describe('LastSyncedBadge (items 5.13, 5.14; TAD §8.1)', () => {
   })
 
   it('renders amber/delayed badge when sync is delayed', () => {
-    const delayedIso = new Date(Date.now() - 55 * 60 * 60 * 1000).toISOString()
+    const delayedIso = isoInstantHoursAgo(55)
     render(
       <LastSyncedBadge
         channel="meta-ads"
@@ -42,7 +43,7 @@ describe('LastSyncedBadge (items 5.13, 5.14; TAD §8.1)', () => {
   })
 
   it('renders red/stale badge when sync is severely overdue', () => {
-    const staleIso = new Date(Date.now() - 120 * 60 * 60 * 1000).toISOString()
+    const staleIso = isoInstantHoursAgo(120)
     render(
       <LastSyncedBadge
         channel="meta-ads"
