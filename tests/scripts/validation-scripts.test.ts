@@ -71,6 +71,13 @@ describe('Validation, Sync Timestamps, and Security Scripts (items 5.4, 5.5, 5.6
     if (existsSync(TMP_TEST_DATA)) rmSync(TMP_TEST_DATA, { recursive: true, force: true })
     mkdirSync(TMP_TEST_DATA, { recursive: true })
 
+    // The fixture value is deliberately NOT shaped like a real vendor key. The
+    // scanner's "Generic API Key" rule fires on the `"apiKey": "<16+ chars>"`
+    // shape, not on any provider's prefix, so a neutral placeholder exercises
+    // exactly the same code path. An earlier version used a Stripe-style
+    // `sk_live_…` string, which GitHub's push protection then blocked as a real
+    // leaked credential — a synthetic secret in a scanner's own test is still a
+    // secret as far as any scanner is concerned.
     writeFileSync(
       join(TMP_TEST_DATA, 'leak.json'),
       JSON.stringify({ apiKey: 'EXAMPLE_FAKE_KEY_0123456789abcdef', notes: 'customer inquiry' }),
