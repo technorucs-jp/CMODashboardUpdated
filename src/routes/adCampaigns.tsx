@@ -88,6 +88,11 @@ export default function AdCampaignsPage() {
                 : undefined
             }
           />
+          <p className="table-note">
+            Reach shows <strong>—</strong> for any range longer than one day. Meta de-duplicates reach, so daily figures
+            cannot be summed without over-counting people seen more than once; this build has no live API to ask for a
+            range-level figure. Select a single day to see real reach.
+          </p>
 
           <h2 className="section-title">Spend by country</h2>
           <div className="split-grid">

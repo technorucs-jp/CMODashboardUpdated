@@ -497,6 +497,19 @@ select:focus-visible,
   text-align: right;
 }
 
+/* A caveat that applies to a whole column belongs under the table once, not
+   repeated down every row. */
+.table-note {
+  margin: calc(var(--space-2) * -1) 0 0;
+  font-size: var(--font-size-micro);
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
+
+.table-note strong {
+  color: var(--color-text-secondary);
+}
+
 /* ===========================================================================
    Pills — a compact value chip (rates, verdicts, page types). Colour is never
    the only carrier of meaning; the text inside always states the value (P8 /
@@ -762,10 +775,9 @@ select:focus-visible,
     padding: var(--space-4) var(--space-4) var(--space-6);
   }
 
-  .app-shell-body {
-    padding-top: var(--topbar-height);
-  }
-
+  /* The bar returns to normal flow here (sticky, not fixed), so it occupies its
+     own height — the desktop layout's compensating top offset must come off, or
+     it shows up as an empty band under the bar. */
   .topbar {
     position: sticky;
   }

@@ -160,7 +160,12 @@ export function buildAdCampaignsViewModel(
       ctrDisplay: formatMetricValue(ctr === null ? null : ctr * 100, 'percent'),
       cpc: formatMetricValue(cpc, 'currency'),
       cpm: formatMetricValue(cpm, 'currency'),
-      reachDisplay: reachTotal === null ? 'n/a for multi-day ranges' : formatMetricValue(reachTotal, 'integer'),
+      // Same rule as the account card (item 2.16) — reach is never summed across
+      // days — but rendered as a bare em-dash here rather than the full sentence.
+      // Repeating "n/a for multi-day ranges" down every row of a 13-row table
+      // drowns out the figures beside it; the reason is stated once, in a note
+      // under the table, which is where a reader looks for a column caveat.
+      reachDisplay: reachTotal === null ? '—' : formatMetricValue(reachTotal, 'integer'),
       conversations,
       conversationsDisplay: formatMetricValue(conversations, 'integer'),
       costPerConv: costPerConv ?? Number.POSITIVE_INFINITY,

@@ -41,11 +41,17 @@ function definedTokens(): Set<string> {
   return new Set([...css.matchAll(/^\s*(--[a-z0-9-]+)\s*:/gm)].map((m) => m[1]))
 }
 
+/**
+ * Shipped source only. Test files are excluded because the invariant is about
+ * what renders in the browser — and because this very file names the bad tokens
+ * (`var(--surface-2)` and friends) in its own doc comment as the example of what
+ * went wrong, which would otherwise make the guard flag itself.
+ */
 function sourceFiles(): string[] {
   return execSync('git ls-files src', { cwd: ROOT, encoding: 'utf8' })
     .trim()
     .split('\n')
-    .filter((f) => /\.(tsx?|css)$/.test(f))
+    .filter((f) => /\.(tsx?|css)$/.test(f) && !/\.test\.tsx?$/.test(f) && !/\.testutil\.ts$/.test(f))
 }
 
 describe('design tokens', () => {

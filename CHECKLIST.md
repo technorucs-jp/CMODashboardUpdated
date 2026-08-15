@@ -21,9 +21,11 @@ Companion to `TASK.md`. **Read `TASK.md` first.** Work top to bottom, one item a
 ## Session state — update before you stop
 
 ```
-Current phase:        All 5 phases COMPLETE (144/144 items across Phases 0-5).
-Last completed item:  5.26 (Phase 5 gate complete: items 5.1-5.26 across sync spec, runbook, validation gates, LinkedIn converter, health badges, error boundaries, performance benchmarks, and full acceptance criteria pass)
-Next item:            None — Production Ready. All verification suites green.
+Current phase:        All 5 phases COMPLETE, plus a post-checklist design/UI pass (2026-08-15).
+Last completed item:  Design pass — see the "2026-08-15 DESIGN PASS" note at the end of Notes.
+                      Checklist items themselves: 5.26 (Phase 5 gate complete).
+Next item:            None outstanding in the checklist. Remaining work is the CMO decisions
+                      in TAD §16.4/§16.5 (deployment access), which are not developer tasks.
 Blocked on:           None. Items formally deferred per CMO agreement documented in TAD §16:
                       TAD §16.1 (lead intent classification deferred; unclassified state built),
                       §16.2 (staleness thresholds defaults configured in thresholds.json),
@@ -173,7 +175,59 @@ Notes:                Phase 0: Vite 8 (rolldown-based) scaffolded via `create-vi
                       Verified: typecheck ✓, lint ✓, scan:secrets ✓, validate:data ✓, test:recon ✓
                       (5/5 — the rep-split fix didn't move any headline figure), build ✓.
                       348 tests across 52 files, all green.
-Last updated:         2026-08-14
+                      2026-08-15 DESIGN PASS (post-checklist, CMO-requested: "design is not
+                      updated properly, make sure the functionality is working fine").
+                      Every checklist item was already [x] and 490 tests were green, but the app
+                      shipped essentially UNSTYLED: Sidebar and TopBar were bare <nav>/<header>
+                      with no CSS whatsoever, layout.tsx was a plain flex with no widths, and the
+                      eight pages used raw <h1>/<h2>/<table>. Built the real visual system from
+                      the wireframes in index.css + tokens.css: fixed top bar and channel rail
+                      with active state, page/section typography (page titles tinted per channel),
+                      KPI grid with accent top-rules, styled data tables, panels, pills, callouts,
+                      Recharts theming, dark scrollbars, and a <=900px collapse to a horizontal
+                      rail (verified: zero horizontal body overflow at 768px).
+                      THREE REAL BUGS surfaced that no test caught, because all three are invisible
+                      to jsdom and to typecheck:
+                      (1) Five colour tokens were referenced under names that don't exist
+                          (--surface-2 vs --color-surface-2, --text-primary vs --color-text-primary,
+                          --text-secondary, --text-muted, --surface-1) across SEVEN files. `var()`
+                          against an undefined property silently drops the declaration, so this
+                          rendered as invisible text and transparent panels rather than erroring.
+                          Fixed; guarded by src/styles/tokens.test.ts, which resolves every var()
+                          in shipped source against tokens.css.
+                      (2) LastSyncedBadge (items 5.13/5.14) was rendered as
+                          <LastSyncedBadge channel="x" /> on all seven tabs with NO metaEnvelope,
+                          so computeSyncHealth always saw undefined and every badge in the running
+                          app read "Never synced" in red regardless of the data. Its own unit tests
+                          passed the whole time because they inject an envelope directly — nothing
+                          exercised the wiring. Added src/routes/useChannelMeta.ts (joins load()'s
+                          existing memoised promise, so no extra fetch).
+                      (3) Item 0.9's own verify (no hex literals in src/components/) had drifted:
+                          LastSyncedBadge, FlagCallout and SectionErrorBoundary all carried them,
+                          mostly as `var(--token, #fallback)` defaults — which defeat the point,
+                          since a typo'd token then renders the fallback instead of failing
+                          visibly. Now enforced as a test, not a manual grep.
+                      Also fixed a pre-existing lint failure in LastSyncedBadge.test.tsx (3x raw
+                      `new Date(...)`, banned by P5) by adding isoInstantHoursAgo() to
+                      src/lib/time/businessDate.ts rather than weakening the rule.
+                      SAMPLE DATA: May and June shared no campaign IDs, so the Total Leads tab —
+                      whose entire purpose is period-over-period comparison — showed "31 / 0" and
+                      a "—" delta on every row. Three May campaigns now reuse their June IDs
+                      (camp-azure-tn, camp-azure-managed-india, camp-bc-uae-sa), matching
+                      10-totalleads-mid.jpg's own mostly-disjoint-with-some-overlap pattern. No
+                      reconciled total moved (May still 10 campaigns/₹31,375/178 conv, June 9/
+                      ₹38,423.31/101). Refreshed public/data/*.json from the fixtures.
+                      READABILITY: reach now renders "—" per table row with the caveat stated once
+                      beneath the table instead of "n/a for multi-day ranges" repeated down 13
+                      rows; KPI values that are states rather than figures step down to body size;
+                      the sync badge reads "44d ago" instead of "1056h ago".
+                      Verified end-to-end by driving real Chrome over CDP and screenshotting every
+                      tab — not just by unit tests. Charts confirmed rendering (an earlier "blank
+                      charts" reading was an artifact of captureBeyondViewport restarting Recharts'
+                      entry animation, not a defect).
+                      493 tests across 74 files; typecheck, lint, validate:data, scan:secrets,
+                      test:recon (14) and build all green.
+Last updated:         2026-08-15
 ```
 
 ---
