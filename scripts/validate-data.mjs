@@ -1,5 +1,6 @@
 import { readFileSync, readdirSync, existsSync } from 'node:fs'
-import { join, dirname } from 'node:path'
+import { execFileSync } from 'node:child_process'
+import { join, dirname, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
@@ -7,7 +8,28 @@ const DATA_DIR = join(ROOT, 'public', 'data')
 
 const REQUIRED_FILES = ['meta-ads.json', 'zoho-crm.json', 'ga4.json', 'gsc.json', 'linkedin.json', 'narratives.json']
 
-export function validateDataDirectory(dataDir = DATA_DIR) {
+// Row-count drops of up to this fraction are allowed without an override (spec §6 gate 4).
+const MAX_ROW_COUNT_DROP_FRACTION = 0.5
+
+/**
+ * Reads the version of `dataDir/filename` currently at HEAD (i.e. what's already
+ * live), so a candidate write — sitting in the working tree right before Cowork's
+ * step 10 commit (COWORK_SYNC_SPEC.md §5) — can be diffed against it. Returns
+ * `null` for anything that isn't a regression signal in itself: no git repo, the
+ * file didn't exist at HEAD yet (first sync), or HEAD's copy doesn't parse —
+ * there is nothing to compare against, not a validation failure.
+ */
+function readPreviousCommittedJson(dataDir, filename) {
+  const gitPath = relative(ROOT, join(dataDir, filename)).split('\\').join('/')
+  try {
+    const raw = execFileSync('git', ['show', `HEAD:${gitPath}`], { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] })
+    return JSON.parse(raw)
+  } catch {
+    return null
+  }
+}
+
+export function validateDataDirectory(dataDir = DATA_DIR, { getPreviousCommittedJson = readPreviousCommittedJson } = {}) {
   const errors = []
 
   for (const filename of REQUIRED_FILES) {
@@ -52,10 +74,50 @@ export function validateDataDirectory(dataDir = DATA_DIR) {
         if (!rowCounts || typeof rowCounts !== 'object') {
           errors.push(`[${filename}] Gate failed: missing meta.rowCounts`)
         }
+
+        // Gates 3 & 4 compare against what's currently committed (HEAD) — the
+        // "previous commit" the spec's gates 3/4 refer to (§6). Skipped when
+        // there is nothing to compare against (new file, not a git repo, or a
+        // HEAD copy that doesn't parse) — that is not itself a regression.
+        const previous = getPreviousCommittedJson(dataDir, filename)
+        const prevMeta = previous && typeof previous === 'object' ? previous.meta : null
+
+        if (prevMeta && typeof prevMeta === 'object') {
+          // Gate 3: No Chronological Reversal
+          if (
+            typeof latestRecordDate === 'string' &&
+            typeof prevMeta.latestRecordDate === 'string' &&
+            latestRecordDate < prevMeta.latestRecordDate
+          ) {
+            errors.push(
+              `[${filename}] Gate failed: meta.latestRecordDate moved backward (${prevMeta.latestRecordDate} -> ${latestRecordDate})`,
+            )
+          }
+
+          // Gate 4: No Severe Row Count Drop (bypassable via VALIDATE_ALLOW_ROW_COUNT_DROP=1,
+          // the spec's "explicit human override flag")
+          if (
+            rowCounts &&
+            typeof rowCounts === 'object' &&
+            prevMeta.rowCounts &&
+            typeof prevMeta.rowCounts === 'object' &&
+            process.env.VALIDATE_ALLOW_ROW_COUNT_DROP !== '1'
+          ) {
+            for (const [key, prevCount] of Object.entries(prevMeta.rowCounts)) {
+              if (typeof prevCount !== 'number' || prevCount <= 0) continue
+              const currentCount = typeof rowCounts[key] === 'number' ? rowCounts[key] : 0
+              if (currentCount < prevCount * (1 - MAX_ROW_COUNT_DROP_FRACTION)) {
+                errors.push(
+                  `[${filename}] Gate failed: meta.rowCounts.${key} dropped by more than ${MAX_ROW_COUNT_DROP_FRACTION * 100}% (${prevCount} -> ${currentCount}); set VALIDATE_ALLOW_ROW_COUNT_DROP=1 to override`,
+                )
+              }
+            }
+          }
+        }
       }
     }
 
-    // Gate 3: For Zoho CRM — Zero Notes Leak Gate (TAD ADR-012, item 5.5)
+    // Gate 5: For Zoho CRM — Zero Notes Leak Gate (TAD ADR-012, item 5.5)
     if (filename === 'zoho-crm.json') {
       const rawText = JSON.stringify(parsed)
       if (rawText.includes('"notes"') || rawText.includes('"description"') || rawText.includes('"inquiry_text"')) {

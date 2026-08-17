@@ -20,7 +20,18 @@ export function composeTabNarrative(
       ? allFlags
       : allFlags.filter((f) => f.channel === channel)
 
-  return relevantFlags.map((flag) =>
-    renderFlagNarrative(flag, narratives?.phrasings?.[flag.id]),
-  )
+  // A rule ID identifies the *type* of flag (and is the narratives.json phrasing
+  // lookup key, ADR-004) — it is not unique per instance. Several rules fire once
+  // per subject (per ad set, per owner, per country, per competitor), so the same
+  // rule ID can appear multiple times in one range. Disambiguate every occurrence
+  // after the first so `id` stays a valid React list key downstream (ActionList,
+  // NarrativeBlock) — without this, two ad sets both flagged for
+  // spend-no-conversions collide on the same key and React silently drops one.
+  const seen = new Map<string, number>()
+  return relevantFlags.map((flag) => {
+    const rendered = renderFlagNarrative(flag, narratives?.phrasings?.[flag.id])
+    const occurrence = seen.get(flag.id) ?? 0
+    seen.set(flag.id, occurrence + 1)
+    return occurrence === 0 ? rendered : { ...rendered, id: `${rendered.id}#${occurrence}` }
+  })
 }

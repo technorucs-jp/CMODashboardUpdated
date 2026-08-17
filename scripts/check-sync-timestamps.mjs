@@ -13,7 +13,7 @@ const CHANNEL_TOLERANCE_DAYS = {
   'linkedin.json': 60, // Monthly manual export
 }
 
-export function checkSyncTimestamps(dataDir = DATA_DIR, now = new Date('2026-08-14T09:00:00+05:30')) {
+export function checkSyncTimestamps(dataDir = DATA_DIR, now = new Date()) {
   const errors = []
 
   for (const [filename, maxDays] of Object.entries(CHANNEL_TOLERANCE_DAYS)) {

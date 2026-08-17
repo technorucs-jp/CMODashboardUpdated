@@ -1,11 +1,20 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import * as XLSX from 'xlsx'
+// Named ESM exports from 'xlsx' omit Node-only members like readFile/writeFile
+// (only present on the default export) — a `import * as XLSX` here throws
+// "XLSX.readFile is not a function" the moment this CLI runs.
+import XLSX from 'xlsx'
 import { convertLinkedInExport } from './convert.ts'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..')
 const LINKEDIN_JSON_PATH = join(ROOT, 'public', 'data', 'linkedin.json')
+
+/** Matches the committed data's `run_2026-07-02T1000` shape (no seconds, no colon). */
+function makeRunId(date) {
+  const iso = date.toISOString()
+  return `run_${iso.slice(0, 10)}T${iso.slice(11, 13)}${iso.slice(14, 16)}`
+}
 
 export function processLinkedInFiles(filePaths, outputPath = LINKEDIN_JSON_PATH) {
   const sheets = { visitors: [], followers: [], content: [], demographics: [] }
@@ -51,12 +60,17 @@ export function processLinkedInFiles(filePaths, outputPath = LINKEDIN_JSON_PATH)
     throw new Error('Conversion failed: unable to derive date coverage from the provided files.')
   }
 
+  const now = new Date()
+
   let existing = {
     schemaVersion: 1,
     meta: {
-      lastSyncedAt: new Date().toISOString(),
+      channel: 'linkedin',
+      lastSyncedAt: now.toISOString(),
       earliestRecordDate: coverage.from,
       latestRecordDate: coverage.to,
+      syncSource: 'Manual XLS upload',
+      coworkRunId: makeRunId(now),
       rowCounts: { dailyTrend: 0, posts: 0 },
       uploads: [],
     },
@@ -72,11 +86,20 @@ export function processLinkedInFiles(filePaths, outputPath = LINKEDIN_JSON_PATH)
     }
   }
 
+  // Matches linkedInUploadSchema (src/data/schemas.ts) — a strict schema, so this
+  // must carry exactly coversFrom/coversTo/uploadedAt/fileType, no more, no less.
+  const includedSheetTypes = [
+    sheets.visitors.length > 0 && 'visitors',
+    sheets.followers.length > 0 && 'followers',
+    sheets.content.length > 0 && 'content',
+    sheets.demographics.length > 0 && 'demographics',
+  ].filter(Boolean)
+
   const uploadEntry = {
-    uploadId: `upload-${Date.now()}`,
-    uploadedAt: new Date().toISOString(),
     coversFrom: coverage.from,
     coversTo: coverage.to,
+    uploadedAt: now.toISOString(),
+    fileType: includedSheetTypes.join('+') || 'unknown',
   }
 
   const updatedUploads = [...(existing.meta?.uploads || []), uploadEntry]
@@ -96,12 +119,24 @@ export function processLinkedInFiles(filePaths, outputPath = LINKEDIN_JSON_PATH)
   const earliest = mergedTrends[0]?.date || coverage.from
   const latest = mergedTrends[mergedTrends.length - 1]?.date || coverage.to
 
+  // `data.audience` is always a populated (if empty-arrayed) object — `||` never
+  // falls through to `existing.audience`, so a batch uploaded without a
+  // demographics sheet would otherwise silently wipe out previously recorded
+  // audience data. Only take the new audience snapshot when this batch actually
+  // included demographic rows.
+  const hasNewAudienceData = Object.values(data.audience ?? {}).some(
+    (rows) => Array.isArray(rows) && rows.length > 0,
+  )
+
   const finalOutput = {
     schemaVersion: 1,
     meta: {
-      lastSyncedAt: new Date().toISOString(),
+      channel: 'linkedin',
+      lastSyncedAt: now.toISOString(),
       earliestRecordDate: earliest,
       latestRecordDate: latest,
+      syncSource: 'Manual XLS upload',
+      coworkRunId: makeRunId(now),
       rowCounts: {
         dailyTrend: mergedTrends.length,
         posts: mergedPosts.length,
@@ -111,7 +146,7 @@ export function processLinkedInFiles(filePaths, outputPath = LINKEDIN_JSON_PATH)
     dailyTrend: mergedTrends,
     posts: mergedPosts,
     competitors: existing.competitors || [],
-    audience: data.audience || existing.audience,
+    audience: hasNewAudienceData ? data.audience : (existing.audience ?? data.audience),
   }
 
   writeFileSync(outputPath, JSON.stringify(finalOutput, null, 2), 'utf8')
